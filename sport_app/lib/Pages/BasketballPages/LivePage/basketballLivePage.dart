@@ -1,0 +1,165 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:nb_utils/nb_utils.dart';
+import 'package:sport_app/Provider/liveStreamProvider.dart';
+
+import '../../../Constants/Controller/layoutController.dart';
+import '../../../Constants/colorConstant.dart';
+import '../../../Constants/textConstant.dart';
+import '../../../Model/userDataModel.dart';
+import '../../../Provider/bookmarkProvider.dart';
+
+class BasketballLivePage extends StatefulWidget {
+  const BasketballLivePage({super.key});
+
+  @override
+  State<BasketballLivePage> createState() => _BasketballLivePageState();
+}
+
+class _BasketballLivePageState extends State<BasketballLivePage>
+    with SingleTickerProviderStateMixin {
+  //get user info
+  UserDataModel userModel = Get.find<UserDataModel>();
+
+  //controller
+  final ScrollController _scrollController = ScrollController();
+  final LayoutController lc = Get.find<LayoutController>();
+
+  //Bookmark and livestream list
+  List<dynamic> savedBookmarkList = [];
+  List<dynamic> getBookmarkList = [];
+
+  //variables
+  bool _showAppBar = true;
+  bool _isScrollingDown = false;
+  bool _isLiveLoading = true;
+  bool _isSavedLiveLoading = true;
+  bool shouldRefresh = false;
+
+  //Provider bookmark and live stream
+  BookmarkProvider savedBookmarkProvider = BookmarkProvider();
+  //live stream provider
+  LiveStreamProvider liveProvider = LiveStreamProvider();
+
+  //common variables
+  List<dynamic>? getAllLiveStreamList = [];
+  List<dynamic>? AllLiveStreamList = [];
+  List<dynamic>? basketballLiveStreamList = [];
+  List<Map<String, dynamic>> savedMatch = [{}];
+  int allStreamCount = 0;
+
+  // get data
+
+  //choice of main page
+  void dropdownCallback(String? selectedValue) {
+    setState(() {
+      lc.sportType.value = selectedValue!;
+
+      print("check sport selection: $selectedValue");
+      if (lc.sportType.value == 'basketball') {
+        userModel.isFootball.value = false;
+        print("check sport selection 2: ${userModel.isFootball.value}");
+      } else {
+        userModel.isFootball.value = true;
+        print("check sport selection 2: ${userModel.isFootball.value}");
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // standard size
+    double baseWidth = 375;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+
+    return Scaffold(
+      backgroundColor: kMainBackgroundColor,
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              padding: EdgeInsets.symmetric(
+                  horizontal: 16 * fem, vertical: 10 * fem),
+              height: _showAppBar ? 56 * fem : 0,
+              color: kMainGreenColor,
+              child: AppBar(
+                backgroundColor: Colors.transparent,
+                scrolledUnderElevation: 0.0,
+                surfaceTintColor: Colors.transparent,
+                actions: [
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                        vertical: 8 * fem, horizontal: 10 * fem),
+                    width: 280 * fem,
+                    height: 40 * fem,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20 * fem),
+                      color: kMainComponentColor.withOpacity(0.3),
+                    ),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          'images/appBar/search.svg',
+                          width: 24 * fem,
+                          height: 24 * fem,
+                        ),
+                        SizedBox(
+                          width: 2 * fem,
+                        ),
+                        Text(
+                          '搜索赛事/球队',
+                          style: tSearch,
+                        )
+                      ],
+                    ),
+                  ),
+                  const Spacer(),
+                  DropdownButton(
+                    underline: Container(
+                      height: 0,
+                      color: Colors.transparent,
+                    ),
+                    dropdownColor: Color.fromARGB(255, 211, 255, 212),
+                    icon: Padding(
+                      padding: EdgeInsets.only(left: 5 * fem),
+                      child: SvgPicture.asset('images/appBar/down-arrow.svg'),
+                    ),
+                    borderRadius: BorderRadius.circular(8 * fem),
+                    items: [
+                      DropdownMenuItem(
+                        value: 'basketball',
+                        child: Center(
+                          child: Image.asset(
+                            'images/appBar/basketball.png',
+                            width: 24 * fem,
+                            height: 24 * fem,
+                          ),
+                        ),
+                      ),
+                      DropdownMenuItem(
+                        value: 'football',
+                        child: Center(
+                          child: Image.asset(
+                            'images/appBar/football.png',
+                            width: 24 * fem,
+                            height: 24 * fem,
+                          ),
+                        ),
+                      ),
+                    ],
+                    value: lc.sportType.value,
+                    onChanged: dropdownCallback,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}

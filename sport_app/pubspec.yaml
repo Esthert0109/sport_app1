@@ -48,7 +48,9 @@ dependencies:
   google_fonts: ^6.1.0
   nb_utils: ^6.1.2
   libphonenumber_plugin: ^0.3.3
-  live_flutter_plugin: ^1.0.7
+  live_flutter_plugin: ^11.4.4
+  text_scroll: ^0.2.0
+  card_loading: ^0.3.2
 
 dependency_overrides:
   http: 0.13.3

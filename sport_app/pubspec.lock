@@ -145,6 +145,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.2+4"
+  card_loading:
+    dependency: "direct main"
+    description:
+      name: card_loading
+      sha256: "40cf98405a104ee8151600510033a9e22a3f9ad808e613c0e563ee7bd85a644c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.2"
   characters:
     dependency: transitive
     description:
@@ -820,10 +828,10 @@ packages:
     dependency: "direct main"
     description:
       name: live_flutter_plugin
-      sha256: f1f3db09dd6b2da77cb78c59478131f136ff31f77f16f945b440238aa2b33616
+      sha256: "4d3be91fb3e749de5b7b21ab71d564bcd890ce244a9518fe6c7adc27f46f2773"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.7"
+    version: "11.4.4"
   loading_animation_widget:
     dependency: transitive
     description:
@@ -1437,6 +1445,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.1"
+  text_scroll:
+    dependency: "direct main"
+    description:
+      name: text_scroll
+      sha256: "7869d86a6fdd725dee56bdd150216a99f0372b82fbfcac319214dbd5f36e1908"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   tim_ui_kit_sticker_plugin:
     dependency: transitive
     description:
@@ -1553,10 +1569,10 @@ packages:
     dependency: transitive
     description:
       name: uuid
-      sha256: "648e103079f7c64a36dc7d39369cabb358d377078a051d6ae2ad3aa539519313"
+      sha256: "2469694ad079893e3b434a627970c33f2fa5adc46dfe03c9617546969a9a8afc"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.7"
+    version: "3.0.6"
   vector_graphics:
     dependency: transitive
     description:

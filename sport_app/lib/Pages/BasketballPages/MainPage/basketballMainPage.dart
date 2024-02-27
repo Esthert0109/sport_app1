@@ -62,6 +62,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
               height: _showAppBar ? 56 * fem : 0,
               color: kMainGreenColor,
               child: AppBar(
+                automaticallyImplyLeading: false,
                 backgroundColor: Colors.transparent,
                 scrolledUnderElevation: 0.0,
                 surfaceTintColor: Colors.transparent,

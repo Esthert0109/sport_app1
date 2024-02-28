@@ -75,8 +75,7 @@ const tOtherSelectedDateButton = TextStyle(
 const tTagButton = TextStyle(
     fontFamily: 'Inter',
     fontSize: 12,
-    fontWeight: FontWeight.w500,
-    letterSpacing: 0.3,
+    fontWeight: FontWeight.w400,
     color: kComponentTagTitleColor);
 const tDate = TextStyle(
     fontFamily: 'Inter',
@@ -86,14 +85,14 @@ const tDate = TextStyle(
     color: kComponentDateColor);
 const tGroupName = TextStyle(
     fontFamily: 'Inter',
-    fontSize: 14,
-    fontWeight: FontWeight.w500,
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
     letterSpacing: 0.3,
     color: kMainTitleColor);
 const tScore = TextStyle(
     fontFamily: 'Inter',
-    fontSize: 16,
-    fontWeight: FontWeight.w600,
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
     letterSpacing: 0.3,
     color: kMainTitleColor);
 

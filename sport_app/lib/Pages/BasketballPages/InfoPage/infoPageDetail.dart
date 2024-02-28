@@ -4,6 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../../Constants/colorConstant.dart';
 import '../../../Constants/textConstant.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InfoPageDetail extends StatefulWidget {
   const InfoPageDetail({super.key});
@@ -24,10 +25,13 @@ class _InfoPageDetailState extends State<InfoPageDetail> {
         backgroundColor: kMainBackgroundColor,
         appBar: AppBar(
           backgroundColor: kMainGreenColor,
+          scrolledUnderElevation: 0.0,
+          surfaceTintColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
           iconTheme: const IconThemeData(color: kMainComponentColor),
-          title: Text("资讯", style: tInfoDetailTitle),
+          title:
+              Text(AppLocalizations.of(context)!.info, style: tInfoDetailTitle),
           leading: IconButton(
               onPressed: () {
                 Get.back();

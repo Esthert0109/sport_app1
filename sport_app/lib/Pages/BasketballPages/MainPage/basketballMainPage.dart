@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import '../../../Constants/Controller/layoutController.dart';
 import '../../../Constants/colorConstant.dart';
@@ -131,6 +132,146 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                     value: lc.sportType.value,
                     onChanged: dropdownCallback,
                   ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(
+                  horizontal: 10 * fem, vertical: 10 * fem),
+              padding: EdgeInsets.symmetric(
+                  horizontal: 10 * fem, vertical: 10 * fem),
+              height: 100 * fem,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: kMainComponentColor),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    flex: 4,
+                    child: Container(
+                      width: 340 * fem,
+                      // color: redColor,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        // crossAxisAlignment: Cro,
+                        children: [
+                          Expanded(
+                              flex: 8,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 20 * fem,
+                                    alignment: Alignment.topLeft,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 8 * fem),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: kLightGreyColor),
+                                    child: Text(
+                                      "Iraqi League - Regular",
+                                      style: tTagButton,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 20 * fem,
+                                    alignment: Alignment.topCenter,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 20 * fem),
+                                    child: Text(
+                                      "00:00",
+                                      style: tDate,
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          Expanded(
+                              flex: 2,
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: Container(
+                                    width: 24 * fem,
+                                    height: 24 * fem,
+                                    alignment: Alignment.topRight,
+                                    // color: Colors.amber,
+                                    child: SvgPicture.asset(
+                                        'images/common/Bookmark-0.svg')),
+                              ))
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                      flex: 6,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: Container(
+                              margin: EdgeInsets.only(right: 8 * fem),
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                "Real Club Deportivo de La Coruña",
+                                style: tGroupName,
+                                textAlign: TextAlign.right,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: Image(
+                                  image: AssetImage(
+                                      'images/mainpage/sampleLogo.png')),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              margin: EdgeInsets.symmetric(horizontal: 1 * fem),
+                              alignment: Alignment.center,
+                              child: Text(
+                                "123 - 123",
+                                style: tScore,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: Image(
+                                  image: AssetImage(
+                                      'images/mainpage/sampleLogo.png')),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Container(
+                              margin: EdgeInsets.only(left: 8 * fem),
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Association",
+                                style: tGroupName,
+                                textAlign: TextAlign.left,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ))
                 ],
               ),
             )

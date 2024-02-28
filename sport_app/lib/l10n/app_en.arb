@@ -3,9 +3,27 @@
     "live": "Live",
     "info": "Info",
     "my": "My",
-
     "search": "Search Game/Team",
-
     "login": "Login",
-    "reg": "Register"
+    "reg": "Register",
+    "editNickname": "Edit Nickname",
+    "nickNameIsNotEmpty": "Nickname cannot be empty",
+    "newNickname": "Please insert a new nickname",
+    "updateNickname": "Update Nickname",
+    "editPassword": "Update Password",
+    "updateConfirmation": "We kindly request your confirmation to proceed with the password change. A verification code will be sent to your registered phone number for authentication purposes.",
+    "yes": "Confirm",
+    "cancel": "Cancel",
+    "otpHitLimit": "OTP requests hit limitation.",
+    "otpSent": "OTP request sent.",
+    "contactUs": "Contact Us",
+    "systemSetting": "Setting",
+    "changeLanguage": "Language Setting",
+    "noInternet": "No Internet Connection. Please Try Again.",
+    "successNickname": "Nickname Updated Successfully",
+    "successProfilePic": "Profile Picture Updated Successfully",
+    "updateInfo": "Personal Information Edit",
+    "myCollection": "My Collection",
+    "logout": "Log Out",
+    "noti": "Notification"
 }

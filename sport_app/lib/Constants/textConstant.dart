@@ -219,8 +219,21 @@ const tMyPageBtn = TextStyle(
 const tContactUsTitle = TextStyle(
     fontFamily: 'Inter',
     fontSize: 30,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w700,
     color: kMainTitleColor);
+
+const tSocialMediaTitle = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: kMainTitleColor);
+
+// edit profile page
+const tEditTitle = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 18,
+    fontWeight: FontWeight.w500,
+    color: kMainComponentColor);
 
 // login page
 

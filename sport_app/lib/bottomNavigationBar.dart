@@ -12,7 +12,7 @@ import 'Pages/BasketballPages/MainPage/BasketballMainPage.dart';
 import 'Pages/FootballPages/InfoPage/footballInfoPage.dart';
 import 'Pages/FootballPages/LivePage/footballLivePage.dart';
 import 'Pages/FootballPages/MainPage/footballMainPage.dart';
-import 'Pages/myPage.dart';
+import 'Pages/MyPages/myPage.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BottomNaviBar extends StatefulWidget {

@@ -3,10 +3,27 @@
     "live": "直播",
     "info": "资讯",
     "my": "我的",
-
-    "search":"搜索赛事/球队",
-
+    "search": "搜索赛事/球队",
     "login": "登录",
-    "reg": "注册"
-
+    "reg": "注册",
+    "editNickname": "修改昵称",
+    "nickNameIsNotEmpty": "用户名不可为空",
+    "newNickname": "请输入新昵称",
+    "updateNickname": "更新昵称",
+    "editPassword": "修改密码",
+    "updateConfirmation": "确认更换密码吗？我们稍后会往您的电话号发送验证码",
+    "yes": "确定",
+    "cancel": "取消",
+    "otpHitLimit": "验证码申请次数已达到上限",
+    "otpSent": "已发送验证码",
+    "contactUs": "联系我们",
+    "systemSetting": "系统设置",
+    "changeLanguage": "修改语言",
+    "noInternet": "无网络连接，请再重试",
+    "successNickname": "已经更换新的昵称",
+    "successProfilePic": "已经更新新头像了",
+    "updateInfo": "信息编辑",
+    "myCollection": "我的收藏直播",
+    "logout": "退出登录",
+    "noti": "系统消息"
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -13,6 +15,7 @@ import '../../../Constants/textConstant.dart';
 import '../../../Model/userDataModel.dart';
 import '../../../Provider/bookmarkProvider.dart';
 import '../../TencentLiveStreamRoom/liveStreamChatRoom.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BasketballLivePage extends StatefulWidget {
   const BasketballLivePage({super.key});
@@ -54,6 +57,64 @@ class _BasketballLivePageState extends State<BasketballLivePage>
   int allStreamCount = 0;
 
   // get data
+  Future<String> getPreBookmarkId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final removeBookmarkId = prefs.getString('removeBookmarkId') ?? "";
+    return removeBookmarkId;
+  }
+
+  Future<String> savedPreBookmarkId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedBookmarkId = prefs.getString('savedBookmarkId') ?? "";
+    return savedBookmarkId;
+  }
+
+  Future<String> removeBookmarkIndex() async {
+    final prefs = await SharedPreferences.getInstance();
+    final removeBookmarkIndex = prefs.getString('removeBookmarkIndex') ?? "";
+    return removeBookmarkIndex;
+  }
+
+  Future<String?> removePreBookmarkId() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('savedBookmarkId');
+    await prefs.remove('removeBookmarkId');
+    await prefs.remove('savedBookmarkIndex');
+    return null;
+  }
+
+  Future<List<dynamic>> getLiveStreamBookmark() async {
+    List<dynamic> getLiveStreamBookmarkList =
+        await savedBookmarkProvider.getLiveStreamBookmark();
+    print(getLiveStreamBookmarkList);
+    return getLiveStreamBookmarkList;
+  }
+
+  Future<List<dynamic>> refreshBookmarkList() async {
+    getLiveStreamBookmark().then((value) {
+      if (mounted) {
+        setState(() {
+          savedBookmarkList = value;
+
+          savedBookmarkList.sort((a, b) {
+            final DateTime dateTimeA = a["matchDate"] ?? DateTime(0);
+            final DateTime dateTimeB = b["matchDate"] ?? DateTime(0);
+            return dateTimeB.compareTo(dateTimeA);
+          });
+        });
+      }
+    });
+    return savedBookmarkList;
+  }
+
+//provider with body
+  Future<List<dynamic>?>? getAllLiveStreamListProvider() async {
+    getAllLiveStreamList = await liveProvider.getAllLiveStreamList();
+    allStreamCount = getAllLiveStreamList!.length;
+
+    print("check popular stream list: $getAllLiveStreamList");
+    return getAllLiveStreamList;
+  }
 
   //choice of main page
   void dropdownCallback(String? selectedValue) {
@@ -69,6 +130,104 @@ class _BasketballLivePageState extends State<BasketballLivePage>
         print("check sport selection 2: ${userModel.isFootball.value}");
       }
     });
+
+    String getStreamURL(streamUrl) {
+      int index = streamUrl.indexOf('?');
+      if (index != -1) {
+        // Extract the substring before the first '?'
+        String result = streamUrl.substring(0, index);
+        print(result);
+        return result;
+      } else {
+        print('No match found');
+        return "";
+      }
+    }
+
+    //refresh to get bookmark
+    Future<void> toggleRefresh() async {
+      //get data from api
+      String removeBookmarkId = await getPreBookmarkId();
+      String savedBookmarkId = await savedPreBookmarkId();
+      String savedBookmarkIndex = await removeBookmarkIndex();
+
+      setState(() {
+        shouldRefresh = !shouldRefresh;
+        if (mounted) {
+          setState(() {
+            if (removeBookmarkId != "") {
+              getBookmarkList.remove(int.parse(removeBookmarkId));
+              savedBookmarkList
+                  .remove(savedBookmarkList[int.parse(savedBookmarkIndex)]);
+            } else {
+              getBookmarkList.add(int.parse(savedBookmarkId));
+            }
+            removePreBookmarkId();
+          });
+        }
+      });
+    }
+
+    //initState
+    @override
+    void initState() {
+      super.initState();
+
+      refreshBookmarkList();
+      print("savedBookmarkList: ${savedBookmarkList.toString()}");
+
+      // getAllLiveStreamListProvider()?.then((value) {
+      //   setState(() {
+      //     AllLiveStreamList = value;
+      //     print("check all in initState: $AllLiveStreamList");
+      //     allStreamCount = AllLiveStreamList!.length;
+      //     // print("check all count: $allStreamCount");
+
+      //     basketballLiveStreamList = AllLiveStreamList!
+      //         .where((item) => item['sportType'] == '1')
+      //         .toList();
+
+      //          print("check all count: $basketballLiveStreamList");
+
+      //     allStreamCount = basketballLiveStreamList!.length;
+      //   });
+      // });
+
+      _scrollController.addListener(() {
+        if (_scrollController.position.userScrollDirection.toString() ==
+            'ScrollDirection.reverse') {
+          if (!_isScrollingDown) {
+            setState(() {
+              _isScrollingDown = true;
+              _showAppBar = false;
+            });
+          }
+        }
+
+        if (_scrollController.position.userScrollDirection.toString() ==
+            'ScrollDirection.forward') {
+          if (_isScrollingDown) {
+            setState(() {
+              _isScrollingDown = false;
+              _showAppBar = true;
+            });
+          }
+        }
+      });
+
+      Timer(const Duration(seconds: 2), () async {
+        setState(() {
+          _isLiveLoading = false;
+        });
+      });
+    }
+
+    @override
+    void dispose() {
+      _scrollController.dispose();
+      _scrollController.removeListener(() {});
+      super.dispose();
+    }
   }
 
   @override
@@ -90,76 +249,78 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                   horizontal: 16 * fem, vertical: 10 * fem),
               height: _showAppBar ? 56 * fem : 0,
               color: kMainGreenColor,
-              child: AppBar(
-                automaticallyImplyLeading: false,
-                backgroundColor: Colors.transparent,
-                scrolledUnderElevation: 0.0,
-                surfaceTintColor: Colors.transparent,
-                actions: [
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 8 * fem, horizontal: 10 * fem),
-                    width: 280 * fem,
-                    height: 40 * fem,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20 * fem),
-                      color: kMainComponentColor.withOpacity(0.3),
+              child: Obx(
+                () => AppBar(
+                  automaticallyImplyLeading: false,
+                  backgroundColor: Colors.transparent,
+                  scrolledUnderElevation: 0.0,
+                  surfaceTintColor: Colors.transparent,
+                  actions: [
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 8 * fem, horizontal: 10 * fem),
+                      width: 280 * fem,
+                      height: 40 * fem,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20 * fem),
+                        color: kMainComponentColor.withOpacity(0.3),
+                      ),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            'images/appBar/search.svg',
+                            width: 24 * fem,
+                            height: 24 * fem,
+                          ),
+                          SizedBox(
+                            width: 2 * fem,
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.search,
+                            style: tSearch,
+                          )
+                        ],
+                      ),
                     ),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(
-                          'images/appBar/search.svg',
-                          width: 24 * fem,
-                          height: 24 * fem,
+                    const Spacer(),
+                    DropdownButton(
+                      underline: Container(
+                        height: 0,
+                        color: Colors.transparent,
+                      ),
+                      dropdownColor: Color.fromARGB(255, 211, 255, 212),
+                      icon: Padding(
+                        padding: EdgeInsets.only(left: 5 * fem),
+                        child: SvgPicture.asset('images/appBar/down-arrow.svg'),
+                      ),
+                      borderRadius: BorderRadius.circular(8 * fem),
+                      items: [
+                        DropdownMenuItem(
+                          value: 'basketball',
+                          child: Center(
+                            child: Image.asset(
+                              'images/appBar/basketball.png',
+                              width: 24 * fem,
+                              height: 24 * fem,
+                            ),
+                          ),
                         ),
-                        SizedBox(
-                          width: 2 * fem,
+                        DropdownMenuItem(
+                          value: 'football',
+                          child: Center(
+                            child: Image.asset(
+                              'images/appBar/football.png',
+                              width: 24 * fem,
+                              height: 24 * fem,
+                            ),
+                          ),
                         ),
-                        Text(
-                          '搜索赛事/球队',
-                          style: tSearch,
-                        )
                       ],
+                      value: lc.sportType.value,
+                      onChanged: dropdownCallback,
                     ),
-                  ),
-                  const Spacer(),
-                  DropdownButton(
-                    underline: Container(
-                      height: 0,
-                      color: Colors.transparent,
-                    ),
-                    dropdownColor: Color.fromARGB(255, 211, 255, 212),
-                    icon: Padding(
-                      padding: EdgeInsets.only(left: 5 * fem),
-                      child: SvgPicture.asset('images/appBar/down-arrow.svg'),
-                    ),
-                    borderRadius: BorderRadius.circular(8 * fem),
-                    items: [
-                      DropdownMenuItem(
-                        value: 'basketball',
-                        child: Center(
-                          child: Image.asset(
-                            'images/appBar/basketball.png',
-                            width: 24 * fem,
-                            height: 24 * fem,
-                          ),
-                        ),
-                      ),
-                      DropdownMenuItem(
-                        value: 'football',
-                        child: Center(
-                          child: Image.asset(
-                            'images/appBar/football.png',
-                            width: 24 * fem,
-                            height: 24 * fem,
-                          ),
-                        ),
-                      ),
-                    ],
-                    value: lc.sportType.value,
-                    onChanged: dropdownCallback,
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             Expanded(

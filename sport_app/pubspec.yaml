@@ -51,6 +51,10 @@ dependencies:
   live_flutter_plugin: ^11.4.4
   text_scroll: ^0.2.0
   card_loading: ^0.3.2
+  flutter_localization: ^0.2.0
+  intl: any
+  flutter_localizations:
+    sdk: flutter
 
 dependency_overrides:
   http: 0.13.3
@@ -76,6 +80,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  generate: true
 
   # To add assets to your application, add an assets section, like this:
   assets:

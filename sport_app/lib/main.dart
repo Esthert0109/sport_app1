@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sport_app/Provider/basketballMatchProvider.dart';
 import 'package:sport_app/Provider/footballMatchProvider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'Constants/Controller/layoutController.dart';
 import 'Constants/colorConstant.dart';
@@ -25,7 +27,25 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+
+  static void setLocale(BuildContext context, Locale newLocale) {
+    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+    state?.setLocale(newLocale);
+  }
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale? _locale;
+
+  setLocale(Locale locale) {
+    setState(() {
+      _locale = locale;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
@@ -37,11 +57,19 @@ class MyApp extends StatelessWidget {
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context)=>FootballMatchProvider()),
-        ChangeNotifierProvider(create: (context)=>BasketballMatchProvider())
+        ChangeNotifierProvider(create: (context) => FootballMatchProvider()),
+        ChangeNotifierProvider(create: (context) => BasketballMatchProvider())
       ],
       child: GetMaterialApp(
         theme: ThemeData(primaryColor: kMainBackgroundColor),
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        locale: _locale,
+        supportedLocales: [Locale('en'), Locale('zh')],
         initialRoute: '/opening',
         getPages: [
           GetPage(name: '/opening', page: () => const Opening()),

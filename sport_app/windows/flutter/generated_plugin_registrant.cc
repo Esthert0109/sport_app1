@@ -10,6 +10,7 @@
 #include <desktop_drop/desktop_drop_plugin.h>
 #include <fc_native_video_thumbnail/fc_native_video_thumbnail_plugin_c_api.h>
 #include <file_selector_windows/file_selector_windows.h>
+#include <flutter_localization/flutter_localization_plugin_c_api.h>
 #include <image_clipboard/image_clipboard_plugin_c_api.h>
 #include <nb_utils/nb_utils_plugin.h>
 #include <pasteboard/pasteboard_plugin.h>
@@ -25,6 +26,8 @@ void RegisterPlugins(flutter::PluginRegistry* registry) {
       registry->GetRegistrarForPlugin("FcNativeVideoThumbnailPluginCApi"));
   FileSelectorWindowsRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FileSelectorWindows"));
+  FlutterLocalizationPluginCApiRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("FlutterLocalizationPluginCApi"));
   ImageClipboardPluginCApiRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("ImageClipboardPluginCApi"));
   NbUtilsPluginRegisterWithRegistrar(

@@ -8,6 +8,7 @@ import '../../Constants/colorConstant.dart';
 import '../../Model/userDataModel.dart';
 import '../AuthenticationPages/login.dart';
 import '../AuthenticationPages/registration.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({Key? key}) : super(key: key);
@@ -45,7 +46,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               height: 18 * fem,
             ),
             WidthButton(
-              text: '登录',
+              text: AppLocalizations.of(context)!.login,
               onPressed: () {
                 Get.to(() => const Login());
               },
@@ -54,7 +55,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               height: 15 * fem,
             ),
             WidthButton(
-                text: '注册',
+                text: AppLocalizations.of(context)!.reg,
                 btnColor: kSecondaryBtnColor,
                 fontColor: kMainGreenColor,
                 onPressed: () {

@@ -13,6 +13,7 @@ import 'Pages/FootballPages/InfoPage/footballInfoPage.dart';
 import 'Pages/FootballPages/LivePage/footballLivePage.dart';
 import 'Pages/FootballPages/MainPage/footballMainPage.dart';
 import 'Pages/myPage.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BottomNaviBar extends StatefulWidget {
   const BottomNaviBar({super.key});
@@ -82,25 +83,25 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
               },
               items: [
                 BottomNavigationBarItem(
-                    label: '首页',
+                    label: AppLocalizations.of(context)!.mainPage,
                     icon: pageIndex == 0
                         ? SvgPicture.asset('images/bottomNaviBtn/home-1.svg')
                         : SvgPicture.asset('images/bottomNaviBtn/home-0.svg'),
                     backgroundColor: kMainBackgroundColor),
                 BottomNavigationBarItem(
-                    label: '直播',
+                    label: AppLocalizations.of(context)!.live,
                     icon: pageIndex == 1
                         ? SvgPicture.asset('images/bottomNaviBtn/live-1.svg')
                         : SvgPicture.asset('images/bottomNaviBtn/live-0.svg'),
                     backgroundColor: kMainBackgroundColor),
                 BottomNavigationBarItem(
-                    label: '资讯',
+                    label: AppLocalizations.of(context)!.info,
                     icon: pageIndex == 2
                         ? SvgPicture.asset('images/bottomNaviBtn/info-0.svg')
                         : SvgPicture.asset('images/bottomNaviBtn/info-1.svg'),
                     backgroundColor: kMainBackgroundColor),
                 BottomNavigationBarItem(
-                    label: '我的',
+                    label: AppLocalizations.of(context)!.my,
                     icon: pageIndex == 3
                         ? SvgPicture.asset('images/bottomNaviBtn/profile-1.svg')
                         : SvgPicture.asset(

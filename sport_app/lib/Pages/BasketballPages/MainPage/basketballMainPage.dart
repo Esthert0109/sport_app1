@@ -6,6 +6,7 @@ import '../../../Constants/Controller/layoutController.dart';
 import '../../../Constants/colorConstant.dart';
 import '../../../Constants/textConstant.dart';
 import '../../../Model/userDataModel.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BasketballMainPage extends StatefulWidget {
   const BasketballMainPage({super.key});
@@ -87,7 +88,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                           width: 2 * fem,
                         ),
                         Text(
-                          '搜索赛事/球队',
+                          AppLocalizations.of(context)!.search,
                           style: tSearch,
                         )
                       ],

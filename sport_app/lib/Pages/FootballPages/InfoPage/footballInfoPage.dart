@@ -1,6 +1,9 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:nb_utils/nb_utils.dart';
+import 'package:tencent_cloud_chat_uikit/ui/views/TIMUIKitChat/TIMUIKitTextField/at_member_panel.dart';
 
 import '../../../Constants/Controller/layoutController.dart';
 import '../../../Constants/colorConstant.dart';
@@ -130,6 +133,51 @@ class _FootballInfoPageState extends State<FootballInfoPage>
                     onChanged: dropdownCallback,
                   ),
                 ],
+              ),
+            ),
+            Container(
+              height: 100,
+              width: 100,
+              color: redColor,
+            ),
+            Text("???"),
+            Swiper(
+              pagination: SwiperPagination(),
+              control: SwiperControl(),
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                return Container(
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(8)),
+                  width: 343 * fem,
+                  height: 183 * fem,
+                  color: Colors.amber,
+                );
+              },
+            ),
+            Container(
+              height: 500 * fem,
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    Text("??????"),
+                    Swiper(
+                      pagination: SwiperPagination(),
+                      control: SwiperControl(),
+                      itemCount: 5,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8)),
+                          width: 343 * fem,
+                          height: 183 * fem,
+                          color: Colors.amber,
+                        );
+                      },
+                    )
+                  ],
+                ),
               ),
             )
           ],

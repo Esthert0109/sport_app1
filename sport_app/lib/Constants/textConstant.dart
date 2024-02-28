@@ -189,6 +189,42 @@ const tGameStatisticTitle = TextStyle(
     fontWeight: FontWeight.w500,
     color: kMainTitleColor);
 
+//info page
+const tInfoTitle = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 14,
+    letterSpacing: 0.3,
+    fontWeight: FontWeight.w500,
+    color: kMainTitleColor);
+
+const tRead = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 12,
+    letterSpacing: 0.3,
+    fontWeight: FontWeight.w400,
+    color: kComponentTagTitleColor);
+
+const tInfoDetailTitle = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 18,
+    letterSpacing: 0.3,
+    fontWeight: FontWeight.w500,
+    color: kMainComponentColor);
+
+const tNewsTitle = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 17,
+    letterSpacing: 0.3,
+    fontWeight: FontWeight.w600,
+    color: kMainTitleColor);
+
+const tNewsDetails = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 14,
+    letterSpacing: 0.3,
+    fontWeight: FontWeight.w400,
+    color: kMainGreyColor);
+
 //my page
 const tUsername = TextStyle(
     fontFamily: 'Inter',

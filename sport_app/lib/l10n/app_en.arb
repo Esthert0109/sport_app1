@@ -25,5 +25,6 @@
     "updateInfo": "Personal Information Edit",
     "myCollection": "My Collection",
     "logout": "Log Out",
-    "noti": "Notification"
+    "noti": "Notification",
+    "read": "read"
 }

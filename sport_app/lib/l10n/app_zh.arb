@@ -25,5 +25,6 @@
     "updateInfo": "信息编辑",
     "myCollection": "我的收藏直播",
     "logout": "退出登录",
-    "noti": "系统消息"
+    "noti": "系统消息",
+    "read": "阅读"
 }

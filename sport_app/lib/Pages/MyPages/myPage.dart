@@ -12,6 +12,7 @@ import '../../Model/userDataModel.dart';
 import '../../Services/Utils/sharedPreferencesUtils.dart';
 import 'contactUs.dart';
 import 'editProfile.dart';
+import 'savedLive.dart';
 import 'systemSetting.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -139,11 +140,7 @@ class _MyPageState extends State<MyPage> {
               height: 30 * fem,
             ),
             GestureDetector(
-              onTap: () => {
-                //   Get.to(() =>
-                // SavedLive()
-                // )
-              },
+              onTap: () => {Get.to(() => SavedLivePage())},
               child: Container(
                   width: 340 * fem,
                   height: 60 * fem,

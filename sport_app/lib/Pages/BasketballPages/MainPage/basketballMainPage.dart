@@ -281,11 +281,13 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                 });
               },
               child: RefreshIndicator(
+                color: kMainGreenColor,
                 onRefresh: () async {
                   refresh();
                 },
                 child: SingleChildScrollView(
                   controller: _scrollController,
+                  physics: const BouncingScrollPhysics(),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.stretch,

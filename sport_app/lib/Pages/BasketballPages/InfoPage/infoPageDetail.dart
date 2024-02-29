@@ -38,7 +38,7 @@ class _InfoPageDetailState extends State<InfoPageDetail> {
               },
               icon: Icon(
                 Icons.arrow_back_ios_new_rounded,
-                size: 24 * fem,
+                size: 20 * fem,
               )),
         ),
         body: SingleChildScrollView(

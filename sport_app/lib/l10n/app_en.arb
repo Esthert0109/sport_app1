@@ -31,5 +31,9 @@
     "competition": "Event",
     "started": "Started",
     "yet": "On Waiting",
-    "end": "End"
+    "end": "End",
+    "noResult": "No result from the search.",
+    "history": "Search History",
+    "clear": "Clear",
+    "trending": "Trending"
 }

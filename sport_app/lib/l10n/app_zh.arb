@@ -31,5 +31,10 @@
     "competition": "赛事",
     "started": "已开赛",
     "yet": "未开赛",
-    "end": "已结束"
+    "end": "已结束",
+    "noResult": "搜索为空",
+    "history": "历史记录",
+    "clear": "清空",
+    "trending": "热门搜索"
+
 }

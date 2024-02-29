@@ -17,6 +17,8 @@ import '../../../Constants/textConstant.dart';
 import '../../../Model/userDataModel.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../SearchPage/searchEvent.dart';
+
 class BasketballMainPage extends StatefulWidget {
   const BasketballMainPage({super.key});
 
@@ -32,6 +34,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
   //controller
   ScrollController _scrollController = ScrollController();
   final LayoutController lc = Get.find<LayoutController>();
+  TextEditingController _searchController = TextEditingController();
 
   // default button id
   int statusId = 0;
@@ -176,30 +179,62 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                 scrolledUnderElevation: 0.0,
                 surfaceTintColor: Colors.transparent,
                 actions: [
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 8 * fem, horizontal: 10 * fem),
-                    width: 280 * fem,
-                    height: 40 * fem,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20 * fem),
-                      color: kMainComponentColor.withOpacity(0.3),
-                    ),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(
-                          'images/appBar/search.svg',
-                          width: 24 * fem,
-                          height: 24 * fem,
-                        ),
-                        SizedBox(
-                          width: 2 * fem,
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!.search,
-                          style: tSearch,
-                        )
-                      ],
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => SearchEventPage());
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 8 * fem, horizontal: 10 * fem),
+                      width: 280 * fem,
+                      height: 40 * fem,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20 * fem),
+                        color: kMainComponentColor.withOpacity(0.3),
+                      ),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            'images/appBar/search.svg',
+                            width: 24 * fem,
+                            height: 24 * fem,
+                          ),
+                          SizedBox(
+                            width: 2 * fem,
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.search,
+                            style: tSearch,
+                          )
+                        ],
+                      ),
+                      // child: TextField(
+                      //   controller: _searchController,
+                      //   cursorHeight: 30,
+                      //   cursorColor: kMainGreenColor,
+                      //   decoration: InputDecoration(
+                      //     hintText: AppLocalizations.of(context)!.search,
+                      //     hintStyle: tSearch,
+                      //     contentPadding: EdgeInsets.all(10 * fem),
+                      //     border: InputBorder.none,
+                      //     prefixIcon: SvgPicture.asset(
+                      //       'images/appBar/search.svg',
+                      //       width: 24 * fem,
+                      //       height: 24 * fem,
+                      //     ),
+                      //     // suffix: _searchController.text.isNotEmpty
+                      //     //     ? IconButton(
+                      //     //         icon: Icon(Icons.close,
+                      //     //             color: kMainTitleColor),
+                      //     //         onPressed: () {
+                      //     //           setState(() {
+                      //     //             _searchController.clear();
+                      //     //           });
+                      //     //         },
+                      //     //       )
+                      //     //     : null,
+                      //   ),
+                      // )
                     ),
                   ),
                   const Spacer(),

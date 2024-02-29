@@ -1,3 +1,4 @@
+import 'package:card_loading/card_loading.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -40,7 +41,9 @@ class _BasketballMainPageState extends State<BasketballMainPage>
   //variables
   bool _showAppBar = true;
   bool isScrollingDown = false;
-  bool isLoading = true;
+  bool isCarouselLoading = false;
+  bool isEventLoading = false;
+  bool isLoading = false;
   int item = 0;
 
   //choice of main page
@@ -287,27 +290,34 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      CarouselSlider.builder(
-                        itemCount: 5,
-                        options: CarouselOptions(
-                            viewportFraction: 0.9,
-                            autoPlay: true,
-                            autoPlayAnimationDuration: Durations.long2),
-                        itemBuilder: (context, index, realIndex) {
-                          return GestureDetector(
-                            onTap: () async {},
-                            child: LiveStreamCarousel(
-                                title:
-                                    "testinga aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaa",
-                                anchor:
-                                    "Testingaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                                anchorPhoto:
-                                    "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
-                                liveStreamPhoto:
-                                    "https://images.chinatimes.com/newsphoto/2022-05-05/656/20220505001628.jpg"),
-                          );
-                        },
-                      ),
+                      isCarouselLoading
+                          ? CardLoading(
+                              height: 185 * fem,
+                              borderRadius: BorderRadius.circular(8 * fem),
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 10 * fem, vertical: 10 * fem),
+                            )
+                          : CarouselSlider.builder(
+                              itemCount: 5,
+                              options: CarouselOptions(
+                                  viewportFraction: 0.9,
+                                  autoPlay: true,
+                                  autoPlayAnimationDuration: Durations.long2),
+                              itemBuilder: (context, index, realIndex) {
+                                return GestureDetector(
+                                  onTap: () async {},
+                                  child: LiveStreamCarousel(
+                                      title:
+                                          "testinga aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaa",
+                                      anchor:
+                                          "Testingaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                                      anchorPhoto:
+                                          "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
+                                      liveStreamPhoto:
+                                          "https://images.chinatimes.com/newsphoto/2022-05-05/656/20220505001628.jpg"),
+                                );
+                              },
+                            ),
                       Container(
                         margin: EdgeInsets.symmetric(
                             horizontal: 10 * fem, vertical: 10 * fem),
@@ -324,7 +334,6 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                 style: tMain,
                               ),
                             ),
-
                             StatusButtonComponent(
                               statusId: statusId,
                               statusList: statusList,
@@ -365,40 +374,20 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                         ),
                                       )
                                     : SizedBox(),
-                            // Expanded(child: child)
-
                             (statusId == 0)
-                                ? ListView.builder(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    itemCount: 10,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          print("navi into tournament");
-                                        },
-                                        child: GameDisplayComponent(
-                                          id: 0,
-                                          competitionType:
-                                              "Iraqi League - Regular",
-                                          duration: "12:59",
-                                          teamAName: "Real Club Deportivo",
-                                          teamALogo:
-                                              'images/mainpage/sampleLogo.png',
-                                          teamAScore: "12",
-                                          teamBName:
-                                              "Real Club Deportivo de La Coruña",
-                                          teamBLogo:
-                                              'images/mainpage/sampleLogo.png',
-                                          teamBScore: "562",
-                                          isSaved: true,
-                                        ),
-                                      );
-                                    },
-                                  )
-                                : (statusId == 1 && futureDateId == 0)
-                                    ? ListView.builder(
+                                ? isEventLoading
+                                    ? Column(children: [
+                                        for (int i = 0; i < 4; i++)
+                                          CardLoading(
+                                            height: 100 * fem,
+                                            borderRadius:
+                                                BorderRadius.circular(8 * fem),
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: 10 * fem,
+                                                vertical: 10 * fem),
+                                          ),
+                                      ])
+                                    : ListView.builder(
                                         physics:
                                             const NeverScrollableScrollPhysics(),
                                         itemCount: 10,
@@ -410,13 +399,15 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                             },
                                             child: GameDisplayComponent(
                                               id: 0,
-                                              competitionType: "欧冠",
+                                              competitionType:
+                                                  "Iraqi League - Regular",
                                               duration: "12:59",
-                                              teamAName: "马德里竞技足球俱乐部",
+                                              teamAName: "Real Club Deportivo",
                                               teamALogo:
                                                   'images/mainpage/sampleLogo.png',
-                                              teamAScore: "0",
-                                              teamBName: "阿尔希拉尔体育俱乐部",
+                                              teamAScore: "12",
+                                              teamBName:
+                                                  "Real Club Deportivo de La Coruña",
                                               teamBLogo:
                                                   'images/mainpage/sampleLogo.png',
                                               teamBScore: "562",
@@ -425,8 +416,21 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                           );
                                         },
                                       )
-                                    : (statusId == 1 && futureDateId == 1)
-                                        ? ListView.builder(
+                                : (statusId == 1 && futureDateId == 0)
+                                    ? isEventLoading
+                                        ? Column(children: [
+                                            for (int i = 0; i < 4; i++)
+                                              CardLoading(
+                                                height: 100 * fem,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        8 * fem),
+                                                margin: EdgeInsets.symmetric(
+                                                    horizontal: 10 * fem,
+                                                    vertical: 10 * fem),
+                                              ),
+                                          ])
+                                        : ListView.builder(
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
                                             itemCount: 10,
@@ -438,16 +442,13 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                 },
                                                 child: GameDisplayComponent(
                                                   id: 0,
-                                                  competitionType:
-                                                      "Iraqi League - Regular",
+                                                  competitionType: "欧冠",
                                                   duration: "12:59",
-                                                  teamAName:
-                                                      "Real Club Deportivo",
+                                                  teamAName: "马德里竞技足球俱乐部",
                                                   teamALogo:
                                                       'images/mainpage/sampleLogo.png',
-                                                  teamAScore: "12",
-                                                  teamBName:
-                                                      "Real Club Deportivo de La Coruña",
+                                                  teamAScore: "0",
+                                                  teamBName: "阿尔希拉尔体育俱乐部",
                                                   teamBLogo:
                                                       'images/mainpage/sampleLogo.png',
                                                   teamBScore: "562",
@@ -456,8 +457,23 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                               );
                                             },
                                           )
-                                        : (statusId == 1 && futureDateId == 2)
-                                            ? ListView.builder(
+                                    : (statusId == 1 && futureDateId == 1)
+                                        ? isEventLoading
+                                            ? Column(children: [
+                                                for (int i = 0; i < 4; i++)
+                                                  CardLoading(
+                                                    height: 100 * fem,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8 * fem),
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                10 * fem,
+                                                            vertical: 10 * fem),
+                                                  ),
+                                              ])
+                                            : ListView.builder(
                                                 physics:
                                                     const NeverScrollableScrollPhysics(),
                                                 itemCount: 10,
@@ -470,13 +486,16 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                     },
                                                     child: GameDisplayComponent(
                                                       id: 0,
-                                                      competitionType: "欧冠",
+                                                      competitionType:
+                                                          "Iraqi League - Regular",
                                                       duration: "12:59",
-                                                      teamAName: "马德里竞技足球俱乐部",
+                                                      teamAName:
+                                                          "Real Club Deportivo",
                                                       teamALogo:
                                                           'images/mainpage/sampleLogo.png',
-                                                      teamAScore: "0",
-                                                      teamBName: "阿尔希拉尔体育俱乐部",
+                                                      teamAScore: "12",
+                                                      teamBName:
+                                                          "Real Club Deportivo de La Coruña",
                                                       teamBLogo:
                                                           'images/mainpage/sampleLogo.png',
                                                       teamBScore: "562",
@@ -485,9 +504,25 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                   );
                                                 },
                                               )
-                                            : (statusId == 1 &&
-                                                    futureDateId == 3)
-                                                ? ListView.builder(
+                                        : (statusId == 1 && futureDateId == 2)
+                                            ? isEventLoading
+                                                ? Column(children: [
+                                                    for (int i = 0; i < 4; i++)
+                                                      CardLoading(
+                                                        height: 100 * fem,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                    8 * fem),
+                                                        margin: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal:
+                                                                    10 * fem,
+                                                                vertical:
+                                                                    10 * fem),
+                                                      ),
+                                                  ])
+                                                : ListView.builder(
                                                     physics:
                                                         const NeverScrollableScrollPhysics(),
                                                     itemCount: 10,
@@ -502,16 +537,15 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                         child:
                                                             GameDisplayComponent(
                                                           id: 0,
-                                                          competitionType:
-                                                              "Iraqi League - Regular",
+                                                          competitionType: "欧冠",
                                                           duration: "12:59",
                                                           teamAName:
-                                                              "Real Club Deportivo",
+                                                              "马德里竞技足球俱乐部",
                                                           teamALogo:
                                                               'images/mainpage/sampleLogo.png',
-                                                          teamAScore: "12",
+                                                          teamAScore: "0",
                                                           teamBName:
-                                                              "Real Club Deportivo de La Coruña",
+                                                              "阿尔希拉尔体育俱乐部",
                                                           teamBLogo:
                                                               'images/mainpage/sampleLogo.png',
                                                           teamBScore: "562",
@@ -520,9 +554,30 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                       );
                                                     },
                                                   )
-                                                : (statusId == 1 &&
-                                                        futureDateId == 4)
-                                                    ? ListView.builder(
+                                            : (statusId == 1 &&
+                                                    futureDateId == 3)
+                                                ? isEventLoading
+                                                    ? Column(children: [
+                                                        for (int i = 0;
+                                                            i < 4;
+                                                            i++)
+                                                          CardLoading(
+                                                            height: 100 * fem,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8 * fem),
+                                                            margin: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        10 *
+                                                                            fem,
+                                                                    vertical:
+                                                                        10 *
+                                                                            fem),
+                                                          ),
+                                                      ])
+                                                    : ListView.builder(
                                                         physics:
                                                             const NeverScrollableScrollPhysics(),
                                                         itemCount: 10,
@@ -538,15 +593,15 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                 GameDisplayComponent(
                                                               id: 0,
                                                               competitionType:
-                                                                  "欧冠",
+                                                                  "Iraqi League - Regular",
                                                               duration: "12:59",
                                                               teamAName:
-                                                                  "马德里竞技足球俱乐部",
+                                                                  "Real Club Deportivo",
                                                               teamALogo:
                                                                   'images/mainpage/sampleLogo.png',
-                                                              teamAScore: "0",
+                                                              teamAScore: "12",
                                                               teamBName:
-                                                                  "阿尔希拉尔体育俱乐部",
+                                                                  "Real Club Deportivo de La Coruña",
                                                               teamBLogo:
                                                                   'images/mainpage/sampleLogo.png',
                                                               teamBScore: "562",
@@ -555,9 +610,30 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                           );
                                                         },
                                                       )
-                                                    : (statusId == 1 &&
-                                                            futureDateId == 5)
-                                                        ? ListView.builder(
+                                                : (statusId == 1 &&
+                                                        futureDateId == 4)
+                                                    ? isEventLoading
+                                                        ? Column(children: [
+                                                            for (int i = 0;
+                                                                i < 4;
+                                                                i++)
+                                                              CardLoading(
+                                                                height:
+                                                                    100 * fem,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(8 *
+                                                                            fem),
+                                                                margin: EdgeInsets.symmetric(
+                                                                    horizontal:
+                                                                        10 *
+                                                                            fem,
+                                                                    vertical:
+                                                                        10 *
+                                                                            fem),
+                                                              ),
+                                                          ])
+                                                        : ListView.builder(
                                                             physics:
                                                                 const NeverScrollableScrollPhysics(),
                                                             itemCount: 10,
@@ -574,17 +650,17 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                     GameDisplayComponent(
                                                                   id: 0,
                                                                   competitionType:
-                                                                      "Iraqi League - Regular",
+                                                                      "欧冠",
                                                                   duration:
                                                                       "12:59",
                                                                   teamAName:
-                                                                      "Real Club Deportivo",
+                                                                      "马德里竞技足球俱乐部",
                                                                   teamALogo:
                                                                       'images/mainpage/sampleLogo.png',
                                                                   teamAScore:
-                                                                      "12",
+                                                                      "0",
                                                                   teamBName:
-                                                                      "Real Club Deportivo de La Coruña",
+                                                                      "阿尔希拉尔体育俱乐部",
                                                                   teamBLogo:
                                                                       'images/mainpage/sampleLogo.png',
                                                                   teamBScore:
@@ -594,10 +670,30 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                               );
                                                             },
                                                           )
-                                                        : (statusId == 1 &&
-                                                                futureDateId ==
-                                                                    6)
-                                                            ? ListView.builder(
+                                                    : (statusId == 1 &&
+                                                            futureDateId == 5)
+                                                        ? isEventLoading
+                                                            ? Column(children: [
+                                                                for (int i = 0;
+                                                                    i < 4;
+                                                                    i++)
+                                                                  CardLoading(
+                                                                    height:
+                                                                        100 *
+                                                                            fem,
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(8 *
+                                                                            fem),
+                                                                    margin: EdgeInsets.symmetric(
+                                                                        horizontal:
+                                                                            10 *
+                                                                                fem,
+                                                                        vertical:
+                                                                            10 *
+                                                                                fem),
+                                                                  ),
+                                                              ])
+                                                            : ListView.builder(
                                                                 physics:
                                                                     const NeverScrollableScrollPhysics(),
                                                                 itemCount: 10,
@@ -615,17 +711,17 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                         GameDisplayComponent(
                                                                       id: 0,
                                                                       competitionType:
-                                                                          "欧冠",
+                                                                          "Iraqi League - Regular",
                                                                       duration:
                                                                           "12:59",
                                                                       teamAName:
-                                                                          "马德里竞技足球俱乐部",
+                                                                          "Real Club Deportivo",
                                                                       teamALogo:
                                                                           'images/mainpage/sampleLogo.png',
                                                                       teamAScore:
-                                                                          "0",
+                                                                          "12",
                                                                       teamBName:
-                                                                          "阿尔希拉尔体育俱乐部",
+                                                                          "Real Club Deportivo de La Coruña",
                                                                       teamBLogo:
                                                                           'images/mainpage/sampleLogo.png',
                                                                       teamBScore:
@@ -636,10 +732,26 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                   );
                                                                 },
                                                               )
-                                                            : (statusId == 2 &&
-                                                                    pastDateId ==
-                                                                        0)
-                                                                ? ListView
+                                                        : (statusId == 1 &&
+                                                                futureDateId ==
+                                                                    6)
+                                                            ? isEventLoading
+                                                                ? Column(
+                                                                    children: [
+                                                                        for (int i =
+                                                                                0;
+                                                                            i < 4;
+                                                                            i++)
+                                                                          CardLoading(
+                                                                            height:
+                                                                                100 * fem,
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(8 * fem),
+                                                                            margin:
+                                                                                EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                          ),
+                                                                      ])
+                                                                : ListView
                                                                     .builder(
                                                                     physics:
                                                                         const NeverScrollableScrollPhysics(),
@@ -681,11 +793,22 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                       );
                                                                     },
                                                                   )
-                                                                : (statusId ==
-                                                                            2 &&
-                                                                        pastDateId ==
-                                                                            1)
-                                                                    ? ListView
+                                                            : (statusId == 2 &&
+                                                                    pastDateId ==
+                                                                        0)
+                                                                ? isEventLoading
+                                                                    ? Column(
+                                                                        children: [
+                                                                            for (int i = 0;
+                                                                                i < 4;
+                                                                                i++)
+                                                                              CardLoading(
+                                                                                height: 100 * fem,
+                                                                                borderRadius: BorderRadius.circular(8 * fem),
+                                                                                margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                              ),
+                                                                          ])
+                                                                    : ListView
                                                                         .builder(
                                                                         physics:
                                                                             const NeverScrollableScrollPhysics(),
@@ -704,12 +827,12 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                             child:
                                                                                 GameDisplayComponent(
                                                                               id: 0,
-                                                                              competitionType: "Iraqi League - Regular",
+                                                                              competitionType: "欧冠",
                                                                               duration: "12:59",
-                                                                              teamAName: "Real Club Deportivo",
+                                                                              teamAName: "马德里竞技足球俱乐部",
                                                                               teamALogo: 'images/mainpage/sampleLogo.png',
-                                                                              teamAScore: "12",
-                                                                              teamBName: "Real Club Deportivo de La Coruña",
+                                                                              teamAScore: "0",
+                                                                              teamBName: "阿尔希拉尔体育俱乐部",
                                                                               teamBLogo: 'images/mainpage/sampleLogo.png',
                                                                               teamBScore: "562",
                                                                               isSaved: true,
@@ -717,11 +840,21 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                           );
                                                                         },
                                                                       )
-                                                                    : (statusId ==
-                                                                                2 &&
-                                                                            pastDateId ==
-                                                                                2)
-                                                                        ? ListView
+                                                                : (statusId ==
+                                                                            2 &&
+                                                                        pastDateId ==
+                                                                            1)
+                                                                    ? isEventLoading
+                                                                        ? Column(
+                                                                            children: [
+                                                                                for (int i = 0; i < 4; i++)
+                                                                                  CardLoading(
+                                                                                    height: 100 * fem,
+                                                                                    borderRadius: BorderRadius.circular(8 * fem),
+                                                                                    margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                  ),
+                                                                              ])
+                                                                        : ListView
                                                                             .builder(
                                                                             physics:
                                                                                 const NeverScrollableScrollPhysics(),
@@ -737,12 +870,12 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                 },
                                                                                 child: GameDisplayComponent(
                                                                                   id: 0,
-                                                                                  competitionType: "欧冠",
+                                                                                  competitionType: "Iraqi League - Regular",
                                                                                   duration: "12:59",
-                                                                                  teamAName: "马德里竞技足球俱乐部",
+                                                                                  teamAName: "Real Club Deportivo",
                                                                                   teamALogo: 'images/mainpage/sampleLogo.png',
-                                                                                  teamAScore: "0",
-                                                                                  teamBName: "阿尔希拉尔体育俱乐部",
+                                                                                  teamAScore: "12",
+                                                                                  teamBName: "Real Club Deportivo de La Coruña",
                                                                                   teamBLogo: 'images/mainpage/sampleLogo.png',
                                                                                   teamBScore: "562",
                                                                                   isSaved: true,
@@ -750,9 +883,20 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                               );
                                                                             },
                                                                           )
-                                                                        : (statusId == 2 &&
-                                                                                pastDateId == 3)
-                                                                            ? ListView.builder(
+                                                                    : (statusId ==
+                                                                                2 &&
+                                                                            pastDateId ==
+                                                                                2)
+                                                                        ? isEventLoading
+                                                                            ? Column(children: [
+                                                                                for (int i = 0; i < 4; i++)
+                                                                                  CardLoading(
+                                                                                    height: 100 * fem,
+                                                                                    borderRadius: BorderRadius.circular(8 * fem),
+                                                                                    margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                  ),
+                                                                              ])
+                                                                            : ListView.builder(
                                                                                 physics: const NeverScrollableScrollPhysics(),
                                                                                 itemCount: 10,
                                                                                 shrinkWrap: true,
@@ -763,12 +907,12 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                     },
                                                                                     child: GameDisplayComponent(
                                                                                       id: 0,
-                                                                                      competitionType: "Iraqi League - Regular",
+                                                                                      competitionType: "欧冠",
                                                                                       duration: "12:59",
-                                                                                      teamAName: "Real Club Deportivo",
+                                                                                      teamAName: "马德里竞技足球俱乐部",
                                                                                       teamALogo: 'images/mainpage/sampleLogo.png',
-                                                                                      teamAScore: "12",
-                                                                                      teamBName: "Real Club Deportivo de La Coruña",
+                                                                                      teamAScore: "0",
+                                                                                      teamBName: "阿尔希拉尔体育俱乐部",
                                                                                       teamBLogo: 'images/mainpage/sampleLogo.png',
                                                                                       teamBScore: "562",
                                                                                       isSaved: true,
@@ -776,8 +920,17 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                   );
                                                                                 },
                                                                               )
-                                                                            : (statusId == 2 && pastDateId == 4)
-                                                                                ? ListView.builder(
+                                                                        : (statusId == 2 && pastDateId == 3)
+                                                                            ? isEventLoading
+                                                                                ? Column(children: [
+                                                                                    for (int i = 0; i < 4; i++)
+                                                                                      CardLoading(
+                                                                                        height: 100 * fem,
+                                                                                        borderRadius: BorderRadius.circular(8 * fem),
+                                                                                        margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                      ),
+                                                                                  ])
+                                                                                : ListView.builder(
                                                                                     physics: const NeverScrollableScrollPhysics(),
                                                                                     itemCount: 10,
                                                                                     shrinkWrap: true,
@@ -788,12 +941,12 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                         },
                                                                                         child: GameDisplayComponent(
                                                                                           id: 0,
-                                                                                          competitionType: "欧冠",
+                                                                                          competitionType: "Iraqi League - Regular",
                                                                                           duration: "12:59",
-                                                                                          teamAName: "马德里竞技足球俱乐部",
+                                                                                          teamAName: "Real Club Deportivo",
                                                                                           teamALogo: 'images/mainpage/sampleLogo.png',
-                                                                                          teamAScore: "0",
-                                                                                          teamBName: "阿尔希拉尔体育俱乐部",
+                                                                                          teamAScore: "12",
+                                                                                          teamBName: "Real Club Deportivo de La Coruña",
                                                                                           teamBLogo: 'images/mainpage/sampleLogo.png',
                                                                                           teamBScore: "562",
                                                                                           isSaved: true,
@@ -801,8 +954,17 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                       );
                                                                                     },
                                                                                   )
-                                                                                : (statusId == 2 && pastDateId == 5)
-                                                                                    ? ListView.builder(
+                                                                            : (statusId == 2 && pastDateId == 4)
+                                                                                ? isEventLoading
+                                                                                    ? Column(children: [
+                                                                                        for (int i = 0; i < 4; i++)
+                                                                                          CardLoading(
+                                                                                            height: 100 * fem,
+                                                                                            borderRadius: BorderRadius.circular(8 * fem),
+                                                                                            margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                          ),
+                                                                                      ])
+                                                                                    : ListView.builder(
                                                                                         physics: const NeverScrollableScrollPhysics(),
                                                                                         itemCount: 10,
                                                                                         shrinkWrap: true,
@@ -813,12 +975,12 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                             },
                                                                                             child: GameDisplayComponent(
                                                                                               id: 0,
-                                                                                              competitionType: "Iraqi League - Regular",
+                                                                                              competitionType: "欧冠",
                                                                                               duration: "12:59",
-                                                                                              teamAName: "Real Club Deportivo",
+                                                                                              teamAName: "马德里竞技足球俱乐部",
                                                                                               teamALogo: 'images/mainpage/sampleLogo.png',
-                                                                                              teamAScore: "12",
-                                                                                              teamBName: "Real Club Deportivo de La Coruña",
+                                                                                              teamAScore: "0",
+                                                                                              teamBName: "阿尔希拉尔体育俱乐部",
                                                                                               teamBLogo: 'images/mainpage/sampleLogo.png',
                                                                                               teamBScore: "562",
                                                                                               isSaved: true,
@@ -826,8 +988,17 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                           );
                                                                                         },
                                                                                       )
-                                                                                    : (statusId == 2 && pastDateId == 6)
-                                                                                        ? ListView.builder(
+                                                                                : (statusId == 2 && pastDateId == 5)
+                                                                                    ? isEventLoading
+                                                                                        ? Column(children: [
+                                                                                            for (int i = 0; i < 4; i++)
+                                                                                              CardLoading(
+                                                                                                height: 100 * fem,
+                                                                                                borderRadius: BorderRadius.circular(8 * fem),
+                                                                                                margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                              ),
+                                                                                          ])
+                                                                                        : ListView.builder(
                                                                                             physics: const NeverScrollableScrollPhysics(),
                                                                                             itemCount: 10,
                                                                                             shrinkWrap: true,
@@ -838,19 +1009,53 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                                 },
                                                                                                 child: GameDisplayComponent(
                                                                                                   id: 0,
-                                                                                                  competitionType: "欧冠",
+                                                                                                  competitionType: "Iraqi League - Regular",
                                                                                                   duration: "12:59",
-                                                                                                  teamAName: "马德里竞技足球俱乐部",
+                                                                                                  teamAName: "Real Club Deportivo",
                                                                                                   teamALogo: 'images/mainpage/sampleLogo.png',
-                                                                                                  teamAScore: "0",
-                                                                                                  teamBName: "阿尔希拉尔体育俱乐部",
+                                                                                                  teamAScore: "12",
+                                                                                                  teamBName: "Real Club Deportivo de La Coruña",
                                                                                                   teamBLogo: 'images/mainpage/sampleLogo.png',
                                                                                                   teamBScore: "562",
-                                                                                                  isSaved: false,
+                                                                                                  isSaved: true,
                                                                                                 ),
                                                                                               );
                                                                                             },
                                                                                           )
+                                                                                    : (statusId == 2 && pastDateId == 6)
+                                                                                        ? isEventLoading
+                                                                                            ? Column(children: [
+                                                                                                for (int i = 0; i < 4; i++)
+                                                                                                  CardLoading(
+                                                                                                    height: 100 * fem,
+                                                                                                    borderRadius: BorderRadius.circular(8 * fem),
+                                                                                                    margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                                  ),
+                                                                                              ])
+                                                                                            : ListView.builder(
+                                                                                                physics: const NeverScrollableScrollPhysics(),
+                                                                                                itemCount: 10,
+                                                                                                shrinkWrap: true,
+                                                                                                itemBuilder: (context, index) {
+                                                                                                  return GestureDetector(
+                                                                                                    onTap: () {
+                                                                                                      print("navi into tournament");
+                                                                                                    },
+                                                                                                    child: GameDisplayComponent(
+                                                                                                      id: 0,
+                                                                                                      competitionType: "欧冠",
+                                                                                                      duration: "12:59",
+                                                                                                      teamAName: "马德里竞技足球俱乐部",
+                                                                                                      teamALogo: 'images/mainpage/sampleLogo.png',
+                                                                                                      teamAScore: "0",
+                                                                                                      teamBName: "阿尔希拉尔体育俱乐部",
+                                                                                                      teamBLogo: 'images/mainpage/sampleLogo.png',
+                                                                                                      teamBScore: "562",
+                                                                                                      isSaved: false,
+                                                                                                    ),
+                                                                                                  );
+                                                                                                },
+                                                                                              )
                                                                                         : Container(),
                             isLoading
                                 ? Center(

@@ -23,6 +23,7 @@ const kComponentFullDateColor = Color(0xffF8FEE4);
 const kComponentHintTextColor = Color(0xff999999);
 const kComponentErrorTextColor = Colors.red;
 const kComponentSuccessTextColor = Colors.green;
+const kComponentSelectedStatusColor = Color(0xff16B13B);
 
 //danmaku button
 const kButtonOnColor = Color.fromARGB(255, 216, 216, 216);

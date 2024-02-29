@@ -27,5 +27,9 @@
     "logout": "Log Out",
     "noti": "Notification",
     "read": "read",
-    "info": "News"
+    "info": "News",
+    "competition": "Event",
+    "started": "Started",
+    "yet": "On Waiting",
+    "end": "End"
 }

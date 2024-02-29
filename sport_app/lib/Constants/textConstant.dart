@@ -9,16 +9,35 @@ const tSearch = TextStyle(
     fontWeight: FontWeight.w400,
     color: kMainComponentColor);
 const tLiveTitle = TextStyle(
-    fontFamily: 'Inter',
-    fontSize: 14,
-    fontWeight: FontWeight.w500,
-    color: kMainComponentColor);
+  fontFamily: 'Inter',
+  fontSize: 14,
+  fontWeight: FontWeight.w500,
+  color: kMainComponentColor,
+  height: 1.12,
+  shadows: [
+    Shadow(
+      offset: Offset(1.0, 1.0),
+      blurRadius: 3.0,
+      color: const Color.fromARGB(255, 116, 116, 116),
+    ),
+  ],
+);
 const tLiveAnchorName = TextStyle(
-    fontFamily: 'Inter',
-    fontSize: 10,
-    fontWeight: FontWeight.w500,
-    letterSpacing: 0.3,
-    color: kMainComponentColor);
+  fontFamily: 'Inter',
+  fontSize: 10,
+  fontWeight: FontWeight.w500,
+  letterSpacing: 0.3,
+  height: 1.0,
+  overflow: TextOverflow.ellipsis,
+  color: kMainComponentColor,
+  shadows: [
+    Shadow(
+      offset: Offset(1.0, 1.0),
+      blurRadius: 3.0,
+      color: const Color.fromARGB(255, 116, 116, 116),
+    ),
+  ],
+);
 const tMain = TextStyle(
     fontFamily: 'Inter',
     fontSize: 18,
@@ -57,7 +76,7 @@ const tTodayDateButton = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w500,
     letterSpacing: 0.3,
-    color: kComponentDateColor);
+    color: kComponentSelectedDateColor);
 const tOtherUnselectedDateButton = TextStyle(
     fontFamily: 'Inter',
     fontSize: 12,
@@ -76,7 +95,8 @@ const tTagButton = TextStyle(
     fontFamily: 'Inter',
     fontSize: 12,
     fontWeight: FontWeight.w400,
-    color: kComponentTagTitleColor);
+    color: kComponentTagTitleColor,
+    overflow: TextOverflow.ellipsis);
 const tDate = TextStyle(
     fontFamily: 'Inter',
     fontSize: 12,

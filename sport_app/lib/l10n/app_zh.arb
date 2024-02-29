@@ -27,5 +27,9 @@
     "logout": "退出登录",
     "noti": "系统消息",
     "read": "阅读",
-    "info": "资讯"
+    "info": "资讯",
+    "competition": "赛事",
+    "started": "已开赛",
+    "yet": "未开赛",
+    "end": "已结束"
 }

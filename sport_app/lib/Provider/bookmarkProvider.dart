@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sport_app/Model/collectionModel.dart';
 import 'package:sport_app/Services/commonServices.dart';
 
 import '../Constants/apiConstant.dart';
@@ -12,8 +13,100 @@ class BookmarkProvider extends ChangeNotifier {
   // get user info
   UserDataModel userModel = Get.find<UserDataModel>();
 
-  Future<Map<String, dynamic>> liveStreamSaveBookmark(
-      String matchId, String categoryId) async {
+  Future<CollectionModel?> createCollection(int matchId) async {
+    String url = "";
+    String category = "";
+
+    if (userModel.isCN.value) {
+      url = ApiConstants.baseUrl + ApiConstants.createCollectionUrl;
+      if (userModel.isFootball.value) {
+        category = '0';
+      } else {
+        category = '1';
+      }
+    } else {
+      url = ApiConstants.baseUrl + ApiConstants.createCollectionEngUrl;
+      if (userModel.isFootball.value) {
+        category = '0';
+      } else {
+        category = '1';
+      }
+    }
+
+    final Map<String, dynamic> collectionData = {
+      'matchId': matchId,
+      'category': category,
+    };
+
+    try {
+      final response = await service.postRequestWithToken(url, collectionData);
+      print("response from create collection");
+
+      int responseCode = response['code'];
+      String responseMsg = response['msg'];
+
+      print("create collection: url:$url, response: $response");
+
+      if (responseCode == 0) {
+        
+        CollectionData responseData = CollectionData.fromJson(response['data']);
+
+        CollectionModel collectionModel = CollectionModel(
+            code: responseCode, msg: responseMsg, data: responseData);
+
+        return collectionModel;
+      } else {
+        CollectionData responseData = CollectionData.fromJson(response['data']);
+        CollectionModel collectionModel = CollectionModel(
+            code: responseCode, msg: responseMsg, data: responseData);
+
+        return collectionModel;
+      }
+    } catch (e) {
+      print("Error in create collection: $e");
+      return null;
+    }
+  }
+
+  Future<DelCollectionModel?> deleteCollection(int matchId) async {
+    String url = '';
+
+    if (userModel.isCN.value) {
+      url = ApiConstants.baseUrl +
+          ApiConstants.deleteCollectionByMatchIdUrl +
+          "${matchId.toString()}";
+    } else {
+      url = ApiConstants.baseUrl +
+          ApiConstants.deleteCollectionEngByMatchIdUrl +
+          "${matchId.toString()}";
+    }
+
+    try {
+      final response = await service.deleteRequest(url);
+
+      int responseCode = response['code'];
+      String responseMsg = response['msg'];
+
+      print("delete collection: url:$url, response: $response");
+
+      if (responseCode == 0) {
+        bool responseData = response['data'];
+        DelCollectionModel delCollectionModel = DelCollectionModel(
+            code: responseCode, msg: responseMsg, data: responseData);
+        return delCollectionModel;
+      } else {
+        bool responseData = response['data'];
+        DelCollectionModel delCollectionModel = DelCollectionModel(
+            code: responseCode, msg: responseMsg, data: responseData);
+        return delCollectionModel;
+      }
+    } catch (e) {
+      print("Error in delete collection: $e");
+      return null;
+    }
+  }
+
+  Future<Map<String, dynamic>> liveStreamSaveBookmark(String matchId) async {
     String url = '';
     String category = '';
 

@@ -103,4 +103,57 @@ class BasketballMatchProvider extends ChangeNotifier {
       return null;
     }
   }
+
+  Future<Map<String, dynamic>?> getBasketballLiveData(String matchId) async {
+    String url = '';
+
+    if (userDataModel.isCN.value) {
+      url = ApiConstants.baseUrl +
+          ApiConstants.getBasketballMatchLiveDataUrl +
+          matchId;
+    } else {
+      url = ApiConstants.baseUrl +
+          ApiConstants.getBasketballMatchLiveDataENurl +
+          matchId;
+    }
+
+    final response = await service.getRequest(url);
+
+    String code = response['code'].toString();
+    String msg = response['msg'].toString();
+    Map<String, dynamic>? data = response['data'];
+
+    if (code == '0') {
+      return data;
+    } else {
+      debugPrint("Error: $msg");
+      return {};
+    }
+  }
+
+  Future<Map<String, dynamic>> getBasketballLineUp(String matchId) async {
+    String url = '';
+    if (userDataModel.isCN.value) {
+      url = ApiConstants.baseUrl +
+          ApiConstants.getBasketballMatchLineUpUrl +
+          matchId;
+    } else {
+      url = ApiConstants.baseUrl +
+          ApiConstants.getBasketballLineUpENurl +
+          matchId;
+    }
+
+    final response = await service.getRequest(url);
+
+    String code = response['code'].toString();
+    String msg = response['msg'].toString();
+    Map<String, dynamic> data = response['data'];
+
+    if (code == '0') {
+      return data;
+    } else {
+      debugPrint("Error: $msg");
+      return {};
+    }
+  }
 }

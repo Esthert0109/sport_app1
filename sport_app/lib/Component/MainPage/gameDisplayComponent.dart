@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../Constants/colorConstant.dart';
 import '../../Constants/textConstant.dart';
+import '../../Model/collectionModel.dart';
+import '../../Provider/bookmarkProvider.dart';
 
 class GameDisplayComponent extends StatefulWidget {
   final int id;
@@ -36,6 +38,20 @@ class GameDisplayComponent extends StatefulWidget {
 }
 
 class _GameDisplayComponentState extends State<GameDisplayComponent> {
+  //services and provider
+  BookmarkProvider bookmarkProvider = BookmarkProvider();
+
+  // save bookmark
+  Future<void> createBookmark(int matchId) async {
+    CollectionModel? collectionModel =
+        await bookmarkProvider.createCollection(matchId);
+  }
+
+  Future<void> delBookmark(int matchId) async {
+    DelCollectionModel? delCollectionModel =
+        await bookmarkProvider.deleteCollection(matchId);
+  }
+
   @override
   Widget build(BuildContext context) {
     // set standard size
@@ -115,6 +131,11 @@ class _GameDisplayComponentState extends State<GameDisplayComponent> {
                         child: GestureDetector(
                           onTap: () {
                             setState(() {
+                              if (isSaved) {
+                                delBookmark(id);
+                              } else {
+                                createBookmark(id);
+                              }
                               isSaved = !isSaved;
                               print("isSaved: $isSaved");
                             });

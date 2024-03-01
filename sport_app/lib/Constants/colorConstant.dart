@@ -24,6 +24,7 @@ const kComponentHintTextColor = Color(0xff999999);
 const kComponentErrorTextColor = Colors.red;
 const kComponentSuccessTextColor = Colors.green;
 const kComponentSelectedStatusColor = Color(0xff16B13B);
+const tableMainColor = Color.fromARGB(255, 236, 236, 236);
 
 //danmaku button
 const kButtonOnColor = Color.fromARGB(255, 216, 216, 216);

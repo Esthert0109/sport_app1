@@ -216,7 +216,7 @@ class ApiConstants {
 
   static const String getMatch = '/{matchId}';
 
-  static const String deleteCollectionByMatchId = '/{matchId}';
+  static const String deleteCollectionByMatchId = '/';
 
   static const String createCollection = '/';
 
@@ -253,7 +253,7 @@ class ApiConstants {
 
   static const String getBasketballEngMatch = '/basketball/{matchId}';
 
-  static const String deleteCollectionEngByMatchId = '/{matchId}';
+  static const String deleteCollectionEngByMatchId = '/';
 
   static const String createCollectionEng = '/';
 

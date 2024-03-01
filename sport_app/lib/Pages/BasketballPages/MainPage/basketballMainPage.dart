@@ -7,20 +7,31 @@ import 'package:intl/intl.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:sport_app/Model/collectionModel.dart';
+import 'package:sport_app/Model/liveStreamModel.dart';
 import 'package:sport_app/Model/matchesModel.dart';
 import 'package:sport_app/Provider/basketballMatchProvider.dart';
+import 'package:sport_app/Provider/bookmarkProvider.dart';
+import 'package:sport_app/Provider/liveStreamProvider.dart';
+import 'package:tencent_cloud_chat_uikit/tencent_cloud_chat_uikit.dart';
 
+import '../../../Component/Common/loadingScreen.dart';
+import '../../../Component/Common/snackBar.dart';
 import '../../../Component/Common/statusButton.dart';
 import '../../../Component/Common/statusDateButton.dart';
 import '../../../Component/MainPage/gameDisplayComponent.dart';
 import '../../../Component/MainPage/liveStreamCarouselComponent.dart';
+import '../../../Component/Tencent/liveStreamPlayer.dart';
 import '../../../Constants/Controller/layoutController.dart';
 import '../../../Constants/colorConstant.dart';
 import '../../../Constants/textConstant.dart';
 import '../../../Model/userDataModel.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../Services/Utils/tencent/tencentLiveUtils.dart';
 import '../../SearchPage/searchEvent.dart';
+import '../../TencentLiveStreamRoom/liveStreamChatRoom.dart';
+import '../basketballTournamentDetails.dart';
 
 class BasketballMainPage extends StatefulWidget {
   const BasketballMainPage({super.key});
@@ -41,6 +52,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
 
   // services and provider
   BasketballMatchProvider matchesProvider = BasketballMatchProvider();
+  LiveStreamProvider liveStreamProvider = LiveStreamProvider();
 
   // fetch data from provider
   DateTime now = DateTime.now();
@@ -90,6 +102,9 @@ class _BasketballMainPageState extends State<BasketballMainPage>
   List<MatchesData> pastList7 = [];
   int past7Length = 0;
   int pagePast7 = 1;
+
+  List<LiveStreamData> liveStreamList = [];
+  int liveStreamLength = 0;
 
   // default button id
   int statusId = 0;
@@ -149,6 +164,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
     super.initState();
     _scrollController = ScrollController()..addListener(bottomScrollController);
     getStartedEventList();
+    getPopularLiveStreamRoomList();
   }
 
   @override
@@ -183,6 +199,9 @@ class _BasketballMainPageState extends State<BasketballMainPage>
   Future<void> refresh() async {
     setState(() {
       print("refresh");
+      liveStreamList.clear();
+      liveStreamLength = liveStreamList.length;
+      getPopularLiveStreamRoomList();
       statusId = 0;
       futureDateId = 0;
       pastDateId = 6;
@@ -434,6 +453,34 @@ class _BasketballMainPageState extends State<BasketballMainPage>
     }
   }
 
+  // fetch live stream room data
+  Future<void> getPopularLiveStreamRoomList() async {
+    LiveStreamModel? liveStreamModel =
+        await liveStreamProvider.getPopularLiveStreamList();
+
+    if (!isCarouselLoading) {
+      setState(() {
+        isCarouselLoading = true;
+      });
+      liveStreamList.addAll(liveStreamModel?.data ?? []);
+      liveStreamLength = liveStreamList.length;
+      setState(() {
+        isCarouselLoading = false;
+      });
+    }
+  }
+
+  String getStreamURL(streamUrl) {
+    int index = streamUrl.indexOf('?');
+    if (index != -1) {
+      String result = streamUrl.substring(0, index);
+      return result;
+    } else {
+      print('No match found');
+      return "";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // standard size
@@ -551,42 +598,6 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                   } else {
                     getEventListByDate();
                   }
-                  // else if (statusId == 1 && futureDateId == 0) {
-                  //   print("future 1");
-                  //   getEventListByDate();
-                  // } else if (statusId == 1 && futureDateId == 1) {
-                  //   print("future 2");
-                  //   getEventListByDate();
-                  // } else if (statusId == 1 && futureDateId == 2) {
-                  //   print("future 3");
-                  //   getEventListByDate();
-                  // } else if (statusId == 1 && futureDateId == 3) {
-                  //   print("future 4");
-                  //   getEventListByDate();
-                  // } else if (statusId == 1 && futureDateId == 4) {
-                  //   print("future 5");
-                  //   getEventListByDate();
-                  // } else if (statusId == 1 && futureDateId == 5) {
-                  //   print("future 6");
-                  //   getEventListByDate();
-                  // } else if (statusId == 1 && futureDateId == 6) {
-                  //   print("future 7");
-                  //   getEventListByDate();
-                  // } else if (statusId == 2 && pastDateId == 0) {
-                  //   print("past 1");
-                  // } else if (statusId == 2 && pastDateId == 1) {
-                  //   print("past 2");
-                  // } else if (statusId == 2 && pastDateId == 2) {
-                  //   print("past 3");
-                  // } else if (statusId == 2 && pastDateId == 3) {
-                  //   print("past 4");
-                  // } else if (statusId == 2 && pastDateId == 4) {
-                  //   print("past 5");
-                  // } else if (statusId == 2 && pastDateId == 5) {
-                  //   print("past 6");
-                  // } else if (statusId == 2 && pastDateId == 6) {
-                  //   print("past 7");
-                  // }
                 });
               },
               child: RefreshIndicator(
@@ -608,27 +619,144 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                               margin: EdgeInsets.symmetric(
                                   horizontal: 10 * fem, vertical: 10 * fem),
                             )
-                          : CarouselSlider.builder(
-                              itemCount: 5,
-                              options: CarouselOptions(
-                                  viewportFraction: 0.9,
-                                  autoPlay: true,
-                                  autoPlayAnimationDuration: Durations.long2),
-                              itemBuilder: (context, index, realIndex) {
-                                return GestureDetector(
-                                  onTap: () async {},
-                                  child: LiveStreamCarousel(
-                                      title:
-                                          "testinga aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaa",
-                                      anchor:
-                                          "Testingaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                                      anchorPhoto:
-                                          "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
-                                      liveStreamPhoto:
-                                          "https://images.chinatimes.com/newsphoto/2022-05-05/656/20220505001628.jpg"),
-                                );
-                              },
-                            ),
+                          : (liveStreamLength == 0)
+                              ? Container(
+                                  width: 328 * fem,
+                                  height: 183 * fem,
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: 10 * fem),
+                                  child: Stack(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(8 * fem),
+                                        child: Image.asset(
+                                          userModel.isCN.value
+                                              ? "images/myPage/NoStreamCN.png"
+                                              : "images/myPage/NoStreamEN.png",
+                                          fit: BoxFit.cover,
+                                          width: 328 * fem,
+                                          height: 183 * fem,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              : CarouselSlider.builder(
+                                  itemCount: liveStreamLength,
+                                  options: CarouselOptions(
+                                      viewportFraction: 0.9,
+                                      autoPlay: true,
+                                      autoPlayAnimationDuration:
+                                          Durations.long2),
+                                  itemBuilder: (context, index, realIndex) {
+                                    return GestureDetector(
+                                      onTap: () async {
+                                        showLoadingDialog(context);
+                                        V2TimValueCallback<int>
+                                            userLoginStatusRes =
+                                            await TencentImSDKPlugin
+                                                .v2TIMManager
+                                                .getLoginStatus();
+                                        if (userLoginStatusRes.code == 0) {
+                                          int? status = userLoginStatusRes.data;
+
+                                          if (status == 1) {
+                                            LiveStreamChatRoom page = LiveStreamChatRoom(
+                                                userLoginId: userModel.id.value,
+                                                avChatRoomId:
+                                                    "panda${liveStreamList![index].userId}",
+                                                anchor: liveStreamList![index]
+                                                        .nickName ??
+                                                    "",
+                                                streamTitle:
+                                                    liveStreamList![index]
+                                                            .title ??
+                                                        "",
+                                                anchorPic: liveStreamList![
+                                                            index]
+                                                        .avatar ??
+                                                    "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
+                                                playMode: V2TXLivePlayMode
+                                                    .v2TXLivePlayModeLeb,
+                                                liveURL:
+                                                    "rtmp://play.mindark.cloud/live/" +
+                                                        getStreamURL(
+                                                            liveStreamList![
+                                                                    index]
+                                                                .pushCode));
+
+                                            Navigator.of(context).pop();
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        page));
+                                          } else if (status == 2) {
+                                            //logined
+                                          } else if (status == 3) {
+                                            bool isChangeNickname =
+                                                await userLogin(
+                                              userModel.id.value,
+                                            );
+                                            if (isChangeNickname) {
+                                              LiveStreamChatRoom page = LiveStreamChatRoom(
+                                                  userLoginId: userModel
+                                                      .id.value,
+                                                  avChatRoomId:
+                                                      "panda${liveStreamList![index].userId}",
+                                                  anchor: liveStreamList![index]
+                                                          .nickName ??
+                                                      "",
+                                                  streamTitle: liveStreamList![
+                                                              index]
+                                                          .title ??
+                                                      "",
+                                                  anchorPic: liveStreamList![
+                                                              index]
+                                                          .avatar ??
+                                                      "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
+                                                  playMode: V2TXLivePlayMode
+                                                      .v2TXLivePlayModeLeb,
+                                                  liveURL:
+                                                      "rtmp://play.mindark.cloud/live/" +
+                                                          getStreamURL(
+                                                              liveStreamList![
+                                                                      index]
+                                                                  .pushCode));
+
+                                              Navigator.of(context).pop();
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          page));
+                                            }
+                                          } else {
+                                            Navigator.of(context).pop();
+                                            openSnackbar(
+                                                context,
+                                                AppLocalizations.of(context)!
+                                                    .noInternet,
+                                                kComponentErrorTextColor);
+                                          }
+                                        }
+                                      },
+                                      child: LiveStreamCarousel(
+                                          title:
+                                              liveStreamList[index].title ?? "",
+                                          anchor:
+                                              liveStreamList[index].nickName ??
+                                                  "",
+                                          anchorPhoto: liveStreamList[index]
+                                                  .avatar ??
+                                              "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
+                                          liveStreamPhoto: liveStreamList[index]
+                                                  .cover ??
+                                              "https://images.chinatimes.com/newsphoto/2022-05-05/656/20220505001628.jpg"),
+                                    );
+                                  },
+                                ),
                       Container(
                         margin: EdgeInsets.symmetric(
                             horizontal: 10 * fem, vertical: 10 * fem),
@@ -766,6 +894,16 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                           return GestureDetector(
                                             onTap: () {
                                               print("navi into tournament");
+                                              BasketballTournamentDetails(
+                                                      id:
+                                                          '${startedList[index].id}',
+                                                      matchDate:
+                                                          '${startedList[index].matchDate}',
+                                                      matchStatus:
+                                                          '${startedList[index].statusStr}',
+                                                      matchName:
+                                                          '${startedList[index].competitionName}')
+                                                  .launch(context);
                                             },
                                             child: GameDisplayComponent(
                                               id: startedList[index].id ?? 0,
@@ -804,7 +942,20 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                 : (statusId == 1 && futureDateId == 0)
                                     ? isEventLoading
                                         ? Column(children: [
-                                            for (int i = 0; i < 4; i++)
+                                            if (future1Length < 4)
+                                              for (int i = 0; i < 4; i++)
+                                                CardLoading(
+                                                  height: 100 * fem,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8 * fem),
+                                                  margin: EdgeInsets.symmetric(
+                                                      horizontal: 10 * fem,
+                                                      vertical: 10 * fem),
+                                                ),
+                                            for (int i = 0;
+                                                i < future1Length;
+                                                i++)
                                               CardLoading(
                                                 height: 100 * fem,
                                                 borderRadius:
@@ -824,6 +975,16 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                               return GestureDetector(
                                                 onTap: () {
                                                   print("navi into tournament");
+                                                  BasketballTournamentDetails(
+                                                          id:
+                                                              '${futureList1[index].id}',
+                                                          matchDate:
+                                                              '${futureList1[index].matchDate}',
+                                                          matchStatus:
+                                                              '${futureList1[index].statusStr}',
+                                                          matchName:
+                                                              '${futureList1[index].competitionName}')
+                                                      .launch(context);
                                                 },
                                                 child: GameDisplayComponent(
                                                   id: futureList1[index].id ??
@@ -863,18 +1024,38 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                     : (statusId == 1 && futureDateId == 1)
                                         ? isEventLoading
                                             ? Column(children: [
-                                                for (int i = 0; i < 4; i++)
-                                                  CardLoading(
-                                                    height: 100 * fem,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8 * fem),
-                                                    margin:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                10 * fem,
-                                                            vertical: 10 * fem),
-                                                  ),
+                                                Column(children: [
+                                                  if (future2Length < 4)
+                                                    for (int i = 0; i < 4; i++)
+                                                      CardLoading(
+                                                        height: 100 * fem,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                    8 * fem),
+                                                        margin: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal:
+                                                                    10 * fem,
+                                                                vertical:
+                                                                    10 * fem),
+                                                      ),
+                                                  for (int i = 0;
+                                                      i < future2Length;
+                                                      i++)
+                                                    CardLoading(
+                                                      height: 100 * fem,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8 * fem),
+                                                      margin:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal:
+                                                                  10 * fem,
+                                                              vertical:
+                                                                  10 * fem),
+                                                    ),
+                                                ])
                                               ])
                                             : ListView.builder(
                                                 physics:
@@ -886,6 +1067,16 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                     onTap: () {
                                                       print(
                                                           "navi into tournament");
+                                                      BasketballTournamentDetails(
+                                                              id:
+                                                                  '${futureList2[index].id}',
+                                                              matchDate:
+                                                                  '${futureList2[index].matchDate}',
+                                                              matchStatus:
+                                                                  '${futureList2[index].statusStr}',
+                                                              matchName:
+                                                                  '${futureList2[index].competitionName}')
+                                                          .launch(context);
                                                     },
                                                     child: GameDisplayComponent(
                                                       id: futureList2[index]
@@ -934,20 +1125,43 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                         : (statusId == 1 && futureDateId == 2)
                                             ? isEventLoading
                                                 ? Column(children: [
-                                                    for (int i = 0; i < 4; i++)
-                                                      CardLoading(
-                                                        height: 100 * fem,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    8 * fem),
-                                                        margin: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal:
-                                                                    10 * fem,
-                                                                vertical:
-                                                                    10 * fem),
-                                                      ),
+                                                    Column(children: [
+                                                      if (future3Length < 4)
+                                                        for (int i = 0;
+                                                            i < 4;
+                                                            i++)
+                                                          CardLoading(
+                                                            height: 100 * fem,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8 * fem),
+                                                            margin: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        10 *
+                                                                            fem,
+                                                                    vertical:
+                                                                        10 *
+                                                                            fem),
+                                                          ),
+                                                      for (int i = 0;
+                                                          i < future3Length;
+                                                          i++)
+                                                        CardLoading(
+                                                          height: 100 * fem,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8 * fem),
+                                                          margin: EdgeInsets
+                                                              .symmetric(
+                                                                  horizontal:
+                                                                      10 * fem,
+                                                                  vertical:
+                                                                      10 * fem),
+                                                        ),
+                                                    ])
                                                   ])
                                                 : ListView.builder(
                                                     physics:
@@ -960,6 +1174,16 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                         onTap: () {
                                                           print(
                                                               "navi into tournament");
+                                                          BasketballTournamentDetails(
+                                                                  id:
+                                                                      '${futureList3[index].id}',
+                                                                  matchDate:
+                                                                      '${futureList3[index].matchDate}',
+                                                                  matchStatus:
+                                                                      '${futureList3[index].statusStr}',
+                                                                  matchName:
+                                                                      '${futureList3[index].competitionName}')
+                                                              .launch(context);
                                                         },
                                                         child:
                                                             GameDisplayComponent(
@@ -1010,24 +1234,45 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                     futureDateId == 3)
                                                 ? isEventLoading
                                                     ? Column(children: [
-                                                        for (int i = 0;
-                                                            i < 4;
-                                                            i++)
-                                                          CardLoading(
-                                                            height: 100 * fem,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8 * fem),
-                                                            margin: EdgeInsets
-                                                                .symmetric(
+                                                        Column(children: [
+                                                          if (future4Length < 4)
+                                                            for (int i = 0;
+                                                                i < 4;
+                                                                i++)
+                                                              CardLoading(
+                                                                height:
+                                                                    100 * fem,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(8 *
+                                                                            fem),
+                                                                margin: EdgeInsets.symmetric(
                                                                     horizontal:
                                                                         10 *
                                                                             fem,
                                                                     vertical:
                                                                         10 *
                                                                             fem),
-                                                          ),
+                                                              ),
+                                                          for (int i = 0;
+                                                              i < future4Length;
+                                                              i++)
+                                                            CardLoading(
+                                                              height: 100 * fem,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8 * fem),
+                                                              margin: EdgeInsets
+                                                                  .symmetric(
+                                                                      horizontal:
+                                                                          10 *
+                                                                              fem,
+                                                                      vertical:
+                                                                          10 *
+                                                                              fem),
+                                                            ),
+                                                        ])
                                                       ])
                                                     : ListView.builder(
                                                         physics:
@@ -1041,6 +1286,17 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                             onTap: () {
                                                               print(
                                                                   "navi into tournament");
+                                                              BasketballTournamentDetails(
+                                                                      id:
+                                                                          '${futureList4[index].id}',
+                                                                      matchDate:
+                                                                          '${futureList4[index].matchDate}',
+                                                                      matchStatus:
+                                                                          '${futureList4[index].statusStr}',
+                                                                      matchName:
+                                                                          '${futureList4[index].competitionName}')
+                                                                  .launch(
+                                                                      context);
                                                             },
                                                             child:
                                                                 GameDisplayComponent(
@@ -1092,24 +1348,46 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                         futureDateId == 4)
                                                     ? isEventLoading
                                                         ? Column(children: [
-                                                            for (int i = 0;
-                                                                i < 4;
-                                                                i++)
-                                                              CardLoading(
-                                                                height:
-                                                                    100 * fem,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(8 *
-                                                                            fem),
-                                                                margin: EdgeInsets.symmetric(
-                                                                    horizontal:
-                                                                        10 *
+                                                            Column(children: [
+                                                              if (future5Length <
+                                                                  4)
+                                                                for (int i = 0;
+                                                                    i < 4;
+                                                                    i++)
+                                                                  CardLoading(
+                                                                    height:
+                                                                        100 *
                                                                             fem,
-                                                                    vertical:
-                                                                        10 *
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(8 *
                                                                             fem),
-                                                              ),
+                                                                    margin: EdgeInsets.symmetric(
+                                                                        horizontal:
+                                                                            10 *
+                                                                                fem,
+                                                                        vertical:
+                                                                            10 *
+                                                                                fem),
+                                                                  ),
+                                                              for (int i = 0;
+                                                                  i < future5Length;
+                                                                  i++)
+                                                                CardLoading(
+                                                                  height:
+                                                                      100 * fem,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(8 *
+                                                                              fem),
+                                                                  margin: EdgeInsets.symmetric(
+                                                                      horizontal:
+                                                                          10 *
+                                                                              fem,
+                                                                      vertical:
+                                                                          10 *
+                                                                              fem),
+                                                                ),
+                                                            ])
                                                           ])
                                                         : ListView.builder(
                                                             physics:
@@ -1124,6 +1402,17 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                 onTap: () {
                                                                   print(
                                                                       "navi into tournament");
+                                                                  BasketballTournamentDetails(
+                                                                          id:
+                                                                              '${futureList5[index].id}',
+                                                                          matchDate:
+                                                                              '${futureList5[index].matchDate}',
+                                                                          matchStatus:
+                                                                              '${futureList5[index].statusStr}',
+                                                                          matchName:
+                                                                              '${futureList5[index].competitionName}')
+                                                                      .launch(
+                                                                          context);
                                                                 },
                                                                 child:
                                                                     GameDisplayComponent(
@@ -1175,24 +1464,36 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                             futureDateId == 5)
                                                         ? isEventLoading
                                                             ? Column(children: [
-                                                                for (int i = 0;
-                                                                    i < 4;
-                                                                    i++)
-                                                                  CardLoading(
-                                                                    height:
-                                                                        100 *
-                                                                            fem,
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(8 *
-                                                                            fem),
-                                                                    margin: EdgeInsets.symmetric(
-                                                                        horizontal:
-                                                                            10 *
-                                                                                fem,
-                                                                        vertical:
-                                                                            10 *
-                                                                                fem),
-                                                                  ),
+                                                                Column(
+                                                                    children: [
+                                                                      if (future6Length <
+                                                                          4)
+                                                                        for (int i =
+                                                                                0;
+                                                                            i < 4;
+                                                                            i++)
+                                                                          CardLoading(
+                                                                            height:
+                                                                                100 * fem,
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(8 * fem),
+                                                                            margin:
+                                                                                EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                          ),
+                                                                      for (int i =
+                                                                              0;
+                                                                          i < future6Length;
+                                                                          i++)
+                                                                        CardLoading(
+                                                                          height:
+                                                                              100 * fem,
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(8 * fem),
+                                                                          margin: EdgeInsets.symmetric(
+                                                                              horizontal: 10 * fem,
+                                                                              vertical: 10 * fem),
+                                                                        ),
+                                                                    ])
                                                               ])
                                                             : ListView.builder(
                                                                 physics:
@@ -1208,6 +1509,12 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                     onTap: () {
                                                                       print(
                                                                           "navi into tournament");
+                                                                      BasketballTournamentDetails(
+                                                                              id: '${futureList6[index].id}',
+                                                                              matchDate: '${futureList6[index].matchDate}',
+                                                                              matchStatus: '${futureList6[index].statusStr}',
+                                                                              matchName: '${futureList6[index].competitionName}')
+                                                                          .launch(context);
                                                                     },
                                                                     child:
                                                                         GameDisplayComponent(
@@ -1253,18 +1560,22 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                             ? isEventLoading
                                                                 ? Column(
                                                                     children: [
-                                                                        for (int i =
-                                                                                0;
-                                                                            i < 4;
-                                                                            i++)
-                                                                          CardLoading(
-                                                                            height:
-                                                                                100 * fem,
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(8 * fem),
-                                                                            margin:
-                                                                                EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                          ),
+                                                                        Column(
+                                                                            children: [
+                                                                              if (future7Length < 4)
+                                                                                for (int i = 0; i < 4; i++)
+                                                                                  CardLoading(
+                                                                                    height: 100 * fem,
+                                                                                    borderRadius: BorderRadius.circular(8 * fem),
+                                                                                    margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                  ),
+                                                                              for (int i = 0; i < future7Length; i++)
+                                                                                CardLoading(
+                                                                                  height: 100 * fem,
+                                                                                  borderRadius: BorderRadius.circular(8 * fem),
+                                                                                  margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                ),
+                                                                            ])
                                                                       ])
                                                                 : ListView
                                                                     .builder(
@@ -1282,6 +1593,9 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                             () {
                                                                           print(
                                                                               "navi into tournament");
+
+                                                                          BasketballTournamentDetails(id: '${futureList7[index].id}', matchDate: '${futureList7[index].matchDate}', matchStatus: '${futureList7[index].statusStr}', matchName: '${futureList7[index].competitionName}')
+                                                                              .launch(context);
                                                                         },
                                                                         child:
                                                                             GameDisplayComponent(
@@ -1317,14 +1631,21 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                 ? isEventLoading
                                                                     ? Column(
                                                                         children: [
-                                                                            for (int i = 0;
-                                                                                i < 4;
-                                                                                i++)
-                                                                              CardLoading(
-                                                                                height: 100 * fem,
-                                                                                borderRadius: BorderRadius.circular(8 * fem),
-                                                                                margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                              ),
+                                                                            Column(children: [
+                                                                              if (past1Length < 4)
+                                                                                for (int i = 0; i < 4; i++)
+                                                                                  CardLoading(
+                                                                                    height: 100 * fem,
+                                                                                    borderRadius: BorderRadius.circular(8 * fem),
+                                                                                    margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                  ),
+                                                                              for (int i = 0; i < past1Length; i++)
+                                                                                CardLoading(
+                                                                                  height: 100 * fem,
+                                                                                  borderRadius: BorderRadius.circular(8 * fem),
+                                                                                  margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                ),
+                                                                            ])
                                                                           ])
                                                                     : ListView
                                                                         .builder(
@@ -1341,6 +1662,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                             onTap:
                                                                                 () {
                                                                               print("navi into tournament");
+                                                                              BasketballTournamentDetails(id: '${pastList1[index].id}', matchDate: '${pastList1[index].matchDate}', matchStatus: '${pastList1[index].statusStr}', matchName: '${pastList1[index].competitionName}').launch(context);
                                                                             },
                                                                             child:
                                                                                 GameDisplayComponent(
@@ -1365,7 +1687,14 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                     ? isEventLoading
                                                                         ? Column(
                                                                             children: [
-                                                                                for (int i = 0; i < 4; i++)
+                                                                                if (past2Length < 4)
+                                                                                  for (int i = 0; i < 4; i++)
+                                                                                    CardLoading(
+                                                                                      height: 100 * fem,
+                                                                                      borderRadius: BorderRadius.circular(8 * fem),
+                                                                                      margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                    ),
+                                                                                for (int i = 0; i < past2Length; i++)
                                                                                   CardLoading(
                                                                                     height: 100 * fem,
                                                                                     borderRadius: BorderRadius.circular(8 * fem),
@@ -1385,6 +1714,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                               return GestureDetector(
                                                                                 onTap: () {
                                                                                   print("navi into tournament");
+                                                                                  BasketballTournamentDetails(id: '${pastList2[index].id}', matchDate: '${pastList2[index].matchDate}', matchStatus: '${pastList2[index].statusStr}', matchName: '${pastList2[index].competitionName}').launch(context);
                                                                                 },
                                                                                 child: GameDisplayComponent(
                                                                                   id: pastList2[index].id ?? 0,
@@ -1407,7 +1737,14 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                 2)
                                                                         ? isEventLoading
                                                                             ? Column(children: [
-                                                                                for (int i = 0; i < 4; i++)
+                                                                                if (past3Length < 4)
+                                                                                  for (int i = 0; i < 4; i++)
+                                                                                    CardLoading(
+                                                                                      height: 100 * fem,
+                                                                                      borderRadius: BorderRadius.circular(8 * fem),
+                                                                                      margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                    ),
+                                                                                for (int i = 0; i < past3Length; i++)
                                                                                   CardLoading(
                                                                                     height: 100 * fem,
                                                                                     borderRadius: BorderRadius.circular(8 * fem),
@@ -1422,6 +1759,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                   return GestureDetector(
                                                                                     onTap: () {
                                                                                       print("navi into tournament");
+                                                                                      BasketballTournamentDetails(id: '${pastList3[index].id}', matchDate: '${pastList3[index].matchDate}', matchStatus: '${pastList3[index].statusStr}', matchName: '${pastList3[index].competitionName}').launch(context);
                                                                                     },
                                                                                     child: GameDisplayComponent(
                                                                                       id: pastList3[index].id ?? 0,
@@ -1441,7 +1779,14 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                         : (statusId == 2 && pastDateId == 3)
                                                                             ? isEventLoading
                                                                                 ? Column(children: [
-                                                                                    for (int i = 0; i < 4; i++)
+                                                                                    if (past4Length < 4)
+                                                                                      for (int i = 0; i < 4; i++)
+                                                                                        CardLoading(
+                                                                                          height: 100 * fem,
+                                                                                          borderRadius: BorderRadius.circular(8 * fem),
+                                                                                          margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                        ),
+                                                                                    for (int i = 0; i < past4Length; i++)
                                                                                       CardLoading(
                                                                                         height: 100 * fem,
                                                                                         borderRadius: BorderRadius.circular(8 * fem),
@@ -1456,6 +1801,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                       return GestureDetector(
                                                                                         onTap: () {
                                                                                           print("navi into tournament");
+                                                                                          BasketballTournamentDetails(id: '${pastList4[index].id}', matchDate: '${pastList4[index].matchDate}', matchStatus: '${pastList4[index].statusStr}', matchName: '${pastList4[index].competitionName}').launch(context);
                                                                                         },
                                                                                         child: GameDisplayComponent(
                                                                                           id: pastList4[index].id ?? 0,
@@ -1475,7 +1821,14 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                             : (statusId == 2 && pastDateId == 4)
                                                                                 ? isEventLoading
                                                                                     ? Column(children: [
-                                                                                        for (int i = 0; i < 4; i++)
+                                                                                        if (past5Length < 4)
+                                                                                          for (int i = 0; i < 4; i++)
+                                                                                            CardLoading(
+                                                                                              height: 100 * fem,
+                                                                                              borderRadius: BorderRadius.circular(8 * fem),
+                                                                                              margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                            ),
+                                                                                        for (int i = 0; i < past5Length; i++)
                                                                                           CardLoading(
                                                                                             height: 100 * fem,
                                                                                             borderRadius: BorderRadius.circular(8 * fem),
@@ -1490,6 +1843,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                           return GestureDetector(
                                                                                             onTap: () {
                                                                                               print("navi into tournament");
+                                                                                              BasketballTournamentDetails(id: '${pastList5[index].id}', matchDate: '${pastList5[index].matchDate}', matchStatus: '${pastList5[index].statusStr}', matchName: '${pastList5[index].competitionName}').launch(context);
                                                                                             },
                                                                                             child: GameDisplayComponent(
                                                                                               id: pastList5[index].id ?? 0,
@@ -1509,7 +1863,14 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                 : (statusId == 2 && pastDateId == 5)
                                                                                     ? isEventLoading
                                                                                         ? Column(children: [
-                                                                                            for (int i = 0; i < 4; i++)
+                                                                                            if (past6Length < 4)
+                                                                                              for (int i = 0; i < 4; i++)
+                                                                                                CardLoading(
+                                                                                                  height: 100 * fem,
+                                                                                                  borderRadius: BorderRadius.circular(8 * fem),
+                                                                                                  margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                                ),
+                                                                                            for (int i = 0; i < past6Length; i++)
                                                                                               CardLoading(
                                                                                                 height: 100 * fem,
                                                                                                 borderRadius: BorderRadius.circular(8 * fem),
@@ -1524,6 +1885,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                               return GestureDetector(
                                                                                                 onTap: () {
                                                                                                   print("navi into tournament");
+                                                                                                  BasketballTournamentDetails(id: '${pastList6[index].id}', matchDate: '${pastList6[index].matchDate}', matchStatus: '${pastList6[index].statusStr}', matchName: '${pastList6[index].competitionName}').launch(context);
                                                                                                 },
                                                                                                 child: GameDisplayComponent(
                                                                                                   id: pastList6[index].id ?? 0,
@@ -1543,7 +1905,14 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                     : (statusId == 2 && pastDateId == 6)
                                                                                         ? isEventLoading
                                                                                             ? Column(children: [
-                                                                                                for (int i = 0; i < 4; i++)
+                                                                                                if (past7Length < 4)
+                                                                                                  for (int i = 0; i < 4; i++)
+                                                                                                    CardLoading(
+                                                                                                      height: 100 * fem,
+                                                                                                      borderRadius: BorderRadius.circular(8 * fem),
+                                                                                                      margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                                    ),
+                                                                                                for (int i = 0; i < past7Length; i++)
                                                                                                   CardLoading(
                                                                                                     height: 100 * fem,
                                                                                                     borderRadius: BorderRadius.circular(8 * fem),
@@ -1558,6 +1927,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                                   return GestureDetector(
                                                                                                     onTap: () {
                                                                                                       print("navi into tournament");
+                                                                                                      BasketballTournamentDetails(id: '${pastList7[index].id}', matchDate: '${pastList7[index].matchDate}', matchStatus: '${pastList7[index].statusStr}', matchName: '${pastList7[index].competitionName}').launch(context);
                                                                                                     },
                                                                                                     child: GameDisplayComponent(
                                                                                                       id: pastList7[index].id ?? 0,

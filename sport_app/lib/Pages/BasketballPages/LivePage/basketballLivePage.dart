@@ -108,13 +108,13 @@ class _BasketballLivePageState extends State<BasketballLivePage>
   }
 
 //provider with body
-  Future<List<dynamic>?>? getAllLiveStreamListProvider() async {
-    getAllLiveStreamList = await liveProvider.getAllLiveStreamList();
-    allStreamCount = getAllLiveStreamList!.length;
+  // Future<List<dynamic>?>? getAllLiveStreamListProvider() async {
+  //   getAllLiveStreamList = await liveProvider.getAllLiveStreamList();
+  //   allStreamCount = getAllLiveStreamList!.length;
 
-    print("check popular stream list: $getAllLiveStreamList");
-    return getAllLiveStreamList;
-  }
+  //   print("check popular stream list: $getAllLiveStreamList");
+  //   return getAllLiveStreamList;
+  // }
 
   //choice of main page
   void dropdownCallback(String? selectedValue) {

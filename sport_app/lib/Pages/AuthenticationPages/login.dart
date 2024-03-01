@@ -222,8 +222,8 @@ class _LoginState extends State<Login> {
 
                             if (isPasswordValid == true) {
                               SharedPreferencesUtils.saveUsername(phone);
-                              SharedPreferencesUtils.saveTokenLocally(
-                                  passwordController.text);
+                              // SharedPreferencesUtils.saveTokenLocally(
+                              //     passwordController.text);
                               Navigator.of(context).pop();
                               Get.off(() => const BottomNaviBar());
                             } else {

@@ -5,6 +5,7 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sport_app/Services/Utils/sharedPreferencesUtils.dart';
 import 'package:sport_app/Services/commonServices.dart';
 
 import '../Constants/apiConstant.dart';
@@ -124,6 +125,7 @@ class UserProvider extends ChangeNotifier {
         if (data != '') {
           Map<String, dynamic> data = response['data'];
           await prefs.setString('token', data['token']);
+          SharedPreferencesUtils.saveTokenLocally(data['token']);
         }
         return true;
       } else {

@@ -3,9 +3,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:sport_app/Model/matchesModel.dart';
+import 'package:sport_app/Provider/basketballMatchProvider.dart';
 
 import '../../../Component/Common/statusButton.dart';
 import '../../../Component/Common/statusDateButton.dart';
@@ -35,6 +38,58 @@ class _BasketballMainPageState extends State<BasketballMainPage>
   ScrollController _scrollController = ScrollController();
   final LayoutController lc = Get.find<LayoutController>();
   TextEditingController _searchController = TextEditingController();
+
+  // services and provider
+  BasketballMatchProvider matchesProvider = BasketballMatchProvider();
+
+  // fetch data from provider
+  DateTime now = DateTime.now();
+  int size = 10;
+  List<MatchesData> startedList = [];
+  int startedLength = 0;
+  int pageStarted = 1;
+  List<MatchesData> futureList1 = [];
+  int future1Length = 0;
+  int pageFuture1 = 1;
+  List<MatchesData> futureList2 = [];
+  int future2Length = 0;
+  int pageFuture2 = 1;
+  List<MatchesData> futureList3 = [];
+  int future3Length = 0;
+  int pageFuture3 = 1;
+  List<MatchesData> futureList4 = [];
+  int future4Length = 0;
+  int pageFuture4 = 1;
+  List<MatchesData> futureList5 = [];
+  int future5Length = 0;
+  int pageFuture5 = 1;
+  List<MatchesData> futureList6 = [];
+  int future6Length = 0;
+  int pageFuture6 = 1;
+  List<MatchesData> futureList7 = [];
+  int future7Length = 0;
+  int pageFuture7 = 1;
+  List<MatchesData> pastList1 = [];
+  int past1Length = 0;
+  int pagePast1 = 1;
+  List<MatchesData> pastList2 = [];
+  int past2Length = 0;
+  int pagePast2 = 1;
+  List<MatchesData> pastList3 = [];
+  int past3Length = 0;
+  int pagePast3 = 1;
+  List<MatchesData> pastList4 = [];
+  int past4Length = 0;
+  int pagePast4 = 1;
+  List<MatchesData> pastList5 = [];
+  int past5Length = 0;
+  int pagePast5 = 1;
+  List<MatchesData> pastList6 = [];
+  int past6Length = 0;
+  int pagePast6 = 1;
+  List<MatchesData> pastList7 = [];
+  int past7Length = 0;
+  int pagePast7 = 1;
 
   // default button id
   int statusId = 0;
@@ -93,6 +148,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
   void initState() {
     super.initState();
     _scrollController = ScrollController()..addListener(bottomScrollController);
+    getStartedEventList();
   }
 
   @override
@@ -122,17 +178,6 @@ class _BasketballMainPageState extends State<BasketballMainPage>
         });
       }
     }
-
-    // if (_scrollController.position.pixels ==
-    //     _scrollController.position.maxScrollExtent) {
-    //   if (_scrollController.position.atEdge) {
-    //     setState(() {
-    //       print("add item");
-    //       item += 10;
-    //       print("item: $item");
-    //     });
-    //   }
-    // }
   }
 
   Future<void> refresh() async {
@@ -141,7 +186,252 @@ class _BasketballMainPageState extends State<BasketballMainPage>
       statusId = 0;
       futureDateId = 0;
       pastDateId = 6;
+      getStartedEventList();
+      startedList.clear();
+      startedLength = startedList.length;
+      pageStarted = 1;
+      getEventListByDate();
+      futureList1.clear();
+      futureList2.clear();
+      futureList3.clear();
+      futureList4.clear();
+      futureList5.clear();
+      futureList6.clear();
+      futureList7.clear();
+      pastList1.clear();
+      pastList2.clear();
+      pastList3.clear();
+      pastList4.clear();
+      pastList5.clear();
+      pastList6.clear();
+      pastList7.clear();
+      future1Length = futureList1.length;
+      future2Length = futureList2.length;
+      future3Length = futureList3.length;
+      future4Length = futureList4.length;
+      future5Length = futureList5.length;
+      future6Length = futureList6.length;
+      future7Length = futureList7.length;
+      past1Length = pastList1.length;
+      past2Length = pastList2.length;
+      past3Length = pastList3.length;
+      past4Length = pastList4.length;
+      past5Length = pastList5.length;
+      past6Length = pastList6.length;
+      past7Length = pastList7.length;
+      pageFuture1 = 1;
+      pageFuture2 = 1;
+      pageFuture3 = 1;
+      pageFuture4 = 1;
+      pageFuture5 = 1;
+      pageFuture6 = 1;
+      pageFuture7 = 1;
+      pagePast1 = 1;
+      pagePast2 = 1;
+      pagePast3 = 1;
+      pagePast4 = 1;
+      pagePast5 = 1;
+      pagePast6 = 1;
+      pagePast7 = 1;
     });
+  }
+
+  // get event
+  Future<void> getStartedEventList() async {
+    StartedMatchesModel? startedMatchesModel =
+        await matchesProvider.getStartedEventList(pageStarted, size);
+
+    if (!isEventLoading) {
+      setState(() {
+        isEventLoading = true;
+      });
+      startedList.addAll(startedMatchesModel?.data.start ?? []);
+      startedLength = startedList.length;
+
+      setState(() {
+        isEventLoading = false;
+        pageStarted++;
+      });
+    }
+  }
+
+  Future<void> getEventListByDate() async {
+    if (!isEventLoading) {
+      setState(() {
+        isEventLoading = true;
+      });
+
+      if (statusId == 1) {
+        List<DateTime> futureDate = generateFutureDates(7);
+        DateTime date = futureDate[futureDateId];
+        String formattedDate = DateFormat('yyyy-MM-dd').format(date);
+
+        if (futureDateId == 0) {
+          MatchesModel? matchesModel = await matchesProvider.getEventByDate(
+              formattedDate, pageFuture1, size, true);
+
+          futureList1.addAll(matchesModel?.data ?? []);
+          future1Length = futureList1.length;
+
+          setState(() {
+            isEventLoading = false;
+            pageFuture1++;
+          });
+        } else if (futureDateId == 1) {
+          MatchesModel? matchesModel = await matchesProvider.getEventByDate(
+              formattedDate, pageFuture2, size, true);
+
+          futureList2.addAll(matchesModel?.data ?? []);
+          future2Length = futureList2.length;
+
+          setState(() {
+            isEventLoading = false;
+            pageFuture2++;
+          });
+        } else if (futureDateId == 2) {
+          MatchesModel? matchesModel = await matchesProvider.getEventByDate(
+              formattedDate, pageFuture3, size, true);
+
+          futureList3.addAll(matchesModel?.data ?? []);
+          future3Length = futureList3.length;
+
+          setState(() {
+            isEventLoading = false;
+            pageFuture3++;
+          });
+        } else if (futureDateId == 3) {
+          MatchesModel? matchesModel = await matchesProvider.getEventByDate(
+              formattedDate, pageFuture4, size, true);
+
+          futureList4.addAll(matchesModel?.data ?? []);
+          future4Length = futureList4.length;
+
+          setState(() {
+            isEventLoading = false;
+            pageFuture4++;
+          });
+        } else if (futureDateId == 4) {
+          MatchesModel? matchesModel = await matchesProvider.getEventByDate(
+              formattedDate, pageFuture5, size, true);
+
+          futureList5.addAll(matchesModel?.data ?? []);
+          future5Length = futureList5.length;
+
+          setState(() {
+            isEventLoading = false;
+            pageFuture5++;
+          });
+        } else if (futureDateId == 5) {
+          MatchesModel? matchesModel = await matchesProvider.getEventByDate(
+              formattedDate, pageFuture6, size, true);
+
+          futureList6.addAll(matchesModel?.data ?? []);
+          future6Length = futureList6.length;
+
+          setState(() {
+            isEventLoading = false;
+            pageFuture6++;
+          });
+        } else if (futureDateId == 6) {
+          MatchesModel? matchesModel = await matchesProvider.getEventByDate(
+              formattedDate, pageFuture7, size, true);
+
+          futureList7.addAll(matchesModel?.data ?? []);
+          future7Length = futureList7.length;
+
+          setState(() {
+            isEventLoading = false;
+            pageFuture7++;
+          });
+        }
+      } else {
+        List<DateTime> pastDate = generatePastDates(7);
+        DateTime date = pastDate[futureDateId];
+        String formattedDate = DateFormat('yyyy-MM-dd').format(date);
+
+        if (futureDateId == 0) {
+          MatchesModel? matchesModel = await matchesProvider.getEventByDate(
+              formattedDate, pagePast1, size, false);
+
+          pastList1.addAll(matchesModel?.data ?? []);
+          past1Length = pastList1.length;
+
+          setState(() {
+            isEventLoading = false;
+            pagePast1++;
+          });
+        } else if (pastDateId == 1) {
+          MatchesModel? matchesModel = await matchesProvider.getEventByDate(
+              formattedDate, pagePast2, size, false);
+
+          pastList2.addAll(matchesModel?.data ?? []);
+          past2Length = pastList2.length;
+
+          setState(() {
+            isEventLoading = false;
+            pagePast2++;
+          });
+        } else if (pastDateId == 2) {
+          MatchesModel? matchesModel = await matchesProvider.getEventByDate(
+              formattedDate, pagePast3, size, false);
+
+          pastList3.addAll(matchesModel?.data ?? []);
+          past3Length = pastList3.length;
+
+          setState(() {
+            isEventLoading = false;
+            pagePast3++;
+          });
+        } else if (pastDateId == 3) {
+          MatchesModel? matchesModel = await matchesProvider.getEventByDate(
+              formattedDate, pagePast4, size, false);
+
+          pastList4.addAll(matchesModel?.data ?? []);
+          past4Length = pastList4.length;
+
+          setState(() {
+            isEventLoading = false;
+            pagePast4++;
+          });
+        } else if (pastDateId == 4) {
+          MatchesModel? matchesModel = await matchesProvider.getEventByDate(
+              formattedDate, pagePast5, size, false);
+
+          pastList5.addAll(matchesModel?.data ?? []);
+          past5Length = pastList5.length;
+
+          setState(() {
+            isEventLoading = false;
+            pagePast5++;
+          });
+        } else if (pastDateId == 5) {
+          MatchesModel? matchesModel = await matchesProvider.getEventByDate(
+              formattedDate, pagePast6, size, false);
+
+          pastList6.addAll(matchesModel?.data ?? []);
+          past6Length = pastList6.length;
+
+          setState(() {
+            isEventLoading = false;
+            pagePast6++;
+          });
+        } else if (pastDateId == 6) {
+          MatchesModel? matchesModel = await matchesProvider.getEventByDate(
+              formattedDate, pagePast7, size, false);
+
+          pastList7.addAll(matchesModel?.data ?? []);
+          past7Length = pastList7.length;
+
+          setState(() {
+            isEventLoading = false;
+            pagePast7++;
+          });
+        }
+      }
+      setState(() {
+        isEventLoading = false;
+      });
+    }
   }
 
   @override
@@ -208,33 +498,6 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                           )
                         ],
                       ),
-                      // child: TextField(
-                      //   controller: _searchController,
-                      //   cursorHeight: 30,
-                      //   cursorColor: kMainGreenColor,
-                      //   decoration: InputDecoration(
-                      //     hintText: AppLocalizations.of(context)!.search,
-                      //     hintStyle: tSearch,
-                      //     contentPadding: EdgeInsets.all(10 * fem),
-                      //     border: InputBorder.none,
-                      //     prefixIcon: SvgPicture.asset(
-                      //       'images/appBar/search.svg',
-                      //       width: 24 * fem,
-                      //       height: 24 * fem,
-                      //     ),
-                      //     // suffix: _searchController.text.isNotEmpty
-                      //     //     ? IconButton(
-                      //     //         icon: Icon(Icons.close,
-                      //     //             color: kMainTitleColor),
-                      //     //         onPressed: () {
-                      //     //           setState(() {
-                      //     //             _searchController.clear();
-                      //     //           });
-                      //     //         },
-                      //     //       )
-                      //     //     : null,
-                      //   ),
-                      // )
                     ),
                   ),
                   const Spacer(),
@@ -284,35 +547,46 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                 setState(() {
                   if (statusId == 0) {
                     print("started");
-                  } else if (statusId == 1 && futureDateId == 0) {
-                    print("future 1");
-                  } else if (statusId == 1 && futureDateId == 1) {
-                    print("future 2");
-                  } else if (statusId == 1 && futureDateId == 2) {
-                    print("future 3");
-                  } else if (statusId == 1 && futureDateId == 3) {
-                    print("future 4");
-                  } else if (statusId == 1 && futureDateId == 4) {
-                    print("future 5");
-                  } else if (statusId == 1 && futureDateId == 5) {
-                    print("future 6");
-                  } else if (statusId == 1 && futureDateId == 6) {
-                    print("future 7");
-                  } else if (statusId == 2 && pastDateId == 0) {
-                    print("past 1");
-                  } else if (statusId == 2 && pastDateId == 1) {
-                    print("past 2");
-                  } else if (statusId == 2 && pastDateId == 2) {
-                    print("past 3");
-                  } else if (statusId == 2 && pastDateId == 3) {
-                    print("past 4");
-                  } else if (statusId == 2 && pastDateId == 4) {
-                    print("past 5");
-                  } else if (statusId == 2 && pastDateId == 5) {
-                    print("past 6");
-                  } else if (statusId == 2 && pastDateId == 6) {
-                    print("past 7");
+                    getStartedEventList();
+                  } else {
+                    getEventListByDate();
                   }
+                  // else if (statusId == 1 && futureDateId == 0) {
+                  //   print("future 1");
+                  //   getEventListByDate();
+                  // } else if (statusId == 1 && futureDateId == 1) {
+                  //   print("future 2");
+                  //   getEventListByDate();
+                  // } else if (statusId == 1 && futureDateId == 2) {
+                  //   print("future 3");
+                  //   getEventListByDate();
+                  // } else if (statusId == 1 && futureDateId == 3) {
+                  //   print("future 4");
+                  //   getEventListByDate();
+                  // } else if (statusId == 1 && futureDateId == 4) {
+                  //   print("future 5");
+                  //   getEventListByDate();
+                  // } else if (statusId == 1 && futureDateId == 5) {
+                  //   print("future 6");
+                  //   getEventListByDate();
+                  // } else if (statusId == 1 && futureDateId == 6) {
+                  //   print("future 7");
+                  //   getEventListByDate();
+                  // } else if (statusId == 2 && pastDateId == 0) {
+                  //   print("past 1");
+                  // } else if (statusId == 2 && pastDateId == 1) {
+                  //   print("past 2");
+                  // } else if (statusId == 2 && pastDateId == 2) {
+                  //   print("past 3");
+                  // } else if (statusId == 2 && pastDateId == 3) {
+                  //   print("past 4");
+                  // } else if (statusId == 2 && pastDateId == 4) {
+                  //   print("past 5");
+                  // } else if (statusId == 2 && pastDateId == 5) {
+                  //   print("past 6");
+                  // } else if (statusId == 2 && pastDateId == 6) {
+                  //   print("past 7");
+                  // }
                 });
               },
               child: RefreshIndicator(
@@ -363,6 +637,14 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
+                            Container(
+                              height: 58 * fem,
+                              margin: EdgeInsets.fromLTRB(
+                                  10 * fem, 0, 10 * fem, 10 * fem),
+                              child: Image(
+                                  image: AssetImage(
+                                      "images/mainpage/advertisement.png")),
+                            ),
                             Padding(
                               padding:
                                   EdgeInsets.symmetric(horizontal: 12 * fem),
@@ -377,6 +659,55 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                               onTap: (index) {
                                 setState(() {
                                   statusId = index;
+                                  if (statusId == 0) {
+                                    refresh();
+                                    getStartedEventList();
+                                  } else {
+                                    futureDateId = 0;
+                                    futureList1.clear();
+                                    futureList2.clear();
+                                    futureList3.clear();
+                                    futureList4.clear();
+                                    futureList5.clear();
+                                    futureList6.clear();
+                                    futureList7.clear();
+                                    pastList1.clear();
+                                    pastList2.clear();
+                                    pastList3.clear();
+                                    pastList4.clear();
+                                    pastList5.clear();
+                                    pastList6.clear();
+                                    pastList7.clear();
+                                    future1Length = futureList1.length;
+                                    future2Length = futureList2.length;
+                                    future3Length = futureList3.length;
+                                    future4Length = futureList4.length;
+                                    future5Length = futureList5.length;
+                                    future6Length = futureList6.length;
+                                    future7Length = futureList7.length;
+                                    past1Length = pastList1.length;
+                                    past2Length = pastList2.length;
+                                    past3Length = pastList3.length;
+                                    past4Length = pastList4.length;
+                                    past5Length = pastList5.length;
+                                    past6Length = pastList6.length;
+                                    past7Length = pastList7.length;
+                                    pageFuture1 = 1;
+                                    pageFuture2 = 1;
+                                    pageFuture3 = 1;
+                                    pageFuture4 = 1;
+                                    pageFuture5 = 1;
+                                    pageFuture6 = 1;
+                                    pageFuture7 = 1;
+                                    pagePast1 = 1;
+                                    pagePast2 = 1;
+                                    pagePast3 = 1;
+                                    pagePast4 = 1;
+                                    pagePast5 = 1;
+                                    pagePast6 = 1;
+                                    pagePast7 = 1;
+                                    getEventListByDate();
+                                  }
                                 });
                               },
                             ),
@@ -391,6 +722,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                       onTap: (index) {
                                         setState(() {
                                           futureDateId = index;
+                                          getEventListByDate();
                                         });
                                       },
                                     ),
@@ -406,6 +738,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                           onTap: (index) {
                                             setState(() {
                                               pastDateId = index;
+                                              getEventListByDate();
                                             });
                                           },
                                         ),
@@ -427,7 +760,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                     : ListView.builder(
                                         physics:
                                             const NeverScrollableScrollPhysics(),
-                                        itemCount: 10,
+                                        itemCount: startedLength,
                                         shrinkWrap: true,
                                         itemBuilder: (context, index) {
                                           return GestureDetector(
@@ -435,20 +768,35 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                               print("navi into tournament");
                                             },
                                             child: GameDisplayComponent(
-                                              id: 0,
+                                              id: startedList[index].id ?? 0,
                                               competitionType:
-                                                  "Iraqi League - Regular",
-                                              duration: "12:59",
-                                              teamAName: "Real Club Deportivo",
-                                              teamALogo:
+                                                  startedList[index]
+                                                          .competitionName ??
+                                                      "",
+                                              duration: startedList[index]
+                                                      .matchTimeStr ??
+                                                  "00:00",
+                                              teamAName: startedList[index]
+                                                      .homeTeamName ??
+                                                  "",
+                                              teamALogo: startedList[index]
+                                                      .homeTeamLogo ??
                                                   'images/mainpage/sampleLogo.png',
-                                              teamAScore: "12",
-                                              teamBName:
-                                                  "Real Club Deportivo de La Coruña",
-                                              teamBLogo:
+                                              teamAScore: startedList[index]
+                                                  .homeTeamScore
+                                                  .toString(),
+                                              teamBName: startedList[index]
+                                                      .awayTeamName ??
+                                                  "",
+                                              teamBLogo: startedList[index]
+                                                      .awayTeamLogo ??
                                                   'images/mainpage/sampleLogo.png',
-                                              teamBScore: "562",
-                                              isSaved: true,
+                                              teamBScore: startedList[index]
+                                                  .awayTeamScore
+                                                  .toString(),
+                                              isSaved: startedList[index]
+                                                      .hasCollected ??
+                                                  false,
                                             ),
                                           );
                                         },
@@ -470,7 +818,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                         : ListView.builder(
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
-                                            itemCount: 10,
+                                            itemCount: future1Length,
                                             shrinkWrap: true,
                                             itemBuilder: (context, index) {
                                               return GestureDetector(
@@ -478,18 +826,36 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                   print("navi into tournament");
                                                 },
                                                 child: GameDisplayComponent(
-                                                  id: 0,
-                                                  competitionType: "欧冠",
-                                                  duration: "12:59",
-                                                  teamAName: "马德里竞技足球俱乐部",
-                                                  teamALogo:
+                                                  id: futureList1[index].id ??
+                                                      0,
+                                                  competitionType: futureList1[
+                                                              index]
+                                                          .competitionName ??
+                                                      "",
+                                                  duration: futureList1[index]
+                                                          .matchTimeStr ??
+                                                      "00:00",
+                                                  teamAName: futureList1[index]
+                                                          .homeTeamName ??
+                                                      "",
+                                                  teamALogo: futureList1[index]
+                                                          .homeTeamLogo ??
                                                       'images/mainpage/sampleLogo.png',
-                                                  teamAScore: "0",
-                                                  teamBName: "阿尔希拉尔体育俱乐部",
-                                                  teamBLogo:
+                                                  teamAScore: futureList1[index]
+                                                      .homeTeamScore
+                                                      .toString(),
+                                                  teamBName: futureList1[index]
+                                                          .awayTeamName ??
+                                                      "",
+                                                  teamBLogo: futureList1[index]
+                                                          .awayTeamLogo ??
                                                       'images/mainpage/sampleLogo.png',
-                                                  teamBScore: "562",
-                                                  isSaved: true,
+                                                  teamBScore: futureList1[index]
+                                                      .awayTeamScore
+                                                      .toString(),
+                                                  isSaved: futureList1[index]
+                                                          .hasCollected ??
+                                                      false,
                                                 ),
                                               );
                                             },
@@ -513,7 +879,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                             : ListView.builder(
                                                 physics:
                                                     const NeverScrollableScrollPhysics(),
-                                                itemCount: 10,
+                                                itemCount: future2Length,
                                                 shrinkWrap: true,
                                                 itemBuilder: (context, index) {
                                                   return GestureDetector(
@@ -522,21 +888,45 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                           "navi into tournament");
                                                     },
                                                     child: GameDisplayComponent(
-                                                      id: 0,
-                                                      competitionType:
-                                                          "Iraqi League - Regular",
-                                                      duration: "12:59",
-                                                      teamAName:
-                                                          "Real Club Deportivo",
-                                                      teamALogo:
+                                                      id: futureList2[index]
+                                                              .id ??
+                                                          0,
+                                                      competitionType: futureList2[
+                                                                  index]
+                                                              .competitionName ??
+                                                          "",
+                                                      duration: futureList2[
+                                                                  index]
+                                                              .matchTimeStr ??
+                                                          "00:00",
+                                                      teamAName: futureList2[
+                                                                  index]
+                                                              .homeTeamName ??
+                                                          "",
+                                                      teamALogo: futureList2[
+                                                                  index]
+                                                              .homeTeamLogo ??
                                                           'images/mainpage/sampleLogo.png',
-                                                      teamAScore: "12",
-                                                      teamBName:
-                                                          "Real Club Deportivo de La Coruña",
-                                                      teamBLogo:
+                                                      teamAScore:
+                                                          futureList2[index]
+                                                              .homeTeamScore
+                                                              .toString(),
+                                                      teamBName: futureList2[
+                                                                  index]
+                                                              .awayTeamName ??
+                                                          "",
+                                                      teamBLogo: futureList2[
+                                                                  index]
+                                                              .awayTeamLogo ??
                                                           'images/mainpage/sampleLogo.png',
-                                                      teamBScore: "562",
-                                                      isSaved: true,
+                                                      teamBScore:
+                                                          futureList2[index]
+                                                              .awayTeamScore
+                                                              .toString(),
+                                                      isSaved: futureList2[
+                                                                  index]
+                                                              .hasCollected ??
+                                                          false,
                                                     ),
                                                   );
                                                 },
@@ -562,7 +952,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                 : ListView.builder(
                                                     physics:
                                                         const NeverScrollableScrollPhysics(),
-                                                    itemCount: 10,
+                                                    itemCount: future3Length,
                                                     shrinkWrap: true,
                                                     itemBuilder:
                                                         (context, index) {
@@ -573,20 +963,45 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                         },
                                                         child:
                                                             GameDisplayComponent(
-                                                          id: 0,
-                                                          competitionType: "欧冠",
-                                                          duration: "12:59",
-                                                          teamAName:
-                                                              "马德里竞技足球俱乐部",
-                                                          teamALogo:
+                                                          id: futureList3[index]
+                                                                  .id ??
+                                                              0,
+                                                          competitionType:
+                                                              futureList3[index]
+                                                                      .competitionName ??
+                                                                  "",
+                                                          duration: futureList3[
+                                                                      index]
+                                                                  .matchTimeStr ??
+                                                              "00:00",
+                                                          teamAName: futureList3[
+                                                                      index]
+                                                                  .homeTeamName ??
+                                                              "",
+                                                          teamALogo: futureList3[
+                                                                      index]
+                                                                  .homeTeamLogo ??
                                                               'images/mainpage/sampleLogo.png',
-                                                          teamAScore: "0",
-                                                          teamBName:
-                                                              "阿尔希拉尔体育俱乐部",
-                                                          teamBLogo:
+                                                          teamAScore:
+                                                              futureList3[index]
+                                                                  .homeTeamScore
+                                                                  .toString(),
+                                                          teamBName: futureList3[
+                                                                      index]
+                                                                  .awayTeamName ??
+                                                              "",
+                                                          teamBLogo: futureList3[
+                                                                      index]
+                                                                  .awayTeamLogo ??
                                                               'images/mainpage/sampleLogo.png',
-                                                          teamBScore: "562",
-                                                          isSaved: true,
+                                                          teamBScore:
+                                                              futureList3[index]
+                                                                  .awayTeamScore
+                                                                  .toString(),
+                                                          isSaved: futureList3[
+                                                                      index]
+                                                                  .hasCollected ??
+                                                              false,
                                                         ),
                                                       );
                                                     },
@@ -617,7 +1032,8 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                     : ListView.builder(
                                                         physics:
                                                             const NeverScrollableScrollPhysics(),
-                                                        itemCount: 10,
+                                                        itemCount:
+                                                            future4Length,
                                                         shrinkWrap: true,
                                                         itemBuilder:
                                                             (context, index) {
@@ -628,21 +1044,46 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                             },
                                                             child:
                                                                 GameDisplayComponent(
-                                                              id: 0,
+                                                              id: futureList4[
+                                                                          index]
+                                                                      .id ??
+                                                                  0,
                                                               competitionType:
-                                                                  "Iraqi League - Regular",
-                                                              duration: "12:59",
-                                                              teamAName:
-                                                                  "Real Club Deportivo",
-                                                              teamALogo:
+                                                                  futureList4[index]
+                                                                          .competitionName ??
+                                                                      "",
+                                                              duration: futureList4[
+                                                                          index]
+                                                                      .matchTimeStr ??
+                                                                  "00:00",
+                                                              teamAName: futureList4[
+                                                                          index]
+                                                                      .homeTeamName ??
+                                                                  "",
+                                                              teamALogo: futureList4[
+                                                                          index]
+                                                                      .homeTeamLogo ??
                                                                   'images/mainpage/sampleLogo.png',
-                                                              teamAScore: "12",
-                                                              teamBName:
-                                                                  "Real Club Deportivo de La Coruña",
-                                                              teamBLogo:
+                                                              teamAScore: futureList4[
+                                                                      index]
+                                                                  .homeTeamScore
+                                                                  .toString(),
+                                                              teamBName: futureList4[
+                                                                          index]
+                                                                      .awayTeamName ??
+                                                                  "",
+                                                              teamBLogo: futureList4[
+                                                                          index]
+                                                                      .awayTeamLogo ??
                                                                   'images/mainpage/sampleLogo.png',
-                                                              teamBScore: "562",
-                                                              isSaved: true,
+                                                              teamBScore: futureList4[
+                                                                      index]
+                                                                  .awayTeamScore
+                                                                  .toString(),
+                                                              isSaved: futureList4[
+                                                                          index]
+                                                                      .hasCollected ??
+                                                                  false,
                                                             ),
                                                           );
                                                         },
@@ -673,7 +1114,8 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                         : ListView.builder(
                                                             physics:
                                                                 const NeverScrollableScrollPhysics(),
-                                                            itemCount: 10,
+                                                            itemCount:
+                                                                future5Length,
                                                             shrinkWrap: true,
                                                             itemBuilder:
                                                                 (context,
@@ -685,24 +1127,46 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                 },
                                                                 child:
                                                                     GameDisplayComponent(
-                                                                  id: 0,
+                                                                  id: futureList5[
+                                                                              index]
+                                                                          .id ??
+                                                                      0,
                                                                   competitionType:
-                                                                      "欧冠",
-                                                                  duration:
-                                                                      "12:59",
+                                                                      futureList5[index]
+                                                                              .competitionName ??
+                                                                          "",
+                                                                  duration: futureList5[
+                                                                              index]
+                                                                          .matchTimeStr ??
+                                                                      "00:00",
                                                                   teamAName:
-                                                                      "马德里竞技足球俱乐部",
-                                                                  teamALogo:
+                                                                      futureList5[index]
+                                                                              .homeTeamName ??
+                                                                          "",
+                                                                  teamALogo: futureList5[
+                                                                              index]
+                                                                          .homeTeamLogo ??
                                                                       'images/mainpage/sampleLogo.png',
-                                                                  teamAScore:
-                                                                      "0",
+                                                                  teamAScore: futureList5[
+                                                                          index]
+                                                                      .homeTeamScore
+                                                                      .toString(),
                                                                   teamBName:
-                                                                      "阿尔希拉尔体育俱乐部",
-                                                                  teamBLogo:
+                                                                      futureList5[index]
+                                                                              .awayTeamName ??
+                                                                          "",
+                                                                  teamBLogo: futureList5[
+                                                                              index]
+                                                                          .awayTeamLogo ??
                                                                       'images/mainpage/sampleLogo.png',
-                                                                  teamBScore:
-                                                                      "562",
-                                                                  isSaved: true,
+                                                                  teamBScore: futureList5[
+                                                                          index]
+                                                                      .awayTeamScore
+                                                                      .toString(),
+                                                                  isSaved: futureList5[
+                                                                              index]
+                                                                          .hasCollected ??
+                                                                      false,
                                                                 ),
                                                               );
                                                             },
@@ -733,7 +1197,8 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                             : ListView.builder(
                                                                 physics:
                                                                     const NeverScrollableScrollPhysics(),
-                                                                itemCount: 10,
+                                                                itemCount:
+                                                                    future6Length,
                                                                 shrinkWrap:
                                                                     true,
                                                                 itemBuilder:
@@ -746,25 +1211,38 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                     },
                                                                     child:
                                                                         GameDisplayComponent(
-                                                                      id: 0,
+                                                                      id: futureList6[index]
+                                                                              .id ??
+                                                                          0,
                                                                       competitionType:
-                                                                          "Iraqi League - Regular",
+                                                                          futureList6[index].competitionName ??
+                                                                              "",
                                                                       duration:
-                                                                          "12:59",
+                                                                          futureList6[index].matchTimeStr ??
+                                                                              "00:00",
                                                                       teamAName:
-                                                                          "Real Club Deportivo",
+                                                                          futureList6[index].homeTeamName ??
+                                                                              "",
                                                                       teamALogo:
-                                                                          'images/mainpage/sampleLogo.png',
-                                                                      teamAScore:
-                                                                          "12",
+                                                                          futureList6[index].homeTeamLogo ??
+                                                                              'images/mainpage/sampleLogo.png',
+                                                                      teamAScore: futureList6[
+                                                                              index]
+                                                                          .homeTeamScore
+                                                                          .toString(),
                                                                       teamBName:
-                                                                          "Real Club Deportivo de La Coruña",
+                                                                          futureList6[index].awayTeamName ??
+                                                                              "",
                                                                       teamBLogo:
-                                                                          'images/mainpage/sampleLogo.png',
-                                                                      teamBScore:
-                                                                          "562",
-                                                                      isSaved:
-                                                                          true,
+                                                                          futureList6[index].awayTeamLogo ??
+                                                                              'images/mainpage/sampleLogo.png',
+                                                                      teamBScore: futureList6[
+                                                                              index]
+                                                                          .awayTeamScore
+                                                                          .toString(),
+                                                                      isSaved: futureList6[index]
+                                                                              .hasCollected ??
+                                                                          false,
                                                                     ),
                                                                   );
                                                                 },
@@ -793,7 +1271,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                     physics:
                                                                         const NeverScrollableScrollPhysics(),
                                                                     itemCount:
-                                                                        10,
+                                                                        future7Length,
                                                                     shrinkWrap:
                                                                         true,
                                                                     itemBuilder:
@@ -807,25 +1285,28 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                         },
                                                                         child:
                                                                             GameDisplayComponent(
-                                                                          id: 0,
+                                                                          id: futureList7[index].id ??
+                                                                              0,
                                                                           competitionType:
-                                                                              "欧冠",
+                                                                              futureList7[index].competitionName ?? "",
                                                                           duration:
-                                                                              "12:59",
+                                                                              futureList7[index].matchTimeStr ?? "00:00",
                                                                           teamAName:
-                                                                              "马德里竞技足球俱乐部",
+                                                                              futureList7[index].homeTeamName ?? "",
                                                                           teamALogo:
-                                                                              'images/mainpage/sampleLogo.png',
-                                                                          teamAScore:
-                                                                              "0",
+                                                                              futureList7[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                          teamAScore: futureList7[index]
+                                                                              .homeTeamScore
+                                                                              .toString(),
                                                                           teamBName:
-                                                                              "阿尔希拉尔体育俱乐部",
+                                                                              futureList7[index].awayTeamName ?? "",
                                                                           teamBLogo:
-                                                                              'images/mainpage/sampleLogo.png',
-                                                                          teamBScore:
-                                                                              "562",
+                                                                              futureList7[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                          teamBScore: futureList7[index]
+                                                                              .awayTeamScore
+                                                                              .toString(),
                                                                           isSaved:
-                                                                              true,
+                                                                              futureList7[index].hasCollected ?? false,
                                                                         ),
                                                                       );
                                                                     },
@@ -850,7 +1331,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                         physics:
                                                                             const NeverScrollableScrollPhysics(),
                                                                         itemCount:
-                                                                            10,
+                                                                            past1Length,
                                                                         shrinkWrap:
                                                                             true,
                                                                         itemBuilder:
@@ -863,16 +1344,16 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                             },
                                                                             child:
                                                                                 GameDisplayComponent(
-                                                                              id: 0,
-                                                                              competitionType: "欧冠",
-                                                                              duration: "12:59",
-                                                                              teamAName: "马德里竞技足球俱乐部",
-                                                                              teamALogo: 'images/mainpage/sampleLogo.png',
-                                                                              teamAScore: "0",
-                                                                              teamBName: "阿尔希拉尔体育俱乐部",
-                                                                              teamBLogo: 'images/mainpage/sampleLogo.png',
-                                                                              teamBScore: "562",
-                                                                              isSaved: true,
+                                                                              id: pastList1[index].id ?? 0,
+                                                                              competitionType: pastList1[index].competitionName ?? "",
+                                                                              duration: pastList1[index].matchTimeStr ?? "00:00",
+                                                                              teamAName: pastList1[index].homeTeamName ?? "",
+                                                                              teamALogo: pastList1[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                              teamAScore: pastList1[index].homeTeamScore.toString(),
+                                                                              teamBName: pastList1[index].awayTeamName ?? "",
+                                                                              teamBLogo: pastList1[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                              teamBScore: pastList1[index].awayTeamScore.toString(),
+                                                                              isSaved: pastList1[index].hasCollected ?? false,
                                                                             ),
                                                                           );
                                                                         },
@@ -896,7 +1377,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                             physics:
                                                                                 const NeverScrollableScrollPhysics(),
                                                                             itemCount:
-                                                                                10,
+                                                                                past2Length,
                                                                             shrinkWrap:
                                                                                 true,
                                                                             itemBuilder:
@@ -906,16 +1387,16 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                   print("navi into tournament");
                                                                                 },
                                                                                 child: GameDisplayComponent(
-                                                                                  id: 0,
-                                                                                  competitionType: "Iraqi League - Regular",
-                                                                                  duration: "12:59",
-                                                                                  teamAName: "Real Club Deportivo",
-                                                                                  teamALogo: 'images/mainpage/sampleLogo.png',
-                                                                                  teamAScore: "12",
-                                                                                  teamBName: "Real Club Deportivo de La Coruña",
-                                                                                  teamBLogo: 'images/mainpage/sampleLogo.png',
-                                                                                  teamBScore: "562",
-                                                                                  isSaved: true,
+                                                                                  id: pastList2[index].id ?? 0,
+                                                                                  competitionType: pastList2[index].competitionName ?? "",
+                                                                                  duration: pastList2[index].matchTimeStr ?? "00:00",
+                                                                                  teamAName: pastList2[index].homeTeamName ?? "",
+                                                                                  teamALogo: pastList2[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                  teamAScore: pastList2[index].homeTeamScore.toString(),
+                                                                                  teamBName: pastList2[index].awayTeamName ?? "",
+                                                                                  teamBLogo: pastList2[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                  teamBScore: pastList2[index].awayTeamScore.toString(),
+                                                                                  isSaved: pastList2[index].hasCollected ?? false,
                                                                                 ),
                                                                               );
                                                                             },
@@ -935,7 +1416,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                               ])
                                                                             : ListView.builder(
                                                                                 physics: const NeverScrollableScrollPhysics(),
-                                                                                itemCount: 10,
+                                                                                itemCount: past3Length,
                                                                                 shrinkWrap: true,
                                                                                 itemBuilder: (context, index) {
                                                                                   return GestureDetector(
@@ -943,16 +1424,16 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                       print("navi into tournament");
                                                                                     },
                                                                                     child: GameDisplayComponent(
-                                                                                      id: 0,
-                                                                                      competitionType: "欧冠",
-                                                                                      duration: "12:59",
-                                                                                      teamAName: "马德里竞技足球俱乐部",
-                                                                                      teamALogo: 'images/mainpage/sampleLogo.png',
-                                                                                      teamAScore: "0",
-                                                                                      teamBName: "阿尔希拉尔体育俱乐部",
-                                                                                      teamBLogo: 'images/mainpage/sampleLogo.png',
-                                                                                      teamBScore: "562",
-                                                                                      isSaved: true,
+                                                                                      id: pastList3[index].id ?? 0,
+                                                                                      competitionType: pastList3[index].competitionName ?? "",
+                                                                                      duration: pastList3[index].matchTimeStr ?? "00:00",
+                                                                                      teamAName: pastList3[index].homeTeamName ?? "",
+                                                                                      teamALogo: pastList3[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                      teamAScore: pastList3[index].homeTeamScore.toString(),
+                                                                                      teamBName: pastList3[index].awayTeamName ?? "",
+                                                                                      teamBLogo: pastList3[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                      teamBScore: pastList3[index].awayTeamScore.toString(),
+                                                                                      isSaved: pastList3[index].hasCollected ?? false,
                                                                                     ),
                                                                                   );
                                                                                 },
@@ -969,7 +1450,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                   ])
                                                                                 : ListView.builder(
                                                                                     physics: const NeverScrollableScrollPhysics(),
-                                                                                    itemCount: 10,
+                                                                                    itemCount: past4Length,
                                                                                     shrinkWrap: true,
                                                                                     itemBuilder: (context, index) {
                                                                                       return GestureDetector(
@@ -977,16 +1458,16 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                           print("navi into tournament");
                                                                                         },
                                                                                         child: GameDisplayComponent(
-                                                                                          id: 0,
-                                                                                          competitionType: "Iraqi League - Regular",
-                                                                                          duration: "12:59",
-                                                                                          teamAName: "Real Club Deportivo",
-                                                                                          teamALogo: 'images/mainpage/sampleLogo.png',
-                                                                                          teamAScore: "12",
-                                                                                          teamBName: "Real Club Deportivo de La Coruña",
-                                                                                          teamBLogo: 'images/mainpage/sampleLogo.png',
-                                                                                          teamBScore: "562",
-                                                                                          isSaved: true,
+                                                                                          id: pastList4[index].id ?? 0,
+                                                                                          competitionType: pastList4[index].competitionName ?? "",
+                                                                                          duration: pastList4[index].matchTimeStr ?? "00:00",
+                                                                                          teamAName: pastList4[index].homeTeamName ?? "",
+                                                                                          teamALogo: pastList4[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                          teamAScore: pastList4[index].homeTeamScore.toString(),
+                                                                                          teamBName: pastList4[index].awayTeamName ?? "",
+                                                                                          teamBLogo: pastList4[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                          teamBScore: pastList4[index].awayTeamScore.toString(),
+                                                                                          isSaved: pastList4[index].hasCollected ?? false,
                                                                                         ),
                                                                                       );
                                                                                     },
@@ -1003,7 +1484,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                       ])
                                                                                     : ListView.builder(
                                                                                         physics: const NeverScrollableScrollPhysics(),
-                                                                                        itemCount: 10,
+                                                                                        itemCount: past5Length,
                                                                                         shrinkWrap: true,
                                                                                         itemBuilder: (context, index) {
                                                                                           return GestureDetector(
@@ -1011,16 +1492,16 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                               print("navi into tournament");
                                                                                             },
                                                                                             child: GameDisplayComponent(
-                                                                                              id: 0,
-                                                                                              competitionType: "欧冠",
-                                                                                              duration: "12:59",
-                                                                                              teamAName: "马德里竞技足球俱乐部",
-                                                                                              teamALogo: 'images/mainpage/sampleLogo.png',
-                                                                                              teamAScore: "0",
-                                                                                              teamBName: "阿尔希拉尔体育俱乐部",
-                                                                                              teamBLogo: 'images/mainpage/sampleLogo.png',
-                                                                                              teamBScore: "562",
-                                                                                              isSaved: true,
+                                                                                              id: pastList5[index].id ?? 0,
+                                                                                              competitionType: pastList5[index].competitionName ?? "",
+                                                                                              duration: pastList5[index].matchTimeStr ?? "00:00",
+                                                                                              teamAName: pastList5[index].homeTeamName ?? "",
+                                                                                              teamALogo: pastList5[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                              teamAScore: pastList5[index].homeTeamScore.toString(),
+                                                                                              teamBName: pastList5[index].awayTeamName ?? "",
+                                                                                              teamBLogo: pastList5[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                              teamBScore: pastList5[index].awayTeamScore.toString(),
+                                                                                              isSaved: pastList5[index].hasCollected ?? false,
                                                                                             ),
                                                                                           );
                                                                                         },
@@ -1037,7 +1518,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                           ])
                                                                                         : ListView.builder(
                                                                                             physics: const NeverScrollableScrollPhysics(),
-                                                                                            itemCount: 10,
+                                                                                            itemCount: past6Length,
                                                                                             shrinkWrap: true,
                                                                                             itemBuilder: (context, index) {
                                                                                               return GestureDetector(
@@ -1045,16 +1526,16 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                                   print("navi into tournament");
                                                                                                 },
                                                                                                 child: GameDisplayComponent(
-                                                                                                  id: 0,
-                                                                                                  competitionType: "Iraqi League - Regular",
-                                                                                                  duration: "12:59",
-                                                                                                  teamAName: "Real Club Deportivo",
-                                                                                                  teamALogo: 'images/mainpage/sampleLogo.png',
-                                                                                                  teamAScore: "12",
-                                                                                                  teamBName: "Real Club Deportivo de La Coruña",
-                                                                                                  teamBLogo: 'images/mainpage/sampleLogo.png',
-                                                                                                  teamBScore: "562",
-                                                                                                  isSaved: true,
+                                                                                                  id: pastList6[index].id ?? 0,
+                                                                                                  competitionType: pastList6[index].competitionName ?? "",
+                                                                                                  duration: pastList6[index].matchTimeStr ?? "00:00",
+                                                                                                  teamAName: pastList6[index].homeTeamName ?? "",
+                                                                                                  teamALogo: pastList6[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                  teamAScore: pastList6[index].homeTeamScore.toString(),
+                                                                                                  teamBName: pastList6[index].awayTeamName ?? "",
+                                                                                                  teamBLogo: pastList6[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                  teamBScore: pastList6[index].awayTeamScore.toString(),
+                                                                                                  isSaved: pastList6[index].hasCollected ?? false,
                                                                                                 ),
                                                                                               );
                                                                                             },
@@ -1071,7 +1552,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                               ])
                                                                                             : ListView.builder(
                                                                                                 physics: const NeverScrollableScrollPhysics(),
-                                                                                                itemCount: 10,
+                                                                                                itemCount: past7Length,
                                                                                                 shrinkWrap: true,
                                                                                                 itemBuilder: (context, index) {
                                                                                                   return GestureDetector(
@@ -1079,16 +1560,16 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                                       print("navi into tournament");
                                                                                                     },
                                                                                                     child: GameDisplayComponent(
-                                                                                                      id: 0,
-                                                                                                      competitionType: "欧冠",
-                                                                                                      duration: "12:59",
-                                                                                                      teamAName: "马德里竞技足球俱乐部",
-                                                                                                      teamALogo: 'images/mainpage/sampleLogo.png',
-                                                                                                      teamAScore: "0",
-                                                                                                      teamBName: "阿尔希拉尔体育俱乐部",
-                                                                                                      teamBLogo: 'images/mainpage/sampleLogo.png',
-                                                                                                      teamBScore: "562",
-                                                                                                      isSaved: false,
+                                                                                                      id: pastList7[index].id ?? 0,
+                                                                                                      competitionType: pastList7[index].competitionName ?? "",
+                                                                                                      duration: pastList7[index].matchTimeStr ?? "00:00",
+                                                                                                      teamAName: pastList7[index].homeTeamName ?? "",
+                                                                                                      teamALogo: pastList7[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                      teamAScore: pastList7[index].homeTeamScore.toString(),
+                                                                                                      teamBName: pastList7[index].awayTeamName ?? "",
+                                                                                                      teamBLogo: pastList7[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                      teamBScore: pastList7[index].awayTeamScore.toString(),
+                                                                                                      isSaved: pastList7[index].hasCollected ?? false,
                                                                                                     ),
                                                                                                   );
                                                                                                 },

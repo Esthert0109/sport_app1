@@ -159,7 +159,7 @@ class _GameDisplayComponentState extends State<GameDisplayComponent> {
                     flex: 1,
                     child: Container(
                       alignment: Alignment.center,
-                      child: Image(image: AssetImage(teamALogo)),
+                      child: Image(image: NetworkImage(teamALogo)),
                     ),
                   ),
                   Expanded(
@@ -178,7 +178,7 @@ class _GameDisplayComponentState extends State<GameDisplayComponent> {
                     flex: 1,
                     child: Container(
                       alignment: Alignment.center,
-                      child: Image(image: AssetImage(teamBLogo)),
+                      child: Image(image: NetworkImage(teamBLogo)),
                     ),
                   ),
                   Expanded(

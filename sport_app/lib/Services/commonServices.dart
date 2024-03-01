@@ -113,7 +113,6 @@ class CommonServices {
         Uri.parse(url),
         headers: <String, String>{
           'Content-Type': 'application/json',
-          //'Cookie': 'token=3287071134634f8eba5992bcc96a30d3',
         },
         body: jsonEncode(data),
       );

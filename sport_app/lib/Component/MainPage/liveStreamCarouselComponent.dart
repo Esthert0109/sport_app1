@@ -30,7 +30,7 @@ class _LiveStreamCarouselState extends State<LiveStreamCarousel> {
     return Container(
       width: 328 * fem,
       height: 183 * fem,
-      margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+      margin: EdgeInsets.fromLTRB(10 * fem, 10 * fem, 10 * fem, 5 * fem),
       child: Stack(
         children: [
           ClipRRect(

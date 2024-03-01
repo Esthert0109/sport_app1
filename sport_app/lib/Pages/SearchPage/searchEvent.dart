@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../Component/Common/snackBar.dart';
+import '../../Component/MainPage/gameDisplayComponent.dart';
 import '../../Constants/colorConstant.dart';
 import '../../Constants/textConstant.dart';
 import '../../Model/userDataModel.dart';
@@ -720,6 +721,19 @@ class _SearchEventState extends State<SearchEventPage> {
                 // ).launch(context);
                 // print(getBookmarkList);
               },
+              child: GameDisplayComponent(
+                id: 0,
+                competitionType: "Iraqi League - Regular",
+                duration: "12:59",
+                teamAName: "Real Club Deportivo",
+                teamALogo: 'images/mainpage/sampleLogo.png',
+                teamAScore: "12",
+                teamBName: "Real Club Deportivo de La Coruña",
+                teamBLogo: 'images/mainpage/sampleLogo.png',
+                teamBScore: "562",
+                isSaved: true,
+              ),
+
               // child: LiveDisplayBlock(
               //   getBookmarkBlockList: getBookmarkList,
               //   onTapCallback: toggleRefresh,

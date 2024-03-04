@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:text_scroll/text_scroll.dart';
 
 import '../../Constants/colorConstant.dart';
+import '../../Constants/textConstant.dart';
 
 class LiveSquareBlock extends StatefulWidget {
   final String title;
@@ -81,8 +82,7 @@ class _LiveSquareBlockState extends State<LiveSquareBlock> {
                                   Velocity(pixelsPerSecond: Offset(20, 0)),
                               delayBefore: Duration(milliseconds: 500),
                               pauseBetween: Duration(milliseconds: 5000),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 16),
+                              style: tLiveTitleComponent,
                               textAlign: TextAlign.left,
                             ),
                           ),
@@ -95,14 +95,7 @@ class _LiveSquareBlockState extends State<LiveSquareBlock> {
                                 0 * fem, 0 * fem, 0 * fem, 0 * fem),
                             child: Text(
                               widget.anchor,
-                              style: TextStyle(
-                                  color: kComponentHintTextColor,
-                                  fontFamily: 'NotoSansSC',
-                                  fontSize: 10 * fem,
-                                  fontWeight: FontWeight.w500,
-                                  height: 1.5 * fem,
-                                  letterSpacing: 0.3 * fem,
-                                  overflow: TextOverflow.ellipsis),
+                              style: tLiveAnchorNameComponent,
                             ),
                           ),
                         ),

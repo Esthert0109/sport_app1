@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sport_app/Model/collectionModel.dart';
+import 'package:sport_app/Services/Utils/httpUtil.dart';
 import 'package:sport_app/Services/commonServices.dart';
 
 import '../Constants/apiConstant.dart';
 import '../Model/userDataModel.dart';
+import '../Services/Utils/sharedPreferencesUtils.dart';
 
 class BookmarkProvider extends ChangeNotifier {
   // services
@@ -48,7 +50,6 @@ class BookmarkProvider extends ChangeNotifier {
       print("create collection: url:$url, response: $response");
 
       if (responseCode == 0) {
-        
         CollectionData responseData = CollectionData.fromJson(response['data']);
 
         CollectionModel collectionModel = CollectionModel(
@@ -102,6 +103,45 @@ class BookmarkProvider extends ChangeNotifier {
       }
     } catch (e) {
       print("Error in delete collection: $e");
+      return null;
+    }
+  }
+
+  Future<CollectMatchesModel?> getThreeCollection() async {
+    String url = ApiConstants.baseUrl +
+        ApiConstants.getAllStreamCollectionListEngUrlBasketball +
+        '/3';
+
+    final token = await SharedPreferencesUtils.getSavedToken();
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=utf-8',
+      'token': token!,
+    };
+
+    try {
+      final response = await sendGetRequest(url, headers);
+
+      int responseCode = response['code'];
+      String responseMsg = response['msg'];
+
+      if (responseCode == 0) {
+        List<dynamic> jsonData = response['data'];
+        List<CollectMatchesData> responseData =
+            jsonData.map((e) => CollectMatchesData.fromJson(e)).toList();
+
+        CollectMatchesModel collectMatchesModel = CollectMatchesModel(
+            code: responseCode, msg: responseMsg, data: responseData);
+
+        return collectMatchesModel;
+      } else {
+        CollectMatchesModel collectMatchesModel =
+            CollectMatchesModel(code: responseCode, msg: responseMsg, data: []);
+
+        return collectMatchesModel;
+      }
+    } catch (e) {
+      print("Errror in get 3 collections: $e");
       return null;
     }
   }

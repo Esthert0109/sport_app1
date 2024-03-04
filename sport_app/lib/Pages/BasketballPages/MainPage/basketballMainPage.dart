@@ -11,7 +11,6 @@ import 'package:sport_app/Model/collectionModel.dart';
 import 'package:sport_app/Model/liveStreamModel.dart';
 import 'package:sport_app/Model/matchesModel.dart';
 import 'package:sport_app/Provider/basketballMatchProvider.dart';
-import 'package:sport_app/Provider/bookmarkProvider.dart';
 import 'package:sport_app/Provider/liveStreamProvider.dart';
 import 'package:tencent_cloud_chat_uikit/tencent_cloud_chat_uikit.dart';
 

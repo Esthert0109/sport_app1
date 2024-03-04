@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../Constants/colorConstant.dart';
 import '../../Constants/textConstant.dart';
 import '../../Model/collectionModel.dart';
-import '../../Provider/bookmarkProvider.dart';
+import '../../Provider/collectionProvider.dart';
 
 class GameDisplayComponent extends StatefulWidget {
   final int id;

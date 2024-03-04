@@ -10,7 +10,7 @@ import '../../Component/MainPage/gameDisplayComponent.dart';
 import '../../Constants/colorConstant.dart';
 import '../../Constants/textConstant.dart';
 import '../../Model/userDataModel.dart';
-import '../../Provider/bookmarkProvider.dart';
+import '../../Provider/collectionProvider.dart';
 import '../../Provider/searchEventProvider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

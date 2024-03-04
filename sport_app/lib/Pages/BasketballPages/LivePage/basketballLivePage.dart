@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:card_loading/card_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -9,12 +10,15 @@ import 'package:sport_app/Provider/liveStreamProvider.dart';
 import '../../../Component/Common/liveSquareBlock.dart';
 import '../../../Component/LivePage/liveDisplayBlockComponent.dart';
 import '../../../Component/Loading/loadingLiveDisplayBlock.dart';
+import '../../../Component/MainPage/gameDisplayComponent.dart';
 import '../../../Component/Tencent/liveStreamPlayer.dart';
 import '../../../Constants/Controller/layoutController.dart';
 import '../../../Constants/colorConstant.dart';
 import '../../../Constants/textConstant.dart';
+import '../../../Model/collectionModel.dart';
+import '../../../Model/liveStreamModel.dart';
 import '../../../Model/userDataModel.dart';
-import '../../../Provider/bookmarkProvider.dart';
+import '../../../Provider/collectionProvider.dart';
 import '../../TencentLiveStreamRoom/liveStreamChatRoom.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -43,8 +47,8 @@ class _BasketballLivePageState extends State<BasketballLivePage>
   //variables
   bool _showAppBar = true;
   bool _isScrollingDown = false;
-  bool _isLiveLoading = true;
-  bool _isSavedLiveLoading = true;
+  bool isLiveLoading = false;
+  bool isCollectionLoading = false;
   bool shouldRefresh = false;
 
   //Provider bookmark and live stream
@@ -53,62 +57,64 @@ class _BasketballLivePageState extends State<BasketballLivePage>
   LiveStreamProvider liveProvider = LiveStreamProvider();
 
   //common variables
-  List<dynamic>? getAllLiveStreamList = [];
-  List<dynamic>? AllLiveStreamList = [];
-  List<dynamic>? basketballLiveStreamList = [];
-  List<Map<String, dynamic>> savedMatch = [{}];
-  int allStreamCount = 0;
+  // List<dynamic>? getAllLiveStreamList = [];
+  // List<dynamic>? AllLiveStreamList = [];
+  List<LiveStreamData> basketballLiveStreamList = [];
+  int liveStreamLength = 0;
+
+  List<CollectMatchesData> threeCollections = [];
+  int collectionLength = 0;
 
   // get data
-  Future<String> getPreBookmarkId() async {
-    final prefs = await SharedPreferences.getInstance();
-    final removeBookmarkId = prefs.getString('removeBookmarkId') ?? "";
-    return removeBookmarkId;
-  }
+  // Future<String> getPreBookmarkId() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final removeBookmarkId = prefs.getString('removeBookmarkId') ?? "";
+  //   return removeBookmarkId;
+  // }
 
-  Future<String> savedPreBookmarkId() async {
-    final prefs = await SharedPreferences.getInstance();
-    final savedBookmarkId = prefs.getString('savedBookmarkId') ?? "";
-    return savedBookmarkId;
-  }
+  // Future<String> savedPreBookmarkId() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final savedBookmarkId = prefs.getString('savedBookmarkId') ?? "";
+  //   return savedBookmarkId;
+  // }
 
-  Future<String> removeBookmarkIndex() async {
-    final prefs = await SharedPreferences.getInstance();
-    final removeBookmarkIndex = prefs.getString('removeBookmarkIndex') ?? "";
-    return removeBookmarkIndex;
-  }
+  // Future<String> removeBookmarkIndex() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final removeBookmarkIndex = prefs.getString('removeBookmarkIndex') ?? "";
+  //   return removeBookmarkIndex;
+  // }
 
-  Future<String?> removePreBookmarkId() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('savedBookmarkId');
-    await prefs.remove('removeBookmarkId');
-    await prefs.remove('savedBookmarkIndex');
-    return null;
-  }
+  // Future<String?> removePreBookmarkId() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   await prefs.remove('savedBookmarkId');
+  //   await prefs.remove('removeBookmarkId');
+  //   await prefs.remove('savedBookmarkIndex');
+  //   return null;
+  // }
 
-  Future<List<dynamic>> getLiveStreamBookmark() async {
-    List<dynamic> getLiveStreamBookmarkList =
-        await savedBookmarkProvider.getLiveStreamBookmark();
-    print(getLiveStreamBookmarkList);
-    return getLiveStreamBookmarkList;
-  }
+  // Future<List<dynamic>> getLiveStreamBookmark() async {
+  //   List<dynamic> getLiveStreamBookmarkList =
+  //       await savedBookmarkProvider.getLiveStreamBookmark();
+  //   print(getLiveStreamBookmarkList);
+  //   return getLiveStreamBookmarkList;
+  // }
 
-  Future<List<dynamic>> refreshBookmarkList() async {
-    getLiveStreamBookmark().then((value) {
-      if (mounted) {
-        setState(() {
-          savedBookmarkList = value;
+  // Future<List<dynamic>> refreshBookmarkList() async {
+  //   getLiveStreamBookmark().then((value) {
+  //     if (mounted) {
+  //       setState(() {
+  //         savedBookmarkList = value;
 
-          savedBookmarkList.sort((a, b) {
-            final DateTime dateTimeA = a["matchDate"] ?? DateTime(0);
-            final DateTime dateTimeB = b["matchDate"] ?? DateTime(0);
-            return dateTimeB.compareTo(dateTimeA);
-          });
-        });
-      }
-    });
-    return savedBookmarkList;
-  }
+  //         savedBookmarkList.sort((a, b) {
+  //           final DateTime dateTimeA = a["matchDate"] ?? DateTime(0);
+  //           final DateTime dateTimeB = b["matchDate"] ?? DateTime(0);
+  //           return dateTimeB.compareTo(dateTimeA);
+  //         });
+  //       });
+  //     }
+  //   });
+  //   return savedBookmarkList;
+  // }
 
 //provider with body
   // Future<List<dynamic>?>? getAllLiveStreamListProvider() async {
@@ -118,6 +124,38 @@ class _BasketballLivePageState extends State<BasketballLivePage>
   //   print("check popular stream list: $getAllLiveStreamList");
   //   return getAllLiveStreamList;
   // }
+
+  Future<void> getAllLiveList() async {
+    LiveStreamModel? liveList = await liveProvider.getAllLiveStreamList();
+
+    if (!isLiveLoading) {
+      setState(() {
+        isLiveLoading = true;
+      });
+      basketballLiveStreamList.addAll(liveList?.data ?? []);
+      liveStreamLength = basketballLiveStreamList.length;
+      setState(() {
+        isLiveLoading = false;
+      });
+    }
+  }
+
+  Future<void> getCollections() async {
+    if (!isCollectionLoading) {
+      setState(() {
+        isCollectionLoading = true;
+      });
+
+      CollectMatchesModel? collection =
+          await savedBookmarkProvider.getThreeCollection();
+      threeCollections.addAll(collection?.data ?? []);
+      collectionLength = threeCollections.length;
+
+      setState(() {
+        isCollectionLoading = false;
+      });
+    }
+  }
 
   //choice of main page
   void dropdownCallback(String? selectedValue) {
@@ -133,103 +171,67 @@ class _BasketballLivePageState extends State<BasketballLivePage>
         print("check sport selection 2: ${userModel.isFootball.value}");
       }
     });
+  }
 
-    String getStreamURL(streamUrl) {
-      int index = streamUrl.indexOf('?');
-      if (index != -1) {
-        // Extract the substring before the first '?'
-        String result = streamUrl.substring(0, index);
-        print(result);
-        return result;
-      } else {
-        print('No match found');
-        return "";
-      }
-    }
+  Future<void> toggleRefresh() async {
+    setState(() {
+      threeCollections.clear();
+      collectionLength = threeCollections.length;
 
-    //refresh to get bookmark
-    Future<void> toggleRefresh() async {
-      //get data from api
-      String removeBookmarkId = await getPreBookmarkId();
-      String savedBookmarkId = await savedPreBookmarkId();
-      String savedBookmarkIndex = await removeBookmarkIndex();
+      getCollections();
 
-      setState(() {
-        shouldRefresh = !shouldRefresh;
-        if (mounted) {
+      basketballLiveStreamList.clear();
+      liveStreamLength = basketballLiveStreamList.length;
+      getAllLiveList();
+    });
+  }
+
+  //initState
+  @override
+  void initState() {
+    super.initState();
+    getCollections();
+    getAllLiveList();
+    print("savedBookmarkList: ${savedBookmarkList.toString()}");
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.userScrollDirection.toString() ==
+          'ScrollDirection.reverse') {
+        if (!_isScrollingDown) {
           setState(() {
-            if (removeBookmarkId != "") {
-              getBookmarkList.remove(int.parse(removeBookmarkId));
-              savedBookmarkList
-                  .remove(savedBookmarkList[int.parse(savedBookmarkIndex)]);
-            } else {
-              getBookmarkList.add(int.parse(savedBookmarkId));
-            }
-            removePreBookmarkId();
+            _isScrollingDown = true;
+            _showAppBar = false;
           });
         }
-      });
-    }
+      }
 
-    //initState
-    @override
-    void initState() {
-      super.initState();
-
-      refreshBookmarkList();
-      print("savedBookmarkList: ${savedBookmarkList.toString()}");
-
-      // getAllLiveStreamListProvider()?.then((value) {
-      //   setState(() {
-      //     AllLiveStreamList = value;
-      //     print("check all in initState: $AllLiveStreamList");
-      //     allStreamCount = AllLiveStreamList!.length;
-      //     // print("check all count: $allStreamCount");
-
-      //     basketballLiveStreamList = AllLiveStreamList!
-      //         .where((item) => item['sportType'] == '1')
-      //         .toList();
-
-      //          print("check all count: $basketballLiveStreamList");
-
-      //     allStreamCount = basketballLiveStreamList!.length;
-      //   });
-      // });
-
-      _scrollController.addListener(() {
-        if (_scrollController.position.userScrollDirection.toString() ==
-            'ScrollDirection.reverse') {
-          if (!_isScrollingDown) {
-            setState(() {
-              _isScrollingDown = true;
-              _showAppBar = false;
-            });
-          }
+      if (_scrollController.position.userScrollDirection.toString() ==
+          'ScrollDirection.forward') {
+        if (_isScrollingDown) {
+          setState(() {
+            _isScrollingDown = false;
+            _showAppBar = true;
+          });
         }
+      }
+    });
+  }
 
-        if (_scrollController.position.userScrollDirection.toString() ==
-            'ScrollDirection.forward') {
-          if (_isScrollingDown) {
-            setState(() {
-              _isScrollingDown = false;
-              _showAppBar = true;
-            });
-          }
-        }
-      });
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _scrollController.removeListener(() {});
+    super.dispose();
+  }
 
-      Timer(const Duration(seconds: 2), () async {
-        setState(() {
-          _isLiveLoading = false;
-        });
-      });
-    }
-
-    @override
-    void dispose() {
-      _scrollController.dispose();
-      _scrollController.removeListener(() {});
-      super.dispose();
+  String getStreamURL(streamUrl) {
+    int index = streamUrl.indexOf('?');
+    if (index != -1) {
+      String result = streamUrl.substring(0, index);
+      return result;
+    } else {
+      print('No match found');
+      return "";
     }
   }
 
@@ -330,8 +332,9 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                 child:
                     // Obx(() =>
                     RefreshIndicator(
+              color: kMainGreenColor,
               onRefresh: () async {
-                // refreshBookmarkList();
+                toggleRefresh();
               },
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -360,73 +363,79 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                           )
                         ],
                       ),
-                      if (savedBookmarkList.isNotEmpty) ...[
-                        Center(
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: (savedBookmarkList.length >= 3)
-                                ? 3
-                                : savedBookmarkList.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: EdgeInsets.all(0),
-                                child: Column(
-                                  children: [
-                                    InkWell(
+                      isCollectionLoading
+                          ? Column(
+                              children: [
+                                for (int i = 0; i < 3; i++)
+                                  CardLoading(
+                                    height: 100 * fem,
+                                    borderRadius:
+                                        BorderRadius.circular(8 * fem),
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: 10 * fem,
+                                        vertical: 10 * fem),
+                                  ),
+                              ],
+                            )
+                          : (collectionLength == 0)
+                              ? Padding(
+                                  padding: EdgeInsets.all(20 * fem),
+                                  child: Text('快去收藏些直播吧！', style: tShowAll),
+                                )
+                              : ListView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  padding:
+                                      EdgeInsets.symmetric(vertical: 10 * fem),
+                                  itemCount: collectionLength,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    return GestureDetector(
                                       onTap: () {
+                                        print("navi into tournament");
                                         BasketballTournamentDetails(
                                                 id:
-                                                    '${savedBookmarkList?[index]['id']}',
+                                                    '${threeCollections[index].id}',
                                                 matchDate:
-                                                    '${savedBookmarkList?[index]['matchDate']}',
+                                                    '${threeCollections[index].matchDate}',
                                                 matchStatus:
-                                                    '${savedBookmarkList?[index]['statusStr']}',
+                                                    '${threeCollections[index].statusStr}',
                                                 matchName:
-                                                    '${savedBookmarkList?[index]['competitionName']}')
+                                                    '${threeCollections[index].competitionName}')
                                             .launch(context);
                                       },
-                                      child: LiveDisplayBlock(
-                                          id: savedBookmarkList?[index]['id']
-                                              .toString(),
-                                          index: index,
-                                          competitionType: savedBookmarkList?[index]
-                                                  ['competitionName']
-                                              .toString(),
-                                          duration: savedBookmarkList?[index]['matchTimeStr']
-                                              .toString(),
-                                          savedAmount: '0',
-                                          isSaved: getBookmarkList.contains(
-                                              savedBookmarkList[index]['id']),
-                                          teamAName: savedBookmarkList?[index]
-                                                  ['homeTeamName']
-                                              .toString(),
-                                          teamALogo: savedBookmarkList?[index]
-                                                  ['homeTeamLogo']
-                                              .toString(),
-                                          teamAScore: savedBookmarkList?[index]
-                                                  ['homeTeamScore']
-                                              .toString(),
-                                          teamBName: savedBookmarkList?[index]
-                                                  ['awayTeamName']
-                                              .toString(),
-                                          teamBLogo: savedBookmarkList?[index]['awayTeamLogo'].toString(),
-                                          teamBScore: savedBookmarkList?[index]['awayTeamScore'].toString(),
-                                          status: savedBookmarkList?[index]['statusStr'].toString(),
-                                          // onTapCallback: toggleRefresh,
-                                          getBookmarkBlockList: getBookmarkList),
-                                    )
-                                  ],
+                                      child: GameDisplayComponent(
+                                        id: threeCollections[index].id ?? 0,
+                                        competitionType: threeCollections[index]
+                                                .competitionName ??
+                                            "",
+                                        duration: threeCollections[index]
+                                                .matchTimeStr ??
+                                            "00:00",
+                                        teamAName: threeCollections[index]
+                                                .homeTeamName ??
+                                            "",
+                                        teamALogo: threeCollections[index]
+                                                .homeTeamLogo ??
+                                            'images/mainpage/sampleLogo.png',
+                                        teamAScore: threeCollections[index]
+                                            .homeTeamScore
+                                            .toString(),
+                                        teamBName: threeCollections[index]
+                                                .awayTeamName ??
+                                            "",
+                                        teamBLogo: threeCollections[index]
+                                                .awayTeamLogo ??
+                                            'images/mainpage/sampleLogo.png',
+                                        teamBScore: threeCollections[index]
+                                            .awayTeamScore
+                                            .toString(),
+                                        isSaved: threeCollections[index]
+                                                .hasCollected ??
+                                            false,
+                                      ),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
-                          ),
-                        )
-                      ] else
-                        Padding(
-                          padding: EdgeInsets.all(20 * fem),
-                          child: Text('快去收藏些直播吧！', style: tShowAll),
-                        ),
                       Align(
                         alignment: Alignment.topLeft,
                         child: Text(
@@ -437,7 +446,7 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                       SizedBox(
                         height: 10 * fem,
                       ),
-                      if (_isLiveLoading) ...{
+                      if (isLiveLoading) ...{
                         Column(
                           children: [
                             const Row(
@@ -460,37 +469,35 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                           ],
                         )
                       } else
-                        for (int i = 0; i < allStreamCount; i += 2)
+                        for (int i = 0; i < liveStreamLength; i += 2)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               for (int j = i;
-                                  j < i + 2 && j < allStreamCount;
+                                  j < i + 2 && j < liveStreamLength;
                                   j++)
                                 InkWell(
                                   onTap: () {
                                     LiveStreamChatRoom page = LiveStreamChatRoom(
                                         userLoginId: userModel.id.value,
                                         avChatRoomId:
-                                            "panda${basketballLiveStreamList![j]['userId']}",
-                                        anchor: basketballLiveStreamList![j]
-                                            ['nickName'],
+                                            "panda${basketballLiveStreamList[j].userId}",
+                                        anchor: basketballLiveStreamList[j]
+                                                .nickName ??
+                                            "",
                                         streamTitle:
-                                            basketballLiveStreamList![j]
-                                                ['title'],
+                                            basketballLiveStreamList[j].title ??
+                                                "",
                                         anchorPic: basketballLiveStreamList![j]
-                                            ['avatar'],
+                                                .avatar ??
+                                            "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
                                         playMode: V2TXLivePlayMode
                                             .v2TXLivePlayModeLeb,
                                         liveURL:
-                                            "rtmp://play.mindark.cloud/live/"
-                                        // +
-                                        //     getStreamURL(
-                                        //         basketballLiveStreamList![
-                                        //                 j]
-                                        //             ['pushCode'])
-
-                                        );
+                                            "rtmp://play.mindark.cloud/live/" +
+                                                getStreamURL(
+                                                    basketballLiveStreamList![j]
+                                                        .pushCode));
 
                                     Navigator.push(
                                         context,
@@ -498,14 +505,17 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                                             builder: (context) => page));
                                   },
                                   child: LiveSquareBlock(
-                                    title: basketballLiveStreamList![j]
-                                        ['title'],
-                                    anchor: basketballLiveStreamList![j]
-                                        ['nickName'],
+                                    title:
+                                        basketballLiveStreamList[j].title ?? "",
+                                    anchor:
+                                        basketballLiveStreamList[j].nickName ??
+                                            "",
                                     anchorPhoto: basketballLiveStreamList![j]
-                                        ['avatar'],
+                                            .avatar ??
+                                        "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
                                     livePhoto: basketballLiveStreamList![j]
-                                        ['cover'],
+                                            .cover ??
+                                        "https://images.chinatimes.com/newsphoto/2022-05-05/656/20220505001628.jpg",
                                   ),
                                 )
                             ],

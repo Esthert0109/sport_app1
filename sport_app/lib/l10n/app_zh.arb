@@ -44,6 +44,10 @@
     "forgotPassword": "忘记密码？",
     "rightPassword": "请输入正确的密码",
     "accExist": "已经有帐户？",
-    "regNow": "立刻注册"
+    "regNow": "立刻注册",
+    "showAll": "展示所有",
+    "savedCollection": "快去收藏些直播吧！",
+    "streaming": "正在直播"
+
 
 }

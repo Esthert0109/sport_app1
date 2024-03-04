@@ -65,66 +65,6 @@ class _BasketballLivePageState extends State<BasketballLivePage>
   List<CollectMatchesData> threeCollections = [];
   int collectionLength = 0;
 
-  // get data
-  // Future<String> getPreBookmarkId() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final removeBookmarkId = prefs.getString('removeBookmarkId') ?? "";
-  //   return removeBookmarkId;
-  // }
-
-  // Future<String> savedPreBookmarkId() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final savedBookmarkId = prefs.getString('savedBookmarkId') ?? "";
-  //   return savedBookmarkId;
-  // }
-
-  // Future<String> removeBookmarkIndex() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final removeBookmarkIndex = prefs.getString('removeBookmarkIndex') ?? "";
-  //   return removeBookmarkIndex;
-  // }
-
-  // Future<String?> removePreBookmarkId() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   await prefs.remove('savedBookmarkId');
-  //   await prefs.remove('removeBookmarkId');
-  //   await prefs.remove('savedBookmarkIndex');
-  //   return null;
-  // }
-
-  // Future<List<dynamic>> getLiveStreamBookmark() async {
-  //   List<dynamic> getLiveStreamBookmarkList =
-  //       await savedBookmarkProvider.getLiveStreamBookmark();
-  //   print(getLiveStreamBookmarkList);
-  //   return getLiveStreamBookmarkList;
-  // }
-
-  // Future<List<dynamic>> refreshBookmarkList() async {
-  //   getLiveStreamBookmark().then((value) {
-  //     if (mounted) {
-  //       setState(() {
-  //         savedBookmarkList = value;
-
-  //         savedBookmarkList.sort((a, b) {
-  //           final DateTime dateTimeA = a["matchDate"] ?? DateTime(0);
-  //           final DateTime dateTimeB = b["matchDate"] ?? DateTime(0);
-  //           return dateTimeB.compareTo(dateTimeA);
-  //         });
-  //       });
-  //     }
-  //   });
-  //   return savedBookmarkList;
-  // }
-
-//provider with body
-  // Future<List<dynamic>?>? getAllLiveStreamListProvider() async {
-  //   getAllLiveStreamList = await liveProvider.getAllLiveStreamList();
-  //   allStreamCount = getAllLiveStreamList!.length;
-
-  //   print("check popular stream list: $getAllLiveStreamList");
-  //   return getAllLiveStreamList;
-  // }
-
   Future<void> getAllLiveList() async {
     LiveStreamModel? liveList = await liveProvider.getAllLiveStreamList();
 
@@ -349,7 +289,7 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            '我收藏的直播',
+                            AppLocalizations.of(context)!.myCollection,
                             style: tMain,
                           ),
                           GestureDetector(
@@ -357,7 +297,7 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                               print("goto saved Live");
                             },
                             child: Text(
-                              '展示所有',
+                              AppLocalizations.of(context)!.showAll,
                               style: tShowAll,
                             ),
                           )
@@ -380,7 +320,10 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                           : (collectionLength == 0)
                               ? Padding(
                                   padding: EdgeInsets.all(20 * fem),
-                                  child: Text('快去收藏些直播吧！', style: tShowAll),
+                                  child: Text(
+                                      AppLocalizations.of(context)!
+                                          .savedCollection,
+                                      style: tShowAll),
                                 )
                               : ListView.builder(
                                   physics: const NeverScrollableScrollPhysics(),
@@ -439,7 +382,7 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                       Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          '正在直播',
+                          AppLocalizations.of(context)!.streaming,
                           style: tMain,
                         ),
                       ),

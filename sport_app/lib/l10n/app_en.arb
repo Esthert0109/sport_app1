@@ -44,5 +44,8 @@
     "forgotPassword": "Forgot password?",
     "rightPassword": "Please enter the correct password",
     "accExist": "Account existed? ",
-    "regNow": "Register Now."
+    "regNow": "Register Now.",
+    "showAll": "Show All",
+    "savedCollection": "Save Your First Collection.",
+    "streaming": "Streaming"
 }

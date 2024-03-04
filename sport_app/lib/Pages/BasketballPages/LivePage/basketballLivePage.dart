@@ -7,6 +7,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/Provider/liveStreamProvider.dart';
 
 import '../../../Component/Common/liveSquareBlock.dart';
+import '../../../Component/LivePage/liveDisplayBlockComponent.dart';
 import '../../../Component/Loading/loadingLiveDisplayBlock.dart';
 import '../../../Component/Tencent/liveStreamPlayer.dart';
 import '../../../Constants/Controller/layoutController.dart';
@@ -16,6 +17,8 @@ import '../../../Model/userDataModel.dart';
 import '../../../Provider/bookmarkProvider.dart';
 import '../../TencentLiveStreamRoom/liveStreamChatRoom.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../basketballTournamentDetails.dart';
 
 class BasketballLivePage extends StatefulWidget {
   const BasketballLivePage({super.key});
@@ -370,50 +373,49 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                                 padding: EdgeInsets.all(0),
                                 child: Column(
                                   children: [
-                                    // InkWell(
-                                    //   onTap: () {
-                                    //     BasketballTournamentDetails(
-                                    //             id:
-                                    //                 '${savedBookmarkList?[index]['id']}',
-                                    //             matchDate:
-                                    //                 '${savedBookmarkList?[index]['matchDate']}',
-                                    //             matchStatus:
-                                    //                 '${savedBookmarkList?[index]['statusStr']}',
-                                    //             matchName:
-                                    //                 '${savedBookmarkList?[index]['competitionName']}')
-                                    //         .launch(context);
-                                    //   },
-                                    //   child: LiveDisplayBlock(
-                                    //       id: savedBookmarkList?[index]['id']
-                                    //           .toString(),
-                                    //       index: index,
-                                    //       competitionType: savedBookmarkList?[index]
-                                    //               ['competitionName']
-                                    //           .toString(),
-                                    //       duration:
-                                    //           savedBookmarkList?[index]
-                                    //                   ['matchTimeStr']
-                                    //               .toString(),
-                                    //       savedAmount: '0',
-                                    //       isSaved: getBookmarkList.contains(
-                                    //           savedBookmarkList[index]
-                                    //               ['id']),
-                                    //       teamAName:
-                                    //           savedBookmarkList?[index]
-                                    //                   ['homeTeamName']
-                                    //               .toString(),
-                                    //       teamALogo:
-                                    //           savedBookmarkList?[index]
-                                    //                   ['homeTeamLogo']
-                                    //               .toString(),
-                                    //       teamAScore: savedBookmarkList?[index]['homeTeamScore'].toString(),
-                                    //       teamBName: savedBookmarkList?[index]['awayTeamName'].toString(),
-                                    //       teamBLogo: savedBookmarkList?[index]['awayTeamLogo'].toString(),
-                                    //       teamBScore: savedBookmarkList?[index]['awayTeamScore'].toString(),
-                                    //       status: savedBookmarkList?[index]['statusStr'].toString(),
-                                    //       // onTapCallback: toggleRefresh,
-                                    //       getBookmarkBlockList: getBookmarkList),
-                                    // )
+                                    InkWell(
+                                      onTap: () {
+                                        BasketballTournamentDetails(
+                                                id:
+                                                    '${savedBookmarkList?[index]['id']}',
+                                                matchDate:
+                                                    '${savedBookmarkList?[index]['matchDate']}',
+                                                matchStatus:
+                                                    '${savedBookmarkList?[index]['statusStr']}',
+                                                matchName:
+                                                    '${savedBookmarkList?[index]['competitionName']}')
+                                            .launch(context);
+                                      },
+                                      child: LiveDisplayBlock(
+                                          id: savedBookmarkList?[index]['id']
+                                              .toString(),
+                                          index: index,
+                                          competitionType: savedBookmarkList?[index]
+                                                  ['competitionName']
+                                              .toString(),
+                                          duration: savedBookmarkList?[index]['matchTimeStr']
+                                              .toString(),
+                                          savedAmount: '0',
+                                          isSaved: getBookmarkList.contains(
+                                              savedBookmarkList[index]['id']),
+                                          teamAName: savedBookmarkList?[index]
+                                                  ['homeTeamName']
+                                              .toString(),
+                                          teamALogo: savedBookmarkList?[index]
+                                                  ['homeTeamLogo']
+                                              .toString(),
+                                          teamAScore: savedBookmarkList?[index]
+                                                  ['homeTeamScore']
+                                              .toString(),
+                                          teamBName: savedBookmarkList?[index]
+                                                  ['awayTeamName']
+                                              .toString(),
+                                          teamBLogo: savedBookmarkList?[index]['awayTeamLogo'].toString(),
+                                          teamBScore: savedBookmarkList?[index]['awayTeamScore'].toString(),
+                                          status: savedBookmarkList?[index]['statusStr'].toString(),
+                                          // onTapCallback: toggleRefresh,
+                                          getBookmarkBlockList: getBookmarkList),
+                                    )
                                   ],
                                 ),
                               );

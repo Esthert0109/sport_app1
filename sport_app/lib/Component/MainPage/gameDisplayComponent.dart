@@ -90,7 +90,7 @@ class _GameDisplayComponentState extends State<GameDisplayComponent> {
                   Expanded(
                       flex: 8,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
@@ -113,7 +113,6 @@ class _GameDisplayComponentState extends State<GameDisplayComponent> {
                           Container(
                             height: 20 * fem,
                             width: 80 * fem,
-                            // color: yellow,
                             alignment: Alignment.topCenter,
                             padding: EdgeInsets.symmetric(horizontal: 20 * fem),
                             child: Text(

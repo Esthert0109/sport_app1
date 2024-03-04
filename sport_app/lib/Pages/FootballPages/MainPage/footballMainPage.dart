@@ -28,6 +28,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../Provider/liveStreamProvider.dart';
 import '../../../Services/Utils/tencent/tencentLiveUtils.dart';
 import '../../BasketballPages/basketballTournamentDetails.dart';
+import '../../SearchPage/searchEvent.dart';
 import '../../TencentLiveStreamRoom/liveStreamChatRoom.dart';
 import '../footballTournamentDetails.dart';
 
@@ -450,34 +451,40 @@ class _FootballMainPageState extends State<FootballMainPage>
               height: _showAppBar ? 56 * fem : 0,
               color: kMainGreenColor,
               child: AppBar(
+                automaticallyImplyLeading: false,
                 backgroundColor: Colors.transparent,
                 scrolledUnderElevation: 0.0,
                 surfaceTintColor: Colors.transparent,
                 actions: [
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 8 * fem, horizontal: 10 * fem),
-                    width: 280 * fem,
-                    height: 40 * fem,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20 * fem),
-                      color: kMainComponentColor.withOpacity(0.3),
-                    ),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(
-                          'images/appBar/search.svg',
-                          width: 24 * fem,
-                          height: 24 * fem,
-                        ),
-                        SizedBox(
-                          width: 2 * fem,
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!.search,
-                          style: tSearch,
-                        )
-                      ],
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => SearchEventPage());
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 8 * fem, horizontal: 10 * fem),
+                      width: 280 * fem,
+                      height: 40 * fem,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20 * fem),
+                        color: kMainComponentColor.withOpacity(0.3),
+                      ),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            'images/appBar/search.svg',
+                            width: 24 * fem,
+                            height: 24 * fem,
+                          ),
+                          SizedBox(
+                            width: 2 * fem,
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.search,
+                            style: tSearch,
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   const Spacer(),
@@ -527,9 +534,9 @@ class _FootballMainPageState extends State<FootballMainPage>
                   setState(() {
                     if (statusId == 0) {
                       print("started");
-                      // getStartedEventList();
+                      getStartedEventList();
                     } else {
-                      // getEventListByDate();
+                      getEventListByDate();
                     }
                   });
                 },
@@ -774,7 +781,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                       pagePast5 = 1;
                                       pagePast6 = 1;
                                       pagePast7 = 1;
-                                      // getEventListByDate();
+                                      getEventListByDate();
                                     }
                                   });
                                 },
@@ -790,7 +797,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                         onTap: (index) {
                                           setState(() {
                                             futureDateId = index;
-                                            // getEventListByDate();
+                                            getEventListByDate();
                                           });
                                         },
                                       ),
@@ -806,7 +813,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                             onTap: (index) {
                                               setState(() {
                                                 pastDateId = index;
-                                                // getEventListByDate();
+                                                getEventListByDate();
                                               });
                                             },
                                           ),

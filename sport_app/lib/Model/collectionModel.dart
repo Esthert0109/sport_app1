@@ -109,6 +109,53 @@ class CollectMatchesModel {
   }
 }
 
+class AllCollectMatchesModel {
+  final int code;
+  final String msg;
+  final List<AllCollectMatchesData> data;
+
+  AllCollectMatchesModel(
+      {required this.code, required this.msg, required this.data});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'code': code,
+      'msg': msg,
+      'data': data.map((item) => item.toJson()).toList()
+    };
+  }
+
+  factory AllCollectMatchesModel.fromJson(Map<String, dynamic> json) {
+    return AllCollectMatchesModel(
+        code: json['code'],
+        msg: json['msg'],
+        data: json['data'] != null
+            ? List<AllCollectMatchesData>.from(json['data']
+                .map((data) => AllCollectMatchesData.fromJson(data)))
+            : []);
+  }
+}
+
+class AllCollectMatchesData {
+  final String date;
+  final List<CollectMatchesData> data;
+
+  AllCollectMatchesData({required this.date, required this.data});
+
+  Map<String, dynamic> toJson() {
+    return {'date': date, 'data': data.map((item) => item.toJson()).toList()};
+  }
+
+  factory AllCollectMatchesData.fromJson(Map<String, dynamic> json) {
+    return AllCollectMatchesData(
+        date: json['date'],
+        data: json['data'] != null
+            ? List<CollectMatchesData>.from(
+                json['data'].map((data) => CollectMatchesData.fromJson(data)))
+            : []);
+  }
+}
+
 class CollectMatchesData {
   final int? id;
   final int? competitionId;

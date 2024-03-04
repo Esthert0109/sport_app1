@@ -140,7 +140,7 @@ class _MyPageState extends State<MyPage> {
               height: 30 * fem,
             ),
             GestureDetector(
-              onTap: () => {Get.to(() => SavedLivePage())},
+              onTap: () => {Get.to(() => SavedCollection())},
               child: Container(
                   width: 340 * fem,
                   height: 60 * fem,

@@ -6,15 +6,64 @@ import '../../Constants/colorConstant.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../Constants/textConstant.dart';
+import '../../Model/collectionModel.dart';
+import '../../Provider/collectionProvider.dart';
 
-class SavedLivePage extends StatefulWidget {
-  const SavedLivePage({super.key});
+class SavedCollection extends StatefulWidget {
+  const SavedCollection({super.key});
 
   @override
-  State<SavedLivePage> createState() => _SavedLivePageState();
+  State<SavedCollection> createState() => _SavedCollectionState();
 }
 
-class _SavedLivePageState extends State<SavedLivePage> {
+class _SavedCollectionState extends State<SavedCollection> {
+  // loading
+  bool isLoading = false;
+
+  // services and provider
+  BookmarkProvider provider = BookmarkProvider();
+
+  // controller
+  ScrollController _scrollController = ScrollController();
+
+  // variables
+  int page = 1;
+  int size = 10;
+
+  List<CollectMatchesData> allCollectionList = []; //get list in each date
+  int collectionMatchesDataLength = 0;
+
+
+  // fetch data
+  List<AllCollectMatchesData> collectionList = []; // get number of date listed
+  int collectionLength = 0;
+
+  Future<void> getAllSavedCollections() async {
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+
+      AllCollectMatchesModel? allCollectionModel =
+          await provider.getAllBasketballCollection(page, size);
+      collectionList.addAll(allCollectionModel?.data ?? []);
+      collectionLength = collectionList.length;
+
+      print("check collection: ${collectionList.toString()}");
+
+      setState(() {
+        isLoading = false;
+        page++;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getAllSavedCollections();
+  }
+
   @override
   Widget build(BuildContext context) {
     // standard size
@@ -68,13 +117,6 @@ class _SavedLivePageState extends State<SavedLivePage> {
               );
             },
           )
-          // Column(
-          //   mainAxisAlignment: MainAxisAlignment.start,
-          //   crossAxisAlignment: CrossAxisAlignment.start,
-          //   children: [
-
-          //   ],
-          // ),
           ),
     ));
   }

@@ -4,6 +4,7 @@ class UserDataModel extends GetxController {
   var token = ''.obs;
   var userName = ''.obs;
   var profilePicture = ''.obs;
+  var password = ''.obs;
   var id = ''.obs;
   var isFootball = false.obs; //保存token,名字与号码
   var isCN = true.obs;

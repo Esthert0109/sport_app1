@@ -92,11 +92,11 @@ class _OpeningState extends State<Opening> {
 
 Future<bool> checklogin() async {
   String? getUsername = await SharedPreferencesUtils.getUsername();
-  String? returnedtoken = await SharedPreferencesUtils.getSavedToken();
+  String? getPassword = await SharedPreferencesUtils.getPassword();
 
   if (getUsername != null) {
     bool isPasswordValid = await UserProvider()
-        .loginUser(getUsername.toString(), returnedtoken.toString());
+        .loginUser(getUsername.toString(), getPassword.toString());
     if (isPasswordValid) {
       return true;
     } else {

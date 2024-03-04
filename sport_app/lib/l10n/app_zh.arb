@@ -35,6 +35,15 @@
     "noResult": "搜索为空",
     "history": "历史记录",
     "clear": "清空",
-    "trending": "热门搜索"
+    "trending": "热门搜索",
+    "notBlank": "手机号不可为空!",
+    "welcomeBack": "欢迎回来, 登录使用！",
+    "keyInPhoneNo": "请输入手机号",
+    "passwordNotBlank": "密码不可为空",
+    "keyInPassword": "请输入密码",
+    "forgotPassword": "忘记密码？",
+    "rightPassword": "请输入正确的密码",
+    "accExist": "已经有帐户？",
+    "regNow": "立刻注册"
 
 }

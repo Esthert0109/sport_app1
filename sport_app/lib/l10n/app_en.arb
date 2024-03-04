@@ -35,5 +35,14 @@
     "noResult": "No result from the search.",
     "history": "Search History",
     "clear": "Clear",
-    "trending": "Trending"
+    "trending": "Trending",
+    "notBlank": "Phone number should not be empty.",
+    "welcomeBack": "Welcome Back！ Login now.",
+    "keyInPhoneNo": "Please enter phone number.",
+    "passwordNotBlank": "password should not be empty.",
+    "keyInPassword": "Please enter password.",
+    "forgotPassword": "Forgot password?",
+    "rightPassword": "Please enter the correct password",
+    "accExist": "Account existed? ",
+    "regNow": "Register Now."
 }

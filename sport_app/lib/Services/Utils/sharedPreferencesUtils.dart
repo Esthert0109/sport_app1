@@ -11,6 +11,16 @@ class SharedPreferencesUtils {
     await prefs.setString('auth_token', token);
   }
 
+  static Future<void> savePasswordLocally(String password) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('password', password);
+  }
+
+  static Future<String?> getPassword() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('password');
+  }
+
   static Future<void> removeTokenLocally() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('auth_token');

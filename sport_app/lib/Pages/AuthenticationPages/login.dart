@@ -17,6 +17,7 @@ import '../../Model/userDataModel.dart';
 import '../../Services/Utils/sharedPreferencesUtils.dart';
 import '../../bottomNavigationBar.dart';
 import 'forgotPassword.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -56,7 +57,7 @@ class _LoginState extends State<Login> {
     });
     if (phoneController.text.toString() == '') {
       setState(() {
-        _responseMsg = '手机号不可为空！';
+        _responseMsg = AppLocalizations.of(context)!.notBlank;
       });
     }
   }
@@ -82,7 +83,7 @@ class _LoginState extends State<Login> {
                 ),
 
                 //Header Text
-                HeadingText(text: '欢迎回来, 登录使用！'),
+                HeadingText(text: AppLocalizations.of(context)!.welcomeBack),
                 SizedBox(
                   height: 30 * fem,
                 ),
@@ -118,7 +119,8 @@ class _LoginState extends State<Login> {
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(8),
                                     borderSide: BorderSide.none),
-                                hintText: '请输入手机号',
+                                hintText:
+                                    AppLocalizations.of(context)!.keyInPhoneNo,
                               ),
                             ),
                           ),
@@ -130,7 +132,8 @@ class _LoginState extends State<Login> {
                         TextFormField(
                           validator: (value) {
                             if (value == "" || value!.isEmpty) {
-                              return '密码不可为空';
+                              return AppLocalizations.of(context)!
+                                  .passwordNotBlank;
                             } else {
                               return null;
                             }
@@ -145,7 +148,8 @@ class _LoginState extends State<Login> {
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.fromLTRB(
                                 18 * fem, 18 * fem, 18 * fem, 18 * fem),
-                            hintText: '请输入密码',
+                            hintText:
+                                AppLocalizations.of(context)!.keyInPassword,
                             hintStyle: TextStyle(
                               fontSize: 16 * fem,
                               fontWeight: FontWeight.w400,
@@ -194,7 +198,7 @@ class _LoginState extends State<Login> {
                     Expanded(child: ErrorText(Msg: _responseMsg)),
                     //忘记密码按钮
                     PressableWord(
-                        text: '忘记密码？',
+                        text: AppLocalizations.of(context)!.forgotPassword,
                         fontWeight: FontWeight.w600,
                         color: kMainTitleColor,
                         onPressed: () {
@@ -209,7 +213,7 @@ class _LoginState extends State<Login> {
                 _isLoading
                     ? LoadingLongButton()
                     : WidthButton(
-                        text: '登入',
+                        text: AppLocalizations.of(context)!.login,
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             // SEND LOGIN REQUEST PUT HERE
@@ -222,13 +226,17 @@ class _LoginState extends State<Login> {
 
                             if (isPasswordValid == true) {
                               SharedPreferencesUtils.saveUsername(phone);
-                              // SharedPreferencesUtils.saveTokenLocally(
-                              //     passwordController.text);
+                              SharedPreferencesUtils.savePasswordLocally(
+                                  passwordController.text);
+                              print(
+                                  "check token saved: ${SharedPreferencesUtils.getSavedToken().toString()}");
                               Navigator.of(context).pop();
                               Get.off(() => const BottomNaviBar());
                             } else {
                               Navigator.of(context).pop();
-                              openSnackbar(context, '请输入正确的密码',
+                              openSnackbar(
+                                  context,
+                                  AppLocalizations.of(context)!.rightPassword,
                                   kComponentErrorTextColor);
                             }
                           } else {
@@ -242,7 +250,7 @@ class _LoginState extends State<Login> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      '已经有帐户？',
+                      AppLocalizations.of(context)!.accExist,
                       style: TextStyle(
                         fontFamily: 'NotoSansSC',
                         fontSize: 15 * fem,
@@ -252,7 +260,7 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     PressableWord(
-                        text: '立刻注册',
+                        text: AppLocalizations.of(context)!.regNow,
                         onPressed: () {
                           Get.offNamed('/register');
                         }),

@@ -788,7 +788,9 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                 setState(() {
                                   statusId = index;
                                   if (statusId == 0) {
-                                    refresh();
+                                    startedList.clear();
+                                    startedLength = startedList.length;
+                                    pageStarted = 1;
                                     getStartedEventList();
                                   } else {
                                     futureDateId = 0;

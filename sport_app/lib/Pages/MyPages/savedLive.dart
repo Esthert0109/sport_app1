@@ -33,7 +33,6 @@ class _SavedCollectionState extends State<SavedCollection> {
   List<CollectMatchesData> allCollectionList = []; //get list in each date
   int collectionMatchesDataLength = 0;
 
-
   // fetch data
   List<AllCollectMatchesData> collectionList = []; // get number of date listed
   int collectionLength = 0;
@@ -49,7 +48,7 @@ class _SavedCollectionState extends State<SavedCollection> {
       collectionList.addAll(allCollectionModel?.data ?? []);
       collectionLength = collectionList.length;
 
-      print("check collection: ${collectionList.toString()}");
+      print("check collection: ${collectionList[0].data[0].awayTeamName}");
 
       setState(() {
         isLoading = false;
@@ -116,8 +115,7 @@ class _SavedCollectionState extends State<SavedCollection> {
                 ),
               );
             },
-          )
-          ),
+          )),
     ));
   }
 }

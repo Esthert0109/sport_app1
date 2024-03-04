@@ -147,7 +147,7 @@ class _BasketballLivePageState extends State<BasketballLivePage>
       });
 
       CollectMatchesModel? collection =
-          await savedBookmarkProvider.getThreeCollection();
+          await savedBookmarkProvider.getThreeBasketballCollection();
       threeCollections.addAll(collection?.data ?? []);
       collectionLength = threeCollections.length;
 

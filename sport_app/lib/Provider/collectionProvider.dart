@@ -107,9 +107,48 @@ class BookmarkProvider extends ChangeNotifier {
     }
   }
 
-  Future<CollectMatchesModel?> getThreeCollection() async {
+  Future<CollectMatchesModel?> getThreeBasketballCollection() async {
     String url = ApiConstants.baseUrl +
         ApiConstants.getAllStreamCollectionListEngUrlBasketball +
+        '/3';
+
+    final token = await SharedPreferencesUtils.getSavedToken();
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=utf-8',
+      'token': token!,
+    };
+
+    try {
+      final response = await sendGetRequest(url, headers);
+
+      int responseCode = response['code'];
+      String responseMsg = response['msg'];
+
+      if (responseCode == 0) {
+        List<dynamic> jsonData = response['data'];
+        List<CollectMatchesData> responseData =
+            jsonData.map((e) => CollectMatchesData.fromJson(e)).toList();
+
+        CollectMatchesModel collectMatchesModel = CollectMatchesModel(
+            code: responseCode, msg: responseMsg, data: responseData);
+
+        return collectMatchesModel;
+      } else {
+        CollectMatchesModel collectMatchesModel =
+            CollectMatchesModel(code: responseCode, msg: responseMsg, data: []);
+
+        return collectMatchesModel;
+      }
+    } catch (e) {
+      print("Errror in get 3 collections: $e");
+      return null;
+    }
+  }
+
+  Future<CollectMatchesModel?> getThreeFootballCollection() async {
+    String url = ApiConstants.baseUrl +
+        ApiConstants.getAllStreamCollectionListEngUrlFootball +
         '/3';
 
     final token = await SharedPreferencesUtils.getSavedToken();
@@ -150,6 +189,46 @@ class BookmarkProvider extends ChangeNotifier {
       int page, int size) async {
     String url = ApiConstants.baseUrl +
         ApiConstants.getAllStreamCollectionListEngUrlBasketball +
+        "?page=${page}&size=${size}";
+
+    final token = await SharedPreferencesUtils.getSavedToken();
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=utf-8',
+      'token': token!,
+    };
+
+    try {
+      final response = await sendGetRequest(url, headers);
+
+      int responseCode = response['code'];
+      String responseMsg = response['msg'];
+
+      if (responseCode == 0) {
+        List<dynamic> jsonData = response['data'];
+        List<AllCollectMatchesData> responseData =
+            jsonData.map((e) => AllCollectMatchesData.fromJson(e)).toList();
+
+        AllCollectMatchesModel allCollectMatchesModel = AllCollectMatchesModel(
+            code: responseCode, msg: responseMsg, data: responseData);
+
+        return allCollectMatchesModel;
+      } else {
+        AllCollectMatchesModel allCollectMatchesModel = AllCollectMatchesModel(
+            code: responseCode, msg: responseMsg, data: []);
+
+        return allCollectMatchesModel;
+      }
+    } catch (e) {
+      print("Error in get all collections: $e");
+      return null;
+    }
+  }
+
+  Future<AllCollectMatchesModel?> getAllFootballCollection(
+      int page, int size) async {
+    String url = ApiConstants.baseUrl +
+        ApiConstants.getAllStreamCollectionListEngUrlFootball +
         "?page=${page}&size=${size}";
 
     final token = await SharedPreferencesUtils.getSavedToken();

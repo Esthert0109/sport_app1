@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'PercentageBarPainter.dart';
+import 'percentageBarPainter.dart';
 
 class PercentageBarPercentage extends StatelessWidget {
   final double percent;

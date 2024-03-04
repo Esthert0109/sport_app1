@@ -5,8 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../Component/Loading/emptyResultComponent.dart';
-import '../../Component/TournamentDetails/FixedColumnTable2.dart';
-import '../../Component/TournamentDetails/PercentageBarPercentage.dart';
+import '../../Component/TournamentDetails/fixedColumnTable2.dart';
+import '../../Component/TournamentDetails/percentageBarPercentage.dart';
 import '../../Constants/colorConstant.dart';
 import '../../Model/userDataModel.dart';
 import '../../Provider/basketballMatchProvider.dart';

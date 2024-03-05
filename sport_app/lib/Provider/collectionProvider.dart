@@ -108,9 +108,17 @@ class BookmarkProvider extends ChangeNotifier {
   }
 
   Future<CollectMatchesModel?> getThreeBasketballCollection() async {
-    String url = ApiConstants.baseUrl +
-        ApiConstants.getAllStreamCollectionListEngUrlBasketball +
-        '/3';
+    String url = "";
+
+    if (userModel.isCN.value) {
+      url = ApiConstants.baseUrl +
+          ApiConstants.getAllStreamCollectionListBasketballUrl +
+          '/3';
+    } else {
+      url = ApiConstants.baseUrl +
+          ApiConstants.getAllStreamCollectionListEngUrlBasketball +
+          '/3';
+    }
 
     final token = await SharedPreferencesUtils.getSavedToken();
 
@@ -147,9 +155,17 @@ class BookmarkProvider extends ChangeNotifier {
   }
 
   Future<CollectMatchesModel?> getThreeFootballCollection() async {
-    String url = ApiConstants.baseUrl +
-        ApiConstants.getAllStreamCollectionListEngUrlFootball +
-        '/3';
+    String url = '';
+
+    if (userModel.isCN.value) {
+      url = ApiConstants.baseUrl +
+          ApiConstants.getAllStreamCollectionListFootballUrl +
+          '/3';
+    } else {
+      url = ApiConstants.baseUrl +
+          ApiConstants.getAllStreamCollectionListEngUrlFootball +
+          '/3';
+    }
 
     final token = await SharedPreferencesUtils.getSavedToken();
 
@@ -185,11 +201,21 @@ class BookmarkProvider extends ChangeNotifier {
     }
   }
 
+  //get all collection
+
   Future<AllCollectMatchesModel?> getAllBasketballCollection(
       int page, int size) async {
-    String url = ApiConstants.baseUrl +
-        ApiConstants.getAllStreamCollectionListEngUrlBasketball +
-        "?page=${page}&size=${size}";
+    String url = "";
+
+    if (userModel.isCN.value) {
+      url = ApiConstants.baseUrl +
+          ApiConstants.getAllStreamCollectionListBasketballUrl +
+          "?page=${page}&size=${size}";
+    } else {
+      url = ApiConstants.baseUrl +
+          ApiConstants.getAllStreamCollectionListEngUrlBasketball +
+          "?page=${page}&size=${size}";
+    }
 
     final token = await SharedPreferencesUtils.getSavedToken();
 
@@ -209,6 +235,9 @@ class BookmarkProvider extends ChangeNotifier {
         List<AllCollectMatchesData> responseData =
             jsonData.map((e) => AllCollectMatchesData.fromJson(e)).toList();
 
+        print("check response here: $response");
+        print("check responseData here: ${responseData}");
+
         AllCollectMatchesModel allCollectMatchesModel = AllCollectMatchesModel(
             code: responseCode, msg: responseMsg, data: responseData);
 
@@ -227,9 +256,17 @@ class BookmarkProvider extends ChangeNotifier {
 
   Future<AllCollectMatchesModel?> getAllFootballCollection(
       int page, int size) async {
-    String url = ApiConstants.baseUrl +
-        ApiConstants.getAllStreamCollectionListEngUrlFootball +
-        "?page=${page}&size=${size}";
+    String url = "";
+
+    if (userModel.isCN.value) {
+      url = ApiConstants.baseUrl +
+          ApiConstants.getAllStreamCollectionListFootballUrl +
+          "?page=${page}&size=${size}";
+    } else {
+      url = ApiConstants.baseUrl +
+          ApiConstants.getAllStreamCollectionListEngUrlFootball +
+          "?page=${page}&size=${size}";
+    }
 
     final token = await SharedPreferencesUtils.getSavedToken();
 

@@ -14,6 +14,7 @@ import '../../../Component/Common/loadingScreen.dart';
 import '../../../Component/Common/snackBar.dart';
 import '../../../Component/Common/statusButton.dart';
 import '../../../Component/Common/statusDateButton.dart';
+import '../../../Component/Loading/emptyResultComponent.dart';
 import '../../../Component/MainPage/gameDisplayComponent.dart';
 import '../../../Component/MainPage/liveStreamCarouselComponent.dart';
 import '../../../Component/Tencent/liveStreamPlayer.dart';
@@ -458,7 +459,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                 actions: [
                   GestureDetector(
                     onTap: () {
-                      Get.to(() => SearchEventPage());
+                      Get.to(() => SearchEventPage(), transition: Transition.noTransition);
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(
@@ -833,65 +834,76 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                   vertical: 10 * fem),
                                             ),
                                         ])
-                                      : ListView.builder(
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount: startedLength,
-                                          shrinkWrap: true,
-                                          itemBuilder: (context, index) {
-                                            return GestureDetector(
-                                              onTap: () {
-                                                print("navi into tournament");
-                                                TournamentDetails(
-                                                  id: '${startedList?[index].id}',
-                                                  matchDate:
-                                                      '${startedList?[index].matchDate}',
-                                                  matchStatus: '未开赛',
-                                                  matchName:
-                                                      '${startedList?[index].competitionName}',
-                                                  homeTeamFormation:
-                                                      '${startedList?[index].homeFormation}',
-                                                  awayTeamFormation:
-                                                      '${startedList?[index].awayFormation}',
-                                                  lineUp: startedList?[index]
-                                                          .lineUp ??
-                                                      0,
-                                                ).launch(context);
-                                              },
-                                              child: GameDisplayComponent(
-                                                id: startedList[index].id ?? 0,
-                                                competitionType:
-                                                    startedList[index]
+                                      : (startedLength == 0)
+                                          ? searchEmptyWidget()
+                                          : ListView.builder(
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              itemCount: startedLength,
+                                              shrinkWrap: true,
+                                              itemBuilder: (context, index) {
+                                                return GestureDetector(
+                                                  onTap: () {
+                                                    print(
+                                                        "navi into tournament");
+                                                    TournamentDetails(
+                                                      id: '${startedList?[index].id}',
+                                                      matchDate:
+                                                          '${startedList?[index].matchDate}',
+                                                      matchStatus: '未开赛',
+                                                      matchName:
+                                                          '${startedList?[index].competitionName}',
+                                                      homeTeamFormation:
+                                                          '${startedList?[index].homeFormation}',
+                                                      awayTeamFormation:
+                                                          '${startedList?[index].awayFormation}',
+                                                      lineUp:
+                                                          startedList?[index]
+                                                                  .lineUp ??
+                                                              0,
+                                                    ).launch(context);
+                                                  },
+                                                  child: GameDisplayComponent(
+                                                    id: startedList[index].id ??
+                                                        0,
+                                                    competitionType: startedList[
+                                                                index]
                                                             .competitionName ??
                                                         "",
-                                                duration: startedList[index]
-                                                        .matchTimeStr ??
-                                                    "00:00",
-                                                teamAName: startedList[index]
-                                                        .homeTeamName ??
-                                                    "",
-                                                teamALogo: startedList[index]
-                                                        .homeTeamLogo ??
-                                                    'images/mainpage/sampleLogo.png',
-                                                teamAScore: startedList[index]
-                                                    .homeTeamScore
-                                                    .toString(),
-                                                teamBName: startedList[index]
-                                                        .awayTeamName ??
-                                                    "",
-                                                teamBLogo: startedList[index]
-                                                        .awayTeamLogo ??
-                                                    'images/mainpage/sampleLogo.png',
-                                                teamBScore: startedList[index]
-                                                    .awayTeamScore
-                                                    .toString(),
-                                                isSaved: startedList[index]
-                                                        .hasCollected ??
-                                                    false,
-                                              ),
-                                            );
-                                          },
-                                        )
+                                                    duration: startedList[index]
+                                                            .matchTimeStr ??
+                                                        "00:00",
+                                                    teamAName:
+                                                        startedList[index]
+                                                                .homeTeamName ??
+                                                            "",
+                                                    teamALogo: startedList[
+                                                                index]
+                                                            .homeTeamLogo ??
+                                                        'images/mainpage/sampleLogo.png',
+                                                    teamAScore:
+                                                        startedList[index]
+                                                            .homeTeamScore
+                                                            .toString(),
+                                                    teamBName:
+                                                        startedList[index]
+                                                                .awayTeamName ??
+                                                            "",
+                                                    teamBLogo: startedList[
+                                                                index]
+                                                            .awayTeamLogo ??
+                                                        'images/mainpage/sampleLogo.png',
+                                                    teamBScore:
+                                                        startedList[index]
+                                                            .awayTeamScore
+                                                            .toString(),
+                                                    isSaved: startedList[index]
+                                                            .hasCollected ??
+                                                        false,
+                                                  ),
+                                                );
+                                              },
+                                            )
                                   : (statusId == 1 && futureDateId == 0)
                                       ? isEventLoading
                                           ? Column(children: [
@@ -921,73 +933,81 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                       vertical: 10 * fem),
                                                 ),
                                             ])
-                                          : ListView.builder(
-                                              physics:
-                                                  const NeverScrollableScrollPhysics(),
-                                              itemCount: future1Length,
-                                              shrinkWrap: true,
-                                              itemBuilder: (context, index) {
-                                                return GestureDetector(
-                                                  onTap: () {
-                                                    print(
-                                                        "navi into tournament");
-                                                    TournamentDetails(
-                                                      id: '${futureList1[index].id}',
-                                                      matchDate:
-                                                          '${futureList1[index].matchDate}',
-                                                      matchStatus: '未开赛',
-                                                      matchName:
-                                                          '${futureList1[index].competitionName}',
-                                                      homeTeamFormation:
-                                                          '${futureList1[index].homeFormation}',
-                                                      awayTeamFormation:
-                                                          '${futureList1[index].awayFormation}',
-                                                      lineUp: futureList1[index]
-                                                              .lineUp ??
-                                                          0,
-                                                    ).launch(context);
-                                                  },
-                                                  child: GameDisplayComponent(
-                                                    id: futureList1[index].id ??
-                                                        0,
-                                                    competitionType: futureList1[
-                                                                index]
-                                                            .competitionName ??
-                                                        "",
-                                                    duration: futureList1[index]
-                                                            .matchTimeStr ??
-                                                        "00:00",
-                                                    teamAName:
-                                                        futureList1[index]
+                                          : (future1Length == 0)
+                                              ? searchEmptyWidget()
+                                              : ListView.builder(
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
+                                                  itemCount: future1Length,
+                                                  shrinkWrap: true,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return GestureDetector(
+                                                      onTap: () {
+                                                        print(
+                                                            "navi into tournament");
+                                                        TournamentDetails(
+                                                          id: '${futureList1[index].id}',
+                                                          matchDate:
+                                                              '${futureList1[index].matchDate}',
+                                                          matchStatus: '未开赛',
+                                                          matchName:
+                                                              '${futureList1[index].competitionName}',
+                                                          homeTeamFormation:
+                                                              '${futureList1[index].homeFormation}',
+                                                          awayTeamFormation:
+                                                              '${futureList1[index].awayFormation}',
+                                                          lineUp:
+                                                              futureList1[index]
+                                                                      .lineUp ??
+                                                                  0,
+                                                        ).launch(context);
+                                                      },
+                                                      child:
+                                                          GameDisplayComponent(
+                                                        id: futureList1[index]
+                                                                .id ??
+                                                            0,
+                                                        competitionType:
+                                                            futureList1[index]
+                                                                    .competitionName ??
+                                                                "",
+                                                        duration: futureList1[
+                                                                    index]
+                                                                .matchTimeStr ??
+                                                            "00:00",
+                                                        teamAName: futureList1[
+                                                                    index]
                                                                 .homeTeamName ??
                                                             "",
-                                                    teamALogo: futureList1[
-                                                                index]
-                                                            .homeTeamLogo ??
-                                                        'images/mainpage/sampleLogo.png',
-                                                    teamAScore:
-                                                        futureList1[index]
-                                                            .homeTeamScore
-                                                            .toString(),
-                                                    teamBName:
-                                                        futureList1[index]
+                                                        teamALogo: futureList1[
+                                                                    index]
+                                                                .homeTeamLogo ??
+                                                            'images/mainpage/sampleLogo.png',
+                                                        teamAScore:
+                                                            futureList1[index]
+                                                                .homeTeamScore
+                                                                .toString(),
+                                                        teamBName: futureList1[
+                                                                    index]
                                                                 .awayTeamName ??
                                                             "",
-                                                    teamBLogo: futureList1[
-                                                                index]
-                                                            .awayTeamLogo ??
-                                                        'images/mainpage/sampleLogo.png',
-                                                    teamBScore:
-                                                        futureList1[index]
-                                                            .awayTeamScore
-                                                            .toString(),
-                                                    isSaved: futureList1[index]
-                                                            .hasCollected ??
-                                                        false,
-                                                  ),
-                                                );
-                                              },
-                                            )
+                                                        teamBLogo: futureList1[
+                                                                    index]
+                                                                .awayTeamLogo ??
+                                                            'images/mainpage/sampleLogo.png',
+                                                        teamBScore:
+                                                            futureList1[index]
+                                                                .awayTeamScore
+                                                                .toString(),
+                                                        isSaved: futureList1[
+                                                                    index]
+                                                                .hasCollected ??
+                                                            false,
+                                                      ),
+                                                    );
+                                                  },
+                                                )
                                       : (statusId == 1 && futureDateId == 1)
                                           ? isEventLoading
                                               ? Column(children: [
@@ -1027,79 +1047,85 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                       ),
                                                   ])
                                                 ])
-                                              : ListView.builder(
-                                                  physics:
-                                                      const NeverScrollableScrollPhysics(),
-                                                  itemCount: future2Length,
-                                                  shrinkWrap: true,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return GestureDetector(
-                                                      onTap: () {
-                                                        print(
-                                                            "navi into tournament");
-                                                        TournamentDetails(
-                                                          id: '${futureList2[index].id}',
-                                                          matchDate:
-                                                              '${futureList2[index].matchDate}',
-                                                          matchStatus: '未开赛',
-                                                          matchName:
-                                                              '${futureList2[index].competitionName}',
-                                                          homeTeamFormation:
-                                                              '${futureList2[index].homeFormation}',
-                                                          awayTeamFormation:
-                                                              '${futureList2[index].awayFormation}',
-                                                          lineUp:
-                                                              futureList2[index]
+                                              : (future2Length == 0)
+                                                  ? searchEmptyWidget()
+                                                  : ListView.builder(
+                                                      physics:
+                                                          const NeverScrollableScrollPhysics(),
+                                                      itemCount: future2Length,
+                                                      shrinkWrap: true,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        return GestureDetector(
+                                                          onTap: () {
+                                                            print(
+                                                                "navi into tournament");
+                                                            TournamentDetails(
+                                                              id: '${futureList2[index].id}',
+                                                              matchDate:
+                                                                  '${futureList2[index].matchDate}',
+                                                              matchStatus:
+                                                                  '未开赛',
+                                                              matchName:
+                                                                  '${futureList2[index].competitionName}',
+                                                              homeTeamFormation:
+                                                                  '${futureList2[index].homeFormation}',
+                                                              awayTeamFormation:
+                                                                  '${futureList2[index].awayFormation}',
+                                                              lineUp: futureList2[
+                                                                          index]
                                                                       .lineUp ??
                                                                   0,
-                                                        ).launch(context);
-                                                      },
-                                                      child:
-                                                          GameDisplayComponent(
-                                                        id: futureList2[index]
-                                                                .id ??
-                                                            0,
-                                                        competitionType:
-                                                            futureList2[index]
-                                                                    .competitionName ??
+                                                            ).launch(context);
+                                                          },
+                                                          child:
+                                                              GameDisplayComponent(
+                                                            id: futureList2[
+                                                                        index]
+                                                                    .id ??
+                                                                0,
+                                                            competitionType:
+                                                                futureList2[index]
+                                                                        .competitionName ??
+                                                                    "",
+                                                            duration: futureList2[
+                                                                        index]
+                                                                    .matchTimeStr ??
+                                                                "00:00",
+                                                            teamAName: futureList2[
+                                                                        index]
+                                                                    .homeTeamName ??
                                                                 "",
-                                                        duration: futureList2[
-                                                                    index]
-                                                                .matchTimeStr ??
-                                                            "00:00",
-                                                        teamAName: futureList2[
-                                                                    index]
-                                                                .homeTeamName ??
-                                                            "",
-                                                        teamALogo: futureList2[
-                                                                    index]
-                                                                .homeTeamLogo ??
-                                                            'images/mainpage/sampleLogo.png',
-                                                        teamAScore:
-                                                            futureList2[index]
-                                                                .homeTeamScore
-                                                                .toString(),
-                                                        teamBName: futureList2[
-                                                                    index]
-                                                                .awayTeamName ??
-                                                            "",
-                                                        teamBLogo: futureList2[
-                                                                    index]
-                                                                .awayTeamLogo ??
-                                                            'images/mainpage/sampleLogo.png',
-                                                        teamBScore:
-                                                            futureList2[index]
-                                                                .awayTeamScore
-                                                                .toString(),
-                                                        isSaved: futureList2[
-                                                                    index]
-                                                                .hasCollected ??
-                                                            false,
-                                                      ),
-                                                    );
-                                                  },
-                                                )
+                                                            teamALogo: futureList2[
+                                                                        index]
+                                                                    .homeTeamLogo ??
+                                                                'images/mainpage/sampleLogo.png',
+                                                            teamAScore:
+                                                                futureList2[
+                                                                        index]
+                                                                    .homeTeamScore
+                                                                    .toString(),
+                                                            teamBName: futureList2[
+                                                                        index]
+                                                                    .awayTeamName ??
+                                                                "",
+                                                            teamBLogo: futureList2[
+                                                                        index]
+                                                                    .awayTeamLogo ??
+                                                                'images/mainpage/sampleLogo.png',
+                                                            teamBScore:
+                                                                futureList2[
+                                                                        index]
+                                                                    .awayTeamScore
+                                                                    .toString(),
+                                                            isSaved: futureList2[
+                                                                        index]
+                                                                    .hasCollected ??
+                                                                false,
+                                                          ),
+                                                        );
+                                                      },
+                                                    )
                                           : (statusId == 1 && futureDateId == 2)
                                               ? isEventLoading
                                                   ? Column(children: [
@@ -1143,83 +1169,85 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                           ),
                                                       ])
                                                     ])
-                                                  : ListView.builder(
-                                                      physics:
-                                                          const NeverScrollableScrollPhysics(),
-                                                      itemCount: future3Length,
-                                                      shrinkWrap: true,
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        return GestureDetector(
-                                                          onTap: () {
-                                                            print(
-                                                                "navi into tournament");
-                                                            TournamentDetails(
-                                                              id: '${futureList3[index].id}',
-                                                              matchDate:
-                                                                  '${futureList3[index].matchDate}',
-                                                              matchStatus:
-                                                                  '未开赛',
-                                                              matchName:
-                                                                  '${futureList3[index].competitionName}',
-                                                              homeTeamFormation:
-                                                                  '${futureList3[index].homeFormation}',
-                                                              awayTeamFormation:
-                                                                  '${futureList3[index].awayFormation}',
-                                                              lineUp: futureList3[
-                                                                          index]
-                                                                      .lineUp ??
-                                                                  0,
-                                                            ).launch(context);
-                                                          },
-                                                          child:
-                                                              GameDisplayComponent(
-                                                            id: futureList3[
-                                                                        index]
-                                                                    .id ??
-                                                                0,
-                                                            competitionType:
-                                                                futureList3[index]
-                                                                        .competitionName ??
+                                                  : (future3Length == 0)
+                                                      ? searchEmptyWidget()
+                                                      : ListView.builder(
+                                                          physics:
+                                                              const NeverScrollableScrollPhysics(),
+                                                          itemCount:
+                                                              future3Length,
+                                                          shrinkWrap: true,
+                                                          itemBuilder:
+                                                              (context, index) {
+                                                            return GestureDetector(
+                                                              onTap: () {
+                                                                print(
+                                                                    "navi into tournament");
+                                                                TournamentDetails(
+                                                                  id: '${futureList3[index].id}',
+                                                                  matchDate:
+                                                                      '${futureList3[index].matchDate}',
+                                                                  matchStatus:
+                                                                      '未开赛',
+                                                                  matchName:
+                                                                      '${futureList3[index].competitionName}',
+                                                                  homeTeamFormation:
+                                                                      '${futureList3[index].homeFormation}',
+                                                                  awayTeamFormation:
+                                                                      '${futureList3[index].awayFormation}',
+                                                                  lineUp: futureList3[
+                                                                              index]
+                                                                          .lineUp ??
+                                                                      0,
+                                                                ).launch(
+                                                                    context);
+                                                              },
+                                                              child:
+                                                                  GameDisplayComponent(
+                                                                id: futureList3[
+                                                                            index]
+                                                                        .id ??
+                                                                    0,
+                                                                competitionType:
+                                                                    futureList3[index]
+                                                                            .competitionName ??
+                                                                        "",
+                                                                duration: futureList3[
+                                                                            index]
+                                                                        .matchTimeStr ??
+                                                                    "00:00",
+                                                                teamAName: futureList3[
+                                                                            index]
+                                                                        .homeTeamName ??
                                                                     "",
-                                                            duration: futureList3[
-                                                                        index]
-                                                                    .matchTimeStr ??
-                                                                "00:00",
-                                                            teamAName: futureList3[
-                                                                        index]
-                                                                    .homeTeamName ??
-                                                                "",
-                                                            teamALogo: futureList3[
-                                                                        index]
-                                                                    .homeTeamLogo ??
-                                                                'images/mainpage/sampleLogo.png',
-                                                            teamAScore:
-                                                                futureList3[
+                                                                teamALogo: futureList3[
+                                                                            index]
+                                                                        .homeTeamLogo ??
+                                                                    'images/mainpage/sampleLogo.png',
+                                                                teamAScore: futureList3[
                                                                         index]
                                                                     .homeTeamScore
                                                                     .toString(),
-                                                            teamBName: futureList3[
-                                                                        index]
-                                                                    .awayTeamName ??
-                                                                "",
-                                                            teamBLogo: futureList3[
-                                                                        index]
-                                                                    .awayTeamLogo ??
-                                                                'images/mainpage/sampleLogo.png',
-                                                            teamBScore:
-                                                                futureList3[
+                                                                teamBName: futureList3[
+                                                                            index]
+                                                                        .awayTeamName ??
+                                                                    "",
+                                                                teamBLogo: futureList3[
+                                                                            index]
+                                                                        .awayTeamLogo ??
+                                                                    'images/mainpage/sampleLogo.png',
+                                                                teamBScore: futureList3[
                                                                         index]
                                                                     .awayTeamScore
                                                                     .toString(),
-                                                            isSaved: futureList3[
-                                                                        index]
-                                                                    .hasCollected ??
-                                                                false,
-                                                          ),
-                                                        );
-                                                      },
-                                                    )
+                                                                isSaved: futureList3[
+                                                                            index]
+                                                                        .hasCollected ??
+                                                                    false,
+                                                              ),
+                                                            );
+                                                          },
+                                                        )
                                               : (statusId == 1 &&
                                                       futureDateId == 3)
                                                   ? isEventLoading
@@ -1265,83 +1293,77 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                               ),
                                                           ])
                                                         ])
-                                                      : ListView.builder(
-                                                          physics:
-                                                              const NeverScrollableScrollPhysics(),
-                                                          itemCount:
-                                                              future4Length,
-                                                          shrinkWrap: true,
-                                                          itemBuilder:
-                                                              (context, index) {
-                                                            return GestureDetector(
-                                                              onTap: () {
-                                                                print(
-                                                                    "navi into tournament");
-                                                                TournamentDetails(
-                                                                  id: '${futureList4[index].id}',
-                                                                  matchDate:
-                                                                      '${futureList4[index].matchDate}',
-                                                                  matchStatus:
-                                                                      '未开赛',
-                                                                  matchName:
-                                                                      '${futureList4[index].competitionName}',
-                                                                  homeTeamFormation:
-                                                                      '${futureList4[index].homeFormation}',
-                                                                  awayTeamFormation:
-                                                                      '${futureList4[index].awayFormation}',
-                                                                  lineUp: futureList4[
-                                                                              index]
-                                                                          .lineUp ??
-                                                                      0,
-                                                                ).launch(
-                                                                    context);
+                                                      : (future4Length == 0)
+                                                          ? searchEmptyWidget()
+                                                          : ListView.builder(
+                                                              physics:
+                                                                  const NeverScrollableScrollPhysics(),
+                                                              itemCount:
+                                                                  future4Length,
+                                                              shrinkWrap: true,
+                                                              itemBuilder:
+                                                                  (context,
+                                                                      index) {
+                                                                return GestureDetector(
+                                                                  onTap: () {
+                                                                    print(
+                                                                        "navi into tournament");
+                                                                    TournamentDetails(
+                                                                      id: '${futureList4[index].id}',
+                                                                      matchDate:
+                                                                          '${futureList4[index].matchDate}',
+                                                                      matchStatus:
+                                                                          '未开赛',
+                                                                      matchName:
+                                                                          '${futureList4[index].competitionName}',
+                                                                      homeTeamFormation:
+                                                                          '${futureList4[index].homeFormation}',
+                                                                      awayTeamFormation:
+                                                                          '${futureList4[index].awayFormation}',
+                                                                      lineUp:
+                                                                          futureList4[index].lineUp ??
+                                                                              0,
+                                                                    ).launch(
+                                                                        context);
+                                                                  },
+                                                                  child:
+                                                                      GameDisplayComponent(
+                                                                    id: futureList4[index]
+                                                                            .id ??
+                                                                        0,
+                                                                    competitionType:
+                                                                        futureList4[index].competitionName ??
+                                                                            "",
+                                                                    duration: futureList4[index]
+                                                                            .matchTimeStr ??
+                                                                        "00:00",
+                                                                    teamAName:
+                                                                        futureList4[index].homeTeamName ??
+                                                                            "",
+                                                                    teamALogo: futureList4[index]
+                                                                            .homeTeamLogo ??
+                                                                        'images/mainpage/sampleLogo.png',
+                                                                    teamAScore: futureList4[
+                                                                            index]
+                                                                        .homeTeamScore
+                                                                        .toString(),
+                                                                    teamBName:
+                                                                        futureList4[index].awayTeamName ??
+                                                                            "",
+                                                                    teamBLogo: futureList4[index]
+                                                                            .awayTeamLogo ??
+                                                                        'images/mainpage/sampleLogo.png',
+                                                                    teamBScore: futureList4[
+                                                                            index]
+                                                                        .awayTeamScore
+                                                                        .toString(),
+                                                                    isSaved: futureList4[index]
+                                                                            .hasCollected ??
+                                                                        false,
+                                                                  ),
+                                                                );
                                                               },
-                                                              child:
-                                                                  GameDisplayComponent(
-                                                                id: futureList4[
-                                                                            index]
-                                                                        .id ??
-                                                                    0,
-                                                                competitionType:
-                                                                    futureList4[index]
-                                                                            .competitionName ??
-                                                                        "",
-                                                                duration: futureList4[
-                                                                            index]
-                                                                        .matchTimeStr ??
-                                                                    "00:00",
-                                                                teamAName: futureList4[
-                                                                            index]
-                                                                        .homeTeamName ??
-                                                                    "",
-                                                                teamALogo: futureList4[
-                                                                            index]
-                                                                        .homeTeamLogo ??
-                                                                    'images/mainpage/sampleLogo.png',
-                                                                teamAScore: futureList4[
-                                                                        index]
-                                                                    .homeTeamScore
-                                                                    .toString(),
-                                                                teamBName: futureList4[
-                                                                            index]
-                                                                        .awayTeamName ??
-                                                                    "",
-                                                                teamBLogo: futureList4[
-                                                                            index]
-                                                                        .awayTeamLogo ??
-                                                                    'images/mainpage/sampleLogo.png',
-                                                                teamBScore: futureList4[
-                                                                        index]
-                                                                    .awayTeamScore
-                                                                    .toString(),
-                                                                isSaved: futureList4[
-                                                                            index]
-                                                                        .hasCollected ??
-                                                                    false,
-                                                              ),
-                                                            );
-                                                          },
-                                                        )
+                                                            )
                                                   : (statusId == 1 &&
                                                           futureDateId == 4)
                                                       ? isEventLoading
@@ -1386,75 +1408,76 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                   ),
                                                               ])
                                                             ])
-                                                          : ListView.builder(
-                                                              physics:
-                                                                  const NeverScrollableScrollPhysics(),
-                                                              itemCount:
-                                                                  future5Length,
-                                                              shrinkWrap: true,
-                                                              itemBuilder:
-                                                                  (context,
-                                                                      index) {
-                                                                return GestureDetector(
-                                                                  onTap: () {
-                                                                    print(
-                                                                        "navi into tournament");
-                                                                    TournamentDetails(
-                                                                      id: '${futureList5[index].id}',
-                                                                      matchDate:
-                                                                          '${futureList5[index].matchDate}',
-                                                                      matchStatus:
-                                                                          '未开赛',
-                                                                      matchName:
-                                                                          '${futureList5[index].competitionName}',
-                                                                      homeTeamFormation:
-                                                                          '${futureList5[index].homeFormation}',
-                                                                      awayTeamFormation:
-                                                                          '${futureList5[index].awayFormation}',
-                                                                      lineUp:
-                                                                          futureList5[index].lineUp ??
-                                                                              0,
-                                                                    ).launch(
-                                                                        context);
+                                                          : (future5Length == 0)
+                                                              ? searchEmptyWidget()
+                                                              : ListView
+                                                                  .builder(
+                                                                  physics:
+                                                                      const NeverScrollableScrollPhysics(),
+                                                                  itemCount:
+                                                                      future5Length,
+                                                                  shrinkWrap:
+                                                                      true,
+                                                                  itemBuilder:
+                                                                      (context,
+                                                                          index) {
+                                                                    return GestureDetector(
+                                                                      onTap:
+                                                                          () {
+                                                                        print(
+                                                                            "navi into tournament");
+                                                                        TournamentDetails(
+                                                                          id: '${futureList5[index].id}',
+                                                                          matchDate:
+                                                                              '${futureList5[index].matchDate}',
+                                                                          matchStatus:
+                                                                              '未开赛',
+                                                                          matchName:
+                                                                              '${futureList5[index].competitionName}',
+                                                                          homeTeamFormation:
+                                                                              '${futureList5[index].homeFormation}',
+                                                                          awayTeamFormation:
+                                                                              '${futureList5[index].awayFormation}',
+                                                                          lineUp:
+                                                                              futureList5[index].lineUp ?? 0,
+                                                                        ).launch(
+                                                                            context);
+                                                                      },
+                                                                      child:
+                                                                          GameDisplayComponent(
+                                                                        id: futureList5[index].id ??
+                                                                            0,
+                                                                        competitionType:
+                                                                            futureList5[index].competitionName ??
+                                                                                "",
+                                                                        duration:
+                                                                            futureList5[index].matchTimeStr ??
+                                                                                "00:00",
+                                                                        teamAName:
+                                                                            futureList5[index].homeTeamName ??
+                                                                                "",
+                                                                        teamALogo:
+                                                                            futureList5[index].homeTeamLogo ??
+                                                                                'images/mainpage/sampleLogo.png',
+                                                                        teamAScore: futureList5[index]
+                                                                            .homeTeamScore
+                                                                            .toString(),
+                                                                        teamBName:
+                                                                            futureList5[index].awayTeamName ??
+                                                                                "",
+                                                                        teamBLogo:
+                                                                            futureList5[index].awayTeamLogo ??
+                                                                                'images/mainpage/sampleLogo.png',
+                                                                        teamBScore: futureList5[index]
+                                                                            .awayTeamScore
+                                                                            .toString(),
+                                                                        isSaved:
+                                                                            futureList5[index].hasCollected ??
+                                                                                false,
+                                                                      ),
+                                                                    );
                                                                   },
-                                                                  child:
-                                                                      GameDisplayComponent(
-                                                                    id: futureList5[index]
-                                                                            .id ??
-                                                                        0,
-                                                                    competitionType:
-                                                                        futureList5[index].competitionName ??
-                                                                            "",
-                                                                    duration: futureList5[index]
-                                                                            .matchTimeStr ??
-                                                                        "00:00",
-                                                                    teamAName:
-                                                                        futureList5[index].homeTeamName ??
-                                                                            "",
-                                                                    teamALogo: futureList5[index]
-                                                                            .homeTeamLogo ??
-                                                                        'images/mainpage/sampleLogo.png',
-                                                                    teamAScore: futureList5[
-                                                                            index]
-                                                                        .homeTeamScore
-                                                                        .toString(),
-                                                                    teamBName:
-                                                                        futureList5[index].awayTeamName ??
-                                                                            "",
-                                                                    teamBLogo: futureList5[index]
-                                                                            .awayTeamLogo ??
-                                                                        'images/mainpage/sampleLogo.png',
-                                                                    teamBScore: futureList5[
-                                                                            index]
-                                                                        .awayTeamScore
-                                                                        .toString(),
-                                                                    isSaved: futureList5[index]
-                                                                            .hasCollected ??
-                                                                        false,
-                                                                  ),
-                                                                );
-                                                              },
-                                                            )
+                                                                )
                                                       : (statusId == 1 &&
                                                               futureDateId == 5)
                                                           ? isEventLoading
@@ -1480,74 +1503,60 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                               ),
                                                                           ])
                                                                     ])
-                                                              : ListView
-                                                                  .builder(
-                                                                  physics:
-                                                                      const NeverScrollableScrollPhysics(),
-                                                                  itemCount:
-                                                                      future6Length,
-                                                                  shrinkWrap:
-                                                                      true,
-                                                                  itemBuilder:
-                                                                      (context,
-                                                                          index) {
-                                                                    return GestureDetector(
-                                                                      onTap:
-                                                                          () {
-                                                                        print(
-                                                                            "navi into tournament");
-                                                                        TournamentDetails(
-                                                                          id: '${futureList6[index].id}',
-                                                                          matchDate:
-                                                                              '${futureList6[index].matchDate}',
-                                                                          matchStatus:
-                                                                              '未开赛',
-                                                                          matchName:
-                                                                              '${futureList6[index].competitionName}',
-                                                                          homeTeamFormation:
-                                                                              '${futureList6[index].homeFormation}',
-                                                                          awayTeamFormation:
-                                                                              '${futureList6[index].awayFormation}',
-                                                                          lineUp:
-                                                                              futureList6[index].lineUp ?? 0,
-                                                                        ).launch(
-                                                                            context);
+                                                              : (future6Length ==
+                                                                      0)
+                                                                  ? searchEmptyWidget()
+                                                                  : ListView
+                                                                      .builder(
+                                                                      physics:
+                                                                          const NeverScrollableScrollPhysics(),
+                                                                      itemCount:
+                                                                          future6Length,
+                                                                      shrinkWrap:
+                                                                          true,
+                                                                      itemBuilder:
+                                                                          (context,
+                                                                              index) {
+                                                                        return GestureDetector(
+                                                                          onTap:
+                                                                              () {
+                                                                            print("navi into tournament");
+                                                                            TournamentDetails(
+                                                                              id: '${futureList6[index].id}',
+                                                                              matchDate: '${futureList6[index].matchDate}',
+                                                                              matchStatus: '未开赛',
+                                                                              matchName: '${futureList6[index].competitionName}',
+                                                                              homeTeamFormation: '${futureList6[index].homeFormation}',
+                                                                              awayTeamFormation: '${futureList6[index].awayFormation}',
+                                                                              lineUp: futureList6[index].lineUp ?? 0,
+                                                                            ).launch(context);
+                                                                          },
+                                                                          child:
+                                                                              GameDisplayComponent(
+                                                                            id: futureList6[index].id ??
+                                                                                0,
+                                                                            competitionType:
+                                                                                futureList6[index].competitionName ?? "",
+                                                                            duration:
+                                                                                futureList6[index].matchTimeStr ?? "00:00",
+                                                                            teamAName:
+                                                                                futureList6[index].homeTeamName ?? "",
+                                                                            teamALogo:
+                                                                                futureList6[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                            teamAScore:
+                                                                                futureList6[index].homeTeamScore.toString(),
+                                                                            teamBName:
+                                                                                futureList6[index].awayTeamName ?? "",
+                                                                            teamBLogo:
+                                                                                futureList6[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                            teamBScore:
+                                                                                futureList6[index].awayTeamScore.toString(),
+                                                                            isSaved:
+                                                                                futureList6[index].hasCollected ?? false,
+                                                                          ),
+                                                                        );
                                                                       },
-                                                                      child:
-                                                                          GameDisplayComponent(
-                                                                        id: futureList6[index].id ??
-                                                                            0,
-                                                                        competitionType:
-                                                                            futureList6[index].competitionName ??
-                                                                                "",
-                                                                        duration:
-                                                                            futureList6[index].matchTimeStr ??
-                                                                                "00:00",
-                                                                        teamAName:
-                                                                            futureList6[index].homeTeamName ??
-                                                                                "",
-                                                                        teamALogo:
-                                                                            futureList6[index].homeTeamLogo ??
-                                                                                'images/mainpage/sampleLogo.png',
-                                                                        teamAScore: futureList6[index]
-                                                                            .homeTeamScore
-                                                                            .toString(),
-                                                                        teamBName:
-                                                                            futureList6[index].awayTeamName ??
-                                                                                "",
-                                                                        teamBLogo:
-                                                                            futureList6[index].awayTeamLogo ??
-                                                                                'images/mainpage/sampleLogo.png',
-                                                                        teamBScore: futureList6[index]
-                                                                            .awayTeamScore
-                                                                            .toString(),
-                                                                        isSaved:
-                                                                            futureList6[index].hasCollected ??
-                                                                                false,
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                )
+                                                                    )
                                                           : (statusId == 1 &&
                                                                   futureDateId ==
                                                                       6)
@@ -1571,58 +1580,48 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                   ),
                                                                               ])
                                                                         ])
-                                                                  : ListView
-                                                                      .builder(
-                                                                      physics:
-                                                                          const NeverScrollableScrollPhysics(),
-                                                                      itemCount:
-                                                                          future7Length,
-                                                                      shrinkWrap:
-                                                                          true,
-                                                                      itemBuilder:
-                                                                          (context,
-                                                                              index) {
-                                                                        return GestureDetector(
-                                                                          onTap:
-                                                                              () {
-                                                                            print("navi into tournament");
+                                                                  : (future7Length ==
+                                                                          0)
+                                                                      ? searchEmptyWidget()
+                                                                      : ListView
+                                                                          .builder(
+                                                                          physics:
+                                                                              const NeverScrollableScrollPhysics(),
+                                                                          itemCount:
+                                                                              future7Length,
+                                                                          shrinkWrap:
+                                                                              true,
+                                                                          itemBuilder:
+                                                                              (context, index) {
+                                                                            return GestureDetector(
+                                                                              onTap: () {
+                                                                                print("navi into tournament");
 
-                                                                            TournamentDetails(
-                                                                              id: '${futureList7[index].id}',
-                                                                              matchDate: '${futureList7[index].matchDate}',
-                                                                              matchStatus: '未开赛',
-                                                                              matchName: '${futureList7[index].competitionName}',
-                                                                              homeTeamFormation: '${futureList7[index].homeFormation}',
-                                                                              awayTeamFormation: '${futureList7[index].awayFormation}',
-                                                                              lineUp: futureList7[index].lineUp ?? 0,
-                                                                            ).launch(context);
+                                                                                TournamentDetails(
+                                                                                  id: '${futureList7[index].id}',
+                                                                                  matchDate: '${futureList7[index].matchDate}',
+                                                                                  matchStatus: '未开赛',
+                                                                                  matchName: '${futureList7[index].competitionName}',
+                                                                                  homeTeamFormation: '${futureList7[index].homeFormation}',
+                                                                                  awayTeamFormation: '${futureList7[index].awayFormation}',
+                                                                                  lineUp: futureList7[index].lineUp ?? 0,
+                                                                                ).launch(context);
+                                                                              },
+                                                                              child: GameDisplayComponent(
+                                                                                id: futureList7[index].id ?? 0,
+                                                                                competitionType: futureList7[index].competitionName ?? "",
+                                                                                duration: futureList7[index].matchTimeStr ?? "00:00",
+                                                                                teamAName: futureList7[index].homeTeamName ?? "",
+                                                                                teamALogo: futureList7[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                teamAScore: futureList7[index].homeTeamScore.toString(),
+                                                                                teamBName: futureList7[index].awayTeamName ?? "",
+                                                                                teamBLogo: futureList7[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                teamBScore: futureList7[index].awayTeamScore.toString(),
+                                                                                isSaved: futureList7[index].hasCollected ?? false,
+                                                                              ),
+                                                                            );
                                                                           },
-                                                                          child:
-                                                                              GameDisplayComponent(
-                                                                            id: futureList7[index].id ??
-                                                                                0,
-                                                                            competitionType:
-                                                                                futureList7[index].competitionName ?? "",
-                                                                            duration:
-                                                                                futureList7[index].matchTimeStr ?? "00:00",
-                                                                            teamAName:
-                                                                                futureList7[index].homeTeamName ?? "",
-                                                                            teamALogo:
-                                                                                futureList7[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                            teamAScore:
-                                                                                futureList7[index].homeTeamScore.toString(),
-                                                                            teamBName:
-                                                                                futureList7[index].awayTeamName ?? "",
-                                                                            teamBLogo:
-                                                                                futureList7[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                            teamBScore:
-                                                                                futureList7[index].awayTeamScore.toString(),
-                                                                            isSaved:
-                                                                                futureList7[index].hasCollected ?? false,
-                                                                          ),
-                                                                        );
-                                                                      },
-                                                                    )
+                                                                        )
                                                               : (statusId ==
                                                                           2 &&
                                                                       pastDateId ==
@@ -1646,101 +1645,99 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                   ),
                                                                               ])
                                                                             ])
-                                                                      : ListView
-                                                                          .builder(
-                                                                          physics:
-                                                                              const NeverScrollableScrollPhysics(),
-                                                                          itemCount:
-                                                                              past1Length,
-                                                                          shrinkWrap:
-                                                                              true,
-                                                                          itemBuilder:
-                                                                              (context, index) {
-                                                                            return GestureDetector(
-                                                                              onTap: () {
-                                                                                print("navi into tournament");
-                                                                                TournamentDetails(
-                                                                                  id: '${pastList1[index].id}',
-                                                                                  matchDate: '${pastList1[index].matchDate}',
-                                                                                  matchStatus: '未开赛',
-                                                                                  matchName: '${pastList1[index].competitionName}',
-                                                                                  homeTeamFormation: '${pastList1[index].homeFormation}',
-                                                                                  awayTeamFormation: '${pastList1[index].awayFormation}',
-                                                                                  lineUp: pastList1[index].lineUp ?? 0,
-                                                                                ).launch(context);
-                                                                              },
-                                                                              child: GameDisplayComponent(
-                                                                                id: pastList1[index].id ?? 0,
-                                                                                competitionType: pastList1[index].competitionName ?? "",
-                                                                                duration: pastList1[index].matchTimeStr ?? "00:00",
-                                                                                teamAName: pastList1[index].homeTeamName ?? "",
-                                                                                teamALogo: pastList1[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                teamAScore: pastList1[index].homeTeamScore.toString(),
-                                                                                teamBName: pastList1[index].awayTeamName ?? "",
-                                                                                teamBLogo: pastList1[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                teamBScore: pastList1[index].awayTeamScore.toString(),
-                                                                                isSaved: pastList1[index].hasCollected ?? false,
-                                                                              ),
-                                                                            );
-                                                                          },
-                                                                        )
-                                                                  : (statusId ==
-                                                                              2 &&
-                                                                          pastDateId ==
-                                                                              1)
-                                                                      ? isEventLoading
-                                                                          ? Column(
-                                                                              children: [
-                                                                                  if (past2Length < 4)
-                                                                                    for (int i = 0; i < 4; i++)
-                                                                                      CardLoading(
-                                                                                        height: 100 * fem,
-                                                                                        borderRadius: BorderRadius.circular(8 * fem),
-                                                                                        margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                      ),
-                                                                                  for (int i = 0; i < past2Length; i++)
-                                                                                    CardLoading(
-                                                                                      height: 100 * fem,
-                                                                                      borderRadius: BorderRadius.circular(8 * fem),
-                                                                                      margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                    ),
-                                                                                ])
+                                                                      : (past1Length ==
+                                                                              0)
+                                                                          ? searchEmptyWidget()
                                                                           : ListView
                                                                               .builder(
                                                                               physics: const NeverScrollableScrollPhysics(),
-                                                                              itemCount: past2Length,
+                                                                              itemCount: past1Length,
                                                                               shrinkWrap: true,
                                                                               itemBuilder: (context, index) {
                                                                                 return GestureDetector(
                                                                                   onTap: () {
                                                                                     print("navi into tournament");
                                                                                     TournamentDetails(
-                                                                                      id: '${pastList2[index].id}',
-                                                                                      matchDate: '${pastList2[index].matchDate}',
+                                                                                      id: '${pastList1[index].id}',
+                                                                                      matchDate: '${pastList1[index].matchDate}',
                                                                                       matchStatus: '未开赛',
-                                                                                      matchName: '${pastList2[index].competitionName}',
-                                                                                      homeTeamFormation: '${pastList2[index].homeFormation}',
-                                                                                      awayTeamFormation: '${pastList2[index].awayFormation}',
-                                                                                      lineUp: pastList2[index].lineUp ?? 0,
+                                                                                      matchName: '${pastList1[index].competitionName}',
+                                                                                      homeTeamFormation: '${pastList1[index].homeFormation}',
+                                                                                      awayTeamFormation: '${pastList1[index].awayFormation}',
+                                                                                      lineUp: pastList1[index].lineUp ?? 0,
                                                                                     ).launch(context);
                                                                                   },
                                                                                   child: GameDisplayComponent(
-                                                                                    id: pastList2[index].id ?? 0,
-                                                                                    competitionType: pastList2[index].competitionName ?? "",
-                                                                                    duration: pastList2[index].matchTimeStr ?? "00:00",
-                                                                                    teamAName: pastList2[index].homeTeamName ?? "",
-                                                                                    teamALogo: pastList2[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                    teamAScore: pastList2[index].homeTeamScore.toString(),
-                                                                                    teamBName: pastList2[index].awayTeamName ?? "",
-                                                                                    teamBLogo: pastList2[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                    teamBScore: pastList2[index].awayTeamScore.toString(),
-                                                                                    isSaved: pastList2[index].hasCollected ?? false,
+                                                                                    id: pastList1[index].id ?? 0,
+                                                                                    competitionType: pastList1[index].competitionName ?? "",
+                                                                                    duration: pastList1[index].matchTimeStr ?? "00:00",
+                                                                                    teamAName: pastList1[index].homeTeamName ?? "",
+                                                                                    teamALogo: pastList1[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                    teamAScore: pastList1[index].homeTeamScore.toString(),
+                                                                                    teamBName: pastList1[index].awayTeamName ?? "",
+                                                                                    teamBLogo: pastList1[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                    teamBScore: pastList1[index].awayTeamScore.toString(),
+                                                                                    isSaved: pastList1[index].hasCollected ?? false,
                                                                                   ),
                                                                                 );
                                                                               },
                                                                             )
-                                                                      : (statusId == 2 &&
-                                                                              pastDateId == 2)
+                                                                  : (statusId ==
+                                                                              2 &&
+                                                                          pastDateId ==
+                                                                              1)
+                                                                      ? isEventLoading
+                                                                          ? Column(children: [
+                                                                              if (past2Length < 4)
+                                                                                for (int i = 0; i < 4; i++)
+                                                                                  CardLoading(
+                                                                                    height: 100 * fem,
+                                                                                    borderRadius: BorderRadius.circular(8 * fem),
+                                                                                    margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                  ),
+                                                                              for (int i = 0; i < past2Length; i++)
+                                                                                CardLoading(
+                                                                                  height: 100 * fem,
+                                                                                  borderRadius: BorderRadius.circular(8 * fem),
+                                                                                  margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                ),
+                                                                            ])
+                                                                          : (past2Length == 0)
+                                                                              ? searchEmptyWidget()
+                                                                              : ListView.builder(
+                                                                                  physics: const NeverScrollableScrollPhysics(),
+                                                                                  itemCount: past2Length,
+                                                                                  shrinkWrap: true,
+                                                                                  itemBuilder: (context, index) {
+                                                                                    return GestureDetector(
+                                                                                      onTap: () {
+                                                                                        print("navi into tournament");
+                                                                                        TournamentDetails(
+                                                                                          id: '${pastList2[index].id}',
+                                                                                          matchDate: '${pastList2[index].matchDate}',
+                                                                                          matchStatus: '未开赛',
+                                                                                          matchName: '${pastList2[index].competitionName}',
+                                                                                          homeTeamFormation: '${pastList2[index].homeFormation}',
+                                                                                          awayTeamFormation: '${pastList2[index].awayFormation}',
+                                                                                          lineUp: pastList2[index].lineUp ?? 0,
+                                                                                        ).launch(context);
+                                                                                      },
+                                                                                      child: GameDisplayComponent(
+                                                                                        id: pastList2[index].id ?? 0,
+                                                                                        competitionType: pastList2[index].competitionName ?? "",
+                                                                                        duration: pastList2[index].matchTimeStr ?? "00:00",
+                                                                                        teamAName: pastList2[index].homeTeamName ?? "",
+                                                                                        teamALogo: pastList2[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                        teamAScore: pastList2[index].homeTeamScore.toString(),
+                                                                                        teamBName: pastList2[index].awayTeamName ?? "",
+                                                                                        teamBLogo: pastList2[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                        teamBScore: pastList2[index].awayTeamScore.toString(),
+                                                                                        isSaved: pastList2[index].hasCollected ?? false,
+                                                                                      ),
+                                                                                    );
+                                                                                  },
+                                                                                )
+                                                                      : (statusId == 2 && pastDateId == 2)
                                                                           ? isEventLoading
                                                                               ? Column(children: [
                                                                                   if (past3Length < 4)
@@ -1757,39 +1754,41 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                       margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
                                                                                     ),
                                                                                 ])
-                                                                              : ListView.builder(
-                                                                                  physics: const NeverScrollableScrollPhysics(),
-                                                                                  itemCount: past3Length,
-                                                                                  shrinkWrap: true,
-                                                                                  itemBuilder: (context, index) {
-                                                                                    return GestureDetector(
-                                                                                      onTap: () {
-                                                                                        print("navi into tournament");
-                                                                                        TournamentDetails(
-                                                                                          id: '${pastList3[index].id}',
-                                                                                          matchDate: '${pastList3[index].matchDate}',
-                                                                                          matchStatus: '未开赛',
-                                                                                          matchName: '${pastList3[index].competitionName}',
-                                                                                          homeTeamFormation: '${pastList3[index].homeFormation}',
-                                                                                          awayTeamFormation: '${pastList3[index].awayFormation}',
-                                                                                          lineUp: pastList3[index].lineUp ?? 0,
-                                                                                        ).launch(context);
+                                                                              : (past3Length == 0)
+                                                                                  ? searchEmptyWidget()
+                                                                                  : ListView.builder(
+                                                                                      physics: const NeverScrollableScrollPhysics(),
+                                                                                      itemCount: past3Length,
+                                                                                      shrinkWrap: true,
+                                                                                      itemBuilder: (context, index) {
+                                                                                        return GestureDetector(
+                                                                                          onTap: () {
+                                                                                            print("navi into tournament");
+                                                                                            TournamentDetails(
+                                                                                              id: '${pastList3[index].id}',
+                                                                                              matchDate: '${pastList3[index].matchDate}',
+                                                                                              matchStatus: '未开赛',
+                                                                                              matchName: '${pastList3[index].competitionName}',
+                                                                                              homeTeamFormation: '${pastList3[index].homeFormation}',
+                                                                                              awayTeamFormation: '${pastList3[index].awayFormation}',
+                                                                                              lineUp: pastList3[index].lineUp ?? 0,
+                                                                                            ).launch(context);
+                                                                                          },
+                                                                                          child: GameDisplayComponent(
+                                                                                            id: pastList3[index].id ?? 0,
+                                                                                            competitionType: pastList3[index].competitionName ?? "",
+                                                                                            duration: pastList3[index].matchTimeStr ?? "00:00",
+                                                                                            teamAName: pastList3[index].homeTeamName ?? "",
+                                                                                            teamALogo: pastList3[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                            teamAScore: pastList3[index].homeTeamScore.toString(),
+                                                                                            teamBName: pastList3[index].awayTeamName ?? "",
+                                                                                            teamBLogo: pastList3[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                            teamBScore: pastList3[index].awayTeamScore.toString(),
+                                                                                            isSaved: pastList3[index].hasCollected ?? false,
+                                                                                          ),
+                                                                                        );
                                                                                       },
-                                                                                      child: GameDisplayComponent(
-                                                                                        id: pastList3[index].id ?? 0,
-                                                                                        competitionType: pastList3[index].competitionName ?? "",
-                                                                                        duration: pastList3[index].matchTimeStr ?? "00:00",
-                                                                                        teamAName: pastList3[index].homeTeamName ?? "",
-                                                                                        teamALogo: pastList3[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                        teamAScore: pastList3[index].homeTeamScore.toString(),
-                                                                                        teamBName: pastList3[index].awayTeamName ?? "",
-                                                                                        teamBLogo: pastList3[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                        teamBScore: pastList3[index].awayTeamScore.toString(),
-                                                                                        isSaved: pastList3[index].hasCollected ?? false,
-                                                                                      ),
-                                                                                    );
-                                                                                  },
-                                                                                )
+                                                                                    )
                                                                           : (statusId == 2 && pastDateId == 3)
                                                                               ? isEventLoading
                                                                                   ? Column(children: [
@@ -1807,39 +1806,41 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                           margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
                                                                                         ),
                                                                                     ])
-                                                                                  : ListView.builder(
-                                                                                      physics: const NeverScrollableScrollPhysics(),
-                                                                                      itemCount: past4Length,
-                                                                                      shrinkWrap: true,
-                                                                                      itemBuilder: (context, index) {
-                                                                                        return GestureDetector(
-                                                                                          onTap: () {
-                                                                                            print("navi into tournament");
-                                                                                            TournamentDetails(
-                                                                                              id: '${pastList4[index].id}',
-                                                                                              matchDate: '${pastList4[index].matchDate}',
-                                                                                              matchStatus: '未开赛',
-                                                                                              matchName: '${pastList4[index].competitionName}',
-                                                                                              homeTeamFormation: '${pastList4[index].homeFormation}',
-                                                                                              awayTeamFormation: '${pastList4[index].awayFormation}',
-                                                                                              lineUp: pastList4[index].lineUp ?? 0,
-                                                                                            ).launch(context);
+                                                                                  : (past4Length == 0)
+                                                                                      ? searchEmptyWidget()
+                                                                                      : ListView.builder(
+                                                                                          physics: const NeverScrollableScrollPhysics(),
+                                                                                          itemCount: past4Length,
+                                                                                          shrinkWrap: true,
+                                                                                          itemBuilder: (context, index) {
+                                                                                            return GestureDetector(
+                                                                                              onTap: () {
+                                                                                                print("navi into tournament");
+                                                                                                TournamentDetails(
+                                                                                                  id: '${pastList4[index].id}',
+                                                                                                  matchDate: '${pastList4[index].matchDate}',
+                                                                                                  matchStatus: '未开赛',
+                                                                                                  matchName: '${pastList4[index].competitionName}',
+                                                                                                  homeTeamFormation: '${pastList4[index].homeFormation}',
+                                                                                                  awayTeamFormation: '${pastList4[index].awayFormation}',
+                                                                                                  lineUp: pastList4[index].lineUp ?? 0,
+                                                                                                ).launch(context);
+                                                                                              },
+                                                                                              child: GameDisplayComponent(
+                                                                                                id: pastList4[index].id ?? 0,
+                                                                                                competitionType: pastList4[index].competitionName ?? "",
+                                                                                                duration: pastList4[index].matchTimeStr ?? "00:00",
+                                                                                                teamAName: pastList4[index].homeTeamName ?? "",
+                                                                                                teamALogo: pastList4[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                teamAScore: pastList4[index].homeTeamScore.toString(),
+                                                                                                teamBName: pastList4[index].awayTeamName ?? "",
+                                                                                                teamBLogo: pastList4[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                teamBScore: pastList4[index].awayTeamScore.toString(),
+                                                                                                isSaved: pastList4[index].hasCollected ?? false,
+                                                                                              ),
+                                                                                            );
                                                                                           },
-                                                                                          child: GameDisplayComponent(
-                                                                                            id: pastList4[index].id ?? 0,
-                                                                                            competitionType: pastList4[index].competitionName ?? "",
-                                                                                            duration: pastList4[index].matchTimeStr ?? "00:00",
-                                                                                            teamAName: pastList4[index].homeTeamName ?? "",
-                                                                                            teamALogo: pastList4[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                            teamAScore: pastList4[index].homeTeamScore.toString(),
-                                                                                            teamBName: pastList4[index].awayTeamName ?? "",
-                                                                                            teamBLogo: pastList4[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                            teamBScore: pastList4[index].awayTeamScore.toString(),
-                                                                                            isSaved: pastList4[index].hasCollected ?? false,
-                                                                                          ),
-                                                                                        );
-                                                                                      },
-                                                                                    )
+                                                                                        )
                                                                               : (statusId == 2 && pastDateId == 4)
                                                                                   ? isEventLoading
                                                                                       ? Column(children: [
@@ -1857,39 +1858,41 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                               margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
                                                                                             ),
                                                                                         ])
-                                                                                      : ListView.builder(
-                                                                                          physics: const NeverScrollableScrollPhysics(),
-                                                                                          itemCount: past5Length,
-                                                                                          shrinkWrap: true,
-                                                                                          itemBuilder: (context, index) {
-                                                                                            return GestureDetector(
-                                                                                              onTap: () {
-                                                                                                print("navi into tournament");
-                                                                                                TournamentDetails(
-                                                                                                  id: '${pastList5[index].id}',
-                                                                                                  matchDate: '${pastList5[index].matchDate}',
-                                                                                                  matchStatus: '未开赛',
-                                                                                                  matchName: '${pastList5[index].competitionName}',
-                                                                                                  homeTeamFormation: '${pastList5[index].homeFormation}',
-                                                                                                  awayTeamFormation: '${pastList5[index].awayFormation}',
-                                                                                                  lineUp: pastList5[index].lineUp ?? 0,
-                                                                                                ).launch(context);
+                                                                                      : (past5Length == 0)
+                                                                                          ? searchEmptyWidget()
+                                                                                          : ListView.builder(
+                                                                                              physics: const NeverScrollableScrollPhysics(),
+                                                                                              itemCount: past5Length,
+                                                                                              shrinkWrap: true,
+                                                                                              itemBuilder: (context, index) {
+                                                                                                return GestureDetector(
+                                                                                                  onTap: () {
+                                                                                                    print("navi into tournament");
+                                                                                                    TournamentDetails(
+                                                                                                      id: '${pastList5[index].id}',
+                                                                                                      matchDate: '${pastList5[index].matchDate}',
+                                                                                                      matchStatus: '未开赛',
+                                                                                                      matchName: '${pastList5[index].competitionName}',
+                                                                                                      homeTeamFormation: '${pastList5[index].homeFormation}',
+                                                                                                      awayTeamFormation: '${pastList5[index].awayFormation}',
+                                                                                                      lineUp: pastList5[index].lineUp ?? 0,
+                                                                                                    ).launch(context);
+                                                                                                  },
+                                                                                                  child: GameDisplayComponent(
+                                                                                                    id: pastList5[index].id ?? 0,
+                                                                                                    competitionType: pastList5[index].competitionName ?? "",
+                                                                                                    duration: pastList5[index].matchTimeStr ?? "00:00",
+                                                                                                    teamAName: pastList5[index].homeTeamName ?? "",
+                                                                                                    teamALogo: pastList5[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                    teamAScore: pastList5[index].homeTeamScore.toString(),
+                                                                                                    teamBName: pastList5[index].awayTeamName ?? "",
+                                                                                                    teamBLogo: pastList5[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                    teamBScore: pastList5[index].awayTeamScore.toString(),
+                                                                                                    isSaved: pastList5[index].hasCollected ?? false,
+                                                                                                  ),
+                                                                                                );
                                                                                               },
-                                                                                              child: GameDisplayComponent(
-                                                                                                id: pastList5[index].id ?? 0,
-                                                                                                competitionType: pastList5[index].competitionName ?? "",
-                                                                                                duration: pastList5[index].matchTimeStr ?? "00:00",
-                                                                                                teamAName: pastList5[index].homeTeamName ?? "",
-                                                                                                teamALogo: pastList5[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                teamAScore: pastList5[index].homeTeamScore.toString(),
-                                                                                                teamBName: pastList5[index].awayTeamName ?? "",
-                                                                                                teamBLogo: pastList5[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                teamBScore: pastList5[index].awayTeamScore.toString(),
-                                                                                                isSaved: pastList5[index].hasCollected ?? false,
-                                                                                              ),
-                                                                                            );
-                                                                                          },
-                                                                                        )
+                                                                                            )
                                                                                   : (statusId == 2 && pastDateId == 5)
                                                                                       ? isEventLoading
                                                                                           ? Column(children: [
@@ -1907,39 +1910,41 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                                   margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
                                                                                                 ),
                                                                                             ])
-                                                                                          : ListView.builder(
-                                                                                              physics: const NeverScrollableScrollPhysics(),
-                                                                                              itemCount: past6Length,
-                                                                                              shrinkWrap: true,
-                                                                                              itemBuilder: (context, index) {
-                                                                                                return GestureDetector(
-                                                                                                  onTap: () {
-                                                                                                    print("navi into tournament");
-                                                                                                    TournamentDetails(
-                                                                                                      id: '${pastList6[index].id}',
-                                                                                                      matchDate: '${pastList6[index].matchDate}',
-                                                                                                      matchStatus: '未开赛',
-                                                                                                      matchName: '${pastList6[index].competitionName}',
-                                                                                                      homeTeamFormation: '${pastList6[index].homeFormation}',
-                                                                                                      awayTeamFormation: '${pastList6[index].awayFormation}',
-                                                                                                      lineUp: pastList6[index].lineUp ?? 0,
-                                                                                                    ).launch(context);
+                                                                                          : (past6Length == 0)
+                                                                                              ? searchEmptyWidget()
+                                                                                              : ListView.builder(
+                                                                                                  physics: const NeverScrollableScrollPhysics(),
+                                                                                                  itemCount: past6Length,
+                                                                                                  shrinkWrap: true,
+                                                                                                  itemBuilder: (context, index) {
+                                                                                                    return GestureDetector(
+                                                                                                      onTap: () {
+                                                                                                        print("navi into tournament");
+                                                                                                        TournamentDetails(
+                                                                                                          id: '${pastList6[index].id}',
+                                                                                                          matchDate: '${pastList6[index].matchDate}',
+                                                                                                          matchStatus: '未开赛',
+                                                                                                          matchName: '${pastList6[index].competitionName}',
+                                                                                                          homeTeamFormation: '${pastList6[index].homeFormation}',
+                                                                                                          awayTeamFormation: '${pastList6[index].awayFormation}',
+                                                                                                          lineUp: pastList6[index].lineUp ?? 0,
+                                                                                                        ).launch(context);
+                                                                                                      },
+                                                                                                      child: GameDisplayComponent(
+                                                                                                        id: pastList6[index].id ?? 0,
+                                                                                                        competitionType: pastList6[index].competitionName ?? "",
+                                                                                                        duration: pastList6[index].matchTimeStr ?? "00:00",
+                                                                                                        teamAName: pastList6[index].homeTeamName ?? "",
+                                                                                                        teamALogo: pastList6[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                        teamAScore: pastList6[index].homeTeamScore.toString(),
+                                                                                                        teamBName: pastList6[index].awayTeamName ?? "",
+                                                                                                        teamBLogo: pastList6[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                        teamBScore: pastList6[index].awayTeamScore.toString(),
+                                                                                                        isSaved: pastList6[index].hasCollected ?? false,
+                                                                                                      ),
+                                                                                                    );
                                                                                                   },
-                                                                                                  child: GameDisplayComponent(
-                                                                                                    id: pastList6[index].id ?? 0,
-                                                                                                    competitionType: pastList6[index].competitionName ?? "",
-                                                                                                    duration: pastList6[index].matchTimeStr ?? "00:00",
-                                                                                                    teamAName: pastList6[index].homeTeamName ?? "",
-                                                                                                    teamALogo: pastList6[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                    teamAScore: pastList6[index].homeTeamScore.toString(),
-                                                                                                    teamBName: pastList6[index].awayTeamName ?? "",
-                                                                                                    teamBLogo: pastList6[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                    teamBScore: pastList6[index].awayTeamScore.toString(),
-                                                                                                    isSaved: pastList6[index].hasCollected ?? false,
-                                                                                                  ),
-                                                                                                );
-                                                                                              },
-                                                                                            )
+                                                                                                )
                                                                                       : (statusId == 2 && pastDateId == 6)
                                                                                           ? isEventLoading
                                                                                               ? Column(children: [
@@ -1957,39 +1962,41 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                                       margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
                                                                                                     ),
                                                                                                 ])
-                                                                                              : ListView.builder(
-                                                                                                  physics: const NeverScrollableScrollPhysics(),
-                                                                                                  itemCount: past7Length,
-                                                                                                  shrinkWrap: true,
-                                                                                                  itemBuilder: (context, index) {
-                                                                                                    return GestureDetector(
-                                                                                                      onTap: () {
-                                                                                                        print("navi into tournament");
-                                                                                                        TournamentDetails(
-                                                                                                          id: '${pastList7[index].id}',
-                                                                                                          matchDate: '${pastList7[index].matchDate}',
-                                                                                                          matchStatus: '未开赛',
-                                                                                                          matchName: '${pastList7[index].competitionName}',
-                                                                                                          homeTeamFormation: '${pastList7[index].homeFormation}',
-                                                                                                          awayTeamFormation: '${pastList7[index].awayFormation}',
-                                                                                                          lineUp: pastList7[index].lineUp ?? 0,
-                                                                                                        ).launch(context);
+                                                                                              : (past7Length == 0)
+                                                                                                  ? searchEmptyWidget()
+                                                                                                  : ListView.builder(
+                                                                                                      physics: const NeverScrollableScrollPhysics(),
+                                                                                                      itemCount: past7Length,
+                                                                                                      shrinkWrap: true,
+                                                                                                      itemBuilder: (context, index) {
+                                                                                                        return GestureDetector(
+                                                                                                          onTap: () {
+                                                                                                            print("navi into tournament");
+                                                                                                            TournamentDetails(
+                                                                                                              id: '${pastList7[index].id}',
+                                                                                                              matchDate: '${pastList7[index].matchDate}',
+                                                                                                              matchStatus: '未开赛',
+                                                                                                              matchName: '${pastList7[index].competitionName}',
+                                                                                                              homeTeamFormation: '${pastList7[index].homeFormation}',
+                                                                                                              awayTeamFormation: '${pastList7[index].awayFormation}',
+                                                                                                              lineUp: pastList7[index].lineUp ?? 0,
+                                                                                                            ).launch(context);
+                                                                                                          },
+                                                                                                          child: GameDisplayComponent(
+                                                                                                            id: pastList7[index].id ?? 0,
+                                                                                                            competitionType: pastList7[index].competitionName ?? "",
+                                                                                                            duration: pastList7[index].matchTimeStr ?? "00:00",
+                                                                                                            teamAName: pastList7[index].homeTeamName ?? "",
+                                                                                                            teamALogo: pastList7[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                            teamAScore: pastList7[index].homeTeamScore.toString(),
+                                                                                                            teamBName: pastList7[index].awayTeamName ?? "",
+                                                                                                            teamBLogo: pastList7[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                            teamBScore: pastList7[index].awayTeamScore.toString(),
+                                                                                                            isSaved: pastList7[index].hasCollected ?? false,
+                                                                                                          ),
+                                                                                                        );
                                                                                                       },
-                                                                                                      child: GameDisplayComponent(
-                                                                                                        id: pastList7[index].id ?? 0,
-                                                                                                        competitionType: pastList7[index].competitionName ?? "",
-                                                                                                        duration: pastList7[index].matchTimeStr ?? "00:00",
-                                                                                                        teamAName: pastList7[index].homeTeamName ?? "",
-                                                                                                        teamALogo: pastList7[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                        teamAScore: pastList7[index].homeTeamScore.toString(),
-                                                                                                        teamBName: pastList7[index].awayTeamName ?? "",
-                                                                                                        teamBLogo: pastList7[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                        teamBScore: pastList7[index].awayTeamScore.toString(),
-                                                                                                        isSaved: pastList7[index].hasCollected ?? false,
-                                                                                                      ),
-                                                                                                    );
-                                                                                                  },
-                                                                                                )
+                                                                                                    )
                                                                                           : Container(),
                               isLoading
                                   ? Center(

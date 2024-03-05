@@ -166,7 +166,7 @@ class CollectMatchesData {
   final String? awayTeamName;
   final int? homeTeamScore;
   final int? awayTeamScore;
-  final String? matchTime;
+  final int? matchTime;
   final String? homeTeamLogo;
   final String? awayTeamLogo;
   final int? statusId;

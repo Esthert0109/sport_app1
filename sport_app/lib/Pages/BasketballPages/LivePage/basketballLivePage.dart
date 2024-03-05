@@ -19,6 +19,7 @@ import '../../../Model/collectionModel.dart';
 import '../../../Model/liveStreamModel.dart';
 import '../../../Model/userDataModel.dart';
 import '../../../Provider/collectionProvider.dart';
+import '../../MyPages/savedLive.dart';
 import '../../TencentLiveStreamRoom/liveStreamChatRoom.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -295,6 +296,8 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                           GestureDetector(
                             onTap: () {
                               print("goto saved Live");
+                              Get.to(() => SavedCollection(),
+                                  transition: Transition.fadeIn);
                             },
                             child: Text(
                               AppLocalizations.of(context)!.showAll,
@@ -374,7 +377,7 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                                             .toString(),
                                         isSaved: threeCollections[index]
                                                 .hasCollected ??
-                                            false,
+                                            true,
                                       ),
                                     );
                                   },

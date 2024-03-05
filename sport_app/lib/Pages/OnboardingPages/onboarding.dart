@@ -48,7 +48,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             WidthButton(
               text: AppLocalizations.of(context)!.login,
               onPressed: () {
-                Get.to(() => const Login());
+                Get.to(() => const Login(), transition: Transition.fadeIn);
               },
             ),
             SizedBox(
@@ -59,7 +59,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 btnColor: kSecondaryBtnColor,
                 fontColor: kMainGreenColor,
                 onPressed: () {
-                  Get.to(() => const Register());
+                  Get.to(() => const Register(), transition: Transition.fadeIn);
                 })
           ],
         ),

@@ -140,7 +140,9 @@ class _MyPageState extends State<MyPage> {
               height: 30 * fem,
             ),
             GestureDetector(
-              onTap: () => {Get.to(() => SavedCollection())},
+              onTap: () => {
+                Get.to(() => SavedCollection(), transition: Transition.fadeIn)
+              },
               child: Container(
                   width: 340 * fem,
                   height: 60 * fem,
@@ -194,13 +196,13 @@ class _MyPageState extends State<MyPage> {
                   width: 14 * fem,
                 ),
                 whiteBox(AppLocalizations.of(context)!.contactUs, () {
-                  Get.to(() => ContactUs());
+                  Get.to(() => ContactUs(), transition: Transition.fadeIn);
                 }),
                 SizedBox(
                   width: 14 * fem,
                 ),
                 whiteBox(AppLocalizations.of(context)!.systemSetting, () {
-                  Get.to(() => SystemSetting());
+                  Get.to(() => SystemSetting(), transition: Transition.fadeIn);
                 }),
               ],
             ),

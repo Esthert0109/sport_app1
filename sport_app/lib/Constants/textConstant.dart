@@ -270,6 +270,14 @@ const tMyPageBtn = TextStyle(
     fontWeight: FontWeight.w400,
     color: kMainTitleColor);
 
+// collection page
+const tCollectionDateTitle = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    letterSpacing: 0.3,
+    color: kMainTitleColor);
+
 // contact us page
 const tContactUsTitle = TextStyle(
     fontFamily: 'Inter',

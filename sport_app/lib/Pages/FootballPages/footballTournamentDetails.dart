@@ -180,7 +180,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                         width:
                                             MediaQuery.of(context).size.width,
                                         child: Image.asset(
-                                          'images/tournament_detail.png',
+                                          'images/tournament/tournament_detail.png',
                                           fit: BoxFit.fill,
                                         )),
                                     Text("无信息数据",
@@ -200,7 +200,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                   Container(
                                     width: MediaQuery.of(context).size.width,
                                     child: Image.asset(
-                                      'images/tournament_detail.png',
+                                      'images/tournament/tournament_detail.png',
                                       fit: BoxFit.fill,
                                     ),
                                   ),
@@ -220,7 +220,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                             Container(
                               width: MediaQuery.of(context).size.width,
                               child: Image.asset(
-                                'images/tournament_detail.png',
+                                'images/tournament/tournament_detail.png',
                                 fit: BoxFit.fill,
                               ),
                             ),

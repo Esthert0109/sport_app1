@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -17,21 +18,22 @@ class GameDisplayComponent extends StatefulWidget {
   final String teamBLogo;
   final String teamBScore;
   final bool isSaved;
-  Function? saveGameCallBack;
+  // Function? saveGameCallBack;
 
-  GameDisplayComponent(
-      {super.key,
-      required this.id,
-      required this.competitionType,
-      required this.duration,
-      required this.teamAName,
-      required this.teamALogo,
-      required this.teamAScore,
-      required this.teamBName,
-      required this.teamBLogo,
-      required this.teamBScore,
-      required this.isSaved,
-      this.saveGameCallBack});
+  GameDisplayComponent({
+    super.key,
+    required this.id,
+    required this.competitionType,
+    required this.duration,
+    required this.teamAName,
+    required this.teamALogo,
+    required this.teamAScore,
+    required this.teamBName,
+    required this.teamBLogo,
+    required this.teamBScore,
+    required this.isSaved,
+    // this.saveGameCallBack
+  });
 
   @override
   State<GameDisplayComponent> createState() => _GameDisplayComponentState();
@@ -40,6 +42,9 @@ class GameDisplayComponent extends StatefulWidget {
 class _GameDisplayComponentState extends State<GameDisplayComponent> {
   //services and provider
   BookmarkProvider bookmarkProvider = BookmarkProvider();
+
+  // required variables
+  bool isSaved = false;
 
   // save bookmark
   Future<void> createBookmark(int matchId) async {
@@ -50,6 +55,19 @@ class _GameDisplayComponentState extends State<GameDisplayComponent> {
   Future<void> delBookmark(int matchId) async {
     DelCollectionModel? delCollectionModel =
         await bookmarkProvider.deleteCollection(matchId);
+  }
+
+  void isSavedAssigning() {
+    setState(() {
+      isSaved = widget.isSaved;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    isSavedAssigning();
   }
 
   @override
@@ -68,7 +86,6 @@ class _GameDisplayComponentState extends State<GameDisplayComponent> {
     String teamBName = widget.teamBName;
     String teamBLogo = widget.teamBLogo;
     String teamBScore = widget.teamBScore;
-    bool isSaved = widget.isSaved;
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
@@ -93,32 +110,46 @@ class _GameDisplayComponentState extends State<GameDisplayComponent> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            height: 20 * fem,
-                            margin: EdgeInsets.symmetric(horizontal: 2 * fem),
-                            alignment: Alignment.topLeft,
-                            padding: EdgeInsets.symmetric(horizontal: 8 * fem),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: kLightGreyColor),
-                            child: Text(
-                              competitionType,
-                              style: tTagButton,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              softWrap: false,
-                              textAlign: TextAlign.center,
+                          Expanded(
+                            flex: 8,
+                            child: Container(
+                              // color: Colors.amberAccent,
+                              // width: 150 * fem,
+                              child: Container(
+                                height: 20 * fem,
+                                margin:
+                                    EdgeInsets.symmetric(horizontal: 2 * fem),
+                                alignment: Alignment.topLeft,
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 8 * fem),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: kLightGreyColor),
+                                child: Text(
+                                  competitionType,
+                                  style: tTagButton,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  softWrap: false,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
                             ),
                           ),
-                          Container(
-                            height: 20 * fem,
-                            width: 80 * fem,
-                            alignment: Alignment.topCenter,
-                            padding: EdgeInsets.symmetric(horizontal: 20 * fem),
-                            child: Text(
-                              duration,
-                              style: tDate,
-                              textAlign: TextAlign.start,
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              // color: Colors.amber,
+                              height: 20 * fem,
+                              width: 80 * fem,
+                              alignment: Alignment.topCenter,
+                              padding:
+                                  EdgeInsets.symmetric(horizontal: 5 * fem),
+                              child: Text(
+                                duration,
+                                style: tDate,
+                                textAlign: TextAlign.start,
+                              ),
                             ),
                           ),
                         ],
@@ -132,23 +163,26 @@ class _GameDisplayComponentState extends State<GameDisplayComponent> {
                             setState(() {
                               if (isSaved) {
                                 delBookmark(id);
+                                isSaved = !isSaved;
                               } else {
                                 createBookmark(id);
+                                isSaved = !isSaved;
                               }
-                              isSaved = !isSaved;
+
                               print("isSaved: $isSaved");
                             });
-                            widget.saveGameCallBack!();
+                            // widget.saveGameCallBack!();
                           },
                           child: Container(
-                              width: 24 * fem,
-                              height: 24 * fem,
-                              alignment: Alignment.topRight,
-                              child: isSaved
-                                  ? SvgPicture.asset(
-                                      'images/common/Bookmark-1.svg')
-                                  : SvgPicture.asset(
-                                      'images/common/Bookmark-0.svg')),
+                            width: 24 * fem,
+                            height: 24 * fem,
+                            alignment: Alignment.topRight,
+                            child: isSaved
+                                ? SvgPicture.asset(
+                                    'images/common/Bookmark-1.svg')
+                                : SvgPicture.asset(
+                                    'images/common/Bookmark-0.svg'),
+                          ),
                         ),
                       ))
                 ],

@@ -19,6 +19,7 @@ import '../../Constants/colorConstant.dart';
 import '../../Model/userDataModel.dart';
 import '../../Provider/userProvider.dart';
 import 'editPassword.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OTPVerification extends StatefulWidget {
   final String phone;
@@ -101,7 +102,8 @@ class _OTPVerificationState extends State<OTPVerification> {
       countdown.start(
         (int seconds) {
           setState(() {
-            countdownMsg = '$seconds秒后再发送验证码';
+            countdownMsg =
+                '$seconds' + AppLocalizations.of(context)!.afterSecond;
             // 展示多少秒后才能重发验证码
             isbuttonDisabled = true; // 禁用按钮
           });
@@ -169,13 +171,16 @@ class _OTPVerificationState extends State<OTPVerification> {
                 SizedBox(
                   height: 41 * fem,
                 ),
-                HeadingText(text: verification ? '验证码验证成功！' : '验证码认证'),
+                HeadingText(
+                    text: verification
+                        ? AppLocalizations.of(context)!.verifiedSuccessfully
+                        : AppLocalizations.of(context)!.verifiedOTP),
 
                 SizedBox(
                   height: 18 * fem,
                 ),
                 //SubText
-                Text(verification ? '' : '请输入我们往您电话号发送的验证码。',
+                Text(verification ? '' : AppLocalizations.of(context)!.keyInOTP,
                     style: GoogleFonts.notoSansSc(
                       color: kMainGreyColor,
                       fontSize: 16 * fem,
@@ -403,7 +408,7 @@ class _OTPVerificationState extends State<OTPVerification> {
                         _isLoading
                             ? LoadingLongButton()
                             : WidthButton(
-                                text: '验证',
+                                text: AppLocalizations.of(context)!.verified,
                                 onPressed: () async {
                                   setState(() {
                                     _responseMsg = "";
@@ -440,9 +445,14 @@ class _OTPVerificationState extends State<OTPVerification> {
                                       } else {
                                         Navigator.of(context).pop();
                                         setState(() {
-                                          _responseMsg = '验证码错误！';
+                                          _responseMsg =
+                                              AppLocalizations.of(context)!
+                                                  .verifiedUnsuccessfully;
                                         });
-                                        openSnackbar(context, '验证码错误！',
+                                        openSnackbar(
+                                            context,
+                                            AppLocalizations.of(context)!
+                                                .verifiedUnsuccessfully,
                                             kComponentErrorTextColor);
                                       }
                                     }
@@ -499,12 +509,16 @@ class _OTPVerificationState extends State<OTPVerification> {
                                               ModalRoute.withName("/auth"));
                                         } else {
                                           setState(() {
-                                            _responseMsg = '验证码错误！';
+                                            _responseMsg =
+                                                AppLocalizations.of(context)!
+                                                    .verifiedUnsuccessfully;
                                           });
                                         }
                                       } else {
                                         setState(() {
-                                          _responseMsg = "请输入验证码";
+                                          _responseMsg =
+                                              AppLocalizations.of(context)!
+                                                  .keyInOTP;
                                         });
                                       }
                                     } else {
@@ -513,7 +527,9 @@ class _OTPVerificationState extends State<OTPVerification> {
                                     }
                                   } else {
                                     setState(() {
-                                      _responseMsg = '请填充空白!';
+                                      _responseMsg =
+                                          AppLocalizations.of(context)!
+                                              .otpNotBlank;
                                     });
                                   }
                                 }),
@@ -535,7 +551,7 @@ class _OTPVerificationState extends State<OTPVerification> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              '无法获取验证码？',
+                              AppLocalizations.of(context)!.cntReceiveOTP,
                               style: GoogleFonts.notoSansSc(
                                 fontSize: 14 * fem,
                                 fontWeight: FontWeight.w500,
@@ -544,7 +560,7 @@ class _OTPVerificationState extends State<OTPVerification> {
                               ),
                             ),
                             PressableWord(
-                              text: '再次发送',
+                              text: AppLocalizations.of(context)!.resend,
                               onPressed: () {
                                 if (!isbuttonDisabled) {
                                   setState(() {

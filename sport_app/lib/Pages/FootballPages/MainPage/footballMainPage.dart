@@ -422,6 +422,65 @@ class _FootballMainPageState extends State<FootballMainPage>
     }
   }
 
+  Future<void> refresh() async {
+    setState(() {
+      print("refresh");
+      liveStreamList.clear();
+      liveStreamLength = liveStreamList.length;
+      getPopularLiveStreamRoomList();
+      statusId = 0;
+      futureDateId = 0;
+      pastDateId = 6;
+      getStartedEventList();
+      startedList.clear();
+      startedLength = startedList.length;
+      pageStarted = 1;
+      getEventListByDate();
+      futureList1.clear();
+      futureList2.clear();
+      futureList3.clear();
+      futureList4.clear();
+      futureList5.clear();
+      futureList6.clear();
+      futureList7.clear();
+      pastList1.clear();
+      pastList2.clear();
+      pastList3.clear();
+      pastList4.clear();
+      pastList5.clear();
+      pastList6.clear();
+      pastList7.clear();
+      future1Length = futureList1.length;
+      future2Length = futureList2.length;
+      future3Length = futureList3.length;
+      future4Length = futureList4.length;
+      future5Length = futureList5.length;
+      future6Length = futureList6.length;
+      future7Length = futureList7.length;
+      past1Length = pastList1.length;
+      past2Length = pastList2.length;
+      past3Length = pastList3.length;
+      past4Length = pastList4.length;
+      past5Length = pastList5.length;
+      past6Length = pastList6.length;
+      past7Length = pastList7.length;
+      pageFuture1 = 1;
+      pageFuture2 = 1;
+      pageFuture3 = 1;
+      pageFuture4 = 1;
+      pageFuture5 = 1;
+      pageFuture6 = 1;
+      pageFuture7 = 1;
+      pagePast1 = 1;
+      pagePast2 = 1;
+      pagePast3 = 1;
+      pagePast4 = 1;
+      pagePast5 = 1;
+      pagePast6 = 1;
+      pagePast7 = 1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // standard size
@@ -459,7 +518,8 @@ class _FootballMainPageState extends State<FootballMainPage>
                 actions: [
                   GestureDetector(
                     onTap: () {
-                      Get.to(() => SearchEventPage(), transition: Transition.noTransition);
+                      Get.to(() => SearchEventPage(),
+                          transition: Transition.noTransition);
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(
@@ -544,7 +604,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                 child: RefreshIndicator(
                   color: kMainGreenColor,
                   onRefresh: () async {
-                    // refresh
+                    refresh();
                   },
                   child: SingleChildScrollView(
                     controller: _scrollController,

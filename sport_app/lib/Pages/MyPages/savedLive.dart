@@ -2,6 +2,7 @@ import 'package:card_loading/card_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/Model/userDataModel.dart';
 
@@ -35,9 +36,6 @@ class _SavedCollectionState extends State<SavedCollection> {
   // variables
   int page = 1;
   int size = 10;
-
-  List<CollectMatchesData> allCollectionList = []; //get list in each date
-  int collectionMatchesDataLength = 0;
 
   // fetch data
   List<AllCollectMatchesData> collectionList = []; // get number of date listed
@@ -75,6 +73,15 @@ class _SavedCollectionState extends State<SavedCollection> {
     }
   }
 
+  Future<void> refresh() async {
+    setState(() {
+      collectionList.clear();
+      collectionLength = collectionList.length;
+      page = 1;
+      getAllSavedCollections();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -108,103 +115,118 @@ class _SavedCollectionState extends State<SavedCollection> {
               size: 20 * fem,
             )),
       ),
-      body: SingleChildScrollView(
-          padding: EdgeInsets.only(bottom: 20 * fem),
-          physics: const BouncingScrollPhysics(),
-          child: ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: collectionLength,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return isLoading
-                  ? Column(children: [
-                      for (int i = 0; i < collectionLength; i++)
-                        CardLoading(
-                          height: 100 * fem,
-                          borderRadius: BorderRadius.circular(8 * fem),
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 10 * fem, vertical: 10 * fem),
-                        ),
-                    ])
-                  : Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.fromLTRB(
-                              20 * fem, 15 * fem, 20 * fem, 10 * fem),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            DateFormat('yyyy/MM/dd  EEEE', 'zh_CN').format(
-                                DateTime.parse(collectionList[index].date)),
-                            style: tCollectionDateTitle,
-                          ),
-                        ),
-                        ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: collectionList[index].data.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, i) {
-                            return GestureDetector(
-                              onTap: () {
-                                print("navi into tournament");
-                                BasketballTournamentDetails(
-                                        id:
-                                            '${collectionList[index].data[i].id}',
-                                        matchDate:
-                                            '${collectionList[index].data[i].matchDate}',
-                                        matchStatus:
-                                            '${collectionList[index].data[i].statusStr}',
-                                        matchName:
-                                            '${collectionList[index].data[i].competitionName}')
-                                    .launch(context);
-                              },
-                              child: GameDisplayComponent(
-                                id: collectionList[index].data[i].id ?? 0,
-                                competitionType: collectionList[index]
-                                        .data[i]
-                                        .competitionName ??
-                                    "",
-                                duration: collectionList[index]
-                                        .data[i]
-                                        .matchTimeStr ??
-                                    "00:00",
-                                teamAName: collectionList[index]
-                                        .data[i]
-                                        .homeTeamName ??
-                                    "",
-                                teamALogo: collectionList[index]
-                                        .data[i]
-                                        .homeTeamLogo ??
-                                    'images/mainpage/sampleLogo.png',
-                                teamAScore: collectionList[index]
-                                    .data[i]
-                                    .homeTeamScore
-                                    .toString(),
-                                teamBName: collectionList[index]
-                                        .data[i]
-                                        .awayTeamName ??
-                                    "",
-                                teamBLogo: collectionList[index]
-                                        .data[i]
-                                        .awayTeamLogo ??
-                                    'images/mainpage/sampleLogo.png',
-                                teamBScore: collectionList[index]
-                                    .data[i]
-                                    .awayTeamScore
-                                    .toString(),
-                                isSaved: collectionList[index]
-                                        .data[i]
-                                        .hasCollected ??
-                                    true,
+      body: LazyLoadScrollView(
+        isLoading: isLoading,
+        onEndOfPage: () {
+          setState(() {
+            getAllSavedCollections();
+            print("end of the page");
+          });
+        },
+        child: RefreshIndicator(
+          color: kMainGreenColor,
+          onRefresh: () async {
+            refresh();
+          },
+          child: SingleChildScrollView(
+              padding: EdgeInsets.only(bottom: 20 * fem),
+              physics: const BouncingScrollPhysics(),
+              child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: collectionLength,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return isLoading
+                      ? Column(children: [
+                          for (int i = 0; i < collectionLength; i++)
+                            CardLoading(
+                              height: 100 * fem,
+                              borderRadius: BorderRadius.circular(8 * fem),
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 10 * fem, vertical: 10 * fem),
+                            ),
+                        ])
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.fromLTRB(
+                                  20 * fem, 15 * fem, 20 * fem, 10 * fem),
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                DateFormat('yyyy/MM/dd  EEEE', 'zh_CN').format(
+                                    DateTime.parse(collectionList[index].date)),
+                                style: tCollectionDateTitle,
                               ),
-                            );
-                          },
-                        )
-                      ],
-                    );
-            },
-          )),
+                            ),
+                            ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: collectionList[index].data.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, i) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    print("navi into tournament");
+                                    BasketballTournamentDetails(
+                                            id:
+                                                '${collectionList[index].data[i].id}',
+                                            matchDate:
+                                                '${collectionList[index].data[i].matchDate}',
+                                            matchStatus:
+                                                '${collectionList[index].data[i].statusStr}',
+                                            matchName:
+                                                '${collectionList[index].data[i].competitionName}')
+                                        .launch(context);
+                                  },
+                                  child: GameDisplayComponent(
+                                    id: collectionList[index].data[i].id ?? 0,
+                                    competitionType: collectionList[index]
+                                            .data[i]
+                                            .competitionName ??
+                                        "",
+                                    duration: collectionList[index]
+                                            .data[i]
+                                            .matchTimeStr ??
+                                        "00:00",
+                                    teamAName: collectionList[index]
+                                            .data[i]
+                                            .homeTeamName ??
+                                        "",
+                                    teamALogo: collectionList[index]
+                                            .data[i]
+                                            .homeTeamLogo ??
+                                        'images/mainpage/sampleLogo.png',
+                                    teamAScore: collectionList[index]
+                                        .data[i]
+                                        .homeTeamScore
+                                        .toString(),
+                                    teamBName: collectionList[index]
+                                            .data[i]
+                                            .awayTeamName ??
+                                        "",
+                                    teamBLogo: collectionList[index]
+                                            .data[i]
+                                            .awayTeamLogo ??
+                                        'images/mainpage/sampleLogo.png',
+                                    teamBScore: collectionList[index]
+                                        .data[i]
+                                        .awayTeamScore
+                                        .toString(),
+                                    isSaved: collectionList[index]
+                                            .data[i]
+                                            .hasCollected ??
+                                        true,
+                                  ),
+                                );
+                              },
+                            )
+                          ],
+                        );
+                },
+              )),
+        ),
+      ),
     ));
   }
 }

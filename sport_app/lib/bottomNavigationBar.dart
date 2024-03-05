@@ -33,7 +33,7 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
   List<Widget> footballPagesLayout = <Widget>[
     const FootballMainPage(),
     const FootballLivePage(),
-    const FootballInfoPage(),
+    const BasketballInfoPage(),
     const MyPage(),
   ];
 

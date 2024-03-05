@@ -37,9 +37,10 @@ class LiveStreamProvider extends ChangeNotifier {
     }
   }
 
-  Future<LiveStreamModel?> getAllLiveStreamList() async {
-    final String url =
-        ApiConstants.baseUrl + ApiConstants.getAllLiveStreamListUrl;
+  Future<LiveStreamModel?> getAllLiveStreamList(int page, int size) async {
+    final String url = ApiConstants.baseUrl +
+        ApiConstants.getAllLiveStreamListUrl +
+        "?page=$page&size=$size";
 
     try {
       final response = await service.getRequest(url);

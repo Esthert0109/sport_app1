@@ -16,6 +16,7 @@ import '../../Model/userDataModel.dart';
 import '../../Provider/userProvider.dart';
 import '../../bottomNavigationBar.dart';
 import 'login.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditPassword extends StatefulWidget {
   final bool isLogin;
@@ -116,7 +117,8 @@ class _EditPasswordState extends State<EditPassword> {
                     SizedBox(
                       height: 35 * fem,
                     ),
-                    HeadingText(text: '成功修改密码'),
+                    HeadingText(
+                        text: AppLocalizations.of(context)!.pwEditSuccess),
                     SizedBox(
                       height: 6 * fem,
                     ),
@@ -126,7 +128,9 @@ class _EditPasswordState extends State<EditPassword> {
                       height: 40 * fem,
                     ),
                     WidthButton(
-                        text: isLogin ? '返回个人资料页面' : '返回登陆页面',
+                        text: isLogin
+                            ? AppLocalizations.of(context)!.returnProfile
+                            : AppLocalizations.of(context)!.returnLogin,
                         onPressed: () {
                           backToPrevPage(isLogin);
                         }),
@@ -158,14 +162,15 @@ class _EditPasswordState extends State<EditPassword> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(
                               0 * fem, 0 * fem, 25 * fem, 0 * fem),
-                          child: HeadingText(text: '创建新密码'),
+                          child: HeadingText(
+                              text: AppLocalizations.of(context)!.createNewPw),
                         ),
 
                         SizedBox(
                           height: 18,
                         ),
                         //SubText
-                        Text('新的密码需要与旧的密码不相同',
+                        Text(AppLocalizations.of(context)!.pwEditRule,
                             style: GoogleFonts.notoSansSc(
                               color: kMainGreyColor,
                               fontSize: 16 * fem,
@@ -188,7 +193,8 @@ class _EditPasswordState extends State<EditPassword> {
                                           18 * fem,
                                           18 * fem,
                                           18 * fem),
-                                      hintText: '密码',
+                                      hintText: AppLocalizations.of(context)!
+                                          .password,
                                       hintStyle: GoogleFonts.notoSansSc(
                                         fontSize: 16 * fem,
                                         fontWeight: FontWeight.w400,
@@ -237,7 +243,8 @@ class _EditPasswordState extends State<EditPassword> {
                                           18 * fem,
                                           18 * fem,
                                           18 * fem),
-                                      hintText: '确认密码',
+                                      hintText: AppLocalizations.of(context)!
+                                          .confirmPw,
                                       hintStyle: TextStyle(
                                         fontSize: 16 * fem,
                                         fontWeight: FontWeight.w400,
@@ -289,7 +296,7 @@ class _EditPasswordState extends State<EditPassword> {
                         _isLoading
                             ? LoadingLongButton()
                             : WidthButton(
-                                text: '重置密码',
+                                text: AppLocalizations.of(context)!.resetPw,
                                 onPressed: () async {
                                   setState(() {
                                     responseMsg = '';
@@ -309,13 +316,19 @@ class _EditPasswordState extends State<EditPassword> {
                                                 widget.phoneNumber);
                                         if (isChangedPassword != true) {
                                           Navigator.of(context).pop();
-                                          openSnackbar(context, '无网络连接，请再重试',
+                                          openSnackbar(
+                                              context,
+                                              AppLocalizations.of(context)!
+                                                  .noInternet,
                                               kComponentErrorTextColor);
                                         } else {
                                           Navigator.of(context).pop();
                                           setState(() {
                                             isSuccess = true;
-                                            openSnackbar(context, '已经跟换新的密码',
+                                            openSnackbar(
+                                                context,
+                                                AppLocalizations.of(context)!
+                                                    .pwReset,
                                                 kComponentSuccessTextColor);
                                           });
                                         }
@@ -324,7 +337,8 @@ class _EditPasswordState extends State<EditPassword> {
                                         print("最少为8个字符,至少一个大写字母、数字和特殊字符");
                                         setState(() {
                                           responseMsg =
-                                              '最少为8个字符,至少一个大写字母、数字和特殊字符';
+                                              AppLocalizations.of(context)!
+                                                  .pwEditRule2;
                                         });
                                       }
 
@@ -332,12 +346,16 @@ class _EditPasswordState extends State<EditPassword> {
                                     } else if (!passwordsMatch) {
                                       print('Passwords are not same');
                                       setState(() {
-                                        responseMsg = '确保密码是一致的！';
+                                        responseMsg =
+                                            AppLocalizations.of(context)!
+                                                .pwNotSame;
                                       });
                                     }
                                   } else {
                                     setState(() {
-                                      responseMsg = '密码不可为空';
+                                      responseMsg =
+                                          AppLocalizations.of(context)!
+                                              .pwNotBlank;
                                     });
                                     print('Passwords are empty!');
                                   }

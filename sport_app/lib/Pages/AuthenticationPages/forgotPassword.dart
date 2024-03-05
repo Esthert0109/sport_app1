@@ -14,6 +14,7 @@ import '../../Constants/colorConstant.dart';
 import '../../Model/userDataModel.dart';
 import '../../Provider/userProvider.dart';
 import 'otpVerification.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ForgotPass extends StatefulWidget {
   const ForgotPass({super.key});
@@ -81,14 +82,15 @@ class _ForgotPassState extends State<ForgotPass> {
                   Padding(
                     padding: EdgeInsets.fromLTRB(
                         0 * fem, 0 * fem, 80 * fem, 0 * fem),
-                    child: HeadingText(text: '忘记密码'),
+                    child: HeadingText(
+                        text: AppLocalizations.of(context)!.forgotPassword),
                   ),
                   SizedBox(
                     height: 18,
                   ),
                   //SubText
                   Text(
-                    '无需担心！请输入您的账户所绑定的电话号码.',
+                    AppLocalizations.of(context)!.keyInPhoneNoConnected,
                     style: TextStyle(
                       fontFamily: 'NotoSansSC',
                       color: kMainGreyColor,
@@ -127,7 +129,7 @@ class _ForgotPassState extends State<ForgotPass> {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                               borderSide: BorderSide.none),
-                          hintText: '请输入手机号',
+                          hintText: AppLocalizations.of(context)!.keyInPhoneNo,
                         ),
                       ),
                     ),
@@ -148,7 +150,7 @@ class _ForgotPassState extends State<ForgotPass> {
                   _isLoading
                       ? LoadingLongButton()
                       : WidthButton(
-                          text: '发送验证码',
+                          text: AppLocalizations.of(context)!.sendOTP,
                           onPressed: () async {
                             setState(() {
                               _responseMsg = "";
@@ -160,11 +162,15 @@ class _ForgotPassState extends State<ForgotPass> {
                                   await provider.getOTP(phone, '3');
 
                               if (successOTP == '500313') {
-                                openSnackbar(context, "验证码申请次数已达到上限",
+                                openSnackbar(
+                                    context,
+                                    AppLocalizations.of(context)!.otpHitLimit,
                                     kComponentErrorTextColor);
                               } else if (successOTP == '500214') {
                                 openSnackbar(
-                                    context, '账号不存在', kComponentErrorTextColor);
+                                    context,
+                                    AppLocalizations.of(context)!.accNotExist,
+                                    kComponentErrorTextColor);
                               } else {
                                 Get.to(() => OTPVerification(
                                       phone: phone,
@@ -177,7 +183,8 @@ class _ForgotPassState extends State<ForgotPass> {
                               }
                             } else {
                               setState(() {
-                                _responseMsg = '电话号码不可为空';
+                                _responseMsg =
+                                    AppLocalizations.of(context)!.notBlank;
                               });
                             }
                           }),
@@ -189,7 +196,7 @@ class _ForgotPassState extends State<ForgotPass> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text('还记得密码吗？',
+                      Text(AppLocalizations.of(context)!.rememberPw,
                           style: GoogleFonts.notoSansSc(
                             fontSize: 14 * fem,
                             fontWeight: FontWeight.w500,
@@ -197,7 +204,7 @@ class _ForgotPassState extends State<ForgotPass> {
                             color: kMainTitleColor,
                           )),
                       PressableWord(
-                          text: '登入',
+                          text: AppLocalizations.of(context)!.login,
                           onPressed: () {
                             Get.back();
                           })

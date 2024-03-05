@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:sport_app/Model/collectionModel.dart';
 import 'package:sport_app/Model/liveStreamModel.dart';
 import 'package:sport_app/Model/matchesModel.dart';
 import 'package:sport_app/Provider/basketballMatchProvider.dart';

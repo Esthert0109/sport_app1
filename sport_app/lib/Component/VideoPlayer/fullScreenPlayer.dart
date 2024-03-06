@@ -166,6 +166,7 @@ class _LivePlayFullScreenPageState extends State<LivePlayFullScreenPage> {
 
     String streamTitle = widget.streamTitle;
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
         home: Scaffold(
             extendBodyBehindAppBar: true,
             appBar: showAppBar

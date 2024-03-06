@@ -5,10 +5,12 @@ import 'package:get/get.dart';
 import '../../Constants/Controller/layoutController.dart';
 import '../../Constants/colorConstant.dart';
 import '../../Constants/textConstant.dart';
+import '../../Model/matchesModel.dart';
 import '../../Model/userDataModel.dart';
 import '../../Provider/collectionProvider.dart';
-import '../../Provider/searchEventProvider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../Provider/searchProvider.dart';
 
 class SearchingPage extends StatefulWidget {
   const SearchingPage({super.key});
@@ -19,12 +21,13 @@ class SearchingPage extends StatefulWidget {
 
 class _SearchingPageState extends State<SearchingPage> {
   // controller
-  final TextEditingController searchController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
   final ScrollController scrollController = ScrollController();
   final LayoutController lc = Get.find<LayoutController>();
+  late FocusNode focusNode;
 
   // services and provider
-  SearchEventProvider searchProvider = SearchEventProvider();
+  SearchProvider searchProvider = SearchProvider();
   BookmarkProvider saveBookmarkProvider = BookmarkProvider();
 
   // get user info
@@ -33,6 +36,12 @@ class _SearchingPageState extends State<SearchingPage> {
   // common variables
   bool _showAppBar = true;
   bool isSearched = false;
+  bool isLoading = false;
+  String searchCriteria = '';
+
+  // variables to fetch data
+  List<PopularKeyWordsData> popularKeywordList = [];
+  int keywordLength = 0;
 
   //choices of main page
   void dropdownCallback(String? selectedValue) {
@@ -48,6 +57,36 @@ class _SearchingPageState extends State<SearchingPage> {
         print("check sport selection 2: ${userModel.isFootball.value}");
       }
     });
+  }
+
+  Future<void> getAllPopularKeyWords() async {
+    PopularKeyWordsModel? popularKeywordListModel =
+        await searchProvider.getAllPopularKeyWords();
+
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+      popularKeywordList.addAll(popularKeywordListModel?.data ?? []);
+      keywordLength = popularKeywordList.length;
+
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getAllPopularKeyWords();
+    focusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -76,8 +115,8 @@ class _SearchingPageState extends State<SearchingPage> {
                 surfaceTintColor: Colors.transparent,
                 actions: [
                   Container(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 8 * fem, horizontal: 10 * fem),
+                    padding: EdgeInsets.fromLTRB(
+                        15 * fem, 8 * fem, 0 * fem, 8 * fem),
                     width: 280 * fem,
                     height: 40 * fem,
                     decoration: BoxDecoration(
@@ -90,8 +129,8 @@ class _SearchingPageState extends State<SearchingPage> {
                       children: [
                         SvgPicture.asset(
                           'images/appBar/searching.svg',
-                          width: 24 * fem,
-                          height: 24 * fem,
+                          width: 12 * fem,
+                          height: 12 * fem,
                         ),
                         SizedBox(
                           width: 2 * fem,
@@ -99,12 +138,17 @@ class _SearchingPageState extends State<SearchingPage> {
                         Expanded(
                           child: Container(
                             width: 260 * fem,
+                            margin: EdgeInsets.only(left: 10 * fem),
                             child: TextField(
                               controller: searchController,
-                              style: tSearchBarText,
+                              style: tSearchingText,
+                              focusNode: focusNode,
+                              autofocus: true,
                               onChanged: (value) {
                                 setState(() {
                                   if (value.isNotEmpty) {
+                                    searchCriteria = value;
+                                    print("check search controller: $value");
                                     isSearched = true;
                                   }
                                 });
@@ -125,8 +169,8 @@ class _SearchingPageState extends State<SearchingPage> {
                                       color: Colors.grey[600],
                                       size: 20,
                                     ),
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 0 * fem),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 0 * fem, horizontal: 0 * fem),
                                     onPressed: () {
                                       setState(() {
                                         searchController.clear();
@@ -141,7 +185,7 @@ class _SearchingPageState extends State<SearchingPage> {
                     ),
                   ),
                   const Spacer(),
-                  InkWell(
+                  GestureDetector(
                     onTap: () {
                       Get.back();
                     },
@@ -155,43 +199,122 @@ class _SearchingPageState extends State<SearchingPage> {
                       ),
                     ),
                   )
-                  // DropdownButton(
-                  //   underline: Container(
-                  //     height: 0,
-                  //     color: Colors.transparent,
-                  //   ),
-                  //   dropdownColor: Color.fromARGB(255, 211, 255, 212),
-                  //   icon: Padding(
-                  //     padding: EdgeInsets.only(left: 5 * fem),
-                  //     child: SvgPicture.asset('images/appBar/down-arrow.svg'),
-                  //   ),
-                  //   borderRadius: BorderRadius.circular(8 * fem),
-                  //   items: [
-                  //     DropdownMenuItem(
-                  //       value: 'basketball',
-                  //       child: Center(
-                  //         child: Image.asset(
-                  //           'images/appBar/basketball.png',
-                  //           width: 24 * fem,
-                  //           height: 24 * fem,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     DropdownMenuItem(
-                  //       value: 'football',
-                  //       child: Center(
-                  //         child: Image.asset(
-                  //           'images/appBar/football.png',
-                  //           width: 24 * fem,
-                  //           height: 24 * fem,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  //   value: lc.sportType.value,
-                  //   onChanged: dropdownCallback,
-                  // ),
                 ],
+              ),
+            ),
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.symmetric(
+                    horizontal: 10 * fem, vertical: 15 * fem),
+                padding: EdgeInsets.symmetric(horizontal: 5 * fem),
+                // height: 500 * fem,
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "历史记录",
+                            style: tMain,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              print("clear history");
+                            },
+                            child: Container(
+                              padding:
+                                  EdgeInsets.symmetric(horizontal: 5 * fem),
+                              child: Text(
+                                "清空",
+                                style: tClearSearchHistory,
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      Wrap(
+                        spacing: 5 * fem, // Horizontal spacing between items
+                        runSpacing: 0 * fem, // Vertical spacing between lines
+                        children: List.generate(
+                          10, // Replace itemCount with the actual number of items in your list
+                          (index) {
+                            return Container(
+                              height: 34 * fem,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(22),
+                                color: kMainComponentColor,
+                              ),
+                              margin: EdgeInsets.fromLTRB(
+                                  0 * fem, 15 * fem, 10 * fem, 0 * fem),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 15 * fem, vertical: 5 * fem),
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    searchController = TextEditingController(
+                                        text: "世界杯$index");
+                                  });
+                                },
+                                child: Text(
+                                  "世界杯$index",
+                                  style: tSearchTag,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 20 * fem),
+                        child: Text(
+                          "热门搜索",
+                          style: tMain,
+                        ),
+                      ),
+                      Wrap(
+                        spacing: 5 * fem, // Horizontal spacing between items
+                        runSpacing: 0 * fem, // Vertical spacing between lines
+                        children: List.generate(
+                          keywordLength, // Replace itemCount with the actual number of items in your list
+                          (index) {
+                            return Container(
+                              height: 34 * fem,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(22),
+                                color: kMainComponentColor,
+                              ),
+                              margin: EdgeInsets.fromLTRB(
+                                  0 * fem, 15 * fem, 10 * fem, 0 * fem),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 15 * fem, vertical: 5 * fem),
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    searchController = TextEditingController(
+                                        text: popularKeywordList[index]
+                                            .popularKeywords);
+                                  });
+                                },
+                                child: Text(
+                                  popularKeywordList[index].popularKeywords,
+                                  style: tSearchTag,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             )
           ],

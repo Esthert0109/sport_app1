@@ -269,6 +269,7 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
           return true;
         },
         child: MaterialApp(
+            debugShowCheckedModeBanner: false,
             home: Scaffold(
                 backgroundColor: kMainBackgroundColor,
                 extendBodyBehindAppBar: true,

@@ -55,30 +55,33 @@ class _MyAppState extends State<MyApp> {
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
 
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => FootballMatchProvider()),
-        ChangeNotifierProvider(create: (context) => BasketballMatchProvider())
-      ],
-      child: GetMaterialApp(
-        theme: ThemeData(primaryColor: kMainBackgroundColor),
-        localizationsDelegates: [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => FootballMatchProvider()),
+          ChangeNotifierProvider(create: (context) => BasketballMatchProvider())
         ],
-        locale: _locale,
-        supportedLocales: [Locale('en'), Locale('zh')],
-        initialRoute: '/opening',
-        getPages: [
-          GetPage(name: '/opening', page: () => const Opening()),
-          GetPage(name: '/auth', page: () => const OnboardingPage()),
-          GetPage(name: '/login', page: () => const Login()),
-          GetPage(name: '/register', page: () => const Register()),
-          GetPage(name: '/forgotpass', page: () => const ForgotPass()),
-          GetPage(name: '/home', page: () => const BottomNaviBar()),
-        ],
+        child: GetMaterialApp(
+          theme: ThemeData(primaryColor: kMainBackgroundColor),
+          localizationsDelegates: [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          locale: _locale,
+          supportedLocales: [Locale('en'), Locale('zh')],
+          initialRoute: '/opening',
+          getPages: [
+            GetPage(name: '/opening', page: () => const Opening()),
+            GetPage(name: '/auth', page: () => const OnboardingPage()),
+            GetPage(name: '/login', page: () => const Login()),
+            GetPage(name: '/register', page: () => const Register()),
+            GetPage(name: '/forgotpass', page: () => const ForgotPass()),
+            GetPage(name: '/home', page: () => const BottomNaviBar()),
+          ],
+        ),
       ),
     );
   }

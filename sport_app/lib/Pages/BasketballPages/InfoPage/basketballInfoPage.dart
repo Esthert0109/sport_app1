@@ -11,6 +11,8 @@ import '../../../Constants/textConstant.dart';
 import '../../../Model/userDataModel.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../SearchPage/searchingPage.dart';
+
 class BasketballInfoPage extends StatefulWidget {
   const BasketballInfoPage({super.key});
 
@@ -77,30 +79,36 @@ class _BasketballInfoPageState extends State<BasketballInfoPage>
                 scrolledUnderElevation: 0.0,
                 surfaceTintColor: Colors.transparent,
                 actions: [
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 8 * fem, horizontal: 10 * fem),
-                    width: 280 * fem,
-                    height: 40 * fem,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20 * fem),
-                      color: kMainComponentColor.withOpacity(0.3),
-                    ),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(
-                          'images/appBar/search.svg',
-                          width: 24 * fem,
-                          height: 24 * fem,
-                        ),
-                        SizedBox(
-                          width: 2 * fem,
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!.search,
-                          style: tSearch,
-                        )
-                      ],
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => SearchingPage(),
+                          transition: Transition.noTransition);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 8 * fem, horizontal: 10 * fem),
+                      width: 280 * fem,
+                      height: 40 * fem,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20 * fem),
+                        color: kMainComponentColor.withOpacity(0.3),
+                      ),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            'images/appBar/search.svg',
+                            width: 24 * fem,
+                            height: 24 * fem,
+                          ),
+                          SizedBox(
+                            width: 2 * fem,
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.search,
+                            style: tSearch,
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   const Spacer(),

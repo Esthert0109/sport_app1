@@ -13,7 +13,7 @@ class SearchProvider extends ChangeNotifier {
   CommonServices service = CommonServices();
 
   // basketball searching
-  Future<SearchMatchesModel?> searchBasketballEvent(
+  Future<SearchMatchesModel?> searchMatches(
       int page, int size, String search) async {
     String url = "";
 

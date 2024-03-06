@@ -360,7 +360,7 @@ class SearchMatchesData {
   final String? awayTeamName;
   final int? homeTeamScore;
   final int? awayTeamScore;
-  final String? matchTime;
+  final int? matchTime;
   final String? competitionName;
   final String? homeTeamLogo;
   final String? awayTeamLogo;

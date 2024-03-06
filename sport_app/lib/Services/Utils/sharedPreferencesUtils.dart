@@ -1,6 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesUtils {
+  static List<String> searchHistory = [];
+
   static Future<String?> getSavedToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('auth_token');
@@ -49,5 +51,23 @@ class SharedPreferencesUtils {
   static Future<void> clearSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
+  }
+
+  static Future<void> saveSearchHistory(String search) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    searchHistory.add(search);
+    await prefs.setStringList('search', searchHistory);
+  }
+
+  static Future<List<String>?> getSearchHistory() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList('search');
+  }
+
+  static Future<void> clearSearchHistory() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('search');
+
+    searchHistory.clear();
   }
 }

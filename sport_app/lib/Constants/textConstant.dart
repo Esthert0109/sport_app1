@@ -145,6 +145,12 @@ const tSearchBarText = TextStyle(
 const tCancelSearch = TextStyle(
     fontFamily: 'Inter',
     fontSize: 14,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.3,
+    color: kMainComponentColor);
+const tClearSearchHistory = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 14,
     fontWeight: FontWeight.w500,
     letterSpacing: 0.3,
     color: kComponentClearSearchColor);

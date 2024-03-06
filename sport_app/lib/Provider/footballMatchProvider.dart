@@ -121,7 +121,7 @@ class FootballMatchProvider extends ChangeNotifier {
         return matchesModel;
       }
     } catch (e) {
-      print("Errror in event by date list: $e");
+      print("Error in event by date list: $e");
       return null;
     }
   }

@@ -47,7 +47,6 @@ class _BasketballMainPageState extends State<BasketballMainPage>
   //controller
   ScrollController _scrollController = ScrollController();
   final LayoutController lc = Get.find<LayoutController>();
-  TextEditingController _searchController = TextEditingController();
 
   // services and provider
   BasketballMatchProvider matchesProvider = BasketballMatchProvider();

@@ -76,11 +76,11 @@
 
     "welcome": "Welcome! Register to start your Journey!",
     "keyInUsername": "Please enter username.",
-    "usenameNotBlank": "Username should not be blank.",
+    "usernameNotBlank": "Username should not be blank.",
     "confirmPwNotBlank": "Confirm password should not be blank.",
     "keyInAgain": "Please enter your password again",
     "phoneNoExist": "Phone number had been registered.",
-    "passwordNotSame": "请确保密码的一致性",
-    "keyInRequirements": "请填写必要的资料",
-    "loginNow": "现在登入"
+    "passwordNotSame": "Please ensure the consistency of the password.",
+    "keyInRequirements": "Please enter required information.",
+    "loginNow": "Login Now"
 }

@@ -19,6 +19,7 @@ import '../../Constants/colorConstant.dart';
 import '../../Model/userDataModel.dart';
 import '../../Provider/userProvider.dart';
 import 'otpVerification.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -89,7 +90,7 @@ class _RegisterState extends State<Register> {
                   SizedBox(
                     height: 42 * fem,
                   ),
-                  HeadingText(text: '欢迎注册， 开始使用!'),
+                  HeadingText(text: AppLocalizations.of(context)!.welcome),
                   SizedBox(
                     height: 30 * fem,
                   ),
@@ -99,8 +100,9 @@ class _RegisterState extends State<Register> {
                       children: <Widget>[
                         CustomTextFormField(
                           controller: userNicknameController,
-                          hintText: '请输入用户名',
-                          errorText: '用户名不可为空',
+                          hintText: AppLocalizations.of(context)!.keyInUsername,
+                          errorText:
+                              AppLocalizations.of(context)!.usernameNotBlank,
                           textInputAction: TextInputAction.next,
                           focusNode: _nameFocusNode,
                         ),
@@ -135,7 +137,8 @@ class _RegisterState extends State<Register> {
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
                                       borderSide: BorderSide.none),
-                                  hintText: '请输入手机号',
+                                  hintText: AppLocalizations.of(context)!
+                                      .keyInPhoneNo,
                                 ),
                               ),
                             ),
@@ -144,9 +147,9 @@ class _RegisterState extends State<Register> {
                         TextFormField(
                           validator: (value) {
                             if (value!.isEmptyOrNull) {
-                              return '密码不可为空';
+                              return AppLocalizations.of(context)!.pwNotBlank;
                             } else if (!_passwordPattern.hasMatch(value!)) {
-                              return '最少为8个字符,至少一个大写字母、数字和特殊字符';
+                              return AppLocalizations.of(context)!.pwEditRule2;
                             }
                           },
                           controller: passwordController,
@@ -155,7 +158,8 @@ class _RegisterState extends State<Register> {
                           decoration: InputDecoration(
                               contentPadding: EdgeInsets.fromLTRB(
                                   18 * fem, 18 * fem, 18 * fem, 18 * fem),
-                              hintText: '请输入密码',
+                              hintText:
+                                  AppLocalizations.of(context)!.keyInPassword,
                               hintStyle: TextStyle(
                                   fontSize: 16 * fem,
                                   fontWeight: FontWeight.w400,
@@ -197,7 +201,8 @@ class _RegisterState extends State<Register> {
                         TextFormField(
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return '确认密码不可为空';
+                              return AppLocalizations.of(context)!
+                                  .confirmPwNotBlank;
                             }
                             return null;
                           },
@@ -207,7 +212,8 @@ class _RegisterState extends State<Register> {
                           decoration: InputDecoration(
                               contentPadding: EdgeInsets.fromLTRB(
                                   18 * fem, 18 * fem, 18 * fem, 18 * fem),
-                              hintText: '请再次输入密码',
+                              hintText:
+                                  AppLocalizations.of(context)!.keyInAgain,
                               hintStyle: TextStyle(
                                 fontSize: 16 * fem,
                                 fontWeight: FontWeight.w400,
@@ -256,7 +262,7 @@ class _RegisterState extends State<Register> {
                   isLoading
                       ? LoadingLongButton()
                       : WidthButton(
-                          text: '注册',
+                          text: AppLocalizations.of(context)!.reg,
                           onPressed: () async {
                             showLoadingDialog(context);
                             if (formKey.currentState!.validate()) {
@@ -267,11 +273,16 @@ class _RegisterState extends State<Register> {
 
                                 if (successOTP == '500215') {
                                   Navigator.of(context).pop();
-                                  openSnackbar(context, '手机号码已存在账号',
+                                  openSnackbar(
+                                      context,
+                                      AppLocalizations.of(context)!
+                                          .phoneNoExist,
                                       kComponentErrorTextColor);
                                 } else if (successOTP == '500313') {
                                   Navigator.of(context).pop();
-                                  openSnackbar(context, '验证码申请次数已达到上限',
+                                  openSnackbar(
+                                      context,
+                                      AppLocalizations.of(context)!.otpHitLimit,
                                       kComponentErrorTextColor);
                                 } else {
                                   Navigator.of(context).pop();
@@ -287,13 +298,17 @@ class _RegisterState extends State<Register> {
                               } else {
                                 Navigator.of(context).pop();
                                 setState(() {
-                                  _responseMsg = '请确保密码的一致性';
+                                  _responseMsg = AppLocalizations.of(context)!
+                                      .passwordNotSame;
                                 });
                                 print("password not same");
                               }
                             } else {
                               Navigator.of(context).pop();
-                              openSnackbar(context, '请填写必要的资料',
+                              openSnackbar(
+                                  context,
+                                  AppLocalizations.of(context)!
+                                      .keyInRequirements,
                                   kComponentErrorTextColor);
                             }
                           }),
@@ -304,7 +319,7 @@ class _RegisterState extends State<Register> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        '已有帐号？',
+                        AppLocalizations.of(context)!.accExist,
                         style: GoogleFonts.notoSansSc(
                           fontSize: 14 * fem,
                           fontWeight: FontWeight.w500,
@@ -313,7 +328,7 @@ class _RegisterState extends State<Register> {
                         ),
                       ),
                       PressableWord(
-                          text: '现在登入',
+                          text: AppLocalizations.of(context)!.loginNow,
                           onPressed: () {
                             Get.offNamed('/login');
                           })

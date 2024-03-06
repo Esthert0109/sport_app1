@@ -15,9 +15,17 @@ class FootballMatchProvider extends ChangeNotifier {
 
   Future<FootballStartedMatchesModel?> getStartedEventList(
       int page, int size) async {
-    String url = ApiConstants.baseUrl +
-        ApiConstants.getStartFootballMatchListENurl +
-        "page=${page.toString()}&size=${size.toString()}";
+    String url = "";
+
+    if (userDataModel.isCN.value) {
+      url = ApiConstants.baseUrl +
+          ApiConstants.getStartFootballMatchListUrl +
+          "page=${page.toString()}&size=${size.toString()}";
+    } else {
+      url = ApiConstants.baseUrl +
+          ApiConstants.getStartFootballMatchListENurl +
+          "page=${page.toString()}&size=${size.toString()}";
+    }
 
     final token = await SharedPreferencesUtils.getSavedToken();
 
@@ -66,9 +74,17 @@ class FootballMatchProvider extends ChangeNotifier {
   Future<FootballMatchesModel?> getEventByDate(
       String date, int page, int size, bool checkData) async {
     String formattedDate = date.replaceAll("-", "");
-    String url = ApiConstants.baseUrl +
-        ApiConstants.getFootballMatchListByDateENurl +
-        "$formattedDate?page=${page.toString()}&size=${size.toString()}&checkData=${checkData.toString()}";
+    String url = "";
+
+    if (userDataModel.isCN.value) {
+      url = ApiConstants.baseUrl +
+          ApiConstants.getMatchByDateUrl +
+          "$formattedDate?page=${page.toString()}&size=${size.toString()}&checkData=${checkData.toString()}";
+    } else {
+      url = ApiConstants.baseUrl +
+          ApiConstants.getFootballMatchListByDateENurl +
+          "$formattedDate?page=${page.toString()}&size=${size.toString()}&checkData=${checkData.toString()}";
+    }
 
     final token = await SharedPreferencesUtils.getSavedToken();
 

@@ -28,7 +28,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../Provider/liveStreamProvider.dart';
 import '../../../Services/Utils/tencent/tencentLiveUtils.dart';
-import '../../BasketballPages/basketballTournamentDetails.dart';
 import '../../SearchPage/searchEvent.dart';
 import '../../TencentLiveStreamRoom/liveStreamChatRoom.dart';
 import '../footballTournamentDetails.dart';
@@ -48,7 +47,6 @@ class _FootballMainPageState extends State<FootballMainPage>
   //controller
   ScrollController _scrollController = ScrollController();
   final LayoutController lc = Get.find<LayoutController>();
-  TextEditingController _searchController = TextEditingController();
 
   // services and provider
   LiveStreamProvider liveStreamProvider = LiveStreamProvider();

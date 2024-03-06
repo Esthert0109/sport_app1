@@ -75,7 +75,7 @@
 
     "welcome": "欢迎注册， 开始使用!",
     "keyInUsername": "请输入用户名",
-    "usenameNotBlank": "用户名不可为空",
+    "usernameNotBlank": "用户名不可为空",
     "confirmPwNotBlank": "确认密码不可为空",
     "keyInAgain": "请再次输入密码",
     "phoneNoExist": "手机号码已存在账号",

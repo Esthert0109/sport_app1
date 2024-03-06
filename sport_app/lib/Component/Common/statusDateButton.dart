@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import '../../Constants/colorConstant.dart';
 import '../../Constants/textConstant.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class StatusDateButtonComponent extends StatefulWidget {
   final int dateId;
   final List<DateTime> dateList;
@@ -88,7 +90,7 @@ class _StatusDateButtonComponentState extends State<StatusDateButtonComponent> {
                         (index == 6 && !widget.isFuture)
                     ? Center(
                         child: Text(
-                        "今天",
+                        AppLocalizations.of(context)!.tdy,
                         style: widget.dateId == index
                             ? tTodayDateButton
                             : tOtherUnselectedDateButton,

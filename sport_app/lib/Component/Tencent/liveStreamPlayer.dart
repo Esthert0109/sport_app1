@@ -17,6 +17,7 @@ import '../../Constants/colorConstant.dart';
 import '../../Model/UserDataModel.dart';
 import '../VideoPlayer/danmakuInput.dart';
 import '../VideoPlayer/fullScreenPlayer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum V2TXLivePlayMode {
   /// 标准直播拉流
@@ -312,7 +313,7 @@ class _LivePlayPageState extends State<LivePlayPage> {
                                         4 * fem, 8 * fem, 1 * fem, 0 * fem),
                                     child: ElevatedButton(
                                       child: Text(
-                                        "关注",
+                                        AppLocalizations.of(context)!.follow,
                                         style: TextStyle(
                                             fontSize: 13,
                                             color: kMainGreenColor,
@@ -468,7 +469,9 @@ class _LivePlayPageState extends State<LivePlayPage> {
                                                             2 * fem,
                                                             2 * fem),
                                                     child: Text(
-                                                      "开",
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .on,
                                                       style: GoogleFonts.inter(
                                                           fontSize: 11 * fem,
                                                           color: isDanmakuOn
@@ -493,7 +496,9 @@ class _LivePlayPageState extends State<LivePlayPage> {
                                                             0 * fem,
                                                             2 * fem),
                                                     child: Text(
-                                                      "关",
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .off,
                                                       style: GoogleFonts.inter(
                                                         fontSize: 11 * fem,
                                                         color: isDanmakuOn
@@ -519,7 +524,6 @@ class _LivePlayPageState extends State<LivePlayPage> {
                   )
                 ],
               ),
-
             ],
           )),
     );

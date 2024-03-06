@@ -9,7 +9,6 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/Provider/liveStreamProvider.dart';
 
 import '../../../Component/Common/liveSquareBlock.dart';
-import '../../../Component/LivePage/liveDisplayBlockComponent.dart';
 import '../../../Component/Loading/loadingLiveDisplayBlock.dart';
 import '../../../Component/MainPage/gameDisplayComponent.dart';
 import '../../../Component/Tencent/liveStreamPlayer.dart';

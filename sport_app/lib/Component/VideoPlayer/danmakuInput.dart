@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../Constants/colorConstant.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DanmakuInput extends StatefulWidget {
   final bool isOn;
@@ -46,7 +47,7 @@ class _DanmakuInputState extends State<DanmakuInput> {
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.fromLTRB(
                             8 * fem, 0 * fem, 1 * fem, 12.5 * fem),
-                        hintText: '点我发弹幕',
+                        hintText: AppLocalizations.of(context)!.sendDanmaku,
                         hintStyle: TextStyle(
                             color: kButtonOnWordColor, fontSize: 12 * fem),
                       ),
@@ -55,7 +56,7 @@ class _DanmakuInputState extends State<DanmakuInput> {
                       padding: EdgeInsets.fromLTRB(
                           8 * fem, 3 * fem, 1 * fem, 0 * fem),
                       child: Text(
-                        '弹幕已关闭',
+                        AppLocalizations.of(context)!.offDanmaku,
                         style: TextStyle(
                           color: kButtonOnWordColor,
                           fontSize: 12 * fem,
@@ -83,7 +84,9 @@ class _DanmakuInputState extends State<DanmakuInput> {
                   padding:
                       EdgeInsets.fromLTRB(4.5 * fem, 1 * fem, 1 * fem, 2 * fem),
                   child: Text(
-                    isDanmakuOn ? '开' : '关',
+                    isDanmakuOn
+                        ? AppLocalizations.of(context)!.on
+                        : AppLocalizations.of(context)!.off,
                     style: GoogleFonts.inter(
                         fontSize: 12 * fem,
                         color:

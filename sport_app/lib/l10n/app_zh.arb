@@ -68,11 +68,10 @@
     "verifiedOTP": "验证码认证",
     "keyInOTP": "请输入验证码。",
     "verified": "验证",
-    "verifiedUnsuccessfully":"验证码错误！",
+    "verifiedUnsuccessfully": "验证码错误！",
     "otpNotBlank": "不可为空!",
     "cntReceiveOTP": "无法获取验证码？",
     "resend": "再次发送",
-
     "welcome": "欢迎注册， 开始使用!",
     "keyInUsername": "请输入用户名",
     "usernameNotBlank": "用户名不可为空",
@@ -81,7 +80,26 @@
     "phoneNoExist": "手机号码已存在账号",
     "passwordNotSame": "请确保密码的一致性",
     "keyInRequirements": "请填写必要的资料",
-    "loginNow": "现在登入"
+    "loginNow": "现在登入",
+    "saySmthg": "输入内容...",
+    "welcomeStream": "欢迎来到直播间！严禁未成年人直播、打赏或向末成年人销售酒类商品。若主播销售酒类商品，请未成年人在监护人陪同下观看。直播间内严禁出现违法违规、低俗色情、吸烟酗酒、人身伤害等内容。如主播在直播中以不当方式诱导打赏私下交易请谨慎判断以防人身财产损失购买商品请点击下方购物车按钮，请勿私下交易，请大家注意财产安全，谨防网络诈骗。",
+    "follow": "关注",
+    "tdy": "今天",
+    "on": "开",
+    "off": "关",
 
+    "time": "时间",
+    "score": "得分",
+    "rebound": "篮板",
+    "assist": "助攻",
+    "fieldGoal": "投篮",
+    "threePointer": "三分",
+    "freeThrow": "罚球",
+    "steal": "抢断",
+    "turnover": "失误",
+    "blockShot": "盖帽",
+    "foul": "犯规",
 
+    "sendDanmaku": "点我发弹幕",
+    "offDanmaku": "弹幕已关闭"
 }

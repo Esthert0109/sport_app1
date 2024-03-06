@@ -240,7 +240,7 @@ class _SearchingPageState extends State<SearchingPage> {
                       height: 40 * fem,
                       alignment: Alignment.centerRight,
                       child: Text(
-                        "取消",
+                        AppLocalizations.of(context)!.cancel,
                         style: tCancelSearch,
                       ),
                     ),
@@ -368,7 +368,7 @@ class _SearchingPageState extends State<SearchingPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "历史记录",
+                                    AppLocalizations.of(context)!.history,
                                     style: tMain,
                                   ),
                                   InkWell(
@@ -386,7 +386,7 @@ class _SearchingPageState extends State<SearchingPage> {
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 5 * fem),
                                       child: Text(
-                                        "清空",
+                                        AppLocalizations.of(context)!.clear,
                                         style: tClearSearchHistory,
                                         textAlign: TextAlign.start,
                                       ),
@@ -441,7 +441,7 @@ class _SearchingPageState extends State<SearchingPage> {
                               Padding(
                                 padding: EdgeInsets.only(top: 20 * fem),
                                 child: Text(
-                                  "热门搜索",
+                                  AppLocalizations.of(context)!.trending,
                                   style: tMain,
                                 ),
                               ),

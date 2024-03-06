@@ -28,7 +28,6 @@ import '../../../Model/userDataModel.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../Services/Utils/tencent/tencentLiveUtils.dart';
-import '../../SearchPage/searchEvent.dart';
 import '../../SearchPage/searchingPage.dart';
 import '../../TencentLiveStreamRoom/liveStreamChatRoom.dart';
 import '../basketballTournamentDetails.dart';

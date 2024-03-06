@@ -9,7 +9,6 @@ import 'Model/userDataModel.dart';
 import 'Pages/BasketballPages/InfoPage/BasketballInfoPage.dart';
 import 'Pages/BasketballPages/LivePage/BasketballLivePage.dart';
 import 'Pages/BasketballPages/MainPage/BasketballMainPage.dart';
-import 'Pages/FootballPages/InfoPage/footballInfoPage.dart';
 import 'Pages/FootballPages/LivePage/footballLivePage.dart';
 import 'Pages/FootballPages/MainPage/footballMainPage.dart';
 import 'Pages/MyPages/myPage.dart';

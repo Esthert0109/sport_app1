@@ -63,17 +63,15 @@
     "sendOTP": "Send OTP",
     "accNotExist": "Account not exist",
     "rememberPw": "Still remember password?",
-
     "afterSecond": "s OTP resend.",
     "verifiedSuccessfully": "OTP verified successfully.",
     "verifiedOTP": "OTP verify",
     "keyInOTP": "Please enter OTP.",
     "verified": "Verify",
-    "verifiedUnsuccessfully":"OTP verified unsuccessfully",
+    "verifiedUnsuccessfully": "OTP verified unsuccessfully",
     "otpNotBlank": "OTP should not be blank",
     "cntReceiveOTP": "Failed to receive OTP?",
     "resend": "Resend",
-
     "welcome": "Welcome! Register to start your Journey!",
     "keyInUsername": "Please enter username.",
     "usernameNotBlank": "Username should not be blank.",
@@ -82,5 +80,26 @@
     "phoneNoExist": "Phone number had been registered.",
     "passwordNotSame": "Please ensure the consistency of the password.",
     "keyInRequirements": "Please enter required information.",
-    "loginNow": "Login Now"
+    "loginNow": "Login Now",
+    "saySmthg": "Say something...",
+    "welcomeStream": "Welcome to the live broadcast room! It is strictly prohibited for minors to live stream, tip or sell alcoholic products to under-adults. If the anchor sells alcohol, minors are asked to watch with the supervision of a guardian. Contents that violate laws and regulations, vulgar pornography, smoking, alcoholism, personal injury, etc. are strictly prohibited in the live broadcast room. If the anchor improperly induces rewards during the live broadcast and makes private transactions, please use caution to prevent personal and property losses. To purchase goods, please click the shopping cart button below. Please do not make private transactions. Please pay attention to property safety and beware of online fraud.",
+    "follow": "Follow",
+    "tdy": "Today",
+    "on": "On",
+    "off": "Off",
+
+    "time": "Time",
+    "score": "Score",
+    "rebound": "Rebound",
+    "assist": "Assist",
+    "fieldGoal": "Field Goal",
+    "threePointer": "3 Pointer",
+    "freeThrow": "Free Throw",
+    "steal": "Steal",
+    "turnover": "Turnover",
+    "blockShot": "Block Shot",
+    "foul": "Foul",
+
+    "sendDanmaku": "Click to send comment",
+    "offDanmaku": "Comment section OFF"
 }

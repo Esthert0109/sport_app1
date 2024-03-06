@@ -152,36 +152,7 @@ class _LiveDisplayBlockState extends State<LiveDisplayBlock> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    // final prefs = await SharedPreferences.getInstance();
-
-                    // checkBookmarkSaved =
-                    //     getBookmarkList.contains(int.parse(id.toString()));
-
-                    // if (checkBookmarkSaved == false) {
-                    //   saveBookmarkResult = await saveBookmarkProvider
-                    //       .liveStreamSaveBookmark(id.toString(), "0");
-
-                    //   getBookmarkList.add(
-                    //       int.parse(saveBookmarkResult['matchId'].toString()));
-                    //   await prefs.setString('savedBookmarkId',
-                    //       saveBookmarkResult['matchId'].toString());
-                    // } else {
-                    //   checkDeleteBookmark = await saveBookmarkProvider
-                    //       .deleteStreamSaveBookmark(id.toString());
-                    //   if (checkDeleteBookmark == true) {
-                    //     getBookmarkList.remove(int.parse(id.toString()));
-                    //     await prefs.setString(
-                    //         'removeBookmarkId', id.toString());
-                    //     await prefs.setString(
-                    //         'removeBookmarkIndex', index.toString());
-                    //   }
-                    // }
-                    // if (mounted) {
-                    //   setState(() {
-                    //     isSaved = !isSaved;
-                    //   });
-                    // }
-                    // widget.onTapCallback!();
+                   
                   },
                   child: SvgPicture.asset(isSaved
                       ? 'images/Bookmark-1.svg'

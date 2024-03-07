@@ -622,8 +622,10 @@ class _FootballMainPageState extends State<FootballMainPage>
                                 ? Container(
                                     width: 328 * fem,
                                     height: 183 * fem,
+                                    alignment: Alignment.center,
                                     margin: EdgeInsets.symmetric(
-                                        horizontal: 10 * fem),
+                                        horizontal: 20 * fem,
+                                        vertical: 20 * fem),
                                     child: Stack(
                                       children: [
                                         ClipRRect(

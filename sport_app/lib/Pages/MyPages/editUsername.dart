@@ -34,7 +34,7 @@ class _EditUserNicknameState extends State<EditUserNickname> {
     double fem = MediaQuery.of(context).size.width / baseWidth;
 
     return Scaffold(
-      backgroundColor: kMainComponentColor,
+      backgroundColor: kMainBackgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -47,49 +47,55 @@ class _EditUserNicknameState extends State<EditUserNickname> {
                 SizedBox(
                   height: 41 * fem,
                 ),
-                Obx(
-                  () => HeadingText(
-                      text: AppLocalizations.of(context)!.editNickname),
-                ),
+                HeadingText(text: AppLocalizations.of(context)!.editNickname),
+
                 SizedBox(
                   height: 30 * fem,
                 ),
                 Form(
                   key: _formKey,
-                  child: TextFormField(
-                    onTapOutside: (event) {
-                      FocusScope.of(context).unfocus(); // 按外面使键盘收回
-                    },
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return AppLocalizations.of(context)!.nickNameIsNotEmpty;
-                      }
-                      return null;
-                    },
-                    focusNode: _nameFocusNode,
-                    controller: _userNameController,
-                    textInputAction: TextInputAction.done, // 按enter使键盘收回
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.fromLTRB(
-                          18 * fem, 18 * fem, 18 * fem, 18 * fem),
-                      hintText: AppLocalizations.of(context)!.newNickname,
-                      hintStyle: TextStyle(
-                        fontSize: 16 * fem,
-                        fontWeight: FontWeight.w400,
-                        height: 1.25 * fem,
-                        color: kComponentHintTextColor,
+                  child: Container(
+                    width: 343 * fem,
+                    height: 60 * fem,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: kMainComponentColor),
+                    child: TextFormField(
+                      onTapOutside: (event) {
+                        FocusScope.of(context).unfocus(); // 按外面使键盘收回
+                      },
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return AppLocalizations.of(context)!
+                              .nickNameIsNotEmpty;
+                        }
+                        return null;
+                      },
+                      focusNode: _nameFocusNode,
+                      controller: _userNameController,
+                      textInputAction: TextInputAction.done, // 按enter使键盘收回
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.fromLTRB(
+                            18 * fem, 18 * fem, 18 * fem, 18 * fem),
+                        hintText: AppLocalizations.of(context)!.newNickname,
+                        hintStyle: TextStyle(
+                          fontSize: 16 * fem,
+                          fontWeight: FontWeight.w400,
+                          height: 1.25 * fem,
+                          color: kComponentHintTextColor,
+                        ),
+                        filled: true,
+                        fillColor: kMainComponentColor,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: BorderSide.none,
+                        ),
+                        errorBorder: const OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: kComponentErrorTextColor)),
                       ),
-                      filled: true,
-                      fillColor: kMainComponentColor,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        borderSide: BorderSide.none,
-                      ),
-                      errorBorder: const OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: kComponentErrorTextColor)),
+                      style: const TextStyle(color: kMainTitleColor),
                     ),
-                    style: const TextStyle(color: kMainTitleColor),
                   ),
                 ),
                 SizedBox(
@@ -107,14 +113,14 @@ class _EditUserNicknameState extends State<EditUserNickname> {
                         fontWeight: FontWeight.w500),
                   ),
                 ),
-                SizedBox(height: 65 * fem),
+                SizedBox(height: 35 * fem),
 
                 // 确认更改名字按钮
                 WidthButton(
                     text: AppLocalizations.of(context)!.updateNickname,
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        showLoadingDialog(context);
+                        // showLoadingDialog(context);
                         String newNickname = _userNameController.text;
                         bool isChangeNickname =
                             await provider.updateUserNickname(newNickname);

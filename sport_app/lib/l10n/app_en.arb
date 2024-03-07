@@ -17,7 +17,7 @@
     "otpHitLimit": "OTP requests hit limitation.",
     "otpSent": "OTP request sent.",
     "contactUs": "Contact Us",
-    "systemSetting": "Setting",
+    "systemSetting": "Settings",
     "changeLanguage": "Language Setting",
     "noInternet": "No Internet Connection. Please Try Again.",
     "successNickname": "Nickname Updated Successfully",
@@ -87,7 +87,6 @@
     "tdy": "Today",
     "on": "On",
     "off": "Off",
-
     "time": "Time",
     "score": "Score",
     "rebound": "Rebound",
@@ -99,7 +98,6 @@
     "turnover": "Turnover",
     "blockShot": "Block Shot",
     "foul": "Foul",
-
     "sendDanmaku": "Click to send comment",
     "offDanmaku": "Comment section OFF"
 }

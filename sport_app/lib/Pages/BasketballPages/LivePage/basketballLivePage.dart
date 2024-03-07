@@ -120,11 +120,14 @@ class _BasketballLivePageState extends State<BasketballLivePage>
       threeCollections.clear();
       collectionLength = threeCollections.length;
 
-      getCollections();
-
       basketballLiveStreamList.clear();
       liveStreamLength = basketballLiveStreamList.length;
+
+      print("check: $liveStreamLength");
+      print("check basket: ${basketballLiveStreamList.toString()}");
       page = 1;
+
+      getCollections();
       getAllLiveList();
     });
   }
@@ -205,9 +208,9 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                   actions: [
                     GestureDetector(
                       onTap: () {
-                      Get.to(() => SearchingPage(),
-                          transition: Transition.noTransition);
-                    },
+                        Get.to(() => SearchingPage(),
+                            transition: Transition.noTransition);
+                      },
                       child: Container(
                         padding: EdgeInsets.symmetric(
                             vertical: 8 * fem, horizontal: 10 * fem),
@@ -299,105 +302,105 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                         horizontal: 16 * fem, vertical: 10 * fem),
                     child: Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.myCollection,
-                              style: tMain,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                print("goto saved Live");
-                                Get.to(() => SavedCollection(),
-                                    transition: Transition.fadeIn);
-                              },
-                              child: Text(
-                                AppLocalizations.of(context)!.showAll,
-                                style: tShowAll,
-                              ),
-                            )
-                          ],
-                        ),
-                        isCollectionLoading
-                            ? Column(
-                                children: [
-                                  for (int i = 0; i < 3; i++)
-                                    CardLoading(
-                                      height: 100 * fem,
-                                      borderRadius:
-                                          BorderRadius.circular(8 * fem),
-                                      margin: EdgeInsets.symmetric(
-                                          horizontal: 10 * fem,
-                                          vertical: 10 * fem),
-                                    ),
-                                ],
-                              )
-                            : (collectionLength == 0)
-                                ? Padding(
-                                    padding: EdgeInsets.all(20 * fem),
-                                    child: Text(
-                                        AppLocalizations.of(context)!
-                                            .savedCollection,
-                                        style: tShowAll),
-                                  )
-                                : ListView.builder(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 10 * fem),
-                                    itemCount: collectionLength,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          print("navi into tournament");
-                                          BasketballTournamentDetails(
-                                                  id:
-                                                      '${threeCollections[index].id}',
-                                                  matchDate:
-                                                      '${threeCollections[index].matchDate}',
-                                                  matchStatus:
-                                                      '${threeCollections[index].statusStr}',
-                                                  matchName:
-                                                      '${threeCollections[index].competitionName}')
-                                              .launch(context);
-                                        },
-                                        child: GameDisplayComponent(
-                                          id: threeCollections[index].id ?? 0,
-                                          competitionType:
-                                              threeCollections[index]
-                                                      .competitionName ??
-                                                  "",
-                                          duration: threeCollections[index]
-                                                  .matchTimeStr ??
-                                              "00:00",
-                                          teamAName: threeCollections[index]
-                                                  .homeTeamName ??
-                                              "",
-                                          teamALogo: threeCollections[index]
-                                                  .homeTeamLogo ??
-                                              'images/mainpage/sampleLogo.png',
-                                          teamAScore: threeCollections[index]
-                                              .homeTeamScore
-                                              .toString(),
-                                          teamBName: threeCollections[index]
-                                                  .awayTeamName ??
-                                              "",
-                                          teamBLogo: threeCollections[index]
-                                                  .awayTeamLogo ??
-                                              'images/mainpage/sampleLogo.png',
-                                          teamBScore: threeCollections[index]
-                                              .awayTeamScore
-                                              .toString(),
-                                          isSaved: threeCollections[index]
-                                                  .hasCollected ??
-                                              true,
-                                        ),
-                                      );
-                                    },
-                                  ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   crossAxisAlignment: CrossAxisAlignment.center,
+                        //   children: [
+                        //     Text(
+                        //       AppLocalizations.of(context)!.myCollection,
+                        //       style: tMain,
+                        //     ),
+                        //     GestureDetector(
+                        //       onTap: () {
+                        //         print("goto saved Live");
+                        //         Get.to(() => SavedCollection(),
+                        //             transition: Transition.fadeIn);
+                        //       },
+                        //       child: Text(
+                        //         AppLocalizations.of(context)!.showAll,
+                        //         style: tShowAll,
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
+                        // isCollectionLoading
+                        //     ? Column(
+                        //         children: [
+                        //           for (int i = 0; i < 3; i++)
+                        //             CardLoading(
+                        //               height: 100 * fem,
+                        //               borderRadius:
+                        //                   BorderRadius.circular(8 * fem),
+                        //               margin: EdgeInsets.symmetric(
+                        //                   horizontal: 10 * fem,
+                        //                   vertical: 10 * fem),
+                        //             ),
+                        //         ],
+                        //       )
+                        // : (collectionLength == 0)
+                        //     ? Padding(
+                        //         padding: EdgeInsets.all(20 * fem),
+                        //         child: Text(
+                        //             AppLocalizations.of(context)!
+                        //                 .savedCollection,
+                        //             style: tShowAll),
+                        //       )
+                        // : ListView.builder(
+                        //     physics:
+                        //         const NeverScrollableScrollPhysics(),
+                        //     padding: EdgeInsets.symmetric(
+                        //         vertical: 10 * fem),
+                        //     itemCount: collectionLength,
+                        //     shrinkWrap: true,
+                        //     itemBuilder: (context, index) {
+                        //       return GestureDetector(
+                        //         onTap: () {
+                        //           print("navi into tournament");
+                        //           BasketballTournamentDetails(
+                        //                   id:
+                        //                       '${threeCollections[index].id}',
+                        //                   matchDate:
+                        //                       '${threeCollections[index].matchDate}',
+                        //                   matchStatus:
+                        //                       '${threeCollections[index].statusStr}',
+                        //                   matchName:
+                        //                       '${threeCollections[index].competitionName}')
+                        //               .launch(context);
+                        //         },
+                        //         child: GameDisplayComponent(
+                        //           id: threeCollections[index].id ?? 0,
+                        //           competitionType:
+                        //               threeCollections[index]
+                        //                       .competitionName ??
+                        //                   "",
+                        //           duration: threeCollections[index]
+                        //                   .matchTimeStr ??
+                        //               "00:00",
+                        //           teamAName: threeCollections[index]
+                        //                   .homeTeamName ??
+                        //               "",
+                        //           teamALogo: threeCollections[index]
+                        //                   .homeTeamLogo ??
+                        //               'images/mainpage/sampleLogo.png',
+                        //           teamAScore: threeCollections[index]
+                        //               .homeTeamScore
+                        //               .toString(),
+                        //           teamBName: threeCollections[index]
+                        //                   .awayTeamName ??
+                        //               "",
+                        //           teamBLogo: threeCollections[index]
+                        //                   .awayTeamLogo ??
+                        //               'images/mainpage/sampleLogo.png',
+                        //           teamBScore: threeCollections[index]
+                        //               .awayTeamScore
+                        //               .toString(),
+                        //           isSaved: threeCollections[index]
+                        //                   .hasCollected ??
+                        //               true,
+                        //         ),
+                        //       );
+                        //     },
+                        //   ),
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(

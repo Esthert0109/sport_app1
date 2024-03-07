@@ -20,31 +20,39 @@ class SearchProvider extends ChangeNotifier {
     if (userDataModel.isFootball.value) {
       if (userDataModel.isCN.value) {
         url = ApiConstants.baseUrl +
-            ApiConstants.searchBasketballTodayUrl +
-            "?search=$search";
+            ApiConstants.searchFootballMatchTodayUrl +
+            "?search=$search&page=$page&size=$size";
       } else {
         url = ApiConstants.baseUrl +
-            ApiConstants.searchBasketballTodayENurl +
-            "?search=$search";
+            ApiConstants.searchFootballMatchTodayENurl +
+            "search=$search&page=$page&size=$size";
       }
     } else {
       if (userDataModel.isCN.value) {
         url = ApiConstants.baseUrl +
-            ApiConstants.searchFootballMatchTodayUrl +
-            "?search=$search";
+            ApiConstants.searchBasketballTodayUrl +
+            "?search=$search&page=$page&size=$size";
       } else {
         url = ApiConstants.baseUrl +
-            ApiConstants.searchFootballMatchTodayENurl +
-            "?search=$search";
+            ApiConstants.searchBasketballTodayENurl +
+            "?search=$search&page=$page&size=$size";
       }
     }
 
     final token = await SharedPreferencesUtils.getSavedToken();
+    Map<String, String> headers = {};
 
-    final Map<String, String> headers = {
-      'Content-Type': 'application/json; charset=utf-8',
-      'token': token!,
-    };
+    print("check token: $token");
+    if (token == null) {
+      headers = {
+        'Content-Type': 'application/json; charset=utf-8',
+      };
+    } else {
+      headers = {
+        'Content-Type': 'application/json; charset=utf-8',
+        'token': token,
+      };
+    }
 
     try {
       final response = await sendGetRequest(url, headers);

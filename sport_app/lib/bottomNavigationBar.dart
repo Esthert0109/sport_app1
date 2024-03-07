@@ -7,6 +7,7 @@ import 'Constants/colorConstant.dart';
 import 'Constants/textConstant.dart';
 import 'Model/userDataModel.dart';
 import 'Pages/BasketballPages/InfoPage/BasketballInfoPage.dart';
+import 'Pages/BasketballPages/InfoPage/newsPage.dart';
 import 'Pages/BasketballPages/LivePage/BasketballLivePage.dart';
 import 'Pages/BasketballPages/MainPage/BasketballMainPage.dart';
 import 'Pages/FootballPages/LivePage/footballLivePage.dart';
@@ -39,7 +40,8 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
   //basketball pages
   List<Widget> basketballPagesLayout = <Widget>[
     const BasketballMainPage(),
-    const BasketballLivePage(),
+    // const BasketballLivePage(),
+    const NewsPage(),
     const BasketballInfoPage(),
     const MyPage(),
   ];

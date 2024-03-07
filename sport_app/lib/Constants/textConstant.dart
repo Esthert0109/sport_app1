@@ -310,4 +310,61 @@ const tEditTitle = TextStyle(
     color: kMainComponentColor);
 
 // login page
+const tContinueAsGuest = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: kMainGreenColor,
+    decoration: TextDecoration.underline,
+    decorationColor: kMainGreenColor);
+const tPhoneNoInput = TextStyle(
+  fontFamily: 'Inter',
+  fontSize: 16,
+  fontWeight: FontWeight.w400,
+  color: kComponentHintTextColor,
+);
 
+// tag dialog
+const tDialogTitle = TextStyle(
+  fontFamily: 'Inter',
+  fontSize: 18,
+  fontWeight: FontWeight.w500,
+  letterSpacing: 0.3,
+  color: kMainTitleColor,
+);
+
+const tTagText = TextStyle(
+  fontFamily: 'Inter',
+  fontSize: 14,
+  fontWeight: FontWeight.w400,
+  letterSpacing: 0.3,
+  color: kComponentErrorTextColor,
+);
+
+const tSelectedTagTitle = TextStyle(
+  fontFamily: 'Inter',
+  fontSize: 14,
+  fontWeight: FontWeight.w500,
+  letterSpacing: 0.3,
+  color: Colors.transparent,
+  decoration: TextDecoration.underline,
+  decorationColor: kMainGreenColor,
+  decorationThickness: 4.0,
+  shadows: [Shadow(color: kMainTitleColor, offset: Offset(0, -5))],
+);
+
+const tUnselectedTagTitle = TextStyle(
+  fontFamily: 'Inter',
+  fontSize: 14,
+  fontWeight: FontWeight.w500,
+  letterSpacing: 0.3,
+  color: kMainGreyColor,
+);
+
+const tNewsTopTitle = TextStyle(
+  fontFamily: 'Inter',
+  fontSize: 14,
+  fontWeight: FontWeight.w500,
+  letterSpacing: 0.3,
+  color: kMainTitleColor,
+);

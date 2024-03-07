@@ -122,11 +122,9 @@ class _editProfileState extends State<EditProfile> {
                   ),
                 ),
                 Center(
-                  child: Obx(
-                    () => Text(
-                      AppLocalizations.of(context)!.updateInfo,
-                      style: tEditTitle,
-                    ),
+                  child: Text(
+                    AppLocalizations.of(context)!.updateInfo,
+                    style: tEditTitle,
                   ),
                 ),
               ],
@@ -166,84 +164,90 @@ class _editProfileState extends State<EditProfile> {
           SizedBox(
             height: 50 * fem,
           ),
-          Obx(
-            () => sectionBox(AppLocalizations.of(context)!.editNickname, () {
-              Get.to(() => const EditUserNickname());
-            }),
-          ),
+          sectionBox(AppLocalizations.of(context)!.editNickname, () {
+            Get.to(() => const EditUserNickname(),
+                transition: Transition.fadeIn);
+          }),
           SizedBox(
             height: 14 * fem,
           ),
-          Obx(
-            () => sectionBox(AppLocalizations.of(context)!.editPassword, () {
-              showNoticeDialog(
-                  context,
-                  AppLocalizations.of(context)!.updateConfirmation,
-                  AppLocalizations.of(context)!.yes, () async {
-                Timer.periodic(Duration(seconds: 1), (timer) {
-                  setState(() async {
-                    showLoadingDialog(context);
-                    String isGetOTP =
-                        await provider.getOTP(userModel.id.value, "2");
-                    remainingTimeInSeconds--;
+          // Obx(
+          //   () =>
 
-                    if (remainingTimeInSeconds == 0) {
-                      if (isGetOTP.isEmptyOrNull) {
+          sectionBox(AppLocalizations.of(context)!.editPassword, () {
+            showNoticeDialog(
+                context,
+                AppLocalizations.of(context)!.updateConfirmation,
+                AppLocalizations.of(context)!.yes, () async {
+              Timer.periodic(Duration(seconds: 1), (timer) {
+                setState(() async {
+                  // showLoadingDialog(context);
+
+                  String isGetOTP =
+                      await provider.getOTP(userModel.id.value, "2");
+                  remainingTimeInSeconds--;
+
+                  if (remainingTimeInSeconds == 0) {
+                    if (isGetOTP.isEmptyOrNull) {
+                      openSnackbar(
+                          context,
+                          AppLocalizations.of(context)!.noInternet,
+                          kComponentErrorTextColor);
+                    } else {
+                      if (isGetOTP == '500313') {
                         openSnackbar(
                             context,
-                            AppLocalizations.of(context)!.noInternet,
+                            AppLocalizations.of(context)!.otpHitLimit,
                             kComponentErrorTextColor);
                       } else {
-                        if (isGetOTP == '500313') {
-                          openSnackbar(
-                              context,
-                              AppLocalizations.of(context)!.otpHitLimit,
-                              kComponentErrorTextColor);
-                        } else {
-                          timer.cancel();
-                          Get.to(() => OTPVerification(
-                                phone: userPhone,
-                                isChangePassword: true,
-                                isLogin: true,
-                                userNickname: '',
-                                dialCode: '',
-                                password: '',
-                              ));
-                          openSnackbar(
-                              context,
-                              AppLocalizations.of(context)!.otpSent,
-                              kComponentSuccessTextColor);
-                        }
-                      }
-                    } else {
-                      if (!isGetOTP.isEmptyOrNull) {
-                        if (isGetOTP == '500313') {
-                          openSnackbar(
-                              context,
-                              AppLocalizations.of(context)!.otpHitLimit,
-                              kComponentErrorTextColor);
-                        } else {
-                          timer.cancel();
-                          Get.to(() => OTPVerification(
-                                phone: userPhone,
-                                isChangePassword: true,
-                                isLogin: true,
-                                userNickname: '',
-                                dialCode: '',
-                                password: '',
-                              ));
-                          openSnackbar(
-                              context,
-                              AppLocalizations.of(context)!.otpSent,
-                              kComponentSuccessTextColor);
-                        }
+                        timer.cancel();
+                        Get.to(
+                            () => OTPVerification(
+                                  phone: userPhone,
+                                  isChangePassword: true,
+                                  isLogin: true,
+                                  userNickname: '',
+                                  dialCode: '',
+                                  password: '',
+                                ),
+                            transition: Transition.fadeIn);
+                        openSnackbar(
+                            context,
+                            AppLocalizations.of(context)!.otpSent,
+                            kComponentSuccessTextColor);
                       }
                     }
-                  });
+                  } else {
+                    if (!isGetOTP.isEmptyOrNull) {
+                      if (isGetOTP == '500313') {
+                        openSnackbar(
+                            context,
+                            AppLocalizations.of(context)!.otpHitLimit,
+                            kComponentErrorTextColor);
+                      } else {
+                        timer.cancel();
+                        Get.to(
+                            () => OTPVerification(
+                                  phone: userPhone,
+                                  isChangePassword: true,
+                                  isLogin: true,
+                                  userNickname: '',
+                                  dialCode: '',
+                                  password: '',
+                                ),
+                            transition: Transition.fadeIn);
+                        openSnackbar(
+                            context,
+                            AppLocalizations.of(context)!.otpSent,
+                            kComponentSuccessTextColor);
+                      }
+                    }
+                  }
                 });
               });
-            }),
-          ),
+            });
+          }),
+          // ),
           SizedBox(
             height: 14 * fem,
           ),

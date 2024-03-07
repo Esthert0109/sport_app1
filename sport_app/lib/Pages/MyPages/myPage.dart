@@ -115,7 +115,8 @@ class _MyPageState extends State<MyPage> {
                   top: 80 * fem,
                   child: GestureDetector(
                     onTap: () {
-                      Get.to(() => EditProfile());
+                      Get.to(() => EditProfile(),
+                          transition: Transition.fadeIn);
                     },
                     child: SvgPicture.asset(
                       'images/myPage/chg-pic-icon.svg',

@@ -87,7 +87,6 @@
     "tdy": "今天",
     "on": "开",
     "off": "关",
-
     "time": "时间",
     "score": "得分",
     "rebound": "篮板",
@@ -99,7 +98,6 @@
     "turnover": "失误",
     "blockShot": "盖帽",
     "foul": "犯规",
-
     "sendDanmaku": "点我发弹幕",
     "offDanmaku": "弹幕已关闭"
 }

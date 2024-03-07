@@ -41,7 +41,7 @@ class BasketballMainPage extends StatefulWidget {
 
 class _BasketballMainPageState extends State<BasketballMainPage>
     with SingleTickerProviderStateMixin {
-//get user info
+  //get user info
   UserDataModel userModel = Get.find<UserDataModel>();
 
   //controller
@@ -622,8 +622,9 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                               ? Container(
                                   width: 328 * fem,
                                   height: 183 * fem,
+                                  alignment: Alignment.center,
                                   margin: EdgeInsets.symmetric(
-                                      horizontal: 10 * fem),
+                                      horizontal: 20 * fem, vertical: 20 * fem),
                                   child: Stack(
                                     children: [
                                       ClipRRect(

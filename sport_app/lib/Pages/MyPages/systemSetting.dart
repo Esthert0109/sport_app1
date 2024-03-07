@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sport_app/main.dart';
 
 import '../../Constants/colorConstant.dart';
 import '../../Model/userDataModel.dart';
@@ -107,62 +108,59 @@ class _systemSettingState extends State<SystemSetting> {
                   ),
                   // Obx(() =>
                   Center(
-                    child: ElevatedButton(
-                      child: Text(AppLocalizations.of(context)!.changeLanguage,
-                          style: TextStyle(
-                            color: Colors.black,
-                          )),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8)),
-                        side: BorderSide.none,
-                        fixedSize: Size(343 * fem, 60 * fem),
-                        alignment: Alignment.centerLeft,
-                        elevation: 0.2,
-                      ),
-                      onPressed: () => showModalBottomSheet(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          context: context,
-                          builder: ((context) {
-                            return Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10 * fem, vertical: 20 * fem),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  ListTile(
-                                    title: new Text('中文'),
-                                    onTap: () {
-                                      setState(() {
-                                        userModel.isCN.value = true;
-                                      });
-                                      Navigator.pushNamedAndRemoveUntil(
-                                          context,
-                                          '/home',
-                                          ModalRoute.withName('/home'));
-                                    },
-                                  ),
-                                  ListTile(
-                                    title: new Text('English'),
-                                    onTap: () {
-                                      setState(() {
-                                        userModel.isCN.value = false;
-                                      });
-                                      Navigator.pushNamedAndRemoveUntil(
-                                          context,
-                                          '/home',
-                                          ModalRoute.withName('/home'));
-                                    },
-                                  )
-                                ],
-                              ),
-                            );
-                          })),
+                      child: ElevatedButton(
+                    child: Text(AppLocalizations.of(context)!.changeLanguage,
+                        style: TextStyle(
+                          color: Colors.black,
+                        )),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      side: BorderSide.none,
+                      fixedSize: Size(343 * fem, 60 * fem),
+                      alignment: Alignment.centerLeft,
+                      elevation: 0.2,
                     ),
-                  )
-                  // ),
+                    onPressed: () => showModalBottomSheet(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        context: context,
+                        builder: ((context) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10 * fem, vertical: 20 * fem),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                ListTile(
+                                  title: new Text('中文'),
+                                  onTap: () {
+                                    setState(() {
+                                      userModel.isCN.value = true;
+                                      MyApp.setLocale(context, Locale('zh'));
+                                    });
+                                    Navigator.pushNamedAndRemoveUntil(context,
+                                        '/home', ModalRoute.withName('/home'));
+                                  },
+                                ),
+                                ListTile(
+                                  title: new Text('English'),
+                                  onTap: () {
+                                    setState(() {
+                                      userModel.isCN.value = false;
+                                      MyApp.setLocale(context, Locale('en'));
+                                    });
+                                    Navigator.pushNamedAndRemoveUntil(context,
+                                        '/home', ModalRoute.withName('/home'));
+                                  },
+                                )
+                              ],
+                            ),
+                          );
+                        })),
+                    // ),
+                  )),
                 ],
               )
             ],

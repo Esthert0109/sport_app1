@@ -27,8 +27,12 @@ class _SavedCollectionState extends State<SavedCollection> {
   bool isLoading = false;
 
   // services and provider
-  UserDataModel userDataModel = UserDataModel();
+  UserDataModel userDataModel = Get.find<UserDataModel>();
+
   BookmarkProvider provider = BookmarkProvider();
+
+  // get language
+  String language = "en_US";
 
   // controller
   ScrollController _scrollController = ScrollController();
@@ -86,6 +90,9 @@ class _SavedCollectionState extends State<SavedCollection> {
   void initState() {
     super.initState();
     getAllSavedCollections();
+    if (userDataModel.isCN.value) {
+      language = 'zh_CN';
+    }
   }
 
   @override
@@ -155,7 +162,7 @@ class _SavedCollectionState extends State<SavedCollection> {
                                   20 * fem, 15 * fem, 20 * fem, 10 * fem),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                DateFormat('yyyy/MM/dd  EEEE', 'zh_CN').format(
+                                DateFormat('yyyy/MM/dd  EEEE', language).format(
                                     DateTime.parse(collectionList[index].date)),
                                 style: tCollectionDateTitle,
                               ),

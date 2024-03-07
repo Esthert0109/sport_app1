@@ -21,7 +21,7 @@ void showNoticeDialog(BuildContext context, String message, String btnText,
         return AlertDialog(
           content: Text(
             message,
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.start,
           ),
           actions: [
             Row(
@@ -32,7 +32,7 @@ void showNoticeDialog(BuildContext context, String message, String btnText,
                   height: 40 * fem,
                   child: TextButton(
                       onPressed: () {
-                        Get.back();
+                        Navigator.pop(context);
                       },
                       style: ButtonStyle(
                           shape:
@@ -44,7 +44,7 @@ void showNoticeDialog(BuildContext context, String message, String btnText,
                           backgroundColor: MaterialStateProperty.all(
                               Color.fromARGB(255, 215, 236, 191))),
                       child: Text(
-                        AppLocalizations.of(context)!.cancel,
+                        userModel.isCN.value ? "取消" : "Cancel",
                         style: TextStyle(
                           fontFamily: 'NotoSansSC',
                           fontSize: 12 * fem,
@@ -57,7 +57,10 @@ void showNoticeDialog(BuildContext context, String message, String btnText,
                   width: 112 * fem,
                   height: 40 * fem,
                   child: TextButton(
-                      onPressed: onPressed,
+                      onPressed: () {
+                        onPressed();
+                        Navigator.pop(context);
+                      },
                       style: ButtonStyle(
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(

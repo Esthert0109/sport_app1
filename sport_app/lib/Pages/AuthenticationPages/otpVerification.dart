@@ -421,7 +421,7 @@ class _OTPVerificationState extends State<OTPVerification> {
                                     // reset password
                                     if (isChangePassword == true &&
                                         isLogin == true) {
-                                      showLoadingDialog(context);
+                                      // showLoadingDialog(context);
                                       bool isOTPValid =
                                           await provider.verifyOTP(
                                               userModel.id.value, otpCode, "2");

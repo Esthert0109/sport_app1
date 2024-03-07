@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:sport_app/Model/userDataModel.dart';
 
 import '../../Constants/colorConstant.dart';
 import '../../Constants/textConstant.dart';
@@ -43,11 +45,11 @@ List<String> formatDateTimeList(List<DateTime> dateTimes) {
   return formattedDates;
 }
 
-List<String> formatDayOfWeekList(List<DateTime> dateTimes) {
+List<String> formatDayOfWeekList(List<DateTime> dateTimes, String language) {
   List<String> dayOfWeekList = [];
 
   for (DateTime dateTime in dateTimes) {
-    String dayOfWeek = DateFormat('EEEE', 'zh_CN').format(dateTime);
+    String dayOfWeek = DateFormat('EEEE', language).format(dateTime);
     dayOfWeekList.add(dayOfWeek);
   }
 
@@ -55,13 +57,25 @@ List<String> formatDayOfWeekList(List<DateTime> dateTimes) {
 }
 
 class _StatusDateButtonComponentState extends State<StatusDateButtonComponent> {
+  UserDataModel userDataModel = Get.find<UserDataModel>();
+  String language = 'en_US';
+
+  @override
+  void initState() {
+    super.initState();
+    if (userDataModel.isCN.value) {
+      language = 'zh_CN';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
 
     List<String> formattedDateList = formatDateTimeList(widget.dateList);
-    List<String> formattedDayList = formatDayOfWeekList(widget.dateList);
+    List<String> formattedDayList =
+        formatDayOfWeekList(widget.dateList, language);
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -73,7 +87,7 @@ class _StatusDateButtonComponentState extends State<StatusDateButtonComponent> {
           children: List.generate(
             widget.dateList.length,
             (index) => Container(
-              width: 60 * fem,
+              // width: 60 * fem,
               height: 46 * fem,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
@@ -82,7 +96,7 @@ class _StatusDateButtonComponentState extends State<StatusDateButtonComponent> {
                     : Colors.transparent,
               ),
               padding:
-                  EdgeInsets.symmetric(horizontal: 5 * fem, vertical: 2 * fem),
+                  EdgeInsets.symmetric(horizontal: 8 * fem, vertical: 2 * fem),
               margin: EdgeInsets.fromLTRB(0, 0, 5 * fem, 0),
               child: InkWell(
                 onTap: () => widget.onTap(index),

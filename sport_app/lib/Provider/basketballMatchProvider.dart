@@ -26,11 +26,19 @@ class BasketballMatchProvider extends ChangeNotifier {
     }
 
     final token = await SharedPreferencesUtils.getSavedToken();
+    Map<String, String> headers = {};
 
-    final Map<String, String> headers = {
-      'Content-Type': 'application/json; charset=utf-8',
-      'token': token!,
-    };
+    print("check token: $token");
+    if (token == null) {
+      headers = {
+        'Content-Type': 'application/json; charset=utf-8',
+      };
+    } else {
+      headers = {
+        'Content-Type': 'application/json; charset=utf-8',
+        'token': token,
+      };
+    }
 
     try {
       final response = await sendGetRequest(url, headers);
@@ -81,11 +89,19 @@ class BasketballMatchProvider extends ChangeNotifier {
     }
 
     final token = await SharedPreferencesUtils.getSavedToken();
+    Map<String, String> headers = {};
 
-    final Map<String, String> headers = {
-      'Content-Type': 'application/json; charset=utf-8',
-      'token': token!,
-    };
+    print("check token: $token");
+    if (token == null) {
+      headers = {
+        'Content-Type': 'application/json; charset=utf-8',
+      };
+    } else {
+      headers = {
+        'Content-Type': 'application/json; charset=utf-8',
+        'token': token,
+      };
+    }
 
     try {
       final response = await sendGetRequest(url, headers);

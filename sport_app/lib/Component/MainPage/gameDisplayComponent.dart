@@ -104,87 +104,82 @@ class _GameDisplayComponentState extends State<GameDisplayComponent> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                      flex: 8,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            flex: 8,
-                            child: Container(
-                              // color: Colors.amberAccent,
-                              // width: 150 * fem,
-                              child: Container(
-                                height: 20 * fem,
-                                margin:
-                                    EdgeInsets.symmetric(horizontal: 2 * fem),
-                                alignment: Alignment.topLeft,
-                                padding:
-                                    EdgeInsets.symmetric(horizontal: 8 * fem),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: kLightGreyColor),
-                                child: Text(
-                                  competitionType,
-                                  style: tTagButton,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  softWrap: false,
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Container(
-                              // color: Colors.amber,
-                              height: 20 * fem,
-                              width: 80 * fem,
-                              alignment: Alignment.topCenter,
-                              padding:
-                                  EdgeInsets.symmetric(horizontal: 5 * fem),
-                              child: Text(
-                                duration,
-                                style: tDate,
-                                textAlign: TextAlign.start,
-                              ),
-                            ),
-                          ),
-                        ],
-                      )),
-                  Expanded(
-                      flex: 2,
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              if (isSaved) {
-                                delBookmark(id);
-                                isSaved = !isSaved;
-                              } else {
-                                createBookmark(id);
-                                isSaved = !isSaved;
-                              }
-
-                              print("isSaved: $isSaved");
-                            });
-                            // widget.saveGameCallBack!();
-                          },
+                  IntrinsicWidth(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Flexible(
                           child: Container(
-                            width: 24 * fem,
-                            height: 24 * fem,
-                            alignment: Alignment.topRight,
-                            child: isSaved
-                                ? SvgPicture.asset(
-                                    'images/common/Bookmark-1.svg')
-                                : SvgPicture.asset(
-                                    'images/common/Bookmark-0.svg'),
+                            // No fixed width needed here
+                            height: 20 * fem,
+                            margin: EdgeInsets.symmetric(horizontal: 2 * fem),
+                            alignment: Alignment.topLeft,
+                            padding: EdgeInsets.symmetric(horizontal: 8 * fem),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: kLightGreyColor,
+                            ),
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                competitionType,
+                                style: tTagButton,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                softWrap: false,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                           ),
                         ),
-                      ))
+                        Container(
+                          // color: Colors.amber,
+                          height: 20 * fem,
+                          width: 80 * fem,
+                          alignment: Alignment.topCenter,
+                          padding: EdgeInsets.symmetric(horizontal: 5 * fem),
+                          child: Text(
+                            duration,
+                            style: tDate,
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 30 * fem,
+                    // color: Colors.amber,
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (isSaved) {
+                              delBookmark(id);
+                              isSaved = !isSaved;
+                            } else {
+                              createBookmark(id);
+                              isSaved = !isSaved;
+                            }
+
+                            print("isSaved: $isSaved");
+                          });
+                          // widget.saveGameCallBack!();
+                        },
+                        child: Container(
+                          width: 24 * fem,
+                          height: 24 * fem,
+                          alignment: Alignment.topRight,
+                          child: isSaved
+                              ? SvgPicture.asset('images/common/Bookmark-1.svg')
+                              : SvgPicture.asset(
+                                  'images/common/Bookmark-0.svg'),
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),

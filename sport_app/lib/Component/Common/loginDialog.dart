@@ -223,8 +223,8 @@ class _LoginAlertDialogState extends State<LoginAlertDialog> {
                   ),
                   Container(
                       margin: EdgeInsets.symmetric(
-                          vertical: 0 * fem, horizontal: 10 * fem),
-                      alignment: Alignment.center,
+                          vertical: 0 * fem, horizontal: 0 * fem),
+                      alignment: Alignment.centerRight,
                       child: TextButton(
                         style: TextButton.styleFrom(
                           primary: Colors.black,
@@ -242,7 +242,30 @@ class _LoginAlertDialogState extends State<LoginAlertDialog> {
                           AppLocalizations.of(context)!.maybeLater,
                           style: tContinueAsGuest,
                         ),
-                      ))
+                      )),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 30 * fem),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          AppLocalizations.of(context)!.noAcc,
+                          style: TextStyle(
+                            fontFamily: 'NotoSansSC',
+                            fontSize: 15 * fem,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 0.14 * fem,
+                            color: kMainGreyColor,
+                          ),
+                        ),
+                        PressableWord(
+                            text: AppLocalizations.of(context)!.regNow,
+                            onPressed: () {
+                              Get.offNamed('/register');
+                            }),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),

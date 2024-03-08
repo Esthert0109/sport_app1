@@ -250,7 +250,7 @@ class _LoginState extends State<Login> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      AppLocalizations.of(context)!.accExist,
+                      AppLocalizations.of(context)!.noAcc,
                       style: TextStyle(
                         fontFamily: 'NotoSansSC',
                         fontSize: 15 * fem,

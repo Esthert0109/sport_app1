@@ -103,5 +103,6 @@
     "pin": "Top",
     "asGuest": "Continue as Guest",
     "loginContinue": "Login to Continue",
-    "maybeLater": "Maybe Later"
+    "maybeLater": "Maybe Later",
+    "noAcc": "Not Registered? "
 }

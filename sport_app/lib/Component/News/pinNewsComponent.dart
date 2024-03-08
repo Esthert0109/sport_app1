@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../Constants/textConstant.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PinNewsComponent extends StatefulWidget {
   final String title;
@@ -47,7 +48,7 @@ class _PinNewsComponentState extends State<PinNewsComponent> {
                 Padding(
                   padding: EdgeInsets.only(right: 20 * fem),
                   child: Text(
-                    "置顶",
+                    AppLocalizations.of(context)!.pin,
                     style: tPinNews,
                   ),
                 ),
@@ -61,7 +62,7 @@ class _PinNewsComponentState extends State<PinNewsComponent> {
                 Padding(
                   padding: EdgeInsets.only(right: 20 * fem),
                   child: Text(
-                    "$read阅读",
+                    "$read " + AppLocalizations.of(context)!.read,
                     style: tTimeRead,
                   ),
                 )

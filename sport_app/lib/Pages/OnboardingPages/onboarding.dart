@@ -114,7 +114,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     Get.off(() => const BottomNaviBar());
                   },
                   child: Text(
-                    "Continue as Guest",
+                    AppLocalizations.of(context)!.asGuest,
                     style: tContinueAsGuest,
                   ),
                 ))

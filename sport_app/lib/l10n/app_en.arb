@@ -1,7 +1,7 @@
 {
     "mainPage": "Main Page",
     "live": "Live",
-    "info": "Info",
+    "info": "News",
     "my": "My",
     "search": "Search Game/Team",
     "login": "Login",
@@ -26,7 +26,7 @@
     "myCollection": "My Collection",
     "logout": "Log Out",
     "noti": "Notification",
-    "read": "read",
+    "read": "Read",
     "competition": "Event",
     "started": "Started",
     "yet": "On Waiting",
@@ -99,5 +99,9 @@
     "blockShot": "Block Shot",
     "foul": "Foul",
     "sendDanmaku": "Click to send comment",
-    "offDanmaku": "Comment section OFF"
+    "offDanmaku": "Comment section OFF",
+    "pin": "Top",
+    "asGuest": "Continue as Guest",
+    "loginContinue": "Login to Continue",
+    "maybeLater": "Maybe Later"
 }

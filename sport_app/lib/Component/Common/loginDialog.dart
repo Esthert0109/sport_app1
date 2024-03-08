@@ -77,7 +77,7 @@ class _LoginAlertDialogState extends State<LoginAlertDialog> {
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 30 * fem),
                     child: Text(
-                      "Login to Continue",
+                      AppLocalizations.of(context)!.loginContinue,
                       style: tContactUsTitle,
                     ),
                   ),
@@ -239,7 +239,7 @@ class _LoginAlertDialogState extends State<LoginAlertDialog> {
                               });
                         },
                         child: Text(
-                          "Maybe Later",
+                          AppLocalizations.of(context)!.maybeLater,
                           style: tContinueAsGuest,
                         ),
                       ))

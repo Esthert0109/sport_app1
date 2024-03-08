@@ -99,5 +99,9 @@
     "blockShot": "盖帽",
     "foul": "犯规",
     "sendDanmaku": "点我发弹幕",
-    "offDanmaku": "弹幕已关闭"
+    "offDanmaku": "弹幕已关闭",
+    "pin": "置顶",
+    "asGuest": "以访客身份继续",
+    "loginContinue": "登录后继续浏览",
+    "maybeLater": "下次一定"
 }

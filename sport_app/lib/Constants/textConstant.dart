@@ -392,3 +392,11 @@ const tHotNewsTitle = TextStyle(
   letterSpacing: 0.3,
   color: kMainTitleColor,
 );
+
+const tHotIndex = TextStyle(
+  fontFamily: 'Inter',
+  fontSize: 14,
+  fontWeight: FontWeight.w800,
+  letterSpacing: 0.3,
+  color: kIndexColor,
+);

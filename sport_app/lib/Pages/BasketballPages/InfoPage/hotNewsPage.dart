@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../../../Component/News/hotNewsComponent.dart';
+import '../../../Component/News/topHotNewsComponent.dart';
 import '../../../Constants/colorConstant.dart';
 import '../../../Constants/textConstant.dart';
+import 'infoPageDetail.dart';
 
 class HotNewsPage extends StatefulWidget {
   const HotNewsPage({super.key});
@@ -15,21 +19,22 @@ class HotNewsPage extends StatefulWidget {
 class _HotNewsPageState extends State<HotNewsPage> {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: kMainHotNewsColor));
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: kMainHotNewsColor,
+    ));
 
     // standard size
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
     return Scaffold(
-      backgroundColor: kSecondaryHotNewsColor,
+      backgroundColor: white,
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: Stack(
+          // mainAxisAlignment: MainAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              height: 121 * fem,
+              height: double.maxFinite,
               color: kSecondaryHotNewsColor,
               child: AppBar(
                 automaticallyImplyLeading: false,
@@ -51,293 +56,49 @@ class _HotNewsPageState extends State<HotNewsPage> {
                 actions: [],
               ),
             ),
-            Expanded(
-                child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  ClipRRect(
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(10)),
-                      child: Container(
-                        // height: 500 * fem,
-                        padding: EdgeInsets.symmetric(
-                            vertical: 30 * fem, horizontal: 20 * fem),
-                        decoration: BoxDecoration(color: kMainComponentColor),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 50 * fem,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Expanded(
-                                      flex: 1,
-                                      child: Center(
-                                        child: Image(
-                                            image: AssetImage(
-                                                'images/info/hotTop1.png')),
-                                      )),
-                                  Expanded(
-                                      flex: 9,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                              flex: 5,
-                                              child: Container(
-                                                padding: EdgeInsets.only(
-                                                  left: 10 * fem,
-                                                ),
-                                                alignment: Alignment.centerLeft,
-                                                child: Text(
-                                                  '🤣阿森纳全场零射正客场0-1波尔图，加莱诺读秒世界波绝杀',
-                                                  style: tHotNewsTitle,
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                              )),
-                                          Expanded(
-                                              flex: 5,
-                                              child: Container(
-                                                margin: EdgeInsets.fromLTRB(
-                                                    10 * fem,
-                                                    5 * fem,
-                                                    0 * fem,
-                                                    0 * fem),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Container(
-                                                      height: 12 * fem,
-                                                      child: Image(
-                                                          image: AssetImage(
-                                                              'images/info/fire.png')),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal:
-                                                                  8 * fem),
-                                                      child: Text(
-                                                        "12613",
-                                                        style: tTimeRead,
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      height: 12 * fem,
-                                                      alignment: Alignment
-                                                          .bottomCenter,
-                                                      child: Image(
-                                                          image: AssetImage(
-                                                              'images/info/boom.png')),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ))
-                                        ],
-                                      ))
-                                ],
+            Positioned(
+              top: 121 * fem,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: ClipRRect(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(
+                        20 * fem, 30 * fem, 20 * fem, 10 * fem),
+                    decoration: BoxDecoration(color: kMainComponentColor),
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        children: [
+                          for (int i = 1; i < 4; i++)
+                            InkWell(
+                              onTap: () {
+                                print("navi to news");
+                                Get.to(() => const InfoPageDetail(),
+                                    transition: Transition.fadeIn);
+                              },
+                              child: TopHotNewsComponent(
+                                hotLogo: "images/info/hotTop$i.png",
+                                title: "🤣阿森纳全场零射正客场0-1波尔图，加莱诺读秒世界波绝杀",
+                                read: 15522,
                               ),
                             ),
-                            Divider(
-                              color: kDividerColor,
-                              thickness: 1,
-                            ),
-                            SizedBox(
-                              height: 50 * fem,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Expanded(
-                                      flex: 1,
-                                      child: Center(
-                                        child: Image(
-                                            image: AssetImage(
-                                                'images/info/hotTop2.png')),
-                                      )),
-                                  Expanded(
-                                      flex: 9,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                              flex: 5,
-                                              child: Container(
-                                                padding: EdgeInsets.only(
-                                                  left: 10 * fem,
-                                                ),
-                                                alignment: Alignment.centerLeft,
-                                                child: Text(
-                                                  '🤣阿森纳全场零射正客场0-1波尔图，加莱诺读秒世界波绝杀',
-                                                  style: tHotNewsTitle,
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                              )),
-                                          Expanded(
-                                              flex: 5,
-                                              child: Container(
-                                                margin: EdgeInsets.fromLTRB(
-                                                    10 * fem,
-                                                    5 * fem,
-                                                    0 * fem,
-                                                    0 * fem),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Container(
-                                                      height: 12 * fem,
-                                                      child: Image(
-                                                          image: AssetImage(
-                                                              'images/info/fire.png')),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal:
-                                                                  8 * fem),
-                                                      child: Text(
-                                                        "12613",
-                                                        style: tTimeRead,
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      height: 12 * fem,
-                                                      alignment: Alignment
-                                                          .bottomCenter,
-                                                      child: Image(
-                                                          image: AssetImage(
-                                                              'images/info/boom.png')),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ))
-                                        ],
-                                      ))
-                                ],
-                              ),
-                            ),
-                            Divider(
-                              color: kDividerColor,
-                              thickness: 1,
-                            ),
-                            SizedBox(
-                              height: 50 * fem,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Expanded(
-                                      flex: 1,
-                                      child: Center(
-                                        child: Image(
-                                            image: AssetImage(
-                                                'images/info/hotTop2.png')),
-                                      )),
-                                  Expanded(
-                                      flex: 9,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                              flex: 5,
-                                              child: Container(
-                                                padding: EdgeInsets.only(
-                                                  left: 10 * fem,
-                                                ),
-                                                alignment: Alignment.centerLeft,
-                                                child: Text(
-                                                  '🤣阿森纳全场零射正客场0-1波尔图，加莱诺读秒世界波绝杀',
-                                                  style: tHotNewsTitle,
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                              )),
-                                          Expanded(
-                                              flex: 5,
-                                              child: Container(
-                                                margin: EdgeInsets.fromLTRB(
-                                                    10 * fem,
-                                                    5 * fem,
-                                                    0 * fem,
-                                                    0 * fem),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Container(
-                                                      height: 12 * fem,
-                                                      child: Image(
-                                                          image: AssetImage(
-                                                              'images/info/fire.png')),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal:
-                                                                  8 * fem),
-                                                      child: Text(
-                                                        "12613",
-                                                        style: tTimeRead,
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      height: 12 * fem,
-                                                      alignment: Alignment
-                                                          .bottomCenter,
-                                                      child: Image(
-                                                          image: AssetImage(
-                                                              'images/info/boom.png')),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ))
-                                        ],
-                                      ))
-                                ],
-                              ),
-                            ),
-                            Divider(
-                              color: kDividerColor,
-                              thickness: 1,
-                            ),
-                          ],
-                        ),
-                      ))
-                ],
-              ),
-            ))
+                          for (int i = 4; i < 27; i++)
+                            InkWell(
+                              onTap: () {
+                                print("navi to news");
+                              },
+                              child: HotNewsComponent(
+                                  index: i,
+                                  title: "💥加莱诺读秒世界波绝杀，阿森纳全场零射正客场0-1波尔图。",
+                                  read: 12613),
+                            )
+                        ],
+                      ),
+                    ),
+                  )),
+            )
           ],
         ),
       ),

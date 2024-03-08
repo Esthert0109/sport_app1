@@ -40,3 +40,4 @@ const kButtonOffWordColor = Color(0xFF16B13B);
 const kMainHotNewsColor = Color(0xffFC4562);
 const kSecondaryHotNewsColor = Color(0xffFC6E4F);
 const kDividerColor = Color(0xffF4F4F4);
+const kIndexColor = Color(0xffFF6F00);

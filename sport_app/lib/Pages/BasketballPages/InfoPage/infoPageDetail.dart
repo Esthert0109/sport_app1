@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -19,6 +20,10 @@ class _InfoPageDetailState extends State<InfoPageDetail> {
     // standard size
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
+
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: kMainGreenColor,
+    ));
 
     return SafeArea(
       child: Scaffold(

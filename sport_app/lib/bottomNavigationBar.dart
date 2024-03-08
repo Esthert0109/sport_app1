@@ -33,16 +33,17 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
   List<Widget> footballPagesLayout = <Widget>[
     const FootballMainPage(),
     const FootballLivePage(),
-    const BasketballInfoPage(),
+    const NewsPage(),
+    // const BasketballInfoPage(),
     const MyPage(),
   ];
 
   //basketball pages
   List<Widget> basketballPagesLayout = <Widget>[
     const BasketballMainPage(),
-    // const BasketballLivePage(),
+    const BasketballLivePage(),
     const NewsPage(),
-    const BasketballInfoPage(),
+    // const BasketballInfoPage(),
     const MyPage(),
   ];
 
@@ -53,7 +54,7 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
     double fem = MediaQuery.of(context).size.width / baseWidth;
 
     SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: kMainGreenColor));
+        const SystemUiOverlayStyle(statusBarColor: kMainGreenColor));
 
     //obx setting
     return Obx(() => Scaffold(

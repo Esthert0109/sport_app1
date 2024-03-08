@@ -106,12 +106,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     foregroundColor: kMainGreenColor,
                   ),
                   onPressed: () {
-                    showModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return TagDialog();
-                        });
-                    // Get.off(() => const BottomNaviBar());
+                    // showModalBottomSheet(
+                    //     context: context,
+                    //     builder: (context) {
+                    //       return TagDialog();
+                    //     });
+                    Get.off(() => const BottomNaviBar());
                   },
                   child: Text(
                     "Continue as Guest",

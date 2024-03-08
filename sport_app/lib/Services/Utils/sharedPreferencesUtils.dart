@@ -67,7 +67,5 @@ class SharedPreferencesUtils {
   static Future<void> clearSearchHistory() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('search');
-
-    searchHistory.clear();
   }
 }

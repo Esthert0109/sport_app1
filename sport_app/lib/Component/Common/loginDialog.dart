@@ -64,7 +64,7 @@ class _LoginAlertDialogState extends State<LoginAlertDialog> {
         return ClipRRect(
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
           child: Container(
-            height: 1000 * fem,
+            height: 700 * fem,
             color: kMainBackgroundColor,
             padding:
                 EdgeInsets.symmetric(horizontal: 20 * fem, vertical: 0 * fem),

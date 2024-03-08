@@ -7,8 +7,10 @@ import 'package:get/get.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/Provider/liveStreamProvider.dart';
+import 'package:sport_app/Services/Utils/sharedPreferencesUtils.dart';
 
 import '../../../Component/Common/liveSquareBlock.dart';
+import '../../../Component/Common/loginDialog.dart';
 import '../../../Component/Loading/loadingLiveDisplayBlock.dart';
 import '../../../Component/MainPage/gameDisplayComponent.dart';
 import '../../../Component/Tencent/liveStreamPlayer.dart';
@@ -47,6 +49,7 @@ class _BasketballLivePageState extends State<BasketballLivePage>
   bool _isScrollingDown = false;
   bool isLiveLoading = false;
   bool isCollectionLoading = false;
+  bool isLogin = true;
 
   //Provider bookmark and live stream
   BookmarkProvider savedBookmarkProvider = BookmarkProvider();
@@ -64,6 +67,17 @@ class _BasketballLivePageState extends State<BasketballLivePage>
   // variables
   int page = 1;
   int size = 10;
+
+  Future<void> checkLogin() async {
+    //get shared preferences
+    String? token = await SharedPreferencesUtils.getSavedToken();
+
+    print("check token: ${token.toString()}");
+
+    if (token.isEmptyOrNull) {
+      isLogin = false;
+    }
+  }
 
   Future<void> getAllLiveList() async {
     LiveStreamModel? liveList =
@@ -138,6 +152,7 @@ class _BasketballLivePageState extends State<BasketballLivePage>
     super.initState();
     getCollections();
     getAllLiveList();
+    checkLogin();
 
     _scrollController.addListener(() {
       if (_scrollController.position.userScrollDirection.toString() ==
@@ -445,34 +460,48 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                                     j++)
                                   InkWell(
                                     onTap: () {
-                                      LiveStreamChatRoom page = LiveStreamChatRoom(
-                                          userLoginId: userModel.id.value,
-                                          avChatRoomId:
-                                              "panda${basketballLiveStreamList[j].userId}",
-                                          anchor: basketballLiveStreamList[j]
-                                                  .nickName ??
-                                              "",
-                                          streamTitle:
-                                              basketballLiveStreamList[j]
-                                                      .title ??
-                                                  "",
-                                          anchorPic: basketballLiveStreamList![
-                                                      j]
-                                                  .avatar ??
-                                              "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
-                                          playMode: V2TXLivePlayMode
-                                              .v2TXLivePlayModeLeb,
-                                          liveURL:
-                                              "rtmp://play.mindark.cloud/live/" +
-                                                  getStreamURL(
-                                                      basketballLiveStreamList![
-                                                              j]
-                                                          .pushCode));
+                                      if (!isLogin) {
+                                        showModalBottomSheet(
+                                            context: context,
+                                            isScrollControlled: true,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.vertical(
+                                                        top: Radius.circular(
+                                                            20))),
+                                            builder: (context) {
+                                              return LoginAlertDialog();
+                                            });
+                                      } else {
+                                        LiveStreamChatRoom page = LiveStreamChatRoom(
+                                            userLoginId: userModel.id.value,
+                                            avChatRoomId:
+                                                "panda${basketballLiveStreamList[j].userId}",
+                                            anchor: basketballLiveStreamList[j]
+                                                    .nickName ??
+                                                "",
+                                            streamTitle:
+                                                basketballLiveStreamList[j]
+                                                        .title ??
+                                                    "",
+                                            anchorPic: basketballLiveStreamList![
+                                                        j]
+                                                    .avatar ??
+                                                "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
+                                            playMode: V2TXLivePlayMode
+                                                .v2TXLivePlayModeLeb,
+                                            liveURL:
+                                                "rtmp://play.mindark.cloud/live/" +
+                                                    getStreamURL(
+                                                        basketballLiveStreamList![
+                                                                j]
+                                                            .pushCode));
 
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => page));
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => page));
+                                      }
                                     },
                                     child: LiveSquareBlock(
                                       title:

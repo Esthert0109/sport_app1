@@ -232,6 +232,7 @@ class _MyPageState extends State<MyPage> {
                           controller: btnController,
                           onPressed: () {
                             SharedPreferencesUtils.clearSharedPreferences();
+                            
                             Future.delayed(Duration(seconds: 2), () async {
                               Get.offAllNamed('/auth');
                             });

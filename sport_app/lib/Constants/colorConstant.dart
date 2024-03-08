@@ -10,6 +10,7 @@ const kMainTitleColor = Color(0xff333333);
 const kMainGreyColor = Color(0xff666666);
 const kLightGreyColor = Color(0xFFF5F5F5);
 const kUnselectedTextColor = Color(0xff999999);
+const kTopNewsTextColor = Color(0xffDE0000);
 
 //component color
 const kComponentTagBackgroundColor = Color(0xffF5F5F5);
@@ -25,6 +26,8 @@ const kComponentErrorTextColor = Colors.red;
 const kComponentSuccessTextColor = Colors.green;
 const kComponentSelectedStatusColor = Color(0xff16B13B);
 const tableMainColor = Color.fromARGB(255, 236, 236, 236);
+const kUnactivePaginationColor = Color(0xffD8E9D8);
+const kActivePaginationColor = Color(0xff16B13B);
 
 //danmaku button
 const kButtonOnColor = Color.fromARGB(255, 216, 216, 216);
@@ -32,3 +35,7 @@ const kButtonOnSecondaryColor = Color(0xFFE3E3E3);
 const kButtonOnWordColor = Color(0xFF999999);
 const kButtonOffSecondaryColor = Color.fromARGB(255, 215, 245, 215);
 const kButtonOffWordColor = Color(0xFF16B13B);
+
+// hot news page
+const kMainHotNewsColor = Color(0xffFC4562);
+const kSecondaryHotNewsColor = Color(0xffFC6E4F);

@@ -368,3 +368,19 @@ const tNewsTopTitle = TextStyle(
   letterSpacing: 0.3,
   color: kMainTitleColor,
 );
+
+const tPinNews = TextStyle(
+  fontFamily: 'Inter',
+  fontSize: 10,
+  fontWeight: FontWeight.w400,
+  letterSpacing: 0.3,
+  color: kTopNewsTextColor,
+);
+
+const tTimeRead = TextStyle(
+  fontFamily: 'Inter',
+  fontSize: 10,
+  fontWeight: FontWeight.w400,
+  letterSpacing: 0.3,
+  color: kUnselectedTextColor,
+);

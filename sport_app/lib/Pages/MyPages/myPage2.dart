@@ -6,6 +6,7 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:sport_app/Constants/colorConstant.dart';
 import 'package:sport_app/Model/userDataModel.dart';
 import 'package:sport_app/Pages/MyPages/contactUs.dart';
+import 'package:sport_app/Pages/MyPages/editProfile.dart';
 
 import '../../Component/Common/loginDialog.dart';
 import '../../Constants/textConstant.dart';
@@ -125,6 +126,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                         onTap: () {
                                           print(
                                               "edit projecxxxxxxxxxxxxxxxxxxxxxxxxxxxxy");
+                                          Get.to(() => EditProfile(),
+                                              transition: Transition.fadeIn);
                                         },
                                         child: Image(
                                           image: const AssetImage(

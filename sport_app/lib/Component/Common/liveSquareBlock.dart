@@ -43,7 +43,8 @@ class _LiveSquareBlockState extends State<LiveSquareBlock> {
               )),
           Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8 * fem),
+                borderRadius:
+                    BorderRadius.vertical(bottom: Radius.circular(8 * fem)),
                 color: kMainComponentColor),
             child: Padding(
               padding:

@@ -37,7 +37,8 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
     const FootballLivePage(),
     const NewsPage(),
     // const BasketballInfoPage(),
-    const MyPage(),
+    // const MyPage(),
+    const ProfilePage(),
   ];
 
   //basketball pages

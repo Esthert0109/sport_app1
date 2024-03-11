@@ -197,7 +197,8 @@ class _NewsPageState extends State<NewsPage> {
                     alignment: Alignment.centerLeft,
                     child: InkWell(
                         onTap: () {
-                          Get.to(() => HotNewsPage());
+                          Get.to(() => HotNewsPage(),
+                              transition: Transition.rightToLeft);
                         },
                         child: Image(image: AssetImage("images/info/hot.png"))),
                   )

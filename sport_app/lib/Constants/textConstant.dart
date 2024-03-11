@@ -136,6 +136,27 @@ const tLiveAnchorNameComponent = TextStyle(
     letterSpacing: 0.3,
     color: kComponentLiveAnchorColor);
 
+const tSelectedTitleText = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 18,
+    fontWeight: FontWeight.w500,
+    letterSpacing: 0.3,
+    color: kMainTitleColor);
+
+const tUnselectedTitleText = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.3,
+    color: kMainGreyColor);
+
+const tUnfollowText = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 10,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.3,
+    color: kMainTitleColor);
+
 //search page
 const tSearchBarText = TextStyle(
     fontFamily: 'Inter',
@@ -258,15 +279,15 @@ const tNewsDetails = TextStyle(
 //my page
 const tUsername = TextStyle(
     fontFamily: 'Inter',
-    fontSize: 18,
+    fontSize: 16,
     letterSpacing: 0.3,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w400,
     color: kMainTitleColor);
 const tPhoneNo = TextStyle(
     fontFamily: 'Inter',
     fontSize: 14,
     letterSpacing: 0.3,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w400,
     color: kMainGreyColor);
 const tCollectionBtn = TextStyle(
     fontFamily: 'Inter',
@@ -277,6 +298,18 @@ const tCollectionBtn = TextStyle(
 const tMyPageBtn = TextStyle(
     fontFamily: 'Inter',
     fontSize: 16,
+    letterSpacing: 0.3,
+    fontWeight: FontWeight.w400,
+    color: kMainTitleColor);
+const tHotGames = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 14,
+    letterSpacing: 0.3,
+    fontWeight: FontWeight.w400,
+    color: kMainGreyColor);
+const tHotsGameName = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 10,
     letterSpacing: 0.3,
     fontWeight: FontWeight.w400,
     color: kMainTitleColor);

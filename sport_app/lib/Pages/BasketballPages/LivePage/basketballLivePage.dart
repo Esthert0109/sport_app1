@@ -6,11 +6,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:sport_app/Component/LivePage/followingBlockComponent.dart';
 import 'package:sport_app/Provider/liveStreamProvider.dart';
 import 'package:sport_app/Services/Utils/sharedPreferencesUtils.dart';
+import 'package:text_scroll/text_scroll.dart';
 
 import '../../../Component/Common/liveSquareBlock.dart';
 import '../../../Component/Common/loginDialog.dart';
+import '../../../Component/Common/selectionButtonText.dart';
 import '../../../Component/Loading/loadingLiveDisplayBlock.dart';
 import '../../../Component/MainPage/gameDisplayComponent.dart';
 import '../../../Component/Tencent/liveStreamPlayer.dart';
@@ -50,6 +53,11 @@ class _BasketballLivePageState extends State<BasketballLivePage>
   bool isLiveLoading = false;
   bool isCollectionLoading = false;
   bool isLogin = true;
+  int statusId = 0;
+  int followStatusId = 0;
+
+  List<String> statusList = ["正在直播", "我的关注"];
+  List<String> followStatusList = ["综合排序", "最近关注", "最早关注"];
 
   //Provider bookmark and live stream
   BookmarkProvider savedBookmarkProvider = BookmarkProvider();
@@ -301,13 +309,13 @@ class _BasketballLivePageState extends State<BasketballLivePage>
               isLoading: isLiveLoading,
               onEndOfPage: () {
                 setState(() {
-                  getAllLiveList();
+                  (statusId == 0) ? getAllLiveList() : null;
                 });
               },
               child: RefreshIndicator(
                 color: kMainGreenColor,
                 onRefresh: () async {
-                  toggleRefresh();
+                  (statusId == 0) ? toggleRefresh() : null;
                 },
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
@@ -317,209 +325,185 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                         horizontal: 16 * fem, vertical: 10 * fem),
                     child: Column(
                       children: [
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   crossAxisAlignment: CrossAxisAlignment.center,
-                        //   children: [
-                        //     Text(
-                        //       AppLocalizations.of(context)!.myCollection,
-                        //       style: tMain,
-                        //     ),
-                        //     GestureDetector(
-                        //       onTap: () {
-                        //         print("goto saved Live");
-                        //         Get.to(() => SavedCollection(),
-                        //             transition: Transition.fadeIn);
-                        //       },
-                        //       child: Text(
-                        //         AppLocalizations.of(context)!.showAll,
-                        //         style: tShowAll,
-                        //       ),
-                        //     )
-                        //   ],
-                        // ),
-                        // isCollectionLoading
-                        //     ? Column(
-                        //         children: [
-                        //           for (int i = 0; i < 3; i++)
-                        //             CardLoading(
-                        //               height: 100 * fem,
-                        //               borderRadius:
-                        //                   BorderRadius.circular(8 * fem),
-                        //               margin: EdgeInsets.symmetric(
-                        //                   horizontal: 10 * fem,
-                        //                   vertical: 10 * fem),
-                        //             ),
-                        //         ],
-                        //       )
-                        // : (collectionLength == 0)
-                        //     ? Padding(
-                        //         padding: EdgeInsets.all(20 * fem),
-                        //         child: Text(
-                        //             AppLocalizations.of(context)!
-                        //                 .savedCollection,
-                        //             style: tShowAll),
-                        //       )
-                        // : ListView.builder(
-                        //     physics:
-                        //         const NeverScrollableScrollPhysics(),
-                        //     padding: EdgeInsets.symmetric(
-                        //         vertical: 10 * fem),
-                        //     itemCount: collectionLength,
-                        //     shrinkWrap: true,
-                        //     itemBuilder: (context, index) {
-                        //       return GestureDetector(
-                        //         onTap: () {
-                        //           print("navi into tournament");
-                        //           BasketballTournamentDetails(
-                        //                   id:
-                        //                       '${threeCollections[index].id}',
-                        //                   matchDate:
-                        //                       '${threeCollections[index].matchDate}',
-                        //                   matchStatus:
-                        //                       '${threeCollections[index].statusStr}',
-                        //                   matchName:
-                        //                       '${threeCollections[index].competitionName}')
-                        //               .launch(context);
-                        //         },
-                        //         child: GameDisplayComponent(
-                        //           id: threeCollections[index].id ?? 0,
-                        //           competitionType:
-                        //               threeCollections[index]
-                        //                       .competitionName ??
-                        //                   "",
-                        //           duration: threeCollections[index]
-                        //                   .matchTimeStr ??
-                        //               "00:00",
-                        //           teamAName: threeCollections[index]
-                        //                   .homeTeamName ??
-                        //               "",
-                        //           teamALogo: threeCollections[index]
-                        //                   .homeTeamLogo ??
-                        //               'images/mainpage/sampleLogo.png',
-                        //           teamAScore: threeCollections[index]
-                        //               .homeTeamScore
-                        //               .toString(),
-                        //           teamBName: threeCollections[index]
-                        //                   .awayTeamName ??
-                        //               "",
-                        //           teamBLogo: threeCollections[index]
-                        //                   .awayTeamLogo ??
-                        //               'images/mainpage/sampleLogo.png',
-                        //           teamBScore: threeCollections[index]
-                        //               .awayTeamScore
-                        //               .toString(),
-                        //           isSaved: threeCollections[index]
-                        //                   .hasCollected ??
-                        //               true,
-                        //         ),
-                        //       );
-                        //     },
-                        //   ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            AppLocalizations.of(context)!.streaming,
-                            style: tMain,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10 * fem,
-                        ),
-                        if (isLiveLoading) ...{
-                          Column(
-                            children: [
-                              const Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  LoadingLiveSquareDisplayBlock(),
-                                  LoadingLiveSquareDisplayBlock(),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 14 * fem,
-                              ),
-                              const Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  LoadingLiveSquareDisplayBlock(),
-                                  LoadingLiveSquareDisplayBlock()
-                                ],
-                              )
-                            ],
-                          )
-                        } else
-                          for (int i = 0; i < liveStreamLength; i += 2)
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                for (int j = i;
-                                    j < i + 2 && j < liveStreamLength;
-                                    j++)
-                                  InkWell(
-                                    onTap: () {
-                                      if (!isLogin) {
-                                        showModalBottomSheet(
-                                            context: context,
-                                            isScrollControlled: true,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.vertical(
-                                                        top: Radius.circular(
-                                                            20))),
-                                            builder: (context) {
-                                              return LoginAlertDialog();
-                                            });
-                                      } else {
-                                        LiveStreamChatRoom page = LiveStreamChatRoom(
-                                            userLoginId: userModel.id.value,
-                                            avChatRoomId:
-                                                "panda${basketballLiveStreamList[j].userId}",
-                                            anchor: basketballLiveStreamList[j]
-                                                    .nickName ??
-                                                "",
-                                            streamTitle:
-                                                basketballLiveStreamList[j]
-                                                        .title ??
-                                                    "",
-                                            anchorPic: basketballLiveStreamList![
-                                                        j]
-                                                    .avatar ??
-                                                "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
-                                            playMode: V2TXLivePlayMode
-                                                .v2TXLivePlayModeLeb,
-                                            liveURL:
-                                                "rtmp://play.mindark.cloud/live/" +
-                                                    getStreamURL(
-                                                        basketballLiveStreamList![
-                                                                j]
-                                                            .pushCode));
-
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => page));
-                                      }
-                                    },
-                                    child: LiveSquareBlock(
-                                      title:
-                                          basketballLiveStreamList[j].title ??
-                                              "",
-                                      anchor: basketballLiveStreamList[j]
-                                              .nickName ??
-                                          "",
-                                      anchorPhoto: basketballLiveStreamList![j]
-                                              .avatar ??
-                                          "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
-                                      livePhoto: basketballLiveStreamList![j]
-                                              .cover ??
-                                          "https://images.chinatimes.com/newsphoto/2022-05-05/656/20220505001628.jpg",
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: List.generate(
+                                statusList.length,
+                                (index) => Container(
+                                      height: 28 * fem,
+                                      padding: EdgeInsets.only(right: 25 * fem),
+                                      child: InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            statusId = index;
+                                          });
+                                        },
+                                        child: Text(
+                                          statusList[index],
+                                          textAlign: TextAlign.center,
+                                          style: (statusId == index)
+                                              ? tSelectedTitleText
+                                              : tUnselectedTitleText,
+                                        ),
+                                      ),
+                                    ))),
+                        (statusId == 0)
+                            ? (isLiveLoading)
+                                ? Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 15 * fem),
+                                    child: Column(
+                                      children: [
+                                        const Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            LoadingLiveSquareDisplayBlock(),
+                                            LoadingLiveSquareDisplayBlock(),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 14 * fem,
+                                        ),
+                                        const Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            LoadingLiveSquareDisplayBlock(),
+                                            LoadingLiveSquareDisplayBlock()
+                                          ],
+                                        )
+                                      ],
                                     ),
                                   )
-                              ],
-                            )
+                                : Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 15 * fem),
+                                    child: Column(
+                                      children: List.generate(
+                                          (liveStreamLength / 2).ceil(),
+                                          (index) {
+                                        int startIndex = index * 2;
+                                        return Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            for (int j = startIndex;
+                                                j < startIndex + 2 &&
+                                                    j < liveStreamLength;
+                                                j++)
+                                              InkWell(
+                                                onTap: () {
+                                                  if (!isLogin) {
+                                                    showModalBottomSheet(
+                                                        context: context,
+                                                        isScrollControlled:
+                                                            true,
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius.vertical(
+                                                                    top: Radius
+                                                                        .circular(
+                                                                            20))),
+                                                        builder: (context) {
+                                                          return LoginAlertDialog();
+                                                        });
+                                                  } else {
+                                                    LiveStreamChatRoom page = LiveStreamChatRoom(
+                                                        userLoginId: userModel
+                                                            .id.value,
+                                                        avChatRoomId:
+                                                            "panda${basketballLiveStreamList[j].userId}",
+                                                        anchor:
+                                                            basketballLiveStreamList[
+                                                                        j]
+                                                                    .nickName ??
+                                                                "",
+                                                        streamTitle:
+                                                            basketballLiveStreamList[
+                                                                        j]
+                                                                    .title ??
+                                                                "",
+                                                        anchorPic:
+                                                            basketballLiveStreamList![j]
+                                                                    .avatar ??
+                                                                "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
+                                                        playMode: V2TXLivePlayMode
+                                                            .v2TXLivePlayModeLeb,
+                                                        liveURL: "rtmp://play.mindark.cloud/live/" +
+                                                            getStreamURL(
+                                                                basketballLiveStreamList![j]
+                                                                    .pushCode));
+
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder:
+                                                                (context) =>
+                                                                    page));
+                                                  }
+                                                },
+                                                child: LiveSquareBlock(
+                                                  title:
+                                                      basketballLiveStreamList[
+                                                                  j]
+                                                              .title ??
+                                                          "",
+                                                  anchor:
+                                                      basketballLiveStreamList[
+                                                                  j]
+                                                              .nickName ??
+                                                          "",
+                                                  anchorPhoto:
+                                                      basketballLiveStreamList![
+                                                                  j]
+                                                              .avatar ??
+                                                          "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
+                                                  livePhoto:
+                                                      basketballLiveStreamList![
+                                                                  j]
+                                                              .cover ??
+                                                          "https://images.chinatimes.com/newsphoto/2022-05-05/656/20220505001628.jpg",
+                                                ),
+                                              )
+                                          ],
+                                        );
+                                      }),
+                                    ),
+                                  )
+                            : Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.symmetric(
+                                        // horizontal: 15 * fem,
+                                        vertical: 10 * fem),
+                                    child: SelectionButtonTextComponent(
+                                        index: followStatusId,
+                                        selectionList: followStatusList,
+                                        isMainPage: false,
+                                        onTap: (index) {
+                                          setState(() {
+                                            followStatusId = index;
+                                          });
+                                        }),
+                                  ),
+                                  Column(
+                                    children: List.generate(
+                                        30,
+                                        (index) => FollowingBlockComponent(
+                                            isStreaming: false,
+                                            streamTitle:
+                                                "",
+                                            anchorName:
+                                                "KIkoooooooooooooooooooooooooooooo",
+                                            anchorPic:
+                                                "https://i.ytimg.com/vi/xvQk-qV1070/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCHK8qn2BR3DrfXETOUGrmen3kNlw")),
+                                  )
+                                ],
+                              )
                       ],
                     ),
                   ),

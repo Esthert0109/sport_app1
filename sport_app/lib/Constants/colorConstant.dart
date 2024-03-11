@@ -28,6 +28,7 @@ const kComponentSelectedStatusColor = Color(0xff16B13B);
 const tableMainColor = Color.fromARGB(255, 236, 236, 236);
 const kUnactivePaginationColor = Color(0xffD8E9D8);
 const kActivePaginationColor = Color(0xff16B13B);
+const kFollowButtonColor = Color(0xffEBEBEB);
 
 //danmaku button
 const kButtonOnColor = Color.fromARGB(255, 216, 216, 216);

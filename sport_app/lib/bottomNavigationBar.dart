@@ -15,6 +15,8 @@ import 'Pages/FootballPages/MainPage/footballMainPage.dart';
 import 'Pages/MyPages/myPage.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'Pages/MyPages/myPage2.dart';
+
 class BottomNaviBar extends StatefulWidget {
   const BottomNaviBar({super.key});
 
@@ -44,7 +46,7 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
     const BasketballLivePage(),
     const NewsPage(),
     // const BasketballInfoPage(),
-    const MyPage(),
+    const ProfilePage(),
   ];
 
   @override

@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:sport_app/Component/Common/selectionButtonText.dart';
 
 import '../../../Component/News/pinNewsComponent.dart';
 import '../../../Constants/Controller/layoutController.dart';
@@ -224,36 +225,15 @@ class _NewsPageState extends State<NewsPage> {
                       Container(
                         margin: EdgeInsets.symmetric(
                             horizontal: 20 * fem, vertical: 10 * fem),
-                        // color: greenColor,
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: List.generate(
-                                tagLength,
-                                (index) => Container(
-                                      height: 25 * fem,
-                                      padding: EdgeInsets.only(right: 20 * fem),
-                                      child: InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            tagId = index;
-                                          });
-                                        },
-                                        child: Center(
-                                          child: Text(
-                                            tagList[index],
-                                            textAlign: TextAlign.center,
-                                            style: (tagId == index)
-                                                ? tSelectedTagTitle
-                                                : tUnselectedTagTitle,
-                                          ),
-                                        ),
-                                      ),
-                                    )),
-                          ),
-                        ),
+                        child: SelectionButtonTextComponent(
+                            index: tagId,
+                            selectionList: tagList,
+                            isMainPage: false,
+                            onTap: (index) {
+                              setState(() {
+                                tagId = index;
+                              });
+                            }),
                       ),
                       Container(
                         margin: EdgeInsets.fromLTRB(

@@ -230,7 +230,9 @@ class _LoginState extends State<Login> {
                                   passwordController.text);
                               print(
                                   "check token saved: ${SharedPreferencesUtils.getSavedToken().toString()}");
+
                               Navigator.of(context).pop();
+                              userModel.isLogin.value = true;
                               Get.off(() => const BottomNaviBar());
                             } else {
                               Navigator.of(context).pop();

@@ -111,6 +111,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     //     builder: (context) {
                     //       return TagDialog();
                     //     });
+                    userModel.isLogin.value = false;
                     Get.off(() => const BottomNaviBar());
                   },
                   child: Text(

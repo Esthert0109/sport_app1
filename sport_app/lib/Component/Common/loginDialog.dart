@@ -10,6 +10,7 @@ import '../../Constants/colorConstant.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../Constants/textConstant.dart';
+import '../../Model/userDataModel.dart';
 import '../../Pages/AuthenticationPages/forgotPassword.dart';
 import '../../Provider/userProvider.dart';
 import '../../Services/Utils/sharedPreferencesUtils.dart';
@@ -43,6 +44,9 @@ class _LoginAlertDialogState extends State<LoginAlertDialog> {
 
   // provider
   UserProvider provider = UserProvider();
+
+  // get user info
+  UserDataModel userModel = Get.find<UserDataModel>();
 
   void checkContactNumber() {
     setState(() {
@@ -163,7 +167,7 @@ class _LoginAlertDialogState extends State<LoginAlertDialog> {
                               )),
                         ),
                       ),
-                      style: TextStyle(color: kMainTitleColor),
+                      style: const TextStyle(color: kMainTitleColor),
                       obscureText: _isHidden,
                     ),
                   ),
@@ -207,6 +211,7 @@ class _LoginAlertDialogState extends State<LoginAlertDialog> {
                                   print(
                                       "check token saved: ${SharedPreferencesUtils.getSavedToken().toString()}");
                                   Navigator.of(context).pop();
+                                  userModel.isLogin.value = true;
                                   Get.off(() => const BottomNaviBar());
                                 } else {
                                   Navigator.of(context).pop();
@@ -232,11 +237,7 @@ class _LoginAlertDialogState extends State<LoginAlertDialog> {
                           foregroundColor: kMainGreenColor,
                         ),
                         onPressed: () {
-                          showModalBottomSheet(
-                              context: context,
-                              builder: (context) {
-                                return LoginAlertDialog();
-                              });
+                          Navigator.pop(context);
                         },
                         child: Text(
                           AppLocalizations.of(context)!.maybeLater,

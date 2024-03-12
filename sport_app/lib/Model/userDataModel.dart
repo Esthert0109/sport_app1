@@ -9,6 +9,7 @@ class UserDataModel extends GetxController {
   var isFootball = true.obs; //保存token,名字与号码
   var isCN = true.obs;
   var currentname = "zh".obs;
+  var isLogin = true.obs;
 
   void saveNameAndContact(
       String newtoken, String newName, String newId, String newPicture) {

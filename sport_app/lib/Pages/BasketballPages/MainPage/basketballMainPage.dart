@@ -494,8 +494,12 @@ class _BasketballMainPageState extends State<BasketballMainPage>
       AppLocalizations.of(context)!.collection
     ];
 
-    // statusList
-    // List<String> statusList = ["全部", "进行中", "赛程", "赛果", "收藏"];
+    List<String> statusListNoLogin = [
+      AppLocalizations.of(context)!.all,
+      AppLocalizations.of(context)!.started,
+      AppLocalizations.of(context)!.yet,
+      AppLocalizations.of(context)!.end
+    ];
 
     List<DateTime> futureDateList = generateFutureDates(7);
     List<DateTime> pastDateList = generatePastDates(7);
@@ -847,18 +851,36 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                             //   },
                             // ),
 
-                            Container(
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: 15 * fem, vertical: 10 * fem),
-                              child: SelectionButtonTextComponent(
-                                  index: statusId,
-                                  selectionList: statusList,
-                                  isMainPage: true,
-                                  onTap: (index) {
-                                    setState(() {
-                                      statusId = index;
-                                    });
-                                  }),
+                            Obx(
+                              () => userModel.isLogin.value
+                                  ? Container(
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 15 * fem,
+                                          vertical: 10 * fem),
+                                      child: SelectionButtonTextComponent(
+                                          index: statusId,
+                                          selectionList: statusList,
+                                          isMainPage: true,
+                                          onTap: (index) {
+                                            setState(() {
+                                              statusId = index;
+                                            });
+                                          }),
+                                    )
+                                  : Container(
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 15 * fem,
+                                          vertical: 10 * fem),
+                                      child: SelectionButtonTextComponent(
+                                          index: statusId,
+                                          selectionList: statusListNoLogin,
+                                          isMainPage: true,
+                                          onTap: (index) {
+                                            setState(() {
+                                              statusId = index;
+                                            });
+                                          }),
+                                    ),
                             ),
 
                             (statusId == 1)

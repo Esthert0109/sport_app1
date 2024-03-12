@@ -45,6 +45,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
     if (token.isEmptyOrNull) {
       isLogin = false;
+      print("check login: ${isLogin}");
+    } else {
+      isLogin = true;
     }
   }
 
@@ -62,6 +65,8 @@ class _ProfilePageState extends State<ProfilePage> {
         statusBarIconBrightness: Brightness.light,
       ),
     );
+
+    checkLogin();
 
     // set standard
     double baseWidth = 375;
@@ -83,28 +88,32 @@ class _ProfilePageState extends State<ProfilePage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: isLogin
-                            ? Image(
-                                image: const NetworkImage(
-                                    "https://cc.tvbs.com.tw/img/upload/2022/05/20/20220520170357-1298d211.jpg"),
-                                fit: BoxFit.cover,
-                                height: 60 * fem,
-                                width: 60 * fem,
-                              )
-                            : Image(
-                                image: const AssetImage(
-                                    "images/myPage/profilePic.png"),
-                                fit: BoxFit.cover,
-                                height: 60 * fem,
-                                width: 60 * fem,
-                              )),
-                    Container(
+                    Obx(
+                      () => ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: userModel.isLogin.value
+                              ? Image(
+                                  image: NetworkImage(
+                                      userModel.profilePicture.value),
+                                  fit: BoxFit.cover,
+                                  height: 60 * fem,
+                                  width: 60 * fem,
+                                )
+                              : Image(
+                                  image: const NetworkImage(
+                                      "https://cc.tvbs.com.tw/img/upload/2022/05/20/20220520170357-1298d211.jpg"
+                                      // "images/myPage/profilePic.png"
+                                      ),
+                                  fit: BoxFit.cover,
+                                  height: 60 * fem,
+                                  width: 60 * fem,
+                                )),
+                    ),
+                    Obx(() => Container(
                         width: 250 * fem,
                         margin: EdgeInsets.symmetric(horizontal: 10 * fem),
                         padding: EdgeInsets.symmetric(horizontal: 10 * fem),
-                        child: isLogin
+                        child: userModel.isLogin.value
                             ? Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,8 +125,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                     children: [
                                       Container(
                                           width: 200 * fem,
-                                          child: const Text(
-                                            "你猜你猜你猜 你猜你猜你猜 你猜你猜你猜",
+                                          child: Text(
+                                            userModel.userName.value,
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 1,
                                             style: tUsername,
@@ -138,8 +147,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                       )
                                     ],
                                   ),
-                                  const Text(
-                                    "0123456789",
+                                  Text(
+                                    userModel.id.value,
                                     style: tPhoneNo,
                                   ),
                                 ],
@@ -164,7 +173,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         });
                                   },
                                 ),
-                              ))
+                              )))
                   ],
                 ),
               ),
@@ -252,8 +261,18 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: InkWell(
                         onTap: () {
                           print("navi to system message");
-                          Get.to(() => SystemMessagePage(),
-                              transition: Transition.fadeIn);
+                          userModel.isLogin.value
+                              ? Get.to(() => SystemMessagePage(),
+                                  transition: Transition.fadeIn)
+                              : showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(20))),
+                                  builder: (context) {
+                                    return LoginAlertDialog();
+                                  });
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -426,37 +445,43 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-              GestureDetector(
-                child: Padding(
-                  padding: const EdgeInsets.all(50),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        children: [
-                          RoundedLoadingButton(
-                            color: Colors.white,
-                            valueColor: kMainGreenColor,
-                            width: 150,
-                            height: 40,
-                            elevation: 0,
-                            child: Text(AppLocalizations.of(context)!.logout,
-                                style: TextStyle(color: kMainGreyColor)),
-                            controller: btnController,
-                            onPressed: () {
-                              SharedPreferencesUtils.clearSharedPreferences();
+              Obx(() => userModel.isLogin.value
+                  ? GestureDetector(
+                      child: Padding(
+                        padding: const EdgeInsets.all(50),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Column(
+                              children: [
+                                RoundedLoadingButton(
+                                  color: Colors.white,
+                                  valueColor: kMainGreenColor,
+                                  width: 150,
+                                  height: 40,
+                                  elevation: 0,
+                                  child: Text(
+                                      AppLocalizations.of(context)!.logout,
+                                      style: TextStyle(color: kMainGreyColor)),
+                                  controller: btnController,
+                                  onPressed: () {
+                                    SharedPreferencesUtils
+                                        .clearSharedPreferences();
+                                    userModel.isLogin.value = false;
 
-                              Future.delayed(Duration(seconds: 2), () async {
-                                Get.offAllNamed('/auth');
-                              });
-                            },
-                          )
-                        ],
+                                    Future.delayed(Duration(seconds: 2),
+                                        () async {
+                                      Get.offAllNamed('/auth');
+                                    });
+                                  },
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
+                    )
+                  : const SizedBox())
             ],
           ),
         ),

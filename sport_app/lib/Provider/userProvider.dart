@@ -52,6 +52,10 @@ class UserProvider extends ChangeNotifier {
       //if the request of creating user success, sending request to get OTP
       if (code == '0') {
         print("success");
+
+        userModel.userName.value = userNickname;
+        userModel.id.value = phoneWithoutPlus;
+        userModel.password.value = encryptedPassword;
       } else {
         if (response['code'] == '500215') {
           responseMsg = '手机号码已存在账号';
@@ -115,6 +119,7 @@ class UserProvider extends ChangeNotifier {
         String? username = parsedData['username'];
 
         userModel.saveNameAndContact(token!, username!, mobile!, head!);
+        userModel.isLogin.value = true;
 
         // Print the extracted values
         print('head: $head');
@@ -295,6 +300,7 @@ class UserProvider extends ChangeNotifier {
 
       if (code == '0') {
         print("nickname upload to database successful");
+        userModel.userName.value = nickname;
         return true;
       } else {
         print("nickname upload to database unsuccessful: $code");

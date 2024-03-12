@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:card_loading/card_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -9,13 +8,11 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/Component/LivePage/followingBlockComponent.dart';
 import 'package:sport_app/Provider/liveStreamProvider.dart';
 import 'package:sport_app/Services/Utils/sharedPreferencesUtils.dart';
-import 'package:text_scroll/text_scroll.dart';
 
 import '../../../Component/Common/liveSquareBlock.dart';
 import '../../../Component/Common/loginDialog.dart';
 import '../../../Component/Common/selectionButtonText.dart';
 import '../../../Component/Loading/loadingLiveDisplayBlock.dart';
-import '../../../Component/MainPage/gameDisplayComponent.dart';
 import '../../../Component/Tencent/liveStreamPlayer.dart';
 import '../../../Constants/Controller/layoutController.dart';
 import '../../../Constants/colorConstant.dart';
@@ -24,12 +21,9 @@ import '../../../Model/collectionModel.dart';
 import '../../../Model/liveStreamModel.dart';
 import '../../../Model/userDataModel.dart';
 import '../../../Provider/collectionProvider.dart';
-import '../../MyPages/savedLive.dart';
 import '../../SearchPage/searchingPage.dart';
 import '../../TencentLiveStreamRoom/liveStreamChatRoom.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../basketballTournamentDetails.dart';
 
 class BasketballLivePage extends StatefulWidget {
   const BasketballLivePage({super.key});
@@ -81,6 +75,8 @@ class _BasketballLivePageState extends State<BasketballLivePage>
 
     if (token.isEmptyOrNull) {
       isLogin = false;
+    } else {
+      isLogin = true;
     }
   }
 
@@ -206,10 +202,14 @@ class _BasketballLivePageState extends State<BasketballLivePage>
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
 
+    checkLogin();
+
     List<String> statusList = [
       AppLocalizations.of(context)!.streaming,
       AppLocalizations.of(context)!.following
     ];
+
+    List<String> statusListNoLogin = [AppLocalizations.of(context)!.streaming];
 
     List<String> followStatusList = [
       AppLocalizations.of(context)!.defaultSort,
@@ -331,187 +331,217 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                   child: Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: 16 * fem, vertical: 10 * fem),
-                    child: Column(
-                      children: [
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: List.generate(
-                                statusList.length,
-                                (index) => Container(
-                                      height: 28 * fem,
-                                      padding: EdgeInsets.only(right: 25 * fem),
-                                      child: InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            statusId = index;
-                                          });
-                                        },
-                                        child: Text(
-                                          statusList[index],
-                                          textAlign: TextAlign.center,
-                                          style: (statusId == index)
-                                              ? tSelectedTitleText
-                                              : tUnselectedTitleText,
-                                        ),
+                    child: Obx(
+                      () => Column(
+                        children: [
+                          userModel.isLogin.value
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: List.generate(
+                                      statusList.length,
+                                      (index) => Container(
+                                            height: 28 * fem,
+                                            padding: EdgeInsets.only(
+                                                right: 25 * fem),
+                                            child: InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  statusId = index;
+                                                });
+                                              },
+                                              child: Text(
+                                                statusList[index],
+                                                textAlign: TextAlign.center,
+                                                style: (statusId == index)
+                                                    ? tSelectedTitleText
+                                                    : tUnselectedTitleText,
+                                              ),
+                                            ),
+                                          )))
+                              : Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: List.generate(
+                                      statusListNoLogin.length,
+                                      (index) => Container(
+                                            height: 28 * fem,
+                                            padding: EdgeInsets.only(
+                                                right: 25 * fem),
+                                            child: InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  statusId = index;
+                                                });
+                                              },
+                                              child: Text(
+                                                statusListNoLogin[index],
+                                                textAlign: TextAlign.center,
+                                                style: (statusId == index)
+                                                    ? tSelectedTitleText
+                                                    : tUnselectedTitleText,
+                                              ),
+                                            ),
+                                          ))),
+                          (statusId == 0)
+                              ? (isLiveLoading)
+                                  ? Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 15 * fem),
+                                      child: Column(
+                                        children: [
+                                          const Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              LoadingLiveSquareDisplayBlock(),
+                                              LoadingLiveSquareDisplayBlock(),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 14 * fem,
+                                          ),
+                                          const Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              LoadingLiveSquareDisplayBlock(),
+                                              LoadingLiveSquareDisplayBlock()
+                                            ],
+                                          )
+                                        ],
                                       ),
-                                    ))),
-                        (statusId == 0)
-                            ? (isLiveLoading)
-                                ? Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 15 * fem),
-                                    child: Column(
-                                      children: [
-                                        const Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            LoadingLiveSquareDisplayBlock(),
-                                            LoadingLiveSquareDisplayBlock(),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 14 * fem,
-                                        ),
-                                        const Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            LoadingLiveSquareDisplayBlock(),
-                                            LoadingLiveSquareDisplayBlock()
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                : Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 15 * fem),
-                                    child: Column(
-                                      children: List.generate(
-                                          (liveStreamLength / 2).ceil(),
-                                          (index) {
-                                        int startIndex = index * 2;
-                                        return Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            for (int j = startIndex;
-                                                j < startIndex + 2 &&
-                                                    j < liveStreamLength;
-                                                j++)
-                                              InkWell(
-                                                onTap: () {
-                                                  if (!isLogin) {
-                                                    showModalBottomSheet(
-                                                        context: context,
-                                                        isScrollControlled:
-                                                            true,
-                                                        shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius.vertical(
-                                                                    top: Radius
-                                                                        .circular(
-                                                                            20))),
-                                                        builder: (context) {
-                                                          return LoginAlertDialog();
-                                                        });
-                                                  } else {
-                                                    LiveStreamChatRoom page = LiveStreamChatRoom(
-                                                        userLoginId: userModel
-                                                            .id.value,
-                                                        avChatRoomId:
-                                                            "panda${basketballLiveStreamList[j].userId}",
-                                                        anchor:
-                                                            basketballLiveStreamList[
-                                                                        j]
-                                                                    .nickName ??
-                                                                "",
-                                                        streamTitle:
-                                                            basketballLiveStreamList[
-                                                                        j]
-                                                                    .title ??
-                                                                "",
-                                                        anchorPic:
-                                                            basketballLiveStreamList![j]
-                                                                    .avatar ??
-                                                                "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
-                                                        playMode: V2TXLivePlayMode
-                                                            .v2TXLivePlayModeLeb,
-                                                        liveURL: "rtmp://play.mindark.cloud/live/" +
-                                                            getStreamURL(
-                                                                basketballLiveStreamList![j]
-                                                                    .pushCode));
+                                    )
+                                  : Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 15 * fem),
+                                      child: Column(
+                                        children: List.generate(
+                                            (liveStreamLength / 2).ceil(),
+                                            (index) {
+                                          int startIndex = index * 2;
+                                          return Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              for (int j = startIndex;
+                                                  j < startIndex + 2 &&
+                                                      j < liveStreamLength;
+                                                  j++)
+                                                InkWell(
+                                                  onTap: () {
+                                                    if (!isLogin) {
+                                                      showModalBottomSheet(
+                                                          context: context,
+                                                          isScrollControlled:
+                                                              true,
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius.vertical(
+                                                                      top: Radius
+                                                                          .circular(
+                                                                              20))),
+                                                          builder: (context) {
+                                                            return LoginAlertDialog();
+                                                          });
+                                                    } else {
+                                                      LiveStreamChatRoom page = LiveStreamChatRoom(
+                                                          userLoginId: userModel
+                                                              .id.value,
+                                                          avChatRoomId:
+                                                              "panda${basketballLiveStreamList[j].userId}",
+                                                          anchor:
+                                                              basketballLiveStreamList[
+                                                                          j]
+                                                                      .nickName ??
+                                                                  "",
+                                                          streamTitle:
+                                                              basketballLiveStreamList[
+                                                                          j]
+                                                                      .title ??
+                                                                  "",
+                                                          anchorPic:
+                                                              basketballLiveStreamList![
+                                                                          j]
+                                                                      .avatar ??
+                                                                  "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
+                                                          playMode: V2TXLivePlayMode
+                                                              .v2TXLivePlayModeLeb,
+                                                          liveURL: "rtmp://play.mindark.cloud/live/" +
+                                                              getStreamURL(
+                                                                  basketballLiveStreamList![j]
+                                                                      .pushCode));
 
-                                                    Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder:
-                                                                (context) =>
-                                                                    page));
-                                                  }
-                                                },
-                                                child: LiveSquareBlock(
-                                                  title:
-                                                      basketballLiveStreamList[
-                                                                  j]
-                                                              .title ??
-                                                          "",
-                                                  anchor:
-                                                      basketballLiveStreamList[
-                                                                  j]
-                                                              .nickName ??
-                                                          "",
-                                                  anchorPhoto:
-                                                      basketballLiveStreamList![
-                                                                  j]
-                                                              .avatar ??
-                                                          "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
-                                                  livePhoto:
-                                                      basketballLiveStreamList![
-                                                                  j]
-                                                              .cover ??
-                                                          "https://images.chinatimes.com/newsphoto/2022-05-05/656/20220505001628.jpg",
-                                                ),
-                                              )
-                                          ],
-                                        );
-                                      }),
-                                    ),
-                                  )
-                            : Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.symmetric(
-                                        // horizontal: 15 * fem,
-                                        vertical: 10 * fem),
-                                    child: SelectionButtonTextComponent(
-                                        index: followStatusId,
-                                        selectionList: followStatusList,
-                                        isMainPage: false,
-                                        onTap: (index) {
-                                          setState(() {
-                                            followStatusId = index;
-                                          });
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder:
+                                                                  (context) =>
+                                                                      page));
+                                                    }
+                                                  },
+                                                  child: LiveSquareBlock(
+                                                    title:
+                                                        basketballLiveStreamList[
+                                                                    j]
+                                                                .title ??
+                                                            "",
+                                                    anchor:
+                                                        basketballLiveStreamList[
+                                                                    j]
+                                                                .nickName ??
+                                                            "",
+                                                    anchorPhoto:
+                                                        basketballLiveStreamList![
+                                                                    j]
+                                                                .avatar ??
+                                                            "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
+                                                    livePhoto:
+                                                        basketballLiveStreamList![
+                                                                    j]
+                                                                .cover ??
+                                                            "https://images.chinatimes.com/newsphoto/2022-05-05/656/20220505001628.jpg",
+                                                  ),
+                                                )
+                                            ],
+                                          );
                                         }),
-                                  ),
-                                  Column(
-                                    children: List.generate(
-                                        30,
-                                        (index) => FollowingBlockComponent(
-                                            isStreaming: false,
-                                            streamTitle: "",
-                                            anchorName:
-                                                "KIkoooooooooooooooooooooooooooooo",
-                                            anchorPic:
-                                                "https://i.ytimg.com/vi/xvQk-qV1070/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCHK8qn2BR3DrfXETOUGrmen3kNlw")),
-                                  )
-                                ],
-                              )
-                      ],
+                                      ),
+                                    )
+                              : Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                          // horizontal: 15 * fem,
+                                          vertical: 10 * fem),
+                                      child: SelectionButtonTextComponent(
+                                          index: followStatusId,
+                                          selectionList: followStatusList,
+                                          isMainPage: false,
+                                          onTap: (index) {
+                                            setState(() {
+                                              followStatusId = index;
+                                            });
+                                          }),
+                                    ),
+                                    Column(
+                                      children: List.generate(
+                                          30,
+                                          (index) => FollowingBlockComponent(
+                                              isStreaming: false,
+                                              streamTitle: "",
+                                              anchorName:
+                                                  "KIkoooooooooooooooooooooooooooooo",
+                                              anchorPic:
+                                                  "https://i.ytimg.com/vi/xvQk-qV1070/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCHK8qn2BR3DrfXETOUGrmen3kNlw")),
+                                    )
+                                  ],
+                                )
+                        ],
+                      ),
                     ),
                   ),
                 ),

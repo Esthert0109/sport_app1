@@ -22,7 +22,7 @@ class EditUserNickname extends StatefulWidget {
 class _EditUserNicknameState extends State<EditUserNickname> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _userNameController = TextEditingController();
-  FocusNode _nameFocusNode = FocusNode();
+  final FocusNode _nameFocusNode = FocusNode();
   String _responseMsg = '';
 
   UserProvider provider = UserProvider();

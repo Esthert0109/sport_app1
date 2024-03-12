@@ -13,6 +13,7 @@ import '../../Component/Common/widthButton.dart';
 import '../../Constants/colorConstant.dart';
 import '../../Model/userDataModel.dart';
 import '../../Provider/userProvider.dart';
+import 'editPassword.dart';
 import 'otpVerification.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -158,8 +159,8 @@ class _ForgotPassState extends State<ForgotPass> {
                             validateForm();
                             if (_isFilled) {
                               // HERE PUT send OTP Function
-                              String successOTP =
-                                  await provider.getOTP(phone, '3');
+                              String successOTP = "0";
+                              await provider.getOTP(phone, '3');
 
                               if (successOTP == '500313') {
                                 openSnackbar(
@@ -180,6 +181,10 @@ class _ForgotPassState extends State<ForgotPass> {
                                       password: '',
                                       userNickname: '',
                                     ));
+                                // Get.to(() => EditPassword(
+                                //       isLogin: false,
+                                //       phoneNumber: "60127659785",
+                                //     ));
                               }
                             } else {
                               setState(() {

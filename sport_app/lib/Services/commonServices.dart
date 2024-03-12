@@ -108,13 +108,14 @@ class CommonServices {
 
   Future<Map<String, dynamic>> patchRequest(
       String url, Map<String, dynamic> data) async {
+    print("check data pass: ${json.encode(data)}");
     try {
       final response = await http.patch(
         Uri.parse(url),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },
-        body: jsonEncode(data),
+        body: json.encode(data),
       );
 
       if (response.statusCode == 200) {

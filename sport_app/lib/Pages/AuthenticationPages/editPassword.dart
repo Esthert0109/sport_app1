@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sport_app/Pages/OnboardingPages/onboarding.dart';
 
 import '../../Component/Common/errorText.dart';
 import '../../Component/Common/headingText.dart';
@@ -322,7 +323,8 @@ class _EditPasswordState extends State<EditPassword> {
                                                   .noInternet,
                                               kComponentErrorTextColor);
                                         } else {
-                                          Navigator.of(context).pop();
+                                          // Navigator.of(context).pop();
+                                          Get.offAll(OnboardingPage());
                                           setState(() {
                                             isSuccess = true;
                                             openSnackbar(

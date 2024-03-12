@@ -94,6 +94,7 @@ class _editProfileState extends State<EditProfile> {
     String profilePicture = 'images/common/pandalogo.png';
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
+    userPhone = userModel.id.value;
 
     return Scaffold(
       backgroundColor: kMainBackgroundColor,

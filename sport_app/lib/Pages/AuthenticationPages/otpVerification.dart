@@ -138,7 +138,7 @@ class _OTPVerificationState extends State<OTPVerification> {
           child: Container(
             height: 100 * fem,
             width: 100 * fem,
-            child: SvgPicture.asset('images/Successmark.svg'),
+            child: SvgPicture.asset('images/common/Successmark.svg'),
           ),
         )
       ],
@@ -162,7 +162,7 @@ class _OTPVerificationState extends State<OTPVerification> {
                           Get.back();
                         },
                         child: SvgPicture.asset(
-                          'images/Arrow.svg',
+                          'images/common/Arrow.svg',
                           width: 24 * fem,
                           height: 24 * fem,
                         ),
@@ -469,7 +469,7 @@ class _OTPVerificationState extends State<OTPVerification> {
                                             verification = true;
                                           });
                                           await Future.delayed(
-                                              Duration(seconds: 3));
+                                              Duration(seconds: 2));
 
                                           Get.offUntil(
                                             MaterialPageRoute(

@@ -74,7 +74,7 @@ class UserProvider extends ChangeNotifier {
     String encryptedPassword;
 
     encryptedPassword = hashPassword(password);
-    print("$encryptedPassword");
+    print("login: $encryptedPassword");
 
     final Map<String, String> userLoginData = {
       'mobile': phoneNumberWithoutPlus,
@@ -351,6 +351,7 @@ class UserProvider extends ChangeNotifier {
     print("check url: $url & check hash password: $encryptedPassword");
 
     Map<String, dynamic> requestBody = {'password': encryptedPassword};
+    print("check password: ${requestBody}");
 
     try {
       final response = await service.patchRequest(url, requestBody);

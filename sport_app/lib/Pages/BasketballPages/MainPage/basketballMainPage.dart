@@ -15,6 +15,7 @@ import 'package:sport_app/Provider/liveStreamProvider.dart';
 import 'package:tencent_cloud_chat_uikit/tencent_cloud_chat_uikit.dart';
 
 import '../../../Component/Common/loadingScreen.dart';
+import '../../../Component/Common/loginDialog.dart';
 import '../../../Component/Common/snackBar.dart';
 import '../../../Component/Common/statusDateButton.dart';
 import '../../../Component/Loading/emptyResultComponent.dart';
@@ -661,54 +662,19 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                   itemBuilder: (context, index, realIndex) {
                                     return GestureDetector(
                                       onTap: () async {
-                                        showLoadingDialog(context);
+                                        // showLoadingDialog(context);
                                         V2TimValueCallback<int>
                                             userLoginStatusRes =
                                             await TencentImSDKPlugin
                                                 .v2TIMManager
                                                 .getLoginStatus();
-                                        if (userLoginStatusRes.code == 0) {
-                                          int? status = userLoginStatusRes.data;
 
-                                          if (status == 1) {
-                                            LiveStreamChatRoom page = LiveStreamChatRoom(
-                                                userLoginId: userModel.id.value,
-                                                avChatRoomId:
-                                                    "panda${liveStreamList![index].userId}",
-                                                anchor: liveStreamList![index]
-                                                        .nickName ??
-                                                    "",
-                                                streamTitle:
-                                                    liveStreamList![index]
-                                                            .title ??
-                                                        "",
-                                                anchorPic: liveStreamList![
-                                                            index]
-                                                        .avatar ??
-                                                    "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
-                                                playMode: V2TXLivePlayMode
-                                                    .v2TXLivePlayModeLeb,
-                                                liveURL:
-                                                    "rtmp://play.mindark.cloud/live/" +
-                                                        getStreamURL(
-                                                            liveStreamList![
-                                                                    index]
-                                                                .pushCode));
+                                        if (userModel.isLogin.value) {
+                                          if (userLoginStatusRes.code == 0) {
+                                            int? status =
+                                                userLoginStatusRes.data;
 
-                                            Navigator.of(context).pop();
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        page));
-                                          } else if (status == 2) {
-                                            //logined
-                                          } else if (status == 3) {
-                                            bool isChangeNickname =
-                                                await userLogin(
-                                              userModel.id.value,
-                                            );
-                                            if (isChangeNickname) {
+                                            if (status == 1) {
                                               LiveStreamChatRoom page = LiveStreamChatRoom(
                                                   userLoginId: userModel
                                                       .id.value,
@@ -740,15 +706,68 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           page));
+                                            } else if (status == 2) {
+                                              //logined
+                                            } else if (status == 3) {
+                                              bool isChangeNickname =
+                                                  await userLogin(
+                                                userModel.id.value,
+                                              );
+                                              if (isChangeNickname) {
+                                                LiveStreamChatRoom page = LiveStreamChatRoom(
+                                                    userLoginId:
+                                                        userModel.id.value,
+                                                    avChatRoomId:
+                                                        "panda${liveStreamList![index].userId}",
+                                                    anchor: liveStreamList![
+                                                                index]
+                                                            .nickName ??
+                                                        "",
+                                                    streamTitle:
+                                                        liveStreamList![index]
+                                                                .title ??
+                                                            "",
+                                                    anchorPic: liveStreamList![
+                                                                index]
+                                                            .avatar ??
+                                                        "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
+                                                    playMode: V2TXLivePlayMode
+                                                        .v2TXLivePlayModeLeb,
+                                                    liveURL:
+                                                        "rtmp://play.mindark.cloud/live/" +
+                                                            getStreamURL(
+                                                                liveStreamList![
+                                                                        index]
+                                                                    .pushCode));
+
+                                                Navigator.of(context).pop();
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            page));
+                                              }
+                                            } else {
+                                              Navigator.of(context).pop();
+                                              openSnackbar(
+                                                  context,
+                                                  AppLocalizations.of(context)!
+                                                      .noInternet,
+                                                  kComponentErrorTextColor);
                                             }
-                                          } else {
-                                            Navigator.of(context).pop();
-                                            openSnackbar(
-                                                context,
-                                                AppLocalizations.of(context)!
-                                                    .noInternet,
-                                                kComponentErrorTextColor);
                                           }
+                                        } else {
+                                          showModalBottomSheet(
+                                              context: context,
+                                              isScrollControlled: true,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.vertical(
+                                                          top: Radius.circular(
+                                                              20))),
+                                              builder: (context) {
+                                                return LoginAlertDialog();
+                                              });
                                         }
                                       },
                                       child: LiveStreamCarousel(

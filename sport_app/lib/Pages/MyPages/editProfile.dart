@@ -39,7 +39,7 @@ class _editProfileState extends State<EditProfile> {
   void openImagePicker() async {
     XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      showLoadingDialog(context);
+      // showLoadingDialog(context);
       // 选择了图像
       File imageFile = File(image.path);
       bool isFinish = await provider.updateProfilePic(imageFile);

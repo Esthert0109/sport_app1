@@ -44,6 +44,7 @@ class _LoginState extends State<Login> {
   //common variables
   bool _isHidden = true;
   bool _isLoading = false;
+  bool isPandaLoading = false;
   String _responseMsg = "";
   String contactNumber = '';
   String dialCode = '';
@@ -217,7 +218,8 @@ class _LoginState extends State<Login> {
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             // SEND LOGIN REQUEST PUT HERE
-                            showLoadingDialog(context);
+
+                            // showLoadingDialog(context);
 
                             checkContactNumber();
 

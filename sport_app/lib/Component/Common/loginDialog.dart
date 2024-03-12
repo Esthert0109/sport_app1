@@ -40,7 +40,8 @@ class _LoginAlertDialogState extends State<LoginAlertDialog> {
 
   //common variables
   bool _isHidden = true;
-  bool _isLoading = false;
+  final bool _isLoading = false;
+  bool isPandaLoading = false;
 
   // provider
   UserProvider provider = UserProvider();
@@ -197,7 +198,7 @@ class _LoginAlertDialogState extends State<LoginAlertDialog> {
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 // SEND LOGIN REQUEST PUT HERE
-                                showLoadingDialog(context);
+                                // showLoadingDialog(context);
 
                                 checkContactNumber();
 

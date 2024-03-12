@@ -264,7 +264,7 @@ class _RegisterState extends State<Register> {
                       : WidthButton(
                           text: AppLocalizations.of(context)!.reg,
                           onPressed: () async {
-                            showLoadingDialog(context);
+                            // showLoadingDialog(context);
                             if (formKey.currentState!.validate()) {
                               bool passwordsMatch = arePasswordsEqual();
                               if (passwordsMatch) {

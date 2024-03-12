@@ -309,7 +309,7 @@ class _EditPasswordState extends State<EditPassword> {
                                           _passwordController.text;
                                       if (_passwordPattern
                                           .hasMatch(newPassword)) {
-                                        showLoadingDialog(context);
+                                        // showLoadingDialog(context);
                                         bool isChangedPassword =
                                             await provider.updateForgotPassword(
                                                 newPassword,

@@ -7,14 +7,17 @@ import 'package:sport_app/Constants/colorConstant.dart';
 import 'package:sport_app/Model/userDataModel.dart';
 import 'package:sport_app/Pages/MyPages/contactUs.dart';
 import 'package:sport_app/Pages/MyPages/editProfile.dart';
+import 'package:sport_app/Provider/popularGamesProvider.dart';
 
 import '../../Component/Common/loginDialog.dart';
 import '../../Constants/textConstant.dart';
+import '../../Model/popularGameModel.dart';
 import '../../Provider/userProvider.dart';
 import '../../Services/Utils/sharedPreferencesUtils.dart';
 import 'systemMessage.dart';
 import 'systemSetting.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -29,6 +32,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // provider
   UserProvider provider = UserProvider();
+  PopularGameProvider gameProvider = PopularGameProvider();
 
   //controller
   final RoundedLoadingButtonController btnController =
@@ -36,6 +40,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // common variables
   bool isLogin = true;
+  bool isLoading = false;
+  List<PopularGameData> gameList = [];
+  int gameLength = 0;
 
   Future<void> checkLogin() async {
     //get shared preferences
@@ -51,9 +58,26 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  Future<void> getPopularGameList() async {
+    PopularGameModel? model = await gameProvider.getPopularGameList();
+
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+      gameList.addAll(model?.data ?? []);
+      gameLength = gameList.length;
+
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    getPopularGameList();
     checkLogin();
   }
 
@@ -177,74 +201,147 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
               ),
-              Row(
-                children: [
-                  Container(
-                    height: 30 * fem,
-                    padding: EdgeInsets.symmetric(horizontal: 10 * fem),
-                    margin: EdgeInsets.symmetric(horizontal: 15 * fem),
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10), // Adjust as needed
-                        ),
-                        color: kMainComponentColor),
-                    child: Center(
-                        child: Text(
-                      AppLocalizations.of(context)!.popularGames,
-                      style: tHotGames,
-                    )),
-                  ),
-                ],
-              ),
-              Container(
-                  height: 120 * fem,
-                  margin: EdgeInsets.symmetric(horizontal: 15 * fem),
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 20 * fem, vertical: 20 * fem),
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(8), // Adjust as needed
-                        bottomLeft: Radius.circular(8),
-                        bottomRight: Radius.circular(8), // Adjust as needed
-                      ),
-                      color: kMainComponentColor),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: List.generate(
-                          10,
-                          (index) => Container(
-                                margin: EdgeInsets.only(right: 25 * fem),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      height: 50 * fem,
-                                      width: 50 * fem,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: redColor),
-                                    ),
-                                    Container(
-                                      width: 50 * fem,
-                                      margin: EdgeInsets.only(top: 3 * fem),
-                                      child: const Text(
-                                        "游戏名字",
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: tHotsGameName,
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    )
-                                  ],
-                                ),
+              (gameLength == 0)
+                  ? SizedBox()
+                  : Column(
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              height: 30 * fem,
+                              padding:
+                                  EdgeInsets.symmetric(horizontal: 10 * fem),
+                              margin:
+                                  EdgeInsets.symmetric(horizontal: 15 * fem),
+                              decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft:
+                                        Radius.circular(10), // Adjust as needed
+                                  ),
+                                  color: kMainComponentColor),
+                              child: Center(
+                                  child: Text(
+                                AppLocalizations.of(context)!.popularGames,
+                                style: tHotGames,
                               )),
+                            ),
+                          ],
+                        ),
+                        Container(
+                            height: 120 * fem,
+                            margin: EdgeInsets.symmetric(horizontal: 15 * fem),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20 * fem, vertical: 20 * fem),
+                            decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topRight:
+                                      Radius.circular(8), // Adjust as needed
+                                  bottomLeft: Radius.circular(8),
+                                  bottomRight:
+                                      Radius.circular(8), // Adjust as needed
+                                ),
+                                color: kMainComponentColor),
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: isLoading
+                                      ? List.generate(
+                                          10,
+                                          (index) => Container(
+                                                margin: EdgeInsets.only(
+                                                    right: 25 * fem),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      height: 50 * fem,
+                                                      width: 50 * fem,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                          color: grey),
+                                                    ),
+                                                    Container(
+                                                      width: 50 * fem,
+                                                      margin: EdgeInsets.only(
+                                                          top: 3 * fem),
+                                                      child: const Text(
+                                                        "游戏名字",
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: tHotsGameName,
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ))
+                                      : List.generate(
+                                          gameLength,
+                                          (index) => Container(
+                                                margin: EdgeInsets.only(
+                                                    right: 25 * fem),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    InkWell(
+                                                      onTap: () {
+                                                        launchUrl(Uri.parse(
+                                                            gameList[index]
+                                                                .gameAndroidUrl));
+                                                      },
+                                                      child: Container(
+                                                        height: 50 * fem,
+                                                        width: 50 * fem,
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                            color: redColor),
+                                                        child: Image(
+                                                          image: NetworkImage(
+                                                              gameList[index]
+                                                                  .gameLogo),
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      width: 50 * fem,
+                                                      margin: EdgeInsets.only(
+                                                          top: 3 * fem),
+                                                      child: Text(
+                                                        userModel.isCN.value
+                                                            ? gameList[index]
+                                                                .gameNameCn
+                                                            : gameList[index]
+                                                                .gameNameEn,
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: tHotsGameName,
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ))),
+                            )),
+                      ],
                     ),
-                  )),
               Container(
                 margin: EdgeInsets.symmetric(
                     horizontal: 15 * fem, vertical: 20 * fem),

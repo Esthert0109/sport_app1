@@ -2,6 +2,8 @@ class ApiConstants {
   //Base Url for all API
   static const String baseUrl = 'http://103.224.93.197:8080';
 
+  static const String localhost = 'http://localhost:8080';
+
   //Login
   static const String loginBaseUrl = '/api/v1/login';
 
@@ -370,4 +372,7 @@ class ApiConstants {
 
   static const getPopularLiveStreamListUrl = liveStreamBaseUrl +
       getPopularLiveStreamList; // get popular live stream page at home page
+
+  // Popular Games - Ads
+  static const getPopularGameList = '/api/v1/popular-games/getAll';
 }

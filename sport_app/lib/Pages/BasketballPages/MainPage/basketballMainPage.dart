@@ -788,7 +788,6 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                       Container(
                         margin: EdgeInsets.symmetric(
                             horizontal: 10 * fem, vertical: 10 * fem),
-                        // padding: EdgeInsets.symmetric(horizontal: 10 * fem),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.stretch,

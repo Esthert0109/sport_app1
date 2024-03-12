@@ -28,9 +28,7 @@
     "noti": "系统消息",
     "read": "阅读",
     "competition": "赛事",
-    "started": "已开赛",
-    "yet": "未开赛",
-    "end": "已结束",
+    
     "noResult": "搜索为空",
     "history": "历史记录",
     "clear": "清空",
@@ -104,5 +102,16 @@
     "asGuest": "以访客身份继续",
     "loginContinue": "登录后继续浏览",
     "maybeLater": "下次一定",
-    "noAcc": "还没有账号? "
+    "noAcc": "还没有账号? ",
+
+    "all": "全部",
+    "started": "已开赛",
+    "yet": "未开赛",
+    "end": "已结束",
+    "collection": "收藏", 
+    "following": "我的关注",
+    "defaultSort": "综合排序",
+    "descendingSort": "最近关注",
+    "ascendingSort": "最早关注",
+    "popularGames": "热门游戏"
 }

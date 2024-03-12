@@ -147,7 +147,11 @@ class _ProfilePageState extends State<ProfilePage> {
                             : Align(
                                 alignment: Alignment.centerLeft,
                                 child: InkWell(
-                                  child: Text("登录/注册", style: tUsername),
+                                  child: Text(
+                                      AppLocalizations.of(context)!.login +
+                                          "/" +
+                                          AppLocalizations.of(context)!.reg,
+                                      style: tUsername),
                                   onTap: () {
                                     showModalBottomSheet(
                                         context: context,
@@ -168,7 +172,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   Container(
                     height: 30 * fem,
-                    width: 100 * fem,
+                    padding: EdgeInsets.symmetric(horizontal: 10 * fem),
                     margin: EdgeInsets.symmetric(horizontal: 15 * fem),
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
@@ -177,7 +181,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         color: kMainComponentColor),
                     child: Center(
                         child: Text(
-                      "热门游戏",
+                      AppLocalizations.of(context)!.popularGames,
                       style: tHotGames,
                     )),
                   ),
@@ -275,8 +279,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 3 * fem),
                                   alignment: Alignment.centerLeft,
-                                  child: const Text(
-                                    "系统消息",
+                                  child: Text(
+                                    AppLocalizations.of(context)!.noti,
                                     style: tMyPageBtn,
                                   ),
                                 )),
@@ -332,7 +336,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       EdgeInsets.symmetric(horizontal: 3 * fem),
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    "联系我们",
+                                    AppLocalizations.of(context)!.contactUs,
                                     style: tMyPageBtn,
                                   ),
                                 )),
@@ -388,7 +392,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       EdgeInsets.symmetric(horizontal: 3 * fem),
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    "系统消息",
+                                    AppLocalizations.of(context)!.systemSetting,
                                     style: tMyPageBtn,
                                   ),
                                 )),

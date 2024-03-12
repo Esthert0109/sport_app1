@@ -28,9 +28,6 @@
     "noti": "Notification",
     "read": "Read",
     "competition": "Event",
-    "started": "Started",
-    "yet": "On Waiting",
-    "end": "End",
     "noResult": "No result from the search.",
     "history": "Search History",
     "clear": "Clear",
@@ -104,5 +101,15 @@
     "asGuest": "Continue as Guest",
     "loginContinue": "Login to Continue",
     "maybeLater": "Maybe Later",
-    "noAcc": "Not Registered? "
+    "noAcc": "Not Registered? ",
+    "all": "All",
+    "started": "Started",
+    "yet": "On Waiting",
+    "end": "End",
+    "collection": "Collection",
+    "following": "Following",
+    "defaultSort": "Default Sorting",
+    "descendingSort": "Recently Followed",
+    "ascendingSort": "Earliest Followed",
+    "popularGames": "Popular Games"
 }

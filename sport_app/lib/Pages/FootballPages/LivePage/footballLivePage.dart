@@ -53,9 +53,6 @@ class _FootballLivePageState extends State<FootballLivePage>
   int statusId = 0;
   int followStatusId = 0;
 
-  List<String> statusList = ["正在直播", "我的关注"];
-  List<String> followStatusList = ["综合排序", "最近关注", "最早关注"];
-
   //Provider bookmark and live stream
   BookmarkProvider savedBookmarkProvider = BookmarkProvider();
 
@@ -201,6 +198,16 @@ class _FootballLivePageState extends State<FootballLivePage>
     // standard size
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
+
+    List<String> statusList = [
+      AppLocalizations.of(context)!.streaming,
+      AppLocalizations.of(context)!.following
+    ];
+    List<String> followStatusList = [
+      AppLocalizations.of(context)!.defaultSort,
+      AppLocalizations.of(context)!.descendingSort,
+      AppLocalizations.of(context)!.ascendingSort
+    ];
 
     return Scaffold(
       backgroundColor: kMainBackgroundColor,

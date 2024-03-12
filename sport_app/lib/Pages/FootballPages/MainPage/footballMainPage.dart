@@ -487,12 +487,14 @@ class _FootballMainPageState extends State<FootballMainPage>
     double fem = MediaQuery.of(context).size.width / baseWidth;
 
     // status and date
-    // List<String> statusList = [
-    //   AppLocalizations.of(context)!.started,
-    //   AppLocalizations.of(context)!.yet,
-    //   AppLocalizations.of(context)!.end
-    // ];
-    List<String> statusList = ["全部", "进行中", "赛程", "赛果", "收藏"];
+    List<String> statusList = [
+      AppLocalizations.of(context)!.all,
+      AppLocalizations.of(context)!.started,
+      AppLocalizations.of(context)!.yet,
+      AppLocalizations.of(context)!.end,
+      AppLocalizations.of(context)!.collection
+    ];
+    // List<String> statusList = ["全部", "进行中", "赛程", "赛果", "收藏"];
 
     List<DateTime> futureDateList = generateFutureDates(7);
     List<DateTime> pastDateList = generatePastDates(7);

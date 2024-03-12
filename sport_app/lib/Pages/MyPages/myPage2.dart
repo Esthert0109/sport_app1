@@ -566,7 +566,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         .clearSharedPreferences();
                                     userModel.isLogin.value = false;
 
-                                    Future.delayed(Duration(seconds: 2),
+                                    Future.delayed(Duration(seconds: 1),
                                         () async {
                                       Get.offAllNamed('/auth');
                                     });

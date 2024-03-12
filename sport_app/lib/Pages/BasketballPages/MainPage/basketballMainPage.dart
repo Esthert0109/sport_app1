@@ -601,7 +601,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
               isLoading: isLoading,
               onEndOfPage: () {
                 setState(() {
-                  if (statusId == 0) {
+                  if (statusId == 1) {
                     print("started");
                     getStartedEventList();
                   } else {
@@ -900,8 +900,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                           }),
                                     ),
                             ),
-
-                            (statusId == 1)
+                            (statusId == 2)
                                 ? Container(
                                     margin: EdgeInsets.symmetric(
                                         horizontal: 10 * fem),
@@ -917,7 +916,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                       },
                                     ),
                                   )
-                                : (statusId == 2)
+                                : (statusId == 3)
                                     ? Container(
                                         margin: EdgeInsets.symmetric(
                                             horizontal: 10 * fem),
@@ -933,7 +932,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                           },
                                         ),
                                       )
-                                    : SizedBox(),
+                                    : const SizedBox(),
                             (statusId == 0)
                                 ? isEventLoading
                                     ? Column(children: [
@@ -1004,23 +1003,10 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                               );
                                             },
                                           )
-                                : (statusId == 1 && futureDateId == 0)
+                                : (statusId == 1)
                                     ? isEventLoading
                                         ? Column(children: [
-                                            if (future1Length < 4)
-                                              for (int i = 0; i < 4; i++)
-                                                CardLoading(
-                                                  height: 100 * fem,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8 * fem),
-                                                  margin: EdgeInsets.symmetric(
-                                                      horizontal: 10 * fem,
-                                                      vertical: 10 * fem),
-                                                ),
-                                            for (int i = 0;
-                                                i < future1Length;
-                                                i++)
+                                            for (int i = 0; i < 4; i++)
                                               CardLoading(
                                                 height: 100 * fem,
                                                 borderRadius:
@@ -1031,12 +1017,12 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                     vertical: 10 * fem),
                                               ),
                                           ])
-                                        : (future1Length == 0)
+                                        : (startedLength == 0)
                                             ? searchEmptyWidget()
                                             : ListView.builder(
                                                 physics:
                                                     const NeverScrollableScrollPhysics(),
-                                                itemCount: future1Length,
+                                                itemCount: startedLength,
                                                 shrinkWrap: true,
                                                 itemBuilder: (context, index) {
                                                   return GestureDetector(
@@ -1045,52 +1031,52 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                           "navi into tournament");
                                                       BasketballTournamentDetails(
                                                               id:
-                                                                  '${futureList1[index].id}',
+                                                                  '${startedList[index].id}',
                                                               matchDate:
-                                                                  '${futureList1[index].matchDate}',
+                                                                  '${startedList[index].matchDate}',
                                                               matchStatus:
-                                                                  '${futureList1[index].statusStr}',
+                                                                  '${startedList[index].statusStr}',
                                                               matchName:
-                                                                  '${futureList1[index].competitionName}')
+                                                                  '${startedList[index].competitionName}')
                                                           .launch(context);
                                                     },
                                                     child: GameDisplayComponent(
-                                                      id: futureList1[index]
+                                                      id: startedList[index]
                                                               .id ??
                                                           0,
-                                                      competitionType: futureList1[
+                                                      competitionType: startedList[
                                                                   index]
                                                               .competitionName ??
                                                           "",
-                                                      duration: futureList1[
+                                                      duration: startedList[
                                                                   index]
                                                               .matchTimeStr ??
                                                           "00:00",
-                                                      teamAName: futureList1[
+                                                      teamAName: startedList[
                                                                   index]
                                                               .homeTeamName ??
                                                           "",
-                                                      teamALogo: futureList1[
+                                                      teamALogo: startedList[
                                                                   index]
                                                               .homeTeamLogo ??
                                                           'images/mainpage/sampleLogo.png',
                                                       teamAScore:
-                                                          futureList1[index]
+                                                          startedList[index]
                                                               .homeTeamScore
                                                               .toString(),
-                                                      teamBName: futureList1[
+                                                      teamBName: startedList[
                                                                   index]
                                                               .awayTeamName ??
                                                           "",
-                                                      teamBLogo: futureList1[
+                                                      teamBLogo: startedList[
                                                                   index]
                                                               .awayTeamLogo ??
                                                           'images/mainpage/sampleLogo.png',
                                                       teamBScore:
-                                                          futureList1[index]
+                                                          startedList[index]
                                                               .awayTeamScore
                                                               .toString(),
-                                                      isSaved: futureList1[
+                                                      isSaved: startedList[
                                                                   index]
                                                               .hasCollected ??
                                                           false,
@@ -1098,28 +1084,11 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                   );
                                                 },
                                               )
-                                    : (statusId == 1 && futureDateId == 1)
+                                    : (statusId == 2 && futureDateId == 0)
                                         ? isEventLoading
                                             ? Column(children: [
-                                                Column(children: [
-                                                  if (future2Length < 4)
-                                                    for (int i = 0; i < 4; i++)
-                                                      CardLoading(
-                                                        height: 100 * fem,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    8 * fem),
-                                                        margin: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal:
-                                                                    10 * fem,
-                                                                vertical:
-                                                                    10 * fem),
-                                                      ),
-                                                  for (int i = 0;
-                                                      i < future2Length;
-                                                      i++)
+                                                if (future1Length < 4)
+                                                  for (int i = 0; i < 4; i++)
                                                     CardLoading(
                                                       height: 100 * fem,
                                                       borderRadius:
@@ -1132,14 +1101,27 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                               vertical:
                                                                   10 * fem),
                                                     ),
-                                                ])
+                                                for (int i = 0;
+                                                    i < future1Length;
+                                                    i++)
+                                                  CardLoading(
+                                                    height: 100 * fem,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8 * fem),
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                10 * fem,
+                                                            vertical: 10 * fem),
+                                                  ),
                                               ])
-                                            : (future2Length == 0)
+                                            : (future1Length == 0)
                                                 ? searchEmptyWidget()
                                                 : ListView.builder(
                                                     physics:
                                                         const NeverScrollableScrollPhysics(),
-                                                    itemCount: future2Length,
+                                                    itemCount: future1Length,
                                                     shrinkWrap: true,
                                                     itemBuilder:
                                                         (context, index) {
@@ -1149,53 +1131,53 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                               "navi into tournament");
                                                           BasketballTournamentDetails(
                                                                   id:
-                                                                      '${futureList2[index].id}',
+                                                                      '${futureList1[index].id}',
                                                                   matchDate:
-                                                                      '${futureList2[index].matchDate}',
+                                                                      '${futureList1[index].matchDate}',
                                                                   matchStatus:
-                                                                      '${futureList2[index].statusStr}',
+                                                                      '${futureList1[index].statusStr}',
                                                                   matchName:
-                                                                      '${futureList2[index].competitionName}')
+                                                                      '${futureList1[index].competitionName}')
                                                               .launch(context);
                                                         },
                                                         child:
                                                             GameDisplayComponent(
-                                                          id: futureList2[index]
+                                                          id: futureList1[index]
                                                                   .id ??
                                                               0,
                                                           competitionType:
-                                                              futureList2[index]
+                                                              futureList1[index]
                                                                       .competitionName ??
                                                                   "",
-                                                          duration: futureList2[
+                                                          duration: futureList1[
                                                                       index]
                                                                   .matchTimeStr ??
                                                               "00:00",
-                                                          teamAName: futureList2[
+                                                          teamAName: futureList1[
                                                                       index]
                                                                   .homeTeamName ??
                                                               "",
-                                                          teamALogo: futureList2[
+                                                          teamALogo: futureList1[
                                                                       index]
                                                                   .homeTeamLogo ??
                                                               'images/mainpage/sampleLogo.png',
                                                           teamAScore:
-                                                              futureList2[index]
+                                                              futureList1[index]
                                                                   .homeTeamScore
                                                                   .toString(),
-                                                          teamBName: futureList2[
+                                                          teamBName: futureList1[
                                                                       index]
                                                                   .awayTeamName ??
                                                               "",
-                                                          teamBLogo: futureList2[
+                                                          teamBLogo: futureList1[
                                                                       index]
                                                                   .awayTeamLogo ??
                                                               'images/mainpage/sampleLogo.png',
                                                           teamBScore:
-                                                              futureList2[index]
+                                                              futureList1[index]
                                                                   .awayTeamScore
                                                                   .toString(),
-                                                          isSaved: futureList2[
+                                                          isSaved: futureList1[
                                                                       index]
                                                                   .hasCollected ??
                                                               false,
@@ -1203,11 +1185,11 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                       );
                                                     },
                                                   )
-                                        : (statusId == 1 && futureDateId == 2)
+                                        : (statusId == 2 && futureDateId == 1)
                                             ? isEventLoading
                                                 ? Column(children: [
                                                     Column(children: [
-                                                      if (future3Length < 4)
+                                                      if (future2Length < 4)
                                                         for (int i = 0;
                                                             i < 4;
                                                             i++)
@@ -1227,7 +1209,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                             fem),
                                                           ),
                                                       for (int i = 0;
-                                                          i < future3Length;
+                                                          i < future2Length;
                                                           i++)
                                                         CardLoading(
                                                           height: 100 * fem,
@@ -1244,13 +1226,13 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                         ),
                                                     ])
                                                   ])
-                                                : (future3Length == 0)
+                                                : (future2Length == 0)
                                                     ? searchEmptyWidget()
                                                     : ListView.builder(
                                                         physics:
                                                             const NeverScrollableScrollPhysics(),
                                                         itemCount:
-                                                            future3Length,
+                                                            future2Length,
                                                         shrinkWrap: true,
                                                         itemBuilder:
                                                             (context, index) {
@@ -1260,55 +1242,55 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                   "navi into tournament");
                                                               BasketballTournamentDetails(
                                                                       id:
-                                                                          '${futureList3[index].id}',
+                                                                          '${futureList2[index].id}',
                                                                       matchDate:
-                                                                          '${futureList3[index].matchDate}',
+                                                                          '${futureList2[index].matchDate}',
                                                                       matchStatus:
-                                                                          '${futureList3[index].statusStr}',
+                                                                          '${futureList2[index].statusStr}',
                                                                       matchName:
-                                                                          '${futureList3[index].competitionName}')
+                                                                          '${futureList2[index].competitionName}')
                                                                   .launch(
                                                                       context);
                                                             },
                                                             child:
                                                                 GameDisplayComponent(
-                                                              id: futureList3[
+                                                              id: futureList2[
                                                                           index]
                                                                       .id ??
                                                                   0,
                                                               competitionType:
-                                                                  futureList3[index]
+                                                                  futureList2[index]
                                                                           .competitionName ??
                                                                       "",
-                                                              duration: futureList3[
+                                                              duration: futureList2[
                                                                           index]
                                                                       .matchTimeStr ??
                                                                   "00:00",
-                                                              teamAName: futureList3[
+                                                              teamAName: futureList2[
                                                                           index]
                                                                       .homeTeamName ??
                                                                   "",
-                                                              teamALogo: futureList3[
+                                                              teamALogo: futureList2[
                                                                           index]
                                                                       .homeTeamLogo ??
                                                                   'images/mainpage/sampleLogo.png',
-                                                              teamAScore: futureList3[
+                                                              teamAScore: futureList2[
                                                                       index]
                                                                   .homeTeamScore
                                                                   .toString(),
-                                                              teamBName: futureList3[
+                                                              teamBName: futureList2[
                                                                           index]
                                                                       .awayTeamName ??
                                                                   "",
-                                                              teamBLogo: futureList3[
+                                                              teamBLogo: futureList2[
                                                                           index]
                                                                       .awayTeamLogo ??
                                                                   'images/mainpage/sampleLogo.png',
-                                                              teamBScore: futureList3[
+                                                              teamBScore: futureList2[
                                                                       index]
                                                                   .awayTeamScore
                                                                   .toString(),
-                                                              isSaved: futureList3[
+                                                              isSaved: futureList2[
                                                                           index]
                                                                       .hasCollected ??
                                                                   false,
@@ -1316,12 +1298,12 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                           );
                                                         },
                                                       )
-                                            : (statusId == 1 &&
-                                                    futureDateId == 3)
+                                            : (statusId == 2 &&
+                                                    futureDateId == 2)
                                                 ? isEventLoading
                                                     ? Column(children: [
                                                         Column(children: [
-                                                          if (future4Length < 4)
+                                                          if (future3Length < 4)
                                                             for (int i = 0;
                                                                 i < 4;
                                                                 i++)
@@ -1341,7 +1323,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                             fem),
                                                               ),
                                                           for (int i = 0;
-                                                              i < future4Length;
+                                                              i < future3Length;
                                                               i++)
                                                             CardLoading(
                                                               height: 100 * fem,
@@ -1360,13 +1342,13 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                             ),
                                                         ])
                                                       ])
-                                                    : (future4Length == 0)
+                                                    : (future3Length == 0)
                                                         ? searchEmptyWidget()
                                                         : ListView.builder(
                                                             physics:
                                                                 const NeverScrollableScrollPhysics(),
                                                             itemCount:
-                                                                future4Length,
+                                                                future3Length,
                                                             shrinkWrap: true,
                                                             itemBuilder:
                                                                 (context,
@@ -1377,55 +1359,55 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                       "navi into tournament");
                                                                   BasketballTournamentDetails(
                                                                           id:
-                                                                              '${futureList4[index].id}',
+                                                                              '${futureList3[index].id}',
                                                                           matchDate:
-                                                                              '${futureList4[index].matchDate}',
+                                                                              '${futureList3[index].matchDate}',
                                                                           matchStatus:
-                                                                              '${futureList4[index].statusStr}',
+                                                                              '${futureList3[index].statusStr}',
                                                                           matchName:
-                                                                              '${futureList4[index].competitionName}')
+                                                                              '${futureList3[index].competitionName}')
                                                                       .launch(
                                                                           context);
                                                                 },
                                                                 child:
                                                                     GameDisplayComponent(
-                                                                  id: futureList4[
+                                                                  id: futureList3[
                                                                               index]
                                                                           .id ??
                                                                       0,
                                                                   competitionType:
-                                                                      futureList4[index]
+                                                                      futureList3[index]
                                                                               .competitionName ??
                                                                           "",
-                                                                  duration: futureList4[
+                                                                  duration: futureList3[
                                                                               index]
                                                                           .matchTimeStr ??
                                                                       "00:00",
                                                                   teamAName:
-                                                                      futureList4[index]
+                                                                      futureList3[index]
                                                                               .homeTeamName ??
                                                                           "",
-                                                                  teamALogo: futureList4[
+                                                                  teamALogo: futureList3[
                                                                               index]
                                                                           .homeTeamLogo ??
                                                                       'images/mainpage/sampleLogo.png',
-                                                                  teamAScore: futureList4[
+                                                                  teamAScore: futureList3[
                                                                           index]
                                                                       .homeTeamScore
                                                                       .toString(),
                                                                   teamBName:
-                                                                      futureList4[index]
+                                                                      futureList3[index]
                                                                               .awayTeamName ??
                                                                           "",
-                                                                  teamBLogo: futureList4[
+                                                                  teamBLogo: futureList3[
                                                                               index]
                                                                           .awayTeamLogo ??
                                                                       'images/mainpage/sampleLogo.png',
-                                                                  teamBScore: futureList4[
+                                                                  teamBScore: futureList3[
                                                                           index]
                                                                       .awayTeamScore
                                                                       .toString(),
-                                                                  isSaved: futureList4[
+                                                                  isSaved: futureList3[
                                                                               index]
                                                                           .hasCollected ??
                                                                       false,
@@ -1433,12 +1415,12 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                               );
                                                             },
                                                           )
-                                                : (statusId == 1 &&
-                                                        futureDateId == 4)
+                                                : (statusId == 2 &&
+                                                        futureDateId == 3)
                                                     ? isEventLoading
                                                         ? Column(children: [
                                                             Column(children: [
-                                                              if (future5Length <
+                                                              if (future4Length <
                                                                   4)
                                                                 for (int i = 0;
                                                                     i < 4;
@@ -1459,7 +1441,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                 fem),
                                                                   ),
                                                               for (int i = 0;
-                                                                  i < future5Length;
+                                                                  i < future4Length;
                                                                   i++)
                                                                 CardLoading(
                                                                   height:
@@ -1478,13 +1460,13 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                 ),
                                                             ])
                                                           ])
-                                                        : (future5Length == 0)
+                                                        : (future4Length == 0)
                                                             ? searchEmptyWidget()
                                                             : ListView.builder(
                                                                 physics:
                                                                     const NeverScrollableScrollPhysics(),
                                                                 itemCount:
-                                                                    future5Length,
+                                                                    future4Length,
                                                                 shrinkWrap:
                                                                     true,
                                                                 itemBuilder:
@@ -1495,57 +1477,57 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                       print(
                                                                           "navi into tournament");
                                                                       BasketballTournamentDetails(
-                                                                              id: '${futureList5[index].id}',
-                                                                              matchDate: '${futureList5[index].matchDate}',
-                                                                              matchStatus: '${futureList5[index].statusStr}',
-                                                                              matchName: '${futureList5[index].competitionName}')
+                                                                              id: '${futureList4[index].id}',
+                                                                              matchDate: '${futureList4[index].matchDate}',
+                                                                              matchStatus: '${futureList4[index].statusStr}',
+                                                                              matchName: '${futureList4[index].competitionName}')
                                                                           .launch(context);
                                                                     },
                                                                     child:
                                                                         GameDisplayComponent(
-                                                                      id: futureList5[index]
+                                                                      id: futureList4[index]
                                                                               .id ??
                                                                           0,
                                                                       competitionType:
-                                                                          futureList5[index].competitionName ??
+                                                                          futureList4[index].competitionName ??
                                                                               "",
                                                                       duration:
-                                                                          futureList5[index].matchTimeStr ??
+                                                                          futureList4[index].matchTimeStr ??
                                                                               "00:00",
                                                                       teamAName:
-                                                                          futureList5[index].homeTeamName ??
+                                                                          futureList4[index].homeTeamName ??
                                                                               "",
                                                                       teamALogo:
-                                                                          futureList5[index].homeTeamLogo ??
+                                                                          futureList4[index].homeTeamLogo ??
                                                                               'images/mainpage/sampleLogo.png',
-                                                                      teamAScore: futureList5[
+                                                                      teamAScore: futureList4[
                                                                               index]
                                                                           .homeTeamScore
                                                                           .toString(),
                                                                       teamBName:
-                                                                          futureList5[index].awayTeamName ??
+                                                                          futureList4[index].awayTeamName ??
                                                                               "",
                                                                       teamBLogo:
-                                                                          futureList5[index].awayTeamLogo ??
+                                                                          futureList4[index].awayTeamLogo ??
                                                                               'images/mainpage/sampleLogo.png',
-                                                                      teamBScore: futureList5[
+                                                                      teamBScore: futureList4[
                                                                               index]
                                                                           .awayTeamScore
                                                                           .toString(),
-                                                                      isSaved: futureList5[index]
+                                                                      isSaved: futureList4[index]
                                                                               .hasCollected ??
                                                                           false,
                                                                     ),
                                                                   );
                                                                 },
                                                               )
-                                                    : (statusId == 1 &&
-                                                            futureDateId == 5)
+                                                    : (statusId == 2 &&
+                                                            futureDateId == 4)
                                                         ? isEventLoading
                                                             ? Column(children: [
                                                                 Column(
                                                                     children: [
-                                                                      if (future6Length <
+                                                                      if (future5Length <
                                                                           4)
                                                                         for (int i =
                                                                                 0;
@@ -1561,7 +1543,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                           ),
                                                                       for (int i =
                                                                               0;
-                                                                          i < future6Length;
+                                                                          i < future5Length;
                                                                           i++)
                                                                         CardLoading(
                                                                           height:
@@ -1574,7 +1556,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                         ),
                                                                     ])
                                                               ])
-                                                            : (future6Length ==
+                                                            : (future5Length ==
                                                                     0)
                                                                 ? searchEmptyWidget()
                                                                 : ListView
@@ -1582,7 +1564,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                     physics:
                                                                         const NeverScrollableScrollPhysics(),
                                                                     itemCount:
-                                                                        future6Length,
+                                                                        future5Length,
                                                                     shrinkWrap:
                                                                         true,
                                                                     itemBuilder:
@@ -1593,45 +1575,103 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                             () {
                                                                           print(
                                                                               "navi into tournament");
-                                                                          BasketballTournamentDetails(id: '${futureList6[index].id}', matchDate: '${futureList6[index].matchDate}', matchStatus: '${futureList6[index].statusStr}', matchName: '${futureList6[index].competitionName}')
+                                                                          BasketballTournamentDetails(id: '${futureList5[index].id}', matchDate: '${futureList5[index].matchDate}', matchStatus: '${futureList5[index].statusStr}', matchName: '${futureList5[index].competitionName}')
                                                                               .launch(context);
                                                                         },
                                                                         child:
                                                                             GameDisplayComponent(
-                                                                          id: futureList6[index].id ??
+                                                                          id: futureList5[index].id ??
                                                                               0,
                                                                           competitionType:
-                                                                              futureList6[index].competitionName ?? "",
+                                                                              futureList5[index].competitionName ?? "",
                                                                           duration:
-                                                                              futureList6[index].matchTimeStr ?? "00:00",
+                                                                              futureList5[index].matchTimeStr ?? "00:00",
                                                                           teamAName:
-                                                                              futureList6[index].homeTeamName ?? "",
+                                                                              futureList5[index].homeTeamName ?? "",
                                                                           teamALogo:
-                                                                              futureList6[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                          teamAScore: futureList6[index]
+                                                                              futureList5[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                          teamAScore: futureList5[index]
                                                                               .homeTeamScore
                                                                               .toString(),
                                                                           teamBName:
-                                                                              futureList6[index].awayTeamName ?? "",
+                                                                              futureList5[index].awayTeamName ?? "",
                                                                           teamBLogo:
-                                                                              futureList6[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                          teamBScore: futureList6[index]
+                                                                              futureList5[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                          teamBScore: futureList5[index]
                                                                               .awayTeamScore
                                                                               .toString(),
                                                                           isSaved:
-                                                                              futureList6[index].hasCollected ?? false,
+                                                                              futureList5[index].hasCollected ?? false,
                                                                         ),
                                                                       );
                                                                     },
                                                                   )
-                                                        : (statusId == 1 &&
+                                                        : (statusId == 2 &&
                                                                 futureDateId ==
-                                                                    6)
+                                                                    5)
                                                             ? isEventLoading
                                                                 ? Column(
                                                                     children: [
                                                                         Column(
                                                                             children: [
+                                                                              if (future6Length < 4)
+                                                                                for (int i = 0; i < 4; i++)
+                                                                                  CardLoading(
+                                                                                    height: 100 * fem,
+                                                                                    borderRadius: BorderRadius.circular(8 * fem),
+                                                                                    margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                  ),
+                                                                              for (int i = 0; i < future6Length; i++)
+                                                                                CardLoading(
+                                                                                  height: 100 * fem,
+                                                                                  borderRadius: BorderRadius.circular(8 * fem),
+                                                                                  margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                ),
+                                                                            ])
+                                                                      ])
+                                                                : (future6Length ==
+                                                                        0)
+                                                                    ? searchEmptyWidget()
+                                                                    : ListView
+                                                                        .builder(
+                                                                        physics:
+                                                                            const NeverScrollableScrollPhysics(),
+                                                                        itemCount:
+                                                                            future6Length,
+                                                                        shrinkWrap:
+                                                                            true,
+                                                                        itemBuilder:
+                                                                            (context,
+                                                                                index) {
+                                                                          return GestureDetector(
+                                                                            onTap:
+                                                                                () {
+                                                                              print("navi into tournament");
+                                                                              BasketballTournamentDetails(id: '${futureList6[index].id}', matchDate: '${futureList6[index].matchDate}', matchStatus: '${futureList6[index].statusStr}', matchName: '${futureList6[index].competitionName}').launch(context);
+                                                                            },
+                                                                            child:
+                                                                                GameDisplayComponent(
+                                                                              id: futureList6[index].id ?? 0,
+                                                                              competitionType: futureList6[index].competitionName ?? "",
+                                                                              duration: futureList6[index].matchTimeStr ?? "00:00",
+                                                                              teamAName: futureList6[index].homeTeamName ?? "",
+                                                                              teamALogo: futureList6[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                              teamAScore: futureList6[index].homeTeamScore.toString(),
+                                                                              teamBName: futureList6[index].awayTeamName ?? "",
+                                                                              teamBLogo: futureList6[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                              teamBScore: futureList6[index].awayTeamScore.toString(),
+                                                                              isSaved: futureList6[index].hasCollected ?? false,
+                                                                            ),
+                                                                          );
+                                                                        },
+                                                                      )
+                                                            : (statusId == 2 &&
+                                                                    futureDateId ==
+                                                                        6)
+                                                                ? isEventLoading
+                                                                    ? Column(
+                                                                        children: [
+                                                                            Column(children: [
                                                                               if (future7Length < 4)
                                                                                 for (int i = 0; i < 4; i++)
                                                                                   CardLoading(
@@ -1646,67 +1686,8 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                   margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
                                                                                 ),
                                                                             ])
-                                                                      ])
-                                                                : (future7Length ==
-                                                                        0)
-                                                                    ? searchEmptyWidget()
-                                                                    : ListView
-                                                                        .builder(
-                                                                        physics:
-                                                                            const NeverScrollableScrollPhysics(),
-                                                                        itemCount:
-                                                                            future7Length,
-                                                                        shrinkWrap:
-                                                                            true,
-                                                                        itemBuilder:
-                                                                            (context,
-                                                                                index) {
-                                                                          return GestureDetector(
-                                                                            onTap:
-                                                                                () {
-                                                                              print("navi into tournament");
-
-                                                                              BasketballTournamentDetails(id: '${futureList7[index].id}', matchDate: '${futureList7[index].matchDate}', matchStatus: '${futureList7[index].statusStr}', matchName: '${futureList7[index].competitionName}').launch(context);
-                                                                            },
-                                                                            child:
-                                                                                GameDisplayComponent(
-                                                                              id: futureList7[index].id ?? 0,
-                                                                              competitionType: futureList7[index].competitionName ?? "",
-                                                                              duration: futureList7[index].matchTimeStr ?? "00:00",
-                                                                              teamAName: futureList7[index].homeTeamName ?? "",
-                                                                              teamALogo: futureList7[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                              teamAScore: futureList7[index].homeTeamScore.toString(),
-                                                                              teamBName: futureList7[index].awayTeamName ?? "",
-                                                                              teamBLogo: futureList7[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                              teamBScore: futureList7[index].awayTeamScore.toString(),
-                                                                              isSaved: futureList7[index].hasCollected ?? false,
-                                                                            ),
-                                                                          );
-                                                                        },
-                                                                      )
-                                                            : (statusId == 2 &&
-                                                                    pastDateId ==
-                                                                        0)
-                                                                ? isEventLoading
-                                                                    ? Column(
-                                                                        children: [
-                                                                            Column(children: [
-                                                                              if (past1Length < 4)
-                                                                                for (int i = 0; i < 4; i++)
-                                                                                  CardLoading(
-                                                                                    height: 100 * fem,
-                                                                                    borderRadius: BorderRadius.circular(8 * fem),
-                                                                                    margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                  ),
-                                                                              for (int i = 0; i < past1Length; i++)
-                                                                                CardLoading(
-                                                                                  height: 100 * fem,
-                                                                                  borderRadius: BorderRadius.circular(8 * fem),
-                                                                                  margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                ),
-                                                                            ])
                                                                           ])
-                                                                    : (past1Length ==
+                                                                    : (future7Length ==
                                                                             0)
                                                                         ? searchEmptyWidget()
                                                                         : ListView
@@ -1714,7 +1695,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                             physics:
                                                                                 const NeverScrollableScrollPhysics(),
                                                                             itemCount:
-                                                                                past1Length,
+                                                                                future7Length,
                                                                             shrinkWrap:
                                                                                 true,
                                                                             itemBuilder:
@@ -1722,30 +1703,82 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                               return GestureDetector(
                                                                                 onTap: () {
                                                                                   print("navi into tournament");
-                                                                                  BasketballTournamentDetails(id: '${pastList1[index].id}', matchDate: '${pastList1[index].matchDate}', matchStatus: '${pastList1[index].statusStr}', matchName: '${pastList1[index].competitionName}').launch(context);
+
+                                                                                  BasketballTournamentDetails(id: '${futureList7[index].id}', matchDate: '${futureList7[index].matchDate}', matchStatus: '${futureList7[index].statusStr}', matchName: '${futureList7[index].competitionName}').launch(context);
                                                                                 },
                                                                                 child: GameDisplayComponent(
-                                                                                  id: pastList1[index].id ?? 0,
-                                                                                  competitionType: pastList1[index].competitionName ?? "",
-                                                                                  duration: pastList1[index].matchTimeStr ?? "00:00",
-                                                                                  teamAName: pastList1[index].homeTeamName ?? "",
-                                                                                  teamALogo: pastList1[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                  teamAScore: pastList1[index].homeTeamScore.toString(),
-                                                                                  teamBName: pastList1[index].awayTeamName ?? "",
-                                                                                  teamBLogo: pastList1[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                  teamBScore: pastList1[index].awayTeamScore.toString(),
-                                                                                  isSaved: pastList1[index].hasCollected ?? false,
+                                                                                  id: futureList7[index].id ?? 0,
+                                                                                  competitionType: futureList7[index].competitionName ?? "",
+                                                                                  duration: futureList7[index].matchTimeStr ?? "00:00",
+                                                                                  teamAName: futureList7[index].homeTeamName ?? "",
+                                                                                  teamALogo: futureList7[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                  teamAScore: futureList7[index].homeTeamScore.toString(),
+                                                                                  teamBName: futureList7[index].awayTeamName ?? "",
+                                                                                  teamBLogo: futureList7[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                  teamBScore: futureList7[index].awayTeamScore.toString(),
+                                                                                  isSaved: futureList7[index].hasCollected ?? false,
                                                                                 ),
                                                                               );
                                                                             },
                                                                           )
                                                                 : (statusId ==
-                                                                            2 &&
+                                                                            3 &&
                                                                         pastDateId ==
-                                                                            1)
+                                                                            0)
                                                                     ? isEventLoading
                                                                         ? Column(
                                                                             children: [
+                                                                                Column(children: [
+                                                                                  if (past1Length < 4)
+                                                                                    for (int i = 0; i < 4; i++)
+                                                                                      CardLoading(
+                                                                                        height: 100 * fem,
+                                                                                        borderRadius: BorderRadius.circular(8 * fem),
+                                                                                        margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                      ),
+                                                                                  for (int i = 0; i < past1Length; i++)
+                                                                                    CardLoading(
+                                                                                      height: 100 * fem,
+                                                                                      borderRadius: BorderRadius.circular(8 * fem),
+                                                                                      margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                    ),
+                                                                                ])
+                                                                              ])
+                                                                        : (past1Length ==
+                                                                                0)
+                                                                            ? searchEmptyWidget()
+                                                                            : ListView
+                                                                                .builder(
+                                                                                physics: const NeverScrollableScrollPhysics(),
+                                                                                itemCount: past1Length,
+                                                                                shrinkWrap: true,
+                                                                                itemBuilder: (context, index) {
+                                                                                  return GestureDetector(
+                                                                                    onTap: () {
+                                                                                      print("navi into tournament");
+                                                                                      BasketballTournamentDetails(id: '${pastList1[index].id}', matchDate: '${pastList1[index].matchDate}', matchStatus: '${pastList1[index].statusStr}', matchName: '${pastList1[index].competitionName}').launch(context);
+                                                                                    },
+                                                                                    child: GameDisplayComponent(
+                                                                                      id: pastList1[index].id ?? 0,
+                                                                                      competitionType: pastList1[index].competitionName ?? "",
+                                                                                      duration: pastList1[index].matchTimeStr ?? "00:00",
+                                                                                      teamAName: pastList1[index].homeTeamName ?? "",
+                                                                                      teamALogo: pastList1[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                      teamAScore: pastList1[index].homeTeamScore.toString(),
+                                                                                      teamBName: pastList1[index].awayTeamName ?? "",
+                                                                                      teamBLogo: pastList1[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                      teamBScore: pastList1[index].awayTeamScore.toString(),
+                                                                                      isSaved: pastList1[index].hasCollected ?? false,
+                                                                                    ),
+                                                                                  );
+                                                                                },
+                                                                              )
+                                                                    : (statusId ==
+                                                                                3 &&
+                                                                            pastDateId ==
+                                                                                1)
+                                                                        ? isEventLoading
+                                                                            ? Column(children: [
                                                                                 if (past2Length < 4)
                                                                                   for (int i = 0; i < 4; i++)
                                                                                     CardLoading(
@@ -1760,259 +1793,291 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                     margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
                                                                                   ),
                                                                               ])
-                                                                        : (past2Length ==
-                                                                                0)
-                                                                            ? searchEmptyWidget()
-                                                                            : ListView
-                                                                                .builder(
-                                                                                physics: const NeverScrollableScrollPhysics(),
-                                                                                itemCount: past2Length,
-                                                                                shrinkWrap: true,
-                                                                                itemBuilder: (context, index) {
-                                                                                  return GestureDetector(
-                                                                                    onTap: () {
-                                                                                      print("navi into tournament");
-                                                                                      BasketballTournamentDetails(id: '${pastList2[index].id}', matchDate: '${pastList2[index].matchDate}', matchStatus: '${pastList2[index].statusStr}', matchName: '${pastList2[index].competitionName}').launch(context);
-                                                                                    },
-                                                                                    child: GameDisplayComponent(
-                                                                                      id: pastList2[index].id ?? 0,
-                                                                                      competitionType: pastList2[index].competitionName ?? "",
-                                                                                      duration: pastList2[index].matchTimeStr ?? "00:00",
-                                                                                      teamAName: pastList2[index].homeTeamName ?? "",
-                                                                                      teamALogo: pastList2[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                      teamAScore: pastList2[index].homeTeamScore.toString(),
-                                                                                      teamBName: pastList2[index].awayTeamName ?? "",
-                                                                                      teamBLogo: pastList2[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                      teamBScore: pastList2[index].awayTeamScore.toString(),
-                                                                                      isSaved: pastList2[index].hasCollected ?? false,
-                                                                                    ),
-                                                                                  );
-                                                                                },
-                                                                              )
-                                                                    : (statusId ==
-                                                                                2 &&
-                                                                            pastDateId ==
-                                                                                2)
-                                                                        ? isEventLoading
-                                                                            ? Column(children: [
-                                                                                if (past3Length < 4)
-                                                                                  for (int i = 0; i < 4; i++)
-                                                                                    CardLoading(
-                                                                                      height: 100 * fem,
-                                                                                      borderRadius: BorderRadius.circular(8 * fem),
-                                                                                      margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                    ),
-                                                                                for (int i = 0; i < past3Length; i++)
-                                                                                  CardLoading(
-                                                                                    height: 100 * fem,
-                                                                                    borderRadius: BorderRadius.circular(8 * fem),
-                                                                                    margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                  ),
-                                                                              ])
-                                                                            : (past3Length == 0)
+                                                                            : (past2Length == 0)
                                                                                 ? searchEmptyWidget()
                                                                                 : ListView.builder(
                                                                                     physics: const NeverScrollableScrollPhysics(),
-                                                                                    itemCount: past3Length,
+                                                                                    itemCount: past2Length,
                                                                                     shrinkWrap: true,
                                                                                     itemBuilder: (context, index) {
                                                                                       return GestureDetector(
                                                                                         onTap: () {
                                                                                           print("navi into tournament");
-                                                                                          BasketballTournamentDetails(id: '${pastList3[index].id}', matchDate: '${pastList3[index].matchDate}', matchStatus: '${pastList3[index].statusStr}', matchName: '${pastList3[index].competitionName}').launch(context);
+                                                                                          BasketballTournamentDetails(id: '${pastList2[index].id}', matchDate: '${pastList2[index].matchDate}', matchStatus: '${pastList2[index].statusStr}', matchName: '${pastList2[index].competitionName}').launch(context);
                                                                                         },
                                                                                         child: GameDisplayComponent(
-                                                                                          id: pastList3[index].id ?? 0,
-                                                                                          competitionType: pastList3[index].competitionName ?? "",
-                                                                                          duration: pastList3[index].matchTimeStr ?? "00:00",
-                                                                                          teamAName: pastList3[index].homeTeamName ?? "",
-                                                                                          teamALogo: pastList3[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                          teamAScore: pastList3[index].homeTeamScore.toString(),
-                                                                                          teamBName: pastList3[index].awayTeamName ?? "",
-                                                                                          teamBLogo: pastList3[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                          teamBScore: pastList3[index].awayTeamScore.toString(),
-                                                                                          isSaved: pastList3[index].hasCollected ?? false,
+                                                                                          id: pastList2[index].id ?? 0,
+                                                                                          competitionType: pastList2[index].competitionName ?? "",
+                                                                                          duration: pastList2[index].matchTimeStr ?? "00:00",
+                                                                                          teamAName: pastList2[index].homeTeamName ?? "",
+                                                                                          teamALogo: pastList2[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                          teamAScore: pastList2[index].homeTeamScore.toString(),
+                                                                                          teamBName: pastList2[index].awayTeamName ?? "",
+                                                                                          teamBLogo: pastList2[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                          teamBScore: pastList2[index].awayTeamScore.toString(),
+                                                                                          isSaved: pastList2[index].hasCollected ?? false,
                                                                                         ),
                                                                                       );
                                                                                     },
                                                                                   )
-                                                                        : (statusId == 2 && pastDateId == 3)
+                                                                        : (statusId == 3 && pastDateId == 2)
                                                                             ? isEventLoading
                                                                                 ? Column(children: [
-                                                                                    if (past4Length < 4)
+                                                                                    if (past3Length < 4)
                                                                                       for (int i = 0; i < 4; i++)
                                                                                         CardLoading(
                                                                                           height: 100 * fem,
                                                                                           borderRadius: BorderRadius.circular(8 * fem),
                                                                                           margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
                                                                                         ),
-                                                                                    for (int i = 0; i < past4Length; i++)
+                                                                                    for (int i = 0; i < past3Length; i++)
                                                                                       CardLoading(
                                                                                         height: 100 * fem,
                                                                                         borderRadius: BorderRadius.circular(8 * fem),
                                                                                         margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
                                                                                       ),
                                                                                   ])
-                                                                                : (past4Length == 0)
+                                                                                : (past3Length == 0)
                                                                                     ? searchEmptyWidget()
                                                                                     : ListView.builder(
                                                                                         physics: const NeverScrollableScrollPhysics(),
-                                                                                        itemCount: past4Length,
+                                                                                        itemCount: past3Length,
                                                                                         shrinkWrap: true,
                                                                                         itemBuilder: (context, index) {
                                                                                           return GestureDetector(
                                                                                             onTap: () {
                                                                                               print("navi into tournament");
-                                                                                              BasketballTournamentDetails(id: '${pastList4[index].id}', matchDate: '${pastList4[index].matchDate}', matchStatus: '${pastList4[index].statusStr}', matchName: '${pastList4[index].competitionName}').launch(context);
+                                                                                              BasketballTournamentDetails(id: '${pastList3[index].id}', matchDate: '${pastList3[index].matchDate}', matchStatus: '${pastList3[index].statusStr}', matchName: '${pastList3[index].competitionName}').launch(context);
                                                                                             },
                                                                                             child: GameDisplayComponent(
-                                                                                              id: pastList4[index].id ?? 0,
-                                                                                              competitionType: pastList4[index].competitionName ?? "",
-                                                                                              duration: pastList4[index].matchTimeStr ?? "00:00",
-                                                                                              teamAName: pastList4[index].homeTeamName ?? "",
-                                                                                              teamALogo: pastList4[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                              teamAScore: pastList4[index].homeTeamScore.toString(),
-                                                                                              teamBName: pastList4[index].awayTeamName ?? "",
-                                                                                              teamBLogo: pastList4[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                              teamBScore: pastList4[index].awayTeamScore.toString(),
-                                                                                              isSaved: pastList4[index].hasCollected ?? false,
+                                                                                              id: pastList3[index].id ?? 0,
+                                                                                              competitionType: pastList3[index].competitionName ?? "",
+                                                                                              duration: pastList3[index].matchTimeStr ?? "00:00",
+                                                                                              teamAName: pastList3[index].homeTeamName ?? "",
+                                                                                              teamALogo: pastList3[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                              teamAScore: pastList3[index].homeTeamScore.toString(),
+                                                                                              teamBName: pastList3[index].awayTeamName ?? "",
+                                                                                              teamBLogo: pastList3[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                              teamBScore: pastList3[index].awayTeamScore.toString(),
+                                                                                              isSaved: pastList3[index].hasCollected ?? false,
                                                                                             ),
                                                                                           );
                                                                                         },
                                                                                       )
-                                                                            : (statusId == 2 && pastDateId == 4)
+                                                                            : (statusId == 3 && pastDateId == 3)
                                                                                 ? isEventLoading
                                                                                     ? Column(children: [
-                                                                                        if (past5Length < 4)
+                                                                                        if (past4Length < 4)
                                                                                           for (int i = 0; i < 4; i++)
                                                                                             CardLoading(
                                                                                               height: 100 * fem,
                                                                                               borderRadius: BorderRadius.circular(8 * fem),
                                                                                               margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
                                                                                             ),
-                                                                                        for (int i = 0; i < past5Length; i++)
+                                                                                        for (int i = 0; i < past4Length; i++)
                                                                                           CardLoading(
                                                                                             height: 100 * fem,
                                                                                             borderRadius: BorderRadius.circular(8 * fem),
                                                                                             margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
                                                                                           ),
                                                                                       ])
-                                                                                    : (past5Length == 0)
+                                                                                    : (past4Length == 0)
                                                                                         ? searchEmptyWidget()
                                                                                         : ListView.builder(
                                                                                             physics: const NeverScrollableScrollPhysics(),
-                                                                                            itemCount: past5Length,
+                                                                                            itemCount: past4Length,
                                                                                             shrinkWrap: true,
                                                                                             itemBuilder: (context, index) {
                                                                                               return GestureDetector(
                                                                                                 onTap: () {
                                                                                                   print("navi into tournament");
-                                                                                                  BasketballTournamentDetails(id: '${pastList5[index].id}', matchDate: '${pastList5[index].matchDate}', matchStatus: '${pastList5[index].statusStr}', matchName: '${pastList5[index].competitionName}').launch(context);
+                                                                                                  BasketballTournamentDetails(id: '${pastList4[index].id}', matchDate: '${pastList4[index].matchDate}', matchStatus: '${pastList4[index].statusStr}', matchName: '${pastList4[index].competitionName}').launch(context);
                                                                                                 },
                                                                                                 child: GameDisplayComponent(
-                                                                                                  id: pastList5[index].id ?? 0,
-                                                                                                  competitionType: pastList5[index].competitionName ?? "",
-                                                                                                  duration: pastList5[index].matchTimeStr ?? "00:00",
-                                                                                                  teamAName: pastList5[index].homeTeamName ?? "",
-                                                                                                  teamALogo: pastList5[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                  teamAScore: pastList5[index].homeTeamScore.toString(),
-                                                                                                  teamBName: pastList5[index].awayTeamName ?? "",
-                                                                                                  teamBLogo: pastList5[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                  teamBScore: pastList5[index].awayTeamScore.toString(),
-                                                                                                  isSaved: pastList5[index].hasCollected ?? false,
+                                                                                                  id: pastList4[index].id ?? 0,
+                                                                                                  competitionType: pastList4[index].competitionName ?? "",
+                                                                                                  duration: pastList4[index].matchTimeStr ?? "00:00",
+                                                                                                  teamAName: pastList4[index].homeTeamName ?? "",
+                                                                                                  teamALogo: pastList4[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                  teamAScore: pastList4[index].homeTeamScore.toString(),
+                                                                                                  teamBName: pastList4[index].awayTeamName ?? "",
+                                                                                                  teamBLogo: pastList4[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                  teamBScore: pastList4[index].awayTeamScore.toString(),
+                                                                                                  isSaved: pastList4[index].hasCollected ?? false,
                                                                                                 ),
                                                                                               );
                                                                                             },
                                                                                           )
-                                                                                : (statusId == 2 && pastDateId == 5)
+                                                                                : (statusId == 3 && pastDateId == 4)
                                                                                     ? isEventLoading
                                                                                         ? Column(children: [
-                                                                                            if (past6Length < 4)
+                                                                                            if (past5Length < 4)
                                                                                               for (int i = 0; i < 4; i++)
                                                                                                 CardLoading(
                                                                                                   height: 100 * fem,
                                                                                                   borderRadius: BorderRadius.circular(8 * fem),
                                                                                                   margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
                                                                                                 ),
-                                                                                            for (int i = 0; i < past6Length; i++)
+                                                                                            for (int i = 0; i < past5Length; i++)
                                                                                               CardLoading(
                                                                                                 height: 100 * fem,
                                                                                                 borderRadius: BorderRadius.circular(8 * fem),
                                                                                                 margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
                                                                                               ),
                                                                                           ])
-                                                                                        : (past6Length == 0)
+                                                                                        : (past5Length == 0)
                                                                                             ? searchEmptyWidget()
                                                                                             : ListView.builder(
                                                                                                 physics: const NeverScrollableScrollPhysics(),
-                                                                                                itemCount: past6Length,
+                                                                                                itemCount: past5Length,
                                                                                                 shrinkWrap: true,
                                                                                                 itemBuilder: (context, index) {
                                                                                                   return GestureDetector(
                                                                                                     onTap: () {
                                                                                                       print("navi into tournament");
-                                                                                                      BasketballTournamentDetails(id: '${pastList6[index].id}', matchDate: '${pastList6[index].matchDate}', matchStatus: '${pastList6[index].statusStr}', matchName: '${pastList6[index].competitionName}').launch(context);
+                                                                                                      BasketballTournamentDetails(id: '${pastList5[index].id}', matchDate: '${pastList5[index].matchDate}', matchStatus: '${pastList5[index].statusStr}', matchName: '${pastList5[index].competitionName}').launch(context);
                                                                                                     },
                                                                                                     child: GameDisplayComponent(
-                                                                                                      id: pastList6[index].id ?? 0,
-                                                                                                      competitionType: pastList6[index].competitionName ?? "",
-                                                                                                      duration: pastList6[index].matchTimeStr ?? "00:00",
-                                                                                                      teamAName: pastList6[index].homeTeamName ?? "",
-                                                                                                      teamALogo: pastList6[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                      teamAScore: pastList6[index].homeTeamScore.toString(),
-                                                                                                      teamBName: pastList6[index].awayTeamName ?? "",
-                                                                                                      teamBLogo: pastList6[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                      teamBScore: pastList6[index].awayTeamScore.toString(),
-                                                                                                      isSaved: pastList6[index].hasCollected ?? false,
+                                                                                                      id: pastList5[index].id ?? 0,
+                                                                                                      competitionType: pastList5[index].competitionName ?? "",
+                                                                                                      duration: pastList5[index].matchTimeStr ?? "00:00",
+                                                                                                      teamAName: pastList5[index].homeTeamName ?? "",
+                                                                                                      teamALogo: pastList5[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                      teamAScore: pastList5[index].homeTeamScore.toString(),
+                                                                                                      teamBName: pastList5[index].awayTeamName ?? "",
+                                                                                                      teamBLogo: pastList5[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                      teamBScore: pastList5[index].awayTeamScore.toString(),
+                                                                                                      isSaved: pastList5[index].hasCollected ?? false,
                                                                                                     ),
                                                                                                   );
                                                                                                 },
                                                                                               )
-                                                                                    : (statusId == 2 && pastDateId == 6)
+                                                                                    : (statusId == 3 && pastDateId == 5)
                                                                                         ? isEventLoading
                                                                                             ? Column(children: [
-                                                                                                if (past7Length < 4)
+                                                                                                if (past6Length < 4)
                                                                                                   for (int i = 0; i < 4; i++)
                                                                                                     CardLoading(
                                                                                                       height: 100 * fem,
                                                                                                       borderRadius: BorderRadius.circular(8 * fem),
                                                                                                       margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
                                                                                                     ),
-                                                                                                for (int i = 0; i < past7Length; i++)
+                                                                                                for (int i = 0; i < past6Length; i++)
                                                                                                   CardLoading(
                                                                                                     height: 100 * fem,
                                                                                                     borderRadius: BorderRadius.circular(8 * fem),
                                                                                                     margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
                                                                                                   ),
                                                                                               ])
-                                                                                            : (past7Length == 0)
+                                                                                            : (past6Length == 0)
                                                                                                 ? searchEmptyWidget()
                                                                                                 : ListView.builder(
                                                                                                     physics: const NeverScrollableScrollPhysics(),
-                                                                                                    itemCount: past7Length,
+                                                                                                    itemCount: past6Length,
                                                                                                     shrinkWrap: true,
                                                                                                     itemBuilder: (context, index) {
                                                                                                       return GestureDetector(
                                                                                                         onTap: () {
                                                                                                           print("navi into tournament");
-                                                                                                          BasketballTournamentDetails(id: '${pastList7[index].id}', matchDate: '${pastList7[index].matchDate}', matchStatus: '${pastList7[index].statusStr}', matchName: '${pastList7[index].competitionName}').launch(context);
+                                                                                                          BasketballTournamentDetails(id: '${pastList6[index].id}', matchDate: '${pastList6[index].matchDate}', matchStatus: '${pastList6[index].statusStr}', matchName: '${pastList6[index].competitionName}').launch(context);
                                                                                                         },
                                                                                                         child: GameDisplayComponent(
-                                                                                                          id: pastList7[index].id ?? 0,
-                                                                                                          competitionType: pastList7[index].competitionName ?? "",
-                                                                                                          duration: pastList7[index].matchTimeStr ?? "00:00",
-                                                                                                          teamAName: pastList7[index].homeTeamName ?? "",
-                                                                                                          teamALogo: pastList7[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                          teamAScore: pastList7[index].homeTeamScore.toString(),
-                                                                                                          teamBName: pastList7[index].awayTeamName ?? "",
-                                                                                                          teamBLogo: pastList7[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                          teamBScore: pastList7[index].awayTeamScore.toString(),
-                                                                                                          isSaved: pastList7[index].hasCollected ?? false,
+                                                                                                          id: pastList6[index].id ?? 0,
+                                                                                                          competitionType: pastList6[index].competitionName ?? "",
+                                                                                                          duration: pastList6[index].matchTimeStr ?? "00:00",
+                                                                                                          teamAName: pastList6[index].homeTeamName ?? "",
+                                                                                                          teamALogo: pastList6[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                          teamAScore: pastList6[index].homeTeamScore.toString(),
+                                                                                                          teamBName: pastList6[index].awayTeamName ?? "",
+                                                                                                          teamBLogo: pastList6[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                          teamBScore: pastList6[index].awayTeamScore.toString(),
+                                                                                                          isSaved: pastList6[index].hasCollected ?? false,
                                                                                                         ),
                                                                                                       );
                                                                                                     },
                                                                                                   )
-                                                                                        : Container(),
+                                                                                        : (statusId == 3 && pastDateId == 6)
+                                                                                            ? isEventLoading
+                                                                                                ? Column(children: [
+                                                                                                    if (past7Length < 4)
+                                                                                                      for (int i = 0; i < 4; i++)
+                                                                                                        CardLoading(
+                                                                                                          height: 100 * fem,
+                                                                                                          borderRadius: BorderRadius.circular(8 * fem),
+                                                                                                          margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                                        ),
+                                                                                                    for (int i = 0; i < past7Length; i++)
+                                                                                                      CardLoading(
+                                                                                                        height: 100 * fem,
+                                                                                                        borderRadius: BorderRadius.circular(8 * fem),
+                                                                                                        margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                                      ),
+                                                                                                  ])
+                                                                                                : (past7Length == 0)
+                                                                                                    ? searchEmptyWidget()
+                                                                                                    : ListView.builder(
+                                                                                                        physics: const NeverScrollableScrollPhysics(),
+                                                                                                        itemCount: past7Length,
+                                                                                                        shrinkWrap: true,
+                                                                                                        itemBuilder: (context, index) {
+                                                                                                          return GestureDetector(
+                                                                                                            onTap: () {
+                                                                                                              print("navi into tournament");
+                                                                                                              BasketballTournamentDetails(id: '${pastList7[index].id}', matchDate: '${pastList7[index].matchDate}', matchStatus: '${pastList7[index].statusStr}', matchName: '${pastList7[index].competitionName}').launch(context);
+                                                                                                            },
+                                                                                                            child: GameDisplayComponent(
+                                                                                                              id: pastList7[index].id ?? 0,
+                                                                                                              competitionType: pastList7[index].competitionName ?? "",
+                                                                                                              duration: pastList7[index].matchTimeStr ?? "00:00",
+                                                                                                              teamAName: pastList7[index].homeTeamName ?? "",
+                                                                                                              teamALogo: pastList7[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                              teamAScore: pastList7[index].homeTeamScore.toString(),
+                                                                                                              teamBName: pastList7[index].awayTeamName ?? "",
+                                                                                                              teamBLogo: pastList7[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                              teamBScore: pastList7[index].awayTeamScore.toString(),
+                                                                                                              isSaved: pastList7[index].hasCollected ?? false,
+                                                                                                            ),
+                                                                                                          );
+                                                                                                        },
+                                                                                                      )
+                                                                                            : (statusId == 4)
+                                                                                                ? isEventLoading
+                                                                                                    ? Column(children: [
+                                                                                                        for (int i = 0; i < 4; i++)
+                                                                                                          CardLoading(
+                                                                                                            height: 100 * fem,
+                                                                                                            borderRadius: BorderRadius.circular(8 * fem),
+                                                                                                            margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                                          ),
+                                                                                                      ])
+                                                                                                    : (startedLength == 0)
+                                                                                                        ? searchEmptyWidget()
+                                                                                                        : ListView.builder(
+                                                                                                            physics: const NeverScrollableScrollPhysics(),
+                                                                                                            itemCount: startedLength,
+                                                                                                            shrinkWrap: true,
+                                                                                                            itemBuilder: (context, index) {
+                                                                                                              return GestureDetector(
+                                                                                                                onTap: () {
+                                                                                                                  print("navi into tournament");
+                                                                                                                  BasketballTournamentDetails(id: '${startedList[index].id}', matchDate: '${startedList[index].matchDate}', matchStatus: '${startedList[index].statusStr}', matchName: '${startedList[index].competitionName}').launch(context);
+                                                                                                                },
+                                                                                                                child: GameDisplayComponent(
+                                                                                                                  id: startedList[index].id ?? 0,
+                                                                                                                  competitionType: startedList[index].competitionName ?? "",
+                                                                                                                  duration: startedList[index].matchTimeStr ?? "00:00",
+                                                                                                                  teamAName: startedList[index].homeTeamName ?? "",
+                                                                                                                  teamALogo: startedList[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                                  teamAScore: startedList[index].homeTeamScore.toString(),
+                                                                                                                  teamBName: startedList[index].awayTeamName ?? "",
+                                                                                                                  teamBLogo: startedList[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                                  teamBScore: startedList[index].awayTeamScore.toString(),
+                                                                                                                  isSaved: startedList[index].hasCollected ?? false,
+                                                                                                                ),
+                                                                                                              );
+                                                                                                            },
+                                                                                                          )
+                                                                                                : Container(),
                             isLoading
                                 ? Center(
                                     child: Lottie.asset(

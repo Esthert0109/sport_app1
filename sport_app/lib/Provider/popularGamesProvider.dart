@@ -9,7 +9,7 @@ class PopularGameProvider extends ChangeNotifier {
   CommonServices service = CommonServices();
 
   Future<PopularGameModel?> getPopularGameList() async {
-    String url = ApiConstants.localhost + ApiConstants.getPopularGameList;
+    String url = ApiConstants.baseUrl + ApiConstants.getPopularGameList;
     Map<String, String> headers = {
       'Content-Type': 'application/json; charset=utf-8',
     };

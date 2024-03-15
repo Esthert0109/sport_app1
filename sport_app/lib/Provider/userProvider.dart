@@ -40,8 +40,7 @@ class UserProvider extends ChangeNotifier {
       final response = await service.postRequest(url, liveStreamUserData);
 
       String phoneWithoutPlus = phone.replaceAll('+', '');
-      bool isRegister = await registerTencent(phoneWithoutPlus, userNickname,
-          "https://live-stream-1321239144.cos.ap-singapore.myqcloud.com/head/000153ed8cd649019e5659f9456419ae.png");
+      
 
       String code = response['code'].toString();
       String msg = response['msg'].toString();
@@ -52,6 +51,8 @@ class UserProvider extends ChangeNotifier {
       //if the request of creating user success, sending request to get OTP
       if (code == '0') {
         print("success");
+        bool isRegister = await registerTencent(phoneWithoutPlus, userNickname,
+          "https://live-stream-1321239144.cos.ap-singapore.myqcloud.com/head/000153ed8cd649019e5659f9456419ae.png");
 
         userModel.userName.value = userNickname;
         userModel.id.value = phoneWithoutPlus;

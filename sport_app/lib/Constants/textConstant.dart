@@ -433,3 +433,11 @@ const tHotIndex = TextStyle(
   letterSpacing: 0.3,
   color: kIndexColor,
 );
+
+// follow page
+const tFollowNull = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.3,
+    color: kUnselectedTextColor);

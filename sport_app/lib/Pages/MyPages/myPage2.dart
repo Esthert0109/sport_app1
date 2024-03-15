@@ -301,20 +301,25 @@ class _ProfilePageState extends State<ProfilePage> {
                                                             gameList[index]
                                                                 .gameAndroidUrl));
                                                       },
-                                                      child: Container(
-                                                        height: 50 * fem,
-                                                        width: 50 * fem,
-                                                        decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                            color: redColor),
-                                                        child: Image(
-                                                          image: NetworkImage(
-                                                              gameList[index]
-                                                                  .gameLogo),
-                                                          fit: BoxFit.cover,
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        child: Container(
+                                                          height: 50 * fem,
+                                                          width: 50 * fem,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
+                                                              color: redColor),
+                                                          child: Image(
+                                                            image: NetworkImage(
+                                                                gameList[index]
+                                                                    .gameLogo),
+                                                            fit: BoxFit.cover,
+                                                          ),
                                                         ),
                                                       ),
                                                     ),

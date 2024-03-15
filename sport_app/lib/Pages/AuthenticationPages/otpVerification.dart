@@ -464,7 +464,7 @@ class _OTPVerificationState extends State<OTPVerification> {
                                         bool isVerifiedOTP =
                                             await provider.verifyOTP(
                                                 widget.phone, otpCode, '3');
-                                        if (isVerifiedOTP) {
+                                        if (isVerifiedOTP == true) {
                                           setState(() {
                                             verification = true;
                                           });
@@ -491,15 +491,18 @@ class _OTPVerificationState extends State<OTPVerification> {
                                         bool isVerifiedOTP =
                                             await provider.verifyOTP(
                                                 widget.phone, otpCode, '1');
-                                        if (isVerifiedOTP) {
+                                        await Future.delayed(
+                                            Duration(seconds: 1));
+                                        if (isVerifiedOTP == true) {
                                           setState(() {
                                             verification = true;
-                                            provider.createUser(
-                                                widget.userNickname,
-                                                widget.phone,
-                                                widget.password,
-                                                widget.dialCode);
                                           });
+
+                                          await provider.createUser(
+                                              widget.userNickname,
+                                              widget.phone,
+                                              widget.password,
+                                              widget.dialCode);
                                           await Future.delayed(
                                               Duration(seconds: 3));
                                           Get.offUntil(

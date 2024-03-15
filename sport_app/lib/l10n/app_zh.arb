@@ -113,5 +113,6 @@
     "defaultSort": "综合排序",
     "descendingSort": "最近关注",
     "ascendingSort": "最早关注",
-    "popularGames": "热门游戏"
+    "popularGames": "热门游戏",
+    "noFollowing": "-关注您的第一个主播吧！-"
 }

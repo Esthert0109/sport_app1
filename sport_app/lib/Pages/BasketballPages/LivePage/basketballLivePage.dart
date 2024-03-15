@@ -6,18 +6,20 @@ import 'package:get/get.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/Component/LivePage/followingBlockComponent.dart';
+import 'package:sport_app/Provider/anchorFollowProvider.dart';
 import 'package:sport_app/Provider/liveStreamProvider.dart';
 import 'package:sport_app/Services/Utils/sharedPreferencesUtils.dart';
 
 import '../../../Component/Common/liveSquareBlock.dart';
 import '../../../Component/Common/loginDialog.dart';
 import '../../../Component/Common/selectionButtonText.dart';
+import '../../../Component/Loading/emptyResultComponent.dart';
 import '../../../Component/Loading/loadingLiveDisplayBlock.dart';
 import '../../../Component/Tencent/liveStreamPlayer.dart';
 import '../../../Constants/Controller/layoutController.dart';
 import '../../../Constants/colorConstant.dart';
 import '../../../Constants/textConstant.dart';
-import '../../../Model/collectionModel.dart';
+import '../../../Model/followingModel.dart';
 import '../../../Model/liveStreamModel.dart';
 import '../../../Model/userDataModel.dart';
 import '../../../Provider/collectionProvider.dart';
@@ -45,7 +47,8 @@ class _BasketballLivePageState extends State<BasketballLivePage>
   bool _showAppBar = true;
   bool _isScrollingDown = false;
   bool isLiveLoading = false;
-  bool isCollectionLoading = false;
+  // bool isCollectionLoading = false;
+  bool isFollowLoading = false;
   bool isLogin = true;
   int statusId = 0;
   int followStatusId = 0;
@@ -56,16 +59,19 @@ class _BasketballLivePageState extends State<BasketballLivePage>
   //live stream provider
   LiveStreamProvider liveProvider = LiveStreamProvider();
 
+  // following provider
+  AnchorFollowProvider followProvider = AnchorFollowProvider();
+
   //common variables
   List<LiveStreamData> basketballLiveStreamList = [];
   int liveStreamLength = 0;
 
-  List<CollectMatchesData> threeCollections = [];
-  int collectionLength = 0;
-
   // variables
   int page = 1;
   int size = 10;
+
+  List<FollowData> followingList = [];
+  int followingLength = 0;
 
   Future<void> checkLogin() async {
     //get shared preferences
@@ -97,19 +103,35 @@ class _BasketballLivePageState extends State<BasketballLivePage>
     }
   }
 
-  Future<void> getCollections() async {
-    if (!isCollectionLoading) {
+  // Future<void> getCollections() async {
+  //   if (!isCollectionLoading) {
+  //     setState(() {
+  //       isCollectionLoading = true;
+  //     });
+
+  //     CollectMatchesModel? collection =
+  //         await savedBookmarkProvider.getThreeBasketballCollection();
+  //     threeCollections.addAll(collection?.data ?? []);
+  //     collectionLength = threeCollections.length;
+
+  //     setState(() {
+  //       isCollectionLoading = false;
+  //     });
+  //   }
+  // }
+
+  Future<void> getFollowingList() async {
+    if (!isFollowLoading) {
       setState(() {
-        isCollectionLoading = true;
+        isFollowLoading = true;
       });
 
-      CollectMatchesModel? collection =
-          await savedBookmarkProvider.getThreeBasketballCollection();
-      threeCollections.addAll(collection?.data ?? []);
-      collectionLength = threeCollections.length;
+      FollowModel? followModel = await followProvider.getFollowingList();
+      followingList.addAll(followModel?.data ?? []);
+      followingLength = followingList.length;
 
       setState(() {
-        isCollectionLoading = false;
+        isFollowLoading = false;
       });
     }
   }
@@ -132,8 +154,10 @@ class _BasketballLivePageState extends State<BasketballLivePage>
 
   Future<void> toggleRefresh() async {
     setState(() {
-      threeCollections.clear();
-      collectionLength = threeCollections.length;
+      // threeCollections.clear();
+      // collectionLength = threeCollections.length;
+      followingList.clear();
+      followingLength = followingList.length;
 
       basketballLiveStreamList.clear();
       liveStreamLength = basketballLiveStreamList.length;
@@ -142,7 +166,8 @@ class _BasketballLivePageState extends State<BasketballLivePage>
       print("check basket: ${basketballLiveStreamList.toString()}");
       page = 1;
 
-      getCollections();
+      // getCollections();
+      getFollowingList();
       getAllLiveList();
     });
   }
@@ -151,9 +176,10 @@ class _BasketballLivePageState extends State<BasketballLivePage>
   @override
   void initState() {
     super.initState();
-    getCollections();
+    // getCollections();
     getAllLiveList();
     checkLogin();
+    getFollowingList();
 
     _scrollController.addListener(() {
       if (_scrollController.position.userScrollDirection.toString() ==
@@ -527,17 +553,46 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                                             });
                                           }),
                                     ),
-                                    Column(
-                                      children: List.generate(
-                                          30,
-                                          (index) => FollowingBlockComponent(
-                                              isStreaming: false,
-                                              streamTitle: "",
-                                              anchorName:
-                                                  "KIkoooooooooooooooooooooooooooooo",
-                                              anchorPic:
-                                                  "https://i.ytimg.com/vi/xvQk-qV1070/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCHK8qn2BR3DrfXETOUGrmen3kNlw")),
-                                    )
+                                    (followingLength == 0)
+                                        ? Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            children: [
+                                              Container(
+                                                  height: 550 * fem,
+                                                  // color: pink,
+                                                  alignment: Alignment.center,
+                                                  child: searchEmptyWidget()),
+                                              Container(
+                                                // color: yellowGreen,
+                                                height: 100 * fem,
+                                                child: Text(
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .noFollowing,
+                                                    style: tFollowNull,
+                                                    textAlign:
+                                                        TextAlign.center),
+                                              ),
+                                            ],
+                                          )
+                                        : (followStatusId == 0)
+                                            ? Column(
+                                                children: List.generate(
+                                                    followingLength,
+                                                    (index) => FollowingBlockComponent(
+                                                        isStreaming: followingList[index].streamingStatus,
+                                                        streamTitle: "",
+                                                        anchorName:
+                                                            followingList[index].anchorDetails.nickName,
+                                                        anchorPic:
+                                                            followingList[index].anchorDetails.head)),
+                                              )
+                                            : (followStatusId == 1)
+                                                ? Column()
+                                                : Column()
                                   ],
                                 )
                         ],

@@ -131,6 +131,8 @@ class _FollowingBlockComponentState extends State<FollowingBlockComponent> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
+                          backgroundColor: white,
+                          surfaceTintColor: white,
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8.0))),

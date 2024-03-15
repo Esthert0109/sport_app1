@@ -19,6 +19,8 @@ void showNoticeDialog(BuildContext context, String message, String btnText,
       context: context,
       builder: ((context) {
         return AlertDialog(
+          backgroundColor: white,
+          surfaceTintColor: white,
           content: Text(
             message,
             textAlign: TextAlign.start,

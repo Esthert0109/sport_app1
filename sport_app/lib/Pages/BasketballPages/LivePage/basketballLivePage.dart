@@ -103,23 +103,6 @@ class _BasketballLivePageState extends State<BasketballLivePage>
     }
   }
 
-  // Future<void> getCollections() async {
-  //   if (!isCollectionLoading) {
-  //     setState(() {
-  //       isCollectionLoading = true;
-  //     });
-
-  //     CollectMatchesModel? collection =
-  //         await savedBookmarkProvider.getThreeBasketballCollection();
-  //     threeCollections.addAll(collection?.data ?? []);
-  //     collectionLength = threeCollections.length;
-
-  //     setState(() {
-  //       isCollectionLoading = false;
-  //     });
-  //   }
-  // }
-
   Future<void> getFollowingList() async {
     if (!isFollowLoading) {
       setState(() {
@@ -582,13 +565,28 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                                             ? Column(
                                                 children: List.generate(
                                                     followingLength,
-                                                    (index) => FollowingBlockComponent(
-                                                        isStreaming: followingList[index].streamingStatus,
-                                                        streamTitle: "",
-                                                        anchorName:
-                                                            followingList[index].anchorDetails.nickName,
-                                                        anchorPic:
-                                                            followingList[index].anchorDetails.head)),
+                                                    (index) =>
+                                                        FollowingBlockComponent(
+                                                          isStreaming:
+                                                              followingList[
+                                                                      index]
+                                                                  .streamingStatus,
+                                                          streamTitle: "",
+                                                          anchorName:
+                                                              followingList[
+                                                                      index]
+                                                                  .anchorDetails
+                                                                  .nickName,
+                                                          anchorPic:
+                                                              followingList[
+                                                                      index]
+                                                                  .anchorDetails
+                                                                  .head,
+                                                          anchorId:
+                                                              followingList[
+                                                                      index]
+                                                                  .anchorId,
+                                                        )),
                                               )
                                             : (followStatusId == 1)
                                                 ? Column()

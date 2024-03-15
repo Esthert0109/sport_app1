@@ -580,13 +580,29 @@ class _FootballLivePageState extends State<FootballLivePage>
                                               ? Column(
                                                   children: List.generate(
                                                       followingLength,
-                                                      (index) => FollowingBlockComponent(
-                                                          isStreaming: followingList[index].streamingStatus,
-                                                          streamTitle: "啊啊啊啊啊？",
-                                                          anchorName:
-                                                              followingList[index].anchorDetails.nickName,
-                                                          anchorPic:
-                                                              followingList[index].anchorDetails.head)),
+                                                      (index) =>
+                                                          FollowingBlockComponent(
+                                                            isStreaming:
+                                                                followingList[
+                                                                        index]
+                                                                    .streamingStatus,
+                                                            streamTitle:
+                                                                "啊啊啊啊啊？",
+                                                            anchorName:
+                                                                followingList[
+                                                                        index]
+                                                                    .anchorDetails
+                                                                    .nickName,
+                                                            anchorPic:
+                                                                followingList[
+                                                                        index]
+                                                                    .anchorDetails
+                                                                    .head,
+                                                            anchorId:
+                                                                followingList[
+                                                                        index]
+                                                                    .anchorId,
+                                                          )),
                                                 )
                                               : (followStatusId == 1)
                                                   ? Column()

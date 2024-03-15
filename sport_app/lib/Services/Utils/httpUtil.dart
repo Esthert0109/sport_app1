@@ -13,31 +13,31 @@ class ResponseData {
   ResponseData(this.statusCode, this.responseBody);
 }
 
-Future<ResponseData> sendPostRequest(
-    String url, Map<String, String> headers, Map<String, dynamic> body) async {
-  try {
-    final response = await http.post(
-      Uri.parse(url),
-      headers: headers,
-      body: json.encode(body),
-    );
+// Future<ResponseData> sendPostRequest(
+//     String url, Map<String, String> headers, Map<String, dynamic> body) async {
+//   try {
+//     final response = await http.post(
+//       Uri.parse(url),
+//       headers: headers,
+//       body: json.encode(body),
+//     );
 
-    // print("check search in request: ${response.body}");
+//     // print("check search in request: ${response.body}");
 
-    return ResponseData(response.statusCode, utf8.decode(response.bodyBytes));
+//     return ResponseData(response.statusCode, utf8.decode(response.bodyBytes));
 
-    // if (response.statusCode == 200) {
-    //   Map<String, dynamic> jsonData = json.decode(response.body);
-    //   return jsonData;
-    // } else {
-    //   throw Exception('Error: ${response.statusCode}');
-    // }
-  } catch (e) {
-    throw Exception('Exception: $e');
-  }
-}
+//     // if (response.statusCode == 200) {
+//     //   Map<String, dynamic> jsonData = json.decode(response.body);
+//     //   return jsonData;
+//     // } else {
+//     //   throw Exception('Error: ${response.statusCode}');
+//     // }
+//   } catch (e) {
+//     throw Exception('Exception: $e');
+//   }
+// }
 
-Future<Map<String, dynamic>> sendPostRequestTest(
+Future<Map<String, dynamic>> sendPostRequest(
     String url, Map<String, String> headers, Map<String, dynamic> body) async {
   try {
     final response = await http.post(

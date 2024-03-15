@@ -378,4 +378,6 @@ class ApiConstants {
 
   // follow anchor
   static const getFollowingList = '/api/v1/follow/following';
+
+  static const createFollow = "/api/v1/follow/create";
 }

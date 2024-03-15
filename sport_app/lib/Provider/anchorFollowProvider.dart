@@ -8,9 +8,44 @@ import 'package:sport_app/Services/Utils/httpUtil.dart';
 import '../Model/followingModel.dart';
 import '../Model/userDataModel.dart';
 import '../Services/Utils/sharedPreferencesUtils.dart';
+import '../Services/commonServices.dart';
 
 class AnchorFollowProvider extends ChangeNotifier {
   UserDataModel userDataModel = Get.find<UserDataModel>();
+  CommonServices service = CommonServices();
+
+  Future<CreateFollowModel?> createFollow(String anchorId) async {
+    final String url = ApiConstants.baseUrl + ApiConstants.createFollow;
+    final Map<String, String> body = {'anchorId': anchorId};
+
+    final token = await SharedPreferencesUtils.getSavedToken();
+    Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=utf-8',
+      'token': token!,
+    };
+
+    try {
+      final response = await sendPostRequest(url, headers, body);
+
+      int responseCode = response['code'];
+      String responseMsg = response['msg'];
+
+      if (responseCode == 0) {
+        bool responseData = response['data'];
+        CreateFollowModel createFollowModel = CreateFollowModel(
+            code: responseCode, msg: responseMsg, data: responseData);
+
+        return createFollowModel;
+      } else {
+        CreateFollowModel createFollowModel = CreateFollowModel(
+            code: responseCode, msg: responseMsg, data: false);
+        return createFollowModel;
+      }
+    } catch (e) {
+      print("Error in create follow: $e");
+      return null;
+    }
+  }
 
   Future<FollowModel?> getFollowingList() async {
     String url = ApiConstants.baseUrl + ApiConstants.getFollowingList;

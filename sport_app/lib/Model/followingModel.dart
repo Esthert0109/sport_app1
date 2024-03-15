@@ -1,3 +1,24 @@
+class CreateFollowModel {
+  final int code;
+  final String msg;
+  final bool data;
+
+  CreateFollowModel(
+      {required this.code, required this.msg, required this.data});
+
+  Map<String, dynamic> toJson() {
+    return {'code': code, 'msg': msg, 'data': data};
+  }
+
+  factory CreateFollowModel.fromJson(Map<String, dynamic> json) {
+    return CreateFollowModel(
+      code: json['code'],
+      msg: json['msg'],
+      data: json['data'],
+    );
+  }
+}
+
 class FollowModel {
   final int code;
   final String msg;
@@ -63,7 +84,7 @@ class FollowData {
     return FollowData(
       id: json['id'],
       anchorId: json['anchorId'],
-      anchorDetails: AnchorDetails.fromJson(json['anchorDetails']) ,
+      anchorDetails: AnchorDetails.fromJson(json['anchorDetails']),
       streamingStatus: json['streamingStatus'],
       followerId: json['followerId'],
       followCreatedTime: json['followCreatedTime'],

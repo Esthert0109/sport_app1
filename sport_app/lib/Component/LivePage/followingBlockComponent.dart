@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sport_app/Model/followingModel.dart';
+import 'package:sport_app/Provider/anchorFollowProvider.dart';
 import 'package:text_scroll/text_scroll.dart';
 
 import '../../Constants/colorConstant.dart';
@@ -9,19 +11,39 @@ class FollowingBlockComponent extends StatefulWidget {
   final String? streamTitle;
   final String anchorName;
   final String anchorPic;
+  final int anchorId;
 
   const FollowingBlockComponent(
       {required this.isStreaming,
       this.streamTitle,
       required this.anchorName,
-      required this.anchorPic});
+      required this.anchorPic,
+      required this.anchorId});
 
   @override
   State<FollowingBlockComponent> createState() =>
       _FollowingBlockComponentState();
 }
 
+// Global variable
+ValueNotifier<bool> followNotifier = ValueNotifier<bool>(false);
+
 class _FollowingBlockComponentState extends State<FollowingBlockComponent> {
+  // provider
+  AnchorFollowProvider provider = AnchorFollowProvider();
+
+  Future<void> createUnfollow() async {
+    CreateFollowModel? model =
+        await provider.createFollow(widget.anchorId.toString());
+    bool result = model?.data ?? false;
+    if (result) {
+      followNotifier.value = true;
+      print("unfollow successfully");
+    } else {
+      print("unfollow unsuccessfully");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // standard size
@@ -97,6 +119,9 @@ class _FollowingBlockComponentState extends State<FollowingBlockComponent> {
             child: InkWell(
               onTap: () {
                 print("unfollow");
+                setState(() {
+                  createUnfollow();
+                });
               },
               child: Center(
                 child: Container(

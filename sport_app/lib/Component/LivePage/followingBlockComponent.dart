@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/Model/followingModel.dart';
 import 'package:sport_app/Provider/anchorFollowProvider.dart';
 import 'package:text_scroll/text_scroll.dart';
 
 import '../../Constants/colorConstant.dart';
 import '../../Constants/textConstant.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FollowingBlockComponent extends StatefulWidget {
   final bool isStreaming;
@@ -12,13 +14,16 @@ class FollowingBlockComponent extends StatefulWidget {
   final String anchorName;
   final String anchorPic;
   final int anchorId;
+  Function? onTapCallback;
 
-  const FollowingBlockComponent(
-      {required this.isStreaming,
+  FollowingBlockComponent(
+      {super.key,
+      required this.isStreaming,
       this.streamTitle,
       required this.anchorName,
       required this.anchorPic,
-      required this.anchorId});
+      required this.anchorId,
+      required this.onTapCallback});
 
   @override
   State<FollowingBlockComponent> createState() =>
@@ -79,7 +84,7 @@ class _FollowingBlockComponentState extends State<FollowingBlockComponent> {
             )),
           ),
           Expanded(
-            flex: isStreaming ? 45 : 65,
+            flex: isStreaming ? 43 : 63,
             child: Padding(
               padding: EdgeInsets.fromLTRB(5 * fem, 0 * fem, 10 * fem, 0 * fem),
               child: isStreaming
@@ -90,10 +95,11 @@ class _FollowingBlockComponentState extends State<FollowingBlockComponent> {
                         TextScroll(
                           title,
                           mode: TextScrollMode.endless,
-                          velocity: Velocity(pixelsPerSecond: Offset(20, 0)),
+                          velocity:
+                              const Velocity(pixelsPerSecond: Offset(20, 0)),
                           style: tLiveTitleComponent,
-                          delayBefore: Duration(milliseconds: 500),
-                          pauseBetween: Duration(milliseconds: 5000),
+                          delayBefore: const Duration(milliseconds: 500),
+                          pauseBetween: const Duration(milliseconds: 5000),
                           textAlign: TextAlign.left,
                         ),
                         Text(
@@ -117,10 +123,100 @@ class _FollowingBlockComponentState extends State<FollowingBlockComponent> {
           Expanded(
             flex: 20,
             child: InkWell(
-              onTap: () {
+              onTap: () async {
                 print("unfollow");
+
                 setState(() {
-                  createUnfollow();
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8.0))),
+                          content: Text(
+                            "确认取关？",
+                            style: tMain,
+                          ),
+                          actions: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  // margin:
+                                  //     EdgeInsets.symmetric(horizontal: 5 * fem),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10 * fem),
+                                  width: 120 * fem,
+                                  child: TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    style: ButtonStyle(
+                                        shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                          ),
+                                        ),
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Color.fromARGB(
+                                                    255, 215, 236, 191))),
+                                    child: Text(
+                                      "取消",
+                                      style: TextStyle(
+                                        fontFamily: 'NotoSansSC',
+                                        fontSize: 12 * fem,
+                                        fontWeight: FontWeight.w600,
+                                        color: greenColor,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  // margin:
+                                  //     EdgeInsets.symmetric(horizontal: 5 * fem),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10 * fem),
+                                  width: 120 * fem,
+                                  child: TextButton(
+                                    onPressed: () async {
+                                      await createUnfollow();
+
+                                      if (widget.onTapCallback != null) {
+                                        widget.onTapCallback!();
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    style: ButtonStyle(
+                                        shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                          ),
+                                        ),
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                kMainGreenColor)),
+                                    child: Text(
+                                      "确认",
+                                      style: TextStyle(
+                                        fontFamily: 'NotoSansSC',
+                                        fontSize: 12 * fem,
+                                        fontWeight: FontWeight.w600,
+                                        color: white,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        );
+                      });
                 });
               },
               child: Center(
@@ -133,7 +229,7 @@ class _FollowingBlockComponentState extends State<FollowingBlockComponent> {
                       borderRadius: BorderRadius.circular(5),
                       color: kFollowButtonColor),
                   child: Text(
-                    "取消关注",
+                    AppLocalizations.of(context)!.unfollow,
                     textAlign: TextAlign.center,
                     style: tUnfollowText,
                   ),
@@ -143,7 +239,7 @@ class _FollowingBlockComponentState extends State<FollowingBlockComponent> {
           ),
           isStreaming
               ? Expanded(
-                  flex: 20,
+                  flex: 22,
                   child: Padding(
                     padding: EdgeInsets.only(left: 5 * fem),
                     child: Column(
@@ -151,22 +247,28 @@ class _FollowingBlockComponentState extends State<FollowingBlockComponent> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image(
-                          image: AssetImage("images/livepage/stream.png"),
+                          image: const AssetImage("images/livepage/stream.png"),
                           height: 24 * fem,
                           width: 24 * fem,
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(vertical: 1 * fem),
-                          child: Text(
-                            "正在直播🔥",
-                            style: tUnfollowText,
+                          child: Container(
+                            width: 70 * fem,
+                            child: Text(
+                              "${AppLocalizations.of(context)!.streaming}🔥",
+                              style: tUnfollowText,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         )
                       ],
                     ),
                   ),
                 )
-              : SizedBox()
+              : const SizedBox()
         ],
       ),
     );

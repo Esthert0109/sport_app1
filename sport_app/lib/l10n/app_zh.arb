@@ -114,5 +114,7 @@
     "descendingSort": "最近关注",
     "ascendingSort": "最早关注",
     "popularGames": "热门游戏",
-    "noFollowing": "-关注您的第一个主播吧！-"
+    "noFollowing": "-关注您的第一个主播吧！-",
+    "unfollow": "取消关注"
+    
 }

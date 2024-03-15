@@ -159,8 +159,6 @@ class _FootballLivePageState extends State<FootballLivePage>
       followingList.clear();
       followingLength = followingList.length;
 
-      // getCollections();
-
       footballLiveStreamList.clear();
       liveStreamLength = footballLiveStreamList.length;
       page = 1;
@@ -587,7 +585,7 @@ class _FootballLivePageState extends State<FootballLivePage>
                                                                         index]
                                                                     .streamingStatus,
                                                             streamTitle:
-                                                                "啊啊啊啊啊？",
+                                                                "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊？",
                                                             anchorName:
                                                                 followingList[
                                                                         index]
@@ -602,6 +600,8 @@ class _FootballLivePageState extends State<FootballLivePage>
                                                                 followingList[
                                                                         index]
                                                                     .anchorId,
+                                                            onTapCallback:
+                                                                toggleRefresh,
                                                           )),
                                                 )
                                               : (followStatusId == 1)

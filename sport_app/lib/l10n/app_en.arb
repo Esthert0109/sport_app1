@@ -112,5 +112,6 @@
     "descendingSort": "Recently Followed",
     "ascendingSort": "Earliest Followed",
     "popularGames": "Popular Games",
-    "noFollowing": "-Let''s get your first Follow!-"
+    "noFollowing": "-Let''s get your first Follow!-",
+    "unfollow": "Unfollow"
 }

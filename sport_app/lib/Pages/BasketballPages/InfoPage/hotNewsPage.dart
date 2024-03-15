@@ -18,11 +18,23 @@ class HotNewsPage extends StatefulWidget {
 
 class _HotNewsPageState extends State<HotNewsPage> {
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: kMainHotNewsColor,
     ));
+  }
 
+  @override
+  void dispose() {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: kMainGreenColor,
+    ));
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     // standard size
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
@@ -30,8 +42,6 @@ class _HotNewsPageState extends State<HotNewsPage> {
       backgroundColor: white,
       body: SafeArea(
         child: Stack(
-          // mainAxisAlignment: MainAxisAlignment.start,
-          // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
               height: double.maxFinite,

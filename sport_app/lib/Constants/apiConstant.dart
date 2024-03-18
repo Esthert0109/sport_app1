@@ -117,21 +117,21 @@ class ApiConstants {
 
   static const String getFootballMatchList = '/match/list?';
 
-  static const String getFootballMatchLineUp = '/match/line-up/';
+  static const String getFootballMatchLineUp = '/match/zh/line-up/';
 
-  static const String searchFootballMatchToday = '/match/now-list';
+  static const String searchFootballMatchToday = '/match/zh/now-list';
 
-  static const String getFootballMatchById = '/match/livedata/';
+  static const String getFootballMatchById = '/match/zh/livedata/';
 
   static const String getFootballLiveAddress = '/address/';
 
-  static const String getStartFootballMatch = '/match/list-start?';
+  static const String getStartFootballMatch = '/match/zh/list-start?';
 
-  static const String getFutureFootballMatch = '/match/list-future?';
+  static const String getFutureFootballMatch = '/match/zh/list-future?';
 
-  static const String getPassFootballMatch = '/match/list-past?';
+  static const String getPassFootballMatch = '/match/zh/list-past?';
 
-  static const String getMatchByDate = '/match/list/';
+  static const String getMatchByDate = '/match/zh/list/';
 
   static const String getMatchByDateUrl =
       footballBaseUrl + getMatchByDate; //get football matches by date

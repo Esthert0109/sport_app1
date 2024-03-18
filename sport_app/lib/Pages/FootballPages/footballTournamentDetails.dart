@@ -161,7 +161,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                           Container(
                             width: MediaQuery.of(context).size.width,
                             child: Image.asset(
-                              'images/tournament_detail.png',
+                              'images/tournament/tournament_detail.png',
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -445,6 +445,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                   // set height to your preference// optional
                   child: isDetailNull
                       ? searchEmptyWidget()
+                      // ? SizedBox()
                       : getContentForSelectedButton(),
                 ),
               ],
@@ -804,8 +805,10 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                       children: [
                                         Column(
                                           children: [
-                                            Image.asset('images/jiaoQiu.png',
-                                                width: 35, height: 30),
+                                            Image.asset(
+                                                'images/tournament/jiaoQiu.png',
+                                                width: 35,
+                                                height: 30),
                                             SizedBox(
                                               height: 10,
                                             ),
@@ -814,8 +817,10 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                         ),
                                         Column(
                                           children: [
-                                            Image.asset('images/hongPai.png',
-                                                width: 35, height: 30),
+                                            Image.asset(
+                                                'images/tournament/hongPai.png',
+                                                width: 35,
+                                                height: 30),
                                             SizedBox(
                                               height: 10,
                                             ),
@@ -824,8 +829,10 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                         ),
                                         Column(
                                           children: [
-                                            Image.asset('images/huangPai.png',
-                                                width: 35, height: 30),
+                                            Image.asset(
+                                                'images/tournament/huangPai.png',
+                                                width: 35,
+                                                height: 30),
                                             SizedBox(
                                               height: 10,
                                             ),
@@ -838,8 +845,10 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                       children: <Widget>[
                                         Column(
                                           children: [
-                                            Image.asset('images/huangPai.png',
-                                                width: 35, height: 30),
+                                            Image.asset(
+                                                'images/tournament/huangPai.png',
+                                                width: 35,
+                                                height: 30),
                                             SizedBox(
                                               height: 10,
                                             ),
@@ -848,8 +857,10 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                         ),
                                         Column(
                                           children: [
-                                            Image.asset('images/hongPai.png',
-                                                width: 35, height: 30),
+                                            Image.asset(
+                                                'images/tournament/hongPai.png',
+                                                width: 35,
+                                                height: 30),
                                             SizedBox(
                                               height: 10,
                                             ),
@@ -858,8 +869,10 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                         ),
                                         Column(
                                           children: [
-                                            Image.asset('images/jiaoQiu.png',
-                                                width: 35, height: 30),
+                                            Image.asset(
+                                                'images/tournament/jiaoQiu.png',
+                                                width: 35,
+                                                height: 30),
                                             SizedBox(
                                               height: 10,
                                             ),
@@ -1187,7 +1200,8 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                               height: 622.75,
                               decoration: ShapeDecoration(
                                 image: const DecorationImage(
-                                  image: AssetImage("images/qiuChang.png"),
+                                  image: AssetImage(
+                                      "images/tournament/qiuChang.png"),
                                   fit: BoxFit.fill,
                                 ),
                                 shape: RoundedRectangleBorder(
@@ -1678,7 +1692,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                                                     image:
                                                                         DecorationImage(
                                                               image: AssetImage(
-                                                                  'images/defaultlogo.png'), // Replace with your image path
+                                                                  'images/tournament/defaultlogo.png'), // Replace with your image path
                                                               fit: BoxFit.cover,
                                                             )),
                                                           ),
@@ -1789,7 +1803,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                                                   image:
                                                                       DecorationImage(
                                                             image: AssetImage(
-                                                                'images/defaultlogo.png'), // Replace with your image path
+                                                                'images/tournament/defaultlogo.png'), // Replace with your image path
                                                             fit: BoxFit.cover,
                                                           )),
                                                         ),

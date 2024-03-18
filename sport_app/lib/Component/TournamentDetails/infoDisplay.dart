@@ -18,7 +18,7 @@ class InfoDisplay extends StatelessWidget {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              Image.asset('images/search_empty.png'),
+              Image.asset('images/common/search_empty.png'),
               Text(text,
                   style: TextStyle(
                     color: textColor,

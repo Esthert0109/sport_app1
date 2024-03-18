@@ -58,16 +58,12 @@ class _SavedCollectionState extends State<SavedCollection> {
             await provider.getAllFootballCollection(page, size);
         collectionList.addAll(allCollectionModel?.data ?? []);
         collectionLength = collectionList.length;
-        print("check collection length: ${collectionLength}");
-        print("check collection length: ${collectionList[0].data.length}");
       } else {
         AllCollectMatchesModel? allCollectionModel =
             await provider.getAllBasketballCollection(page, size);
         collectionList.addAll(allCollectionModel?.data ?? []);
         collectionLength = collectionList.length;
 
-        print("check collection length: ${collectionLength}");
-        print("check collection length: ${collectionList[0].data.length}");
       }
 
       setState(() {

@@ -21,13 +21,16 @@ import '../../../Component/Tencent/liveStreamPlayer.dart';
 import '../../../Constants/Controller/layoutController.dart';
 import '../../../Constants/colorConstant.dart';
 import '../../../Constants/textConstant.dart';
+import '../../../Model/collectionModel.dart';
 import '../../../Model/liveStreamModel.dart';
 import '../../../Model/matchesModel.dart';
 import '../../../Model/userDataModel.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../Provider/collectionProvider.dart';
 import '../../../Provider/liveStreamProvider.dart';
 import '../../../Services/Utils/tencent/tencentLiveUtils.dart';
+import '../../BasketballPages/basketballTournamentDetails.dart';
 import '../../SearchPage/searchingPage.dart';
 import '../../TencentLiveStreamRoom/liveStreamChatRoom.dart';
 import '../footballTournamentDetails.dart';
@@ -51,6 +54,10 @@ class _FootballMainPageState extends State<FootballMainPage>
   // services and provider
   LiveStreamProvider liveStreamProvider = LiveStreamProvider();
   FootballMatchProvider matchesProvider = FootballMatchProvider();
+  BookmarkProvider provider = BookmarkProvider();
+
+  // get language
+  String language = "en_US";
 
   // fetch data from provider
   DateTime now = DateTime.now();
@@ -100,6 +107,9 @@ class _FootballMainPageState extends State<FootballMainPage>
   List<FootballMatchesData> pastList7 = [];
   int past7Length = 0;
   int pagePast7 = 1;
+  List<AllCollectMatchesData> collectionList = [];
+  int collectionLength = 0;
+  int page = 1;
 
   List<LiveStreamData> liveStreamList = [];
   int liveStreamLength = 0;
@@ -116,6 +126,24 @@ class _FootballMainPageState extends State<FootballMainPage>
   bool isEventLoading = false;
   bool isLoading = false;
   int item = 0;
+
+  Future<void> getFootballSavedCollections() async {
+    AllCollectMatchesModel? allCollectionModel =
+        await provider.getAllFootballCollection(page, size);
+    if (!isEventLoading) {
+      setState(() {
+        isEventLoading = true;
+      });
+
+      collectionList.addAll(allCollectionModel?.data ?? []);
+      collectionLength = collectionList.length;
+
+      setState(() {
+        isEventLoading = false;
+        page++;
+      });
+    }
+  }
 
   //choice of main page
   void dropdownCallback(String? selectedValue) {
@@ -247,7 +275,7 @@ class _FootballMainPageState extends State<FootballMainPage>
         isEventLoading = true;
       });
 
-      if (statusId == 1) {
+      if (statusId == 2) {
         List<DateTime> futureDate = generateFutureDates(7);
         DateTime date = futureDate[futureDateId];
         String formattedDate = DateFormat('yyyy-MM-dd').format(date);
@@ -330,12 +358,12 @@ class _FootballMainPageState extends State<FootballMainPage>
             pageFuture7++;
           });
         }
-      } else {
+      } else if (statusId == 3) {
         List<DateTime> pastDate = generatePastDates(7);
-        DateTime date = pastDate[futureDateId];
+        DateTime date = pastDate[pastDateId];
         String formattedDate = DateFormat('yyyy-MM-dd').format(date);
 
-        if (futureDateId == 0) {
+        if (pastDateId == 0) {
           FootballMatchesModel? matchesModel = await matchesProvider
               .getEventByDate(formattedDate, pagePast1, size, false);
 
@@ -402,6 +430,7 @@ class _FootballMainPageState extends State<FootballMainPage>
             pagePast6++;
           });
         } else if (pastDateId == 6) {
+          print(formattedDate);
           FootballMatchesModel? matchesModel = await matchesProvider
               .getEventByDate(formattedDate, pagePast7, size, false);
 
@@ -603,6 +632,8 @@ class _FootballMainPageState extends State<FootballMainPage>
                     if (statusId == 0) {
                       print("started");
                       getStartedEventList();
+                    } else if (statusId == 4) {
+                      getFootballSavedCollections();
                     } else {
                       getEventListByDate();
                     }
@@ -827,6 +858,15 @@ class _FootballMainPageState extends State<FootballMainPage>
                                             onTap: (index) {
                                               setState(() {
                                                 statusId = index;
+                                                if (statusId == 0) {
+                                                  print("display all");
+                                                } else if (statusId == 1) {
+                                                  getStartedEventList();
+                                                } else if (statusId == 4) {
+                                                  getFootballSavedCollections();
+                                                } else {
+                                                  getEventListByDate();
+                                                }
                                               });
                                             }),
                                       )
@@ -2149,7 +2189,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                                             );
                                                                                                           },
                                                                                                         )
-                                                                                              : (statusId == 0)
+                                                                                              : (statusId == 4)
                                                                                                   ? isEventLoading
                                                                                                       ? Column(children: [
                                                                                                           for (int i = 0; i < 4; i++)
@@ -2163,35 +2203,57 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                                           ? searchEmptyWidget()
                                                                                                           : ListView.builder(
                                                                                                               physics: const NeverScrollableScrollPhysics(),
-                                                                                                              itemCount: startedLength,
+                                                                                                              itemCount: collectionLength,
                                                                                                               shrinkWrap: true,
                                                                                                               itemBuilder: (context, index) {
-                                                                                                                return GestureDetector(
-                                                                                                                  onTap: () {
-                                                                                                                    print("navi into tournament");
-                                                                                                                    TournamentDetails(
-                                                                                                                      id: '${startedList?[index].id}',
-                                                                                                                      matchDate: '${startedList?[index].matchDate}',
-                                                                                                                      matchStatus: '未开赛',
-                                                                                                                      matchName: '${startedList?[index].competitionName}',
-                                                                                                                      homeTeamFormation: '${startedList?[index].homeFormation}',
-                                                                                                                      awayTeamFormation: '${startedList?[index].awayFormation}',
-                                                                                                                      lineUp: startedList?[index].lineUp ?? 0,
-                                                                                                                    ).launch(context);
-                                                                                                                  },
-                                                                                                                  child: GameDisplayComponent(
-                                                                                                                    id: startedList[index].id ?? 0,
-                                                                                                                    competitionType: startedList[index].competitionName ?? "",
-                                                                                                                    duration: startedList[index].matchTimeStr ?? "00:00",
-                                                                                                                    teamAName: startedList[index].homeTeamName ?? "",
-                                                                                                                    teamALogo: startedList[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                                    teamAScore: startedList[index].homeTeamScore.toString(),
-                                                                                                                    teamBName: startedList[index].awayTeamName ?? "",
-                                                                                                                    teamBLogo: startedList[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                                    teamBScore: startedList[index].awayTeamScore.toString(),
-                                                                                                                    isSaved: startedList[index].hasCollected ?? false,
-                                                                                                                  ),
-                                                                                                                );
+                                                                                                                return isLoading
+                                                                                                                    ? Column(children: [
+                                                                                                                        for (int i = 0; i < collectionLength; i++)
+                                                                                                                          CardLoading(
+                                                                                                                            height: 100 * fem,
+                                                                                                                            borderRadius: BorderRadius.circular(8 * fem),
+                                                                                                                            margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                                                          ),
+                                                                                                                      ])
+                                                                                                                    : Column(
+                                                                                                                        mainAxisAlignment: MainAxisAlignment.start,
+                                                                                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                                        children: [
+                                                                                                                          Container(
+                                                                                                                            margin: EdgeInsets.fromLTRB(20 * fem, 15 * fem, 20 * fem, 10 * fem),
+                                                                                                                            alignment: Alignment.centerLeft,
+                                                                                                                            child: Text(
+                                                                                                                              DateFormat('yyyy/MM/dd  EEEE', language).format(DateTime.parse(collectionList[index].date)),
+                                                                                                                              style: tCollectionDateTitle,
+                                                                                                                            ),
+                                                                                                                          ),
+                                                                                                                          ListView.builder(
+                                                                                                                            physics: const NeverScrollableScrollPhysics(),
+                                                                                                                            itemCount: collectionList[index].data.length,
+                                                                                                                            shrinkWrap: true,
+                                                                                                                            itemBuilder: (context, i) {
+                                                                                                                              return GestureDetector(
+                                                                                                                                onTap: () {
+                                                                                                                                  print("navi into tournament");
+                                                                                                                                  BasketballTournamentDetails(id: '${collectionList[index].data[i].id}', matchDate: '${collectionList[index].data[i].matchDate}', matchStatus: '${collectionList[index].data[i].statusStr}', matchName: '${collectionList[index].data[i].competitionName}').launch(context);
+                                                                                                                                },
+                                                                                                                                child: GameDisplayComponent(
+                                                                                                                                  id: collectionList[index].data[i].id ?? 0,
+                                                                                                                                  competitionType: collectionList[index].data[i].competitionName ?? "",
+                                                                                                                                  duration: collectionList[index].data[i].matchTimeStr ?? "00:00",
+                                                                                                                                  teamAName: collectionList[index].data[i].homeTeamName ?? "",
+                                                                                                                                  teamALogo: collectionList[index].data[i].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                                                  teamAScore: collectionList[index].data[i].homeTeamScore.toString(),
+                                                                                                                                  teamBName: collectionList[index].data[i].awayTeamName ?? "",
+                                                                                                                                  teamBLogo: collectionList[index].data[i].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                                                  teamBScore: collectionList[index].data[i].awayTeamScore.toString(),
+                                                                                                                                  isSaved: collectionList[index].data[i].hasCollected ?? true,
+                                                                                                                                ),
+                                                                                                                              );
+                                                                                                                            },
+                                                                                                                          )
+                                                                                                                        ],
+                                                                                                                      );
                                                                                                               },
                                                                                                             )
                                                                                                   : Container(),

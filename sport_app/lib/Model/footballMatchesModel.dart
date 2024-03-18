@@ -29,233 +29,153 @@ class FootballMatchesModel {
 }
 
 class FootballMatchesData {
-  final String weatherEn;
-  final String leagueEn;
-  final String roundCn;
-  final String leagueChtShort;
-  final String subLeagueEn;
-  final int awayCorner;
-  final String leagueEnShort;
-  final int homeRed;
-  final int leagueId;
-  final String subLeagueCht;
-  final String season;
-  final String explainEn;
-  final int state;
-  final int homeHalfScore;
-  final String homeRankEn;
-  final String subLeagueId;
-  final int homeId;
-  final int awayRed;
-  final String leagueChsShort;
-  final int kind;
-  final String subLeagueChs;
-  final String matchTime;
-  final String grouping;
-  final String homeEn;
-  final int injuryTime;
-  final String awayChs;
-  final String awayRankEn;
-  final String awayCht;
-  final String weatherCn;
-  final String roundEn;
-  final String color;
-  final int awayHalfScore;
-  final int homeCorner;
-  final String extraExplain;
-  final int awayScore;
-  final String locationEn;
-  final String explainCn;
-  final String homeRankCn;
-  final String startTime;
   final int matchId;
-  final bool isNeutral;
-  final String temp;
+  final String status;
+  final String matchDate;
+  final String matchTime;
+  final String homeTeamName;
+  final String awayTeamName;
+  final String homeTeamLogo;
+  final String awayTeamLog;
+  final String refereeName;
+  final String venueName;
+  final String homeFormation;
+  final String awayFormation;
+  final String homeCoach;
+  final String awayCoach;
+  final int homeAttackNum;
+  final int awayAttackNum;
+  final int homeAttackDangerNum;
+  final int awayAttackDangerNum;
+  final String homePossessionRate;
+  final String awayPossessionRate;
+  final int homeShootGoalNum;
+  final int awayShootGoalNum;
+  final int homeBiasNum;
+  final int awayBiasNum;
+  final int homeCornerKickNum;
+  final int awayCornerKickNum;
+  final int homeRedCardNum;
+  final int awayRedCardNum;
+  final int homeYellowCardNum;
+  final int awayYellowCardNum;
   final int homeScore;
-  final String locationCn;
-  final int awayId;
-  final int awayYellow;
-  final String updateTime;
-  final int homeYellow;
-  final String homeChs;
-  final bool isHidden;
-  final String homeCht;
-  final String awayEn;
-  final String awayRankCn;
-  final String hasLineup;
+  final int awayScore;
+  final int homePenaltyNum;
+  final int awayPenaltyNum;
 
   FootballMatchesData({
-    required this.weatherEn,
-    required this.leagueEn,
-    required this.roundCn,
-    required this.leagueChtShort,
-    required this.subLeagueEn,
-    required this.awayCorner,
-    required this.leagueEnShort,
-    required this.homeRed,
-    required this.leagueId,
-    required this.subLeagueCht,
-    required this.season,
-    required this.explainEn,
-    required this.state,
-    required this.homeHalfScore,
-    required this.homeRankEn,
-    required this.subLeagueId,
-    required this.homeId,
-    required this.awayRed,
-    required this.leagueChsShort,
-    required this.kind,
-    required this.subLeagueChs,
-    required this.matchTime,
-    required this.grouping,
-    required this.homeEn,
-    required this.injuryTime,
-    required this.awayChs,
-    required this.awayRankEn,
-    required this.awayCht,
-    required this.weatherCn,
-    required this.roundEn,
-    required this.color,
-    required this.awayHalfScore,
-    required this.homeCorner,
-    required this.extraExplain,
-    required this.awayScore,
-    required this.locationEn,
-    required this.explainCn,
-    required this.homeRankCn,
-    required this.startTime,
     required this.matchId,
-    required this.isNeutral,
-    required this.temp,
+    required this.status,
+    required this.matchDate,
+    required this.matchTime,
+    required this.homeTeamName,
+    required this.awayTeamName,
+    required this.homeTeamLogo,
+    required this.awayTeamLog,
+    required this.refereeName,
+    required this.venueName,
+    required this.homeFormation,
+    required this.awayFormation,
+    required this.homeCoach,
+    required this.awayCoach,
+    required this.homeAttackNum,
+    required this.awayAttackNum,
+    required this.homeAttackDangerNum,
+    required this.awayAttackDangerNum,
+    required this.homePossessionRate,
+    required this.awayPossessionRate,
+    required this.homeShootGoalNum,
+    required this.awayShootGoalNum,
+    required this.homeBiasNum,
+    required this.awayBiasNum,
+    required this.homeCornerKickNum,
+    required this.awayCornerKickNum,
+    required this.homeRedCardNum,
+    required this.awayRedCardNum,
+    required this.homeYellowCardNum,
+    required this.awayYellowCardNum,
     required this.homeScore,
-    required this.locationCn,
-    required this.awayId,
-    required this.awayYellow,
-    required this.updateTime,
-    required this.homeYellow,
-    required this.homeChs,
-    required this.isHidden,
-    required this.homeCht,
-    required this.awayEn,
-    required this.awayRankCn,
-    required this.hasLineup,
+    required this.awayScore,
+    required this.homePenaltyNum,
+    required this.awayPenaltyNum,
   });
 
   Map<String, dynamic> toJson() {
     return {
-      'weatherEn': weatherEn,
-      'leagueEn': leagueEn,
-      'roundCn': roundCn,
-      'leagueChtShort': leagueChtShort,
-      'subLeagueEn': subLeagueEn,
-      'awayCorner': awayCorner,
-      'leagueEnShort': leagueEnShort,
-      'homeRed': homeRed,
-      'leagueId': leagueId,
-      'subLeagueCht': subLeagueCht,
-      'season': season,
-      'explainEn': explainEn,
-      'state': state,
-      'homeHalfScore': homeHalfScore,
-      'homeRankEn': homeRankEn,
-      'subLeagueId': subLeagueId,
-      'homeId': homeId,
-      'awayRed': awayRed,
-      'leagueChsShort': leagueChsShort,
-      'kind': kind,
-      'subLeagueChs': subLeagueChs,
-      'matchTime': matchTime,
-      'grouping': grouping,
-      'homeEn': homeEn,
-      'injuryTime': injuryTime,
-      'awayChs': awayChs,
-      'awayRankEn': awayRankEn,
-      'awayCht': awayCht,
-      'weatherCn': weatherCn,
-      'roundEn': roundEn,
-      'color': color,
-      'awayHalfScore': awayHalfScore,
-      'homeCorner': homeCorner,
-      'extraExplain': extraExplain,
-      'awayScore': awayScore,
-      'locationEn': locationEn,
-      'explainCn': explainCn,
-      'homeRankCn': homeRankCn,
-      'startTime': startTime,
-      'matchId': matchId,
-      'isNeutral': isNeutral,
-      'temp': temp,
-      'homeScore': homeScore,
-      'locationCn': locationCn,
-      'awayId': awayId,
-      'awayYellow': awayYellow,
-      'updateTime': updateTime,
-      'homeYellow': homeYellow,
-      'homeChs': homeChs,
-      'isHidden': isHidden,
-      'homeCht': homeCht,
-      'awayEn': awayEn,
-      'awayRankCn': awayRankCn,
-      'hasLineup': hasLineup,
+      "matchId": matchId,
+      "status": status,
+      "matchDate": matchDate,
+      "matchTime": matchTime,
+      "homeTeamName": homeTeamName,
+      "awayTeamName": awayTeamName,
+      "homeTeamLogo": homeTeamLogo,
+      "awayTeamLog": awayTeamLog,
+      "refereeName": refereeName,
+      "venueName": venueName,
+      "homeFormation": homeFormation,
+      "awayFormation": awayFormation,
+      "homeCoach": homeCoach,
+      "awayCoach": awayCoach,
+      "homeAttackNum": homeAttackNum,
+      "awayAttackNum": awayAttackNum,
+      "homeAttackDangerNum": homeAttackDangerNum,
+      "awayAttackDangerNum": awayAttackDangerNum,
+      "homePossessionRate": homePossessionRate,
+      "awayPossessionRate": awayPossessionRate,
+      "homeShootGoalNum": homeShootGoalNum,
+      "awayShootGoalNum": awayShootGoalNum,
+      "homeBiasNum": homeBiasNum,
+      "awayBiasNum": awayBiasNum,
+      "homeCornerKickNum": homeCornerKickNum,
+      "awayCornerKickNum": awayCornerKickNum,
+      "homeRedCardNum": homeRedCardNum,
+      "awayRedCardNum": awayRedCardNum,
+      "homeYellowCardNum": homeYellowCardNum,
+      "awayYellowCardNum": awayYellowCardNum,
+      "homeScore": homeScore,
+      "awayScore": awayScore,
+      "homePenaltyNum": homePenaltyNum,
+      "awayPenaltyNum": awayPenaltyNum,
     };
   }
 
   factory FootballMatchesData.fromJson(Map<String, dynamic> json) {
     return FootballMatchesData(
-      weatherEn: json['weatherEn'],
-      leagueEn: json['leagueEn'],
-      roundCn: json['roundCn'],
-      leagueChtShort: json['leagueChtShort'],
-      subLeagueEn: json['subLeagueEn'],
-      awayCorner: json['awayCorner'],
-      leagueEnShort: json['leagueEnShort'],
-      homeRed: json['homeRed'],
-      leagueId: json['leagueId'],
-      subLeagueCht: json['subLeagueCht'],
-      season: json['season'],
-      explainEn: json['explainEn'],
-      state: json['state'],
-      homeHalfScore: json['homeHalfScore'],
-      homeRankEn: json['homeRankEn'],
-      subLeagueId: json['subLeagueId'],
-      homeId: json['homeId'],
-      awayRed: json['awayRed'],
-      leagueChsShort: json['leagueChsShort'],
-      kind: json['kind'],
-      subLeagueChs: json['subLeagueChs'],
-      matchTime: json['matchTime'],
-      grouping: json['grouping'],
-      homeEn: json['homeEn'],
-      injuryTime: json['injuryTime'],
-      awayChs: json['awayChs'],
-      awayRankEn: json['awayRankEn'],
-      awayCht: json['awayCht'],
-      weatherCn: json['weatherCn'],
-      roundEn: json['roundEn'],
-      color: json['color'],
-      awayHalfScore: json['awayHalfScore'],
-      homeCorner: json['homeCorner'],
-      extraExplain: json['extraExplain'],
-      awayScore: json['awayScore'],
-      locationEn: json['locationEn'],
-      explainCn: json['explainCn'],
-      homeRankCn: json['homeRankCn'],
-      startTime: json['startTime'],
       matchId: json['matchId'],
-      isNeutral: json['isNeutral'],
-      temp: json['temp'],
+      status: json['status'],
+      matchDate: json['matchDate'],
+      matchTime: json['matchTime'],
+      homeTeamName: json['homeTeamName'],
+      awayTeamName: json['awayTeamName'],
+      homeTeamLogo: json['homeTeamLogo'],
+      awayTeamLog: json['awayTeamLog'],
+      refereeName: json['refereeName'],
+      venueName: json['venueName'],
+      homeFormation: json['homeFormation'],
+      awayFormation: json['awayFormation'],
+      homeCoach: json['homeCoach'],
+      awayCoach: json['awayCoach'],
+      homeAttackNum: json['homeAttackNum'],
+      awayAttackNum: json['awayAttackNum'],
+      homeAttackDangerNum: json['homeAttackDangerNum'],
+      awayAttackDangerNum: json['awayAttackDangerNum'],
+      homePossessionRate: json['homePossessionRate'],
+      awayPossessionRate: json['awayPossessionRate'],
+      homeShootGoalNum: json['homeShootGoalNum'],
+      awayShootGoalNum: json['awayShootGoalNum'],
+      homeBiasNum: json['homeBiasNum'],
+      awayBiasNum: json['awayBiasNum'],
+      homeCornerKickNum: json['homeCornerKickNum'],
+      awayCornerKickNum: json['awayCornerKickNum'],
+      homeRedCardNum: json['homeRedCardNum'],
+      awayRedCardNum: json['awayRedCardNum'],
+      homeYellowCardNum: json['homeYellowCardNum'],
+      awayYellowCardNum: json['awayYellowCardNum'],
       homeScore: json['homeScore'],
-      locationCn: json['locationCn'],
-      awayId: json['awayId'],
-      awayYellow: json['awayYellow'],
-      updateTime: json['updateTime'],
-      homeYellow: json['homeYellow'],
-      homeChs: json['homeChs'],
-      isHidden: json['isHidden'],
-      homeCht: json['homeCht'],
-      awayEn: json['awayEn'],
-      awayRankCn: json['awayRankCn'],
-      hasLineup: json['hasLineup'],
+      awayScore: json['awayScore'],
+      homePenaltyNum: json['homePenaltyNum'],
+      awayPenaltyNum: json['awayPenaltyNum'],
     );
   }
 }

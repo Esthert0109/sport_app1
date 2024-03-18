@@ -872,7 +872,8 @@ class _BasketballTournamentDetailsState
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       style: TextStyle(
-                                                          color: kMainGreyColor),
+                                                          color:
+                                                              kMainGreyColor),
                                                     ),
                                                   )),
                                               SizedBox(
@@ -882,7 +883,8 @@ class _BasketballTournamentDetailsState
                                                     child: Text(
                                                       "${basketballMatchById!['hfquarter']}",
                                                       style: TextStyle(
-                                                          color: kMainGreyColor),
+                                                          color:
+                                                              kMainGreyColor),
                                                     ),
                                                   ),
                                                 ),
@@ -894,7 +896,8 @@ class _BasketballTournamentDetailsState
                                                     child: Text(
                                                       "${basketballMatchById!['hsquarter']}",
                                                       style: TextStyle(
-                                                          color: kMainGreyColor),
+                                                          color:
+                                                              kMainGreyColor),
                                                     ),
                                                   ),
                                                 ),
@@ -906,7 +909,8 @@ class _BasketballTournamentDetailsState
                                                     child: Text(
                                                       "${basketballMatchById!['htquarter']}",
                                                       style: TextStyle(
-                                                          color: kMainGreyColor),
+                                                          color:
+                                                              kMainGreyColor),
                                                     ),
                                                   ),
                                                 ),
@@ -918,7 +922,8 @@ class _BasketballTournamentDetailsState
                                                     child: Text(
                                                       "${basketballMatchById!['h4Quarter']}",
                                                       style: TextStyle(
-                                                          color: kMainGreyColor),
+                                                          color:
+                                                              kMainGreyColor),
                                                     ),
                                                   ),
                                                 ),
@@ -930,7 +935,8 @@ class _BasketballTournamentDetailsState
                                                     child: Text(
                                                       "${basketballMatchById!['homeScore']}",
                                                       style: TextStyle(
-                                                          color: kMainGreyColor),
+                                                          color:
+                                                              kMainGreyColor),
                                                     ),
                                                   ),
                                                 ),
@@ -956,7 +962,8 @@ class _BasketballTournamentDetailsState
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       style: TextStyle(
-                                                          color: kMainGreyColor),
+                                                          color:
+                                                              kMainGreyColor),
                                                     ),
                                                   )),
                                               SizedBox(
@@ -966,7 +973,8 @@ class _BasketballTournamentDetailsState
                                                     child: Text(
                                                       "${basketballMatchById!['afquarter']}",
                                                       style: TextStyle(
-                                                          color: kMainGreyColor),
+                                                          color:
+                                                              kMainGreyColor),
                                                     ),
                                                   ),
                                                 ),
@@ -978,7 +986,8 @@ class _BasketballTournamentDetailsState
                                                     child: Text(
                                                       "${basketballMatchById!['asquarter']}",
                                                       style: TextStyle(
-                                                          color: kMainGreyColor),
+                                                          color:
+                                                              kMainGreyColor),
                                                     ),
                                                   ),
                                                 ),
@@ -990,7 +999,8 @@ class _BasketballTournamentDetailsState
                                                     child: Text(
                                                       "${basketballMatchById!['atquarter']}",
                                                       style: TextStyle(
-                                                          color: kMainGreyColor),
+                                                          color:
+                                                              kMainGreyColor),
                                                     ),
                                                   ),
                                                 ),
@@ -1002,7 +1012,8 @@ class _BasketballTournamentDetailsState
                                                     child: Text(
                                                       "${basketballMatchById!['a4Quarter']}",
                                                       style: TextStyle(
-                                                          color: kMainGreyColor),
+                                                          color:
+                                                              kMainGreyColor),
                                                     ),
                                                   ),
                                                 ),
@@ -1014,7 +1025,8 @@ class _BasketballTournamentDetailsState
                                                     child: Text(
                                                       "${basketballMatchById!['awayScore']}",
                                                       style: TextStyle(
-                                                          color: kMainGreyColor),
+                                                          color:
+                                                              kMainGreyColor),
                                                     ),
                                                   ),
                                                 ),
@@ -1039,7 +1051,7 @@ class _BasketballTournamentDetailsState
                                               borderRadius:
                                                   BorderRadius.circular(10)),
                                           child: Image.asset(
-                                              'images/search_empty.png'),
+                                              'images/common/search_empty.png'),
                                         )
                                       : Container(
                                           width: screenWidth * 1,
@@ -1344,8 +1356,7 @@ class _BasketballTournamentDetailsState
                                                               : (percentageOfFreeThrowHomeEN ==
                                                                       0
                                                                   ? 0
-                                                                  : percentageOfFreeThrowHomeEN)
-                                                          ,
+                                                                  : percentageOfFreeThrowHomeEN),
                                                           percent2_text: userModel
                                                                       .isCN ==
                                                                   true
@@ -1979,7 +1990,6 @@ class _BasketballTournamentDetailsState
                                         "${basketballMatchById?['homeTeamName'].toString()}",
                                     awayTeamName:
                                         "${basketballMatchById?['awayTeamName'].toString()}"),
-
                                 SizedBox(
                                   height: 20,
                                 ),

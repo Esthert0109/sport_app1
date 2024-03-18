@@ -377,7 +377,10 @@ class ApiConstants {
   static const getPopularGameList = '/api/v1/popular-games/getAll';
 
   // follow anchor
-  static const getFollowingList = '/api/v1/follow/following';
+  static const getFollowingList = '/api/v1/follow/following?';
+  static const getFollowingListDesc = '/api/v1/follow/following/desc?';
+  static const getFollowingListAsc = '/api/v1/follow/following/asc?';
+  
 
   static const createFollow = "/api/v1/follow/create";
 }

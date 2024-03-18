@@ -73,9 +73,18 @@ class _FootballLivePageState extends State<FootballLivePage>
   // variables
   int page = 1;
   int size = 10;
+  int followPage = 1;
+  int followPageDesc = 1;
+  int followPageAsc = 1;
 
   List<FollowData> followingList = [];
   int followingLength = 0;
+
+  List<FollowData> followingListDesc = [];
+  int followingDescLength = 0;
+
+  List<FollowData> followingListAsc = [];
+  int followingAscLength = 0;
 
   Future<void> checkLogin() async {
     //get shared preferences
@@ -94,12 +103,50 @@ class _FootballLivePageState extends State<FootballLivePage>
         isFollowLoading = true;
       });
 
-      FollowModel? followModel = await followProvider.getFollowingList();
+      FollowModel? followModel =
+          await followProvider.getFollowingList(followPage, size);
       followingList.addAll(followModel?.data ?? []);
       followingLength = followingList.length;
 
       setState(() {
         isFollowLoading = false;
+        followPage++;
+      });
+    }
+  }
+
+  Future<void> getFollowingListDesc() async {
+    if (!isFollowLoading) {
+      setState(() {
+        isFollowLoading = true;
+      });
+
+      FollowModel? followModel =
+          await followProvider.getFollowingListDesc(followPage, size);
+      followingListDesc.addAll(followModel?.data ?? []);
+      followingDescLength = followingList.length;
+
+      setState(() {
+        isFollowLoading = false;
+        followPageDesc++;
+      });
+    }
+  }
+
+  Future<void> getFollowingListAsc() async {
+    if (!isFollowLoading) {
+      setState(() {
+        isFollowLoading = true;
+      });
+
+      FollowModel? followModel =
+          await followProvider.getFollowingListAsc(followPage, size);
+      followingListAsc.addAll(followModel?.data ?? []);
+      followingAscLength = followingList.length;
+
+      setState(() {
+        isFollowLoading = false;
+        followPageAsc++;
       });
     }
   }
@@ -137,27 +184,11 @@ class _FootballLivePageState extends State<FootballLivePage>
     }
   }
 
-  Future<void> getCollections() async {
-    if (!isCollectionLoading) {
-      setState(() {
-        isCollectionLoading = true;
-      });
-
-      CollectMatchesModel? collection =
-          await savedBookmarkProvider.getThreeFootballCollection();
-      threeCollections.addAll(collection?.data ?? []);
-      collectionLength = threeCollections.length;
-
-      setState(() {
-        isCollectionLoading = false;
-      });
-    }
-  }
-
   Future<void> toggleRefresh() async {
     setState(() {
       followingList.clear();
       followingLength = followingList.length;
+      followPage = 1;
 
       footballLiveStreamList.clear();
       liveStreamLength = footballLiveStreamList.length;
@@ -546,6 +577,26 @@ class _FootballLivePageState extends State<FootballLivePage>
                                             onTap: (index) {
                                               setState(() {
                                                 followStatusId = index;
+                                                if (followStatusId == 0) {
+                                                  followingList.clear();
+                                                  followingLength =
+                                                      followingList.length;
+                                                  followPage = 1;
+                                                  getFollowingList();
+                                                } else if (followStatusId ==
+                                                    1) {
+                                                  followingListDesc.clear();
+                                                  followingDescLength =
+                                                      followingListDesc.length;
+                                                  followPageDesc = 1;
+                                                  getFollowingListDesc();
+                                                } else {
+                                                  followingListAsc.clear();
+                                                  followingAscLength =
+                                                      followingListAsc.length;
+                                                  followPageAsc = 1;
+                                                  getFollowingListAsc();
+                                                }
                                               });
                                             }),
                                       ),
@@ -605,8 +656,62 @@ class _FootballLivePageState extends State<FootballLivePage>
                                                           )),
                                                 )
                                               : (followStatusId == 1)
-                                                  ? Column()
-                                                  : Column()
+                                                  ? Column(
+                                                      children: List.generate(
+                                                          followingDescLength,
+                                                          (index) =>
+                                                              FollowingBlockComponent(
+                                                                isStreaming:
+                                                                    followingListDesc[
+                                                                            index]
+                                                                        .streamingStatus,
+                                                                streamTitle:
+                                                                    "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊？",
+                                                                anchorName: followingListDesc[
+                                                                        index]
+                                                                    .anchorDetails
+                                                                    .nickName,
+                                                                anchorPic:
+                                                                    followingListDesc[
+                                                                            index]
+                                                                        .anchorDetails
+                                                                        .head,
+                                                                anchorId:
+                                                                    followingListDesc[
+                                                                            index]
+                                                                        .anchorId,
+                                                                onTapCallback:
+                                                                    toggleRefresh,
+                                                              )),
+                                                    )
+                                                  : Column(
+                                                      children: List.generate(
+                                                          followingAscLength,
+                                                          (index) =>
+                                                              FollowingBlockComponent(
+                                                                isStreaming:
+                                                                    followingListAsc[
+                                                                            index]
+                                                                        .streamingStatus,
+                                                                streamTitle:
+                                                                    "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊？",
+                                                                anchorName: followingListAsc[
+                                                                        index]
+                                                                    .anchorDetails
+                                                                    .nickName,
+                                                                anchorPic:
+                                                                    followingListAsc[
+                                                                            index]
+                                                                        .anchorDetails
+                                                                        .head,
+                                                                anchorId:
+                                                                    followingListAsc[
+                                                                            index]
+                                                                        .anchorId,
+                                                                onTapCallback:
+                                                                    toggleRefresh,
+                                                              )),
+                                                    )
                                     ],
                                   )
                           ],

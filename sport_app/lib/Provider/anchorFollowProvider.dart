@@ -47,8 +47,86 @@ class AnchorFollowProvider extends ChangeNotifier {
     }
   }
 
-  Future<FollowModel?> getFollowingList() async {
-    String url = ApiConstants.baseUrl + ApiConstants.getFollowingList;
+  Future<FollowModel?> getFollowingList(int page, int size) async {
+    String url = ApiConstants.baseUrl +
+        ApiConstants.getFollowingList +
+        "page=$page&size=$size";
+
+    final token = await SharedPreferencesUtils.getSavedToken();
+    Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=utf-8',
+      'token': token!,
+    };
+
+    try {
+      final response = await sendGetRequest(url, headers);
+
+      int responseCode = response['code'];
+      String responseMsg = response['msg'];
+
+      if (responseCode == 0) {
+        List<dynamic> jsonData = response['data'];
+
+        print("check list: ${jsonData}");
+        List<FollowData> responseData =
+            jsonData.map((e) => FollowData.fromJson(e)).toList();
+
+        FollowModel followModel = FollowModel(
+            code: responseCode, msg: responseMsg, data: responseData);
+        return followModel;
+      } else {
+        FollowModel followModel =
+            FollowModel(code: responseCode, msg: responseMsg, data: []);
+        return followModel;
+      }
+    } catch (e) {
+      print("Error in get following list: $e");
+      return null;
+    }
+  }
+
+  Future<FollowModel?> getFollowingListDesc(int page, int size) async {
+    String url = ApiConstants.baseUrl +
+        ApiConstants.getFollowingListDesc +
+        "page=$page&size=$size";
+
+    final token = await SharedPreferencesUtils.getSavedToken();
+    Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=utf-8',
+      'token': token!,
+    };
+
+    try {
+      final response = await sendGetRequest(url, headers);
+
+      int responseCode = response['code'];
+      String responseMsg = response['msg'];
+
+      if (responseCode == 0) {
+        List<dynamic> jsonData = response['data'];
+
+        print("check list: ${jsonData}");
+        List<FollowData> responseData =
+            jsonData.map((e) => FollowData.fromJson(e)).toList();
+
+        FollowModel followModel = FollowModel(
+            code: responseCode, msg: responseMsg, data: responseData);
+        return followModel;
+      } else {
+        FollowModel followModel =
+            FollowModel(code: responseCode, msg: responseMsg, data: []);
+        return followModel;
+      }
+    } catch (e) {
+      print("Error in get following list: $e");
+      return null;
+    }
+  }
+
+  Future<FollowModel?> getFollowingListAsc(int page, int size) async {
+    String url = ApiConstants.baseUrl +
+        ApiConstants.getFollowingListAsc +
+        "page=$page&size=$size";
 
     final token = await SharedPreferencesUtils.getSavedToken();
     Map<String, String> headers = {

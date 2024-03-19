@@ -70,9 +70,17 @@ class _BasketballLivePageState extends State<BasketballLivePage>
   int page = 1;
   int size = 10;
   int followPage = 1;
+  int followPageDesc = 1;
+  int followPageAsc = 1;
 
   List<FollowData> followingList = [];
   int followingLength = 0;
+
+  List<FollowData> followingListDesc = [];
+  int followingDescLength = 0;
+
+  List<FollowData> followingListAsc = [];
+  int followingAscLength = 0;
 
   Future<void> checkLogin() async {
     //get shared preferences
@@ -117,6 +125,43 @@ class _BasketballLivePageState extends State<BasketballLivePage>
 
       setState(() {
         isFollowLoading = false;
+        followPage++;
+      });
+    }
+  }
+
+  Future<void> getFollowingListDesc() async {
+    FollowModel? followModel =
+        await followProvider.getFollowingListDesc(followPageDesc, size);
+    if (!isFollowLoading) {
+      setState(() {
+        isFollowLoading = true;
+      });
+
+      followingListDesc.addAll(followModel?.data ?? []);
+      followingDescLength = followingList.length;
+
+      setState(() {
+        isFollowLoading = false;
+        followPageDesc++;
+      });
+    }
+  }
+
+  Future<void> getFollowingListAsc() async {
+    if (!isFollowLoading) {
+      setState(() {
+        isFollowLoading = true;
+      });
+
+      FollowModel? followModel =
+          await followProvider.getFollowingListAsc(followPageAsc, size);
+      followingListAsc.addAll(followModel?.data ?? []);
+      followingAscLength = followingList.length;
+
+      setState(() {
+        isFollowLoading = false;
+        followPageAsc++;
       });
     }
   }
@@ -139,16 +184,15 @@ class _BasketballLivePageState extends State<BasketballLivePage>
 
   Future<void> toggleRefresh() async {
     setState(() {
-      // threeCollections.clear();
-      // collectionLength = threeCollections.length;
+      statusId = 0;
+      followStatusId = 0;
+
       followingList.clear();
       followingLength = followingList.length;
+      followPage = 1;
 
       basketballLiveStreamList.clear();
       liveStreamLength = basketballLiveStreamList.length;
-
-      print("check: $liveStreamLength");
-      print("check basket: ${basketballLiveStreamList.toString()}");
       page = 1;
 
       // getCollections();
@@ -161,7 +205,6 @@ class _BasketballLivePageState extends State<BasketballLivePage>
   @override
   void initState() {
     super.initState();
-    // getCollections();
     getAllLiveList();
     checkLogin();
     getFollowingList();
@@ -533,6 +576,25 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                                           onTap: (index) {
                                             setState(() {
                                               followStatusId = index;
+                                              if (followStatusId == 0) {
+                                                followingList.clear();
+                                                followingLength =
+                                                    followingList.length;
+                                                followPage = 1;
+                                                getFollowingList();
+                                              } else if (followStatusId == 1) {
+                                                followingListDesc.clear();
+                                                followingDescLength =
+                                                    followingListDesc.length;
+                                                followPageDesc = 1;
+                                                getFollowingListDesc();
+                                              } else {
+                                                followingListAsc.clear();
+                                                followingAscLength =
+                                                    followingListAsc.length;
+                                                followPageAsc = 1;
+                                                getFollowingListAsc();
+                                              }
                                             });
                                           }),
                                     ),
@@ -545,11 +607,9 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                                             children: [
                                               Container(
                                                   height: 550 * fem,
-                                                  // color: pink,
                                                   alignment: Alignment.center,
                                                   child: searchEmptyWidget()),
                                               Container(
-                                                // color: yellowGreen,
                                                 height: 100 * fem,
                                                 child: Text(
                                                     AppLocalizations.of(
@@ -591,8 +651,64 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                                                         )),
                                               )
                                             : (followStatusId == 1)
-                                                ? const Column()
-                                                : const Column()
+                                                ? Column(
+                                                    children: List.generate(
+                                                        followingDescLength,
+                                                        (index) =>
+                                                            FollowingBlockComponent(
+                                                              isStreaming:
+                                                                  followingListDesc[
+                                                                          index]
+                                                                      .streamingStatus,
+                                                              streamTitle:
+                                                                  "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊？",
+                                                              anchorName:
+                                                                  followingListDesc[
+                                                                          index]
+                                                                      .anchorDetails
+                                                                      .nickName,
+                                                              anchorPic:
+                                                                  followingListDesc[
+                                                                          index]
+                                                                      .anchorDetails
+                                                                      .head,
+                                                              anchorId:
+                                                                  followingListDesc[
+                                                                          index]
+                                                                      .anchorId,
+                                                              onTapCallback:
+                                                                  toggleRefresh,
+                                                            )),
+                                                  )
+                                                : Column(
+                                                    children: List.generate(
+                                                        followingAscLength,
+                                                        (index) =>
+                                                            FollowingBlockComponent(
+                                                              isStreaming:
+                                                                  followingListAsc[
+                                                                          index]
+                                                                      .streamingStatus,
+                                                              streamTitle:
+                                                                  "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊？",
+                                                              anchorName:
+                                                                  followingListAsc[
+                                                                          index]
+                                                                      .anchorDetails
+                                                                      .nickName,
+                                                              anchorPic:
+                                                                  followingListAsc[
+                                                                          index]
+                                                                      .anchorDetails
+                                                                      .head,
+                                                              anchorId:
+                                                                  followingListAsc[
+                                                                          index]
+                                                                      .anchorId,
+                                                              onTapCallback:
+                                                                  toggleRefresh,
+                                                            )),
+                                                  )
                                   ],
                                 )
                         ],

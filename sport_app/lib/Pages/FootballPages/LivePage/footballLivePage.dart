@@ -67,9 +67,6 @@ class _FootballLivePageState extends State<FootballLivePage>
   List<LiveStreamData> footballLiveStreamList = [];
   int liveStreamLength = 0;
 
-  List<CollectMatchesData> threeCollections = [];
-  int collectionLength = 0;
-
   // variables
   int page = 1;
   int size = 10;
@@ -116,13 +113,13 @@ class _FootballLivePageState extends State<FootballLivePage>
   }
 
   Future<void> getFollowingListDesc() async {
+    FollowModel? followModel =
+        await followProvider.getFollowingListDesc(followPageDesc, size);
     if (!isFollowLoading) {
       setState(() {
         isFollowLoading = true;
       });
 
-      FollowModel? followModel =
-          await followProvider.getFollowingListDesc(followPage, size);
       followingListDesc.addAll(followModel?.data ?? []);
       followingDescLength = followingList.length;
 
@@ -140,7 +137,7 @@ class _FootballLivePageState extends State<FootballLivePage>
       });
 
       FollowModel? followModel =
-          await followProvider.getFollowingListAsc(followPage, size);
+          await followProvider.getFollowingListAsc(followPageAsc, size);
       followingListAsc.addAll(followModel?.data ?? []);
       followingAscLength = followingList.length;
 
@@ -186,6 +183,9 @@ class _FootballLivePageState extends State<FootballLivePage>
 
   Future<void> toggleRefresh() async {
     setState(() {
+      statusId = 0;
+      followStatusId = 0;
+
       followingList.clear();
       followingLength = followingList.length;
       followPage = 1;
@@ -193,6 +193,7 @@ class _FootballLivePageState extends State<FootballLivePage>
       footballLiveStreamList.clear();
       liveStreamLength = footballLiveStreamList.length;
       page = 1;
+
       getAllLiveList();
       getFollowingList();
     });
@@ -201,7 +202,6 @@ class _FootballLivePageState extends State<FootballLivePage>
   @override
   void initState() {
     super.initState();
-    // getCollections();
     getFollowingList();
     getAllLiveList();
     checkLogin();
@@ -609,11 +609,9 @@ class _FootballLivePageState extends State<FootballLivePage>
                                               children: [
                                                 Container(
                                                     height: 550 * fem,
-                                                    // color: pink,
                                                     alignment: Alignment.center,
                                                     child: searchEmptyWidget()),
                                                 Container(
-                                                  // color: yellowGreen,
                                                   height: 100 * fem,
                                                   child: Text(
                                                       AppLocalizations.of(

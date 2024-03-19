@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sport_app/Constants/apiConstant.dart';
 import 'package:sport_app/Model/userDataModel.dart';
 
+import '../Model/footballMatchesModel.dart';
 import '../Model/matchesModel.dart';
 import '../Pages/FootballPages/footballTournamentDetails.dart';
 import '../Services/Utils/httpUtil.dart';
@@ -138,6 +139,87 @@ class FootballMatchProvider extends ChangeNotifier {
       }
     } catch (e) {
       print("Error in event by date list: $e");
+      return null;
+    }
+  }
+
+  Future<FootballLiveDataModel?> getFootballLiveData(String id) async {
+    String url = "";
+
+    if (userDataModel.isCN.value) {
+      url = ApiConstants.baseUrl + ApiConstants.getFootballMatchByIdUrl + id;
+    } else {
+      url = ApiConstants.baseUrl + ApiConstants.getFootballMatchByIdENurl + id;
+    }
+
+    Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=utf-8',
+    };
+
+    try {
+      final response = await sendGetRequest(url, headers);
+
+      int responseCode = response['code'];
+      String responseMsg = response['msg'];
+
+      if (responseCode == 0) {
+        Map<String, dynamic> jsonData = response['data'];
+        FootballLiveData responseData = FootballLiveData.fromJson(jsonData);
+
+        FootballLiveDataModel liveDataModel = FootballLiveDataModel(
+            code: responseCode, msg: responseMsg, data: responseData);
+
+        return liveDataModel;
+      } else {
+        Map<String, dynamic> jsonData = response['data'];
+        FootballLiveData responseData = FootballLiveData.fromJson(jsonData);
+        FootballLiveDataModel liveDataModel = FootballLiveDataModel(
+            code: responseCode, msg: responseMsg, data: responseData);
+
+        return liveDataModel;
+      }
+    } catch (e) {
+      print("Error in get live data: $e");
+      return null;
+    }
+  }
+
+  Future<FootballLineUpModel?> getFootballLineUp(String id) async {
+    String url = "";
+
+    if (userDataModel.isCN.value) {
+      url = ApiConstants.baseUrl + ApiConstants.getFootballMatchLineUpUrl + id;
+    } else {
+      url =
+          ApiConstants.baseUrl + ApiConstants.getFootballMatchLineUpENurl + id;
+    }
+
+    Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=utf-8',
+    };
+
+    try {
+      final response = await sendGetRequest(url, headers);
+
+      int responseCode = response['code'];
+      String responseMsg = response['msg'];
+
+      if (responseCode == 0) {
+        Map<String, dynamic> jsonData = response['data'];
+        FootballLineUpData responseData = FootballLineUpData.fromJson(jsonData);
+        FootballLineUpModel lineUpModel = FootballLineUpModel(
+            code: responseCode, msg: responseMsg, data: responseData);
+
+        return lineUpModel;
+      } else {
+        FootballLineUpData responseData = response['data'];
+        FootballLineUpModel lineUpModel = FootballLineUpModel(
+            code: responseCode, msg: responseMsg, data: responseData);
+
+        return lineUpModel;
+      }
+    } catch (e) {
+      print("Error in get line up data: $e");
       return null;
     }
   }

@@ -17,6 +17,7 @@ import '../../Component/TournamentDetails/infoDisplay.dart';
 import '../../Component/TournamentDetails/mapContent.dart';
 import '../../Component/TournamentDetails/substituteList.dart';
 import '../../Constants/colorConstant.dart';
+import '../../Model/footballMatchesModel.dart';
 import '../../Model/userDataModel.dart';
 import '../../Provider/footballMatchProvider.dart';
 
@@ -50,12 +51,17 @@ class _TournamentDetailsState extends State<TournamentDetails> {
 
   int selectedButton = 1;
   int selectedTextButton = 1;
-  bool isLoading = true;
+  bool isLoading = false;
   bool isDetailNull = false;
   bool isCN = true;
   String matchStatusStr = '';
   // int lineUp = 1;
   UserDataModel userModel = Get.find<UserDataModel>();
+
+  // get football live data
+  FootballLiveData liveData = FootballLiveData();
+  FootballLineUpData lineUpData =
+      FootballLineUpData(homeMatchLineUpList: [], awayMatchLineUpList: []);
 
   ButtonStyle buttonStyle(int buttonNumber) {
     return ElevatedButton.styleFrom(
@@ -69,6 +75,8 @@ class _TournamentDetailsState extends State<TournamentDetails> {
   @override
   void initState() {
     super.initState();
+    getFootballLiveData();
+    getFootballLineUpData();
 
     if (widget.matchStatus == '未') {
       matchStatusStr = userModel.isCN == true ? '未开赛' : 'Not Started Yet';
@@ -85,6 +93,41 @@ class _TournamentDetailsState extends State<TournamentDetails> {
     });
 
     getTournamentLineup();
+  }
+
+  Future<void> getFootballLiveData() async {
+    FootballLiveDataModel? liveDataModel =
+        await provider.getFootballLiveData(widget.id);
+
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+
+      liveData = liveDataModel?.data ?? FootballLiveData();
+      print("check new Api: $liveData");
+
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> getFootballLineUpData() async {
+    FootballLineUpModel? lineUpModel =
+        await provider.getFootballLineUp(widget.id);
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+      lineUpData = lineUpModel?.data ??
+          FootballLineUpData(homeMatchLineUpList: [], awayMatchLineUpList: []);
+      print("check new Api: $lineUpData");
+
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   Future<Map<String, dynamic>> getTournamentDetails() async {
@@ -677,6 +720,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
     double parseDouble(String key, Map<String, dynamic> data) {
       if (data[key] != null) {
         return double.parse(data[key].toString());
+        // return double.parse("55");
       }
       return 0.0;
     }

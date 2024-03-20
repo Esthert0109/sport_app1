@@ -61,7 +61,7 @@ class _LivePlayPageState extends State<LivePlayPage> {
   bool isFullScreen = false;
   bool _muteState = false;
   UserDataModel userModel = Get.find<UserDataModel>();
-  var url = "rtmp://play.mindark.cloud/live/hd-zh-2-3735975";
+  var url = "rtmp://mindaker.top/live/testing123";
   final TencentCloudAvChatRoomController controller =
       TencentCloudAvChatRoomController();
 
@@ -320,7 +320,7 @@ class _LivePlayPageState extends State<LivePlayPage> {
                                             fontWeight: FontWeight.w600),
                                       ),
                                       style: ElevatedButton.styleFrom(
-                                          primary: kButtonOffSecondaryColor,
+                                          // primary: kButtonOffSecondaryColor,
                                           side: BorderSide.none,
                                           elevation: 0.3,
                                           shape: RoundedRectangleBorder(

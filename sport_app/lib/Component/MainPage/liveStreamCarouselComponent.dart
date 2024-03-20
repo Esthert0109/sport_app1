@@ -35,18 +35,22 @@ class _LiveStreamCarouselState extends State<LiveStreamCarousel> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(8 * fem),
-            child: Image.network(
-              "${widget.liveStreamPhoto}",
-              fit: BoxFit.cover,
+            child: Container(
               width: 328 * fem,
               height: 183 * fem,
+              child: Image.network(
+                "${widget.liveStreamPhoto}",
+                fit: BoxFit.cover,
+                width: 328 * fem,
+                height: 183 * fem,
+              ),
             ),
           ),
           Align(
             alignment: const FractionalOffset(0.0, 1.0),
             child: Padding(
               padding:
-                  EdgeInsets.fromLTRB(15 * fem, 138 * fem, 50 * fem, 13 * fem),
+                  EdgeInsets.fromLTRB(15 * fem, 134 * fem, 50 * fem, 19 * fem),
               child: Container(
                 height: 180 * fem,
                 child: Row(
@@ -63,6 +67,7 @@ class _LiveStreamCarouselState extends State<LiveStreamCarousel> {
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
                           height: 20 * fem,

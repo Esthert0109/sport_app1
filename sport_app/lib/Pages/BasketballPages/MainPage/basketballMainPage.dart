@@ -10,6 +10,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/Component/Common/selectionButtonText.dart';
 import 'package:sport_app/Model/liveStreamModel.dart';
 import 'package:sport_app/Model/matchesModel.dart';
+import 'package:sport_app/Pages/TencentLiveStreamRoom/livePlayPage.dart';
 import 'package:sport_app/Provider/basketballMatchProvider.dart';
 import 'package:sport_app/Provider/liveStreamProvider.dart';
 import 'package:tencent_cloud_chat_uikit/tencent_cloud_chat_uikit.dart';
@@ -24,12 +25,13 @@ import '../../../Component/Tencent/liveStreamPlayer.dart';
 import '../../../Constants/Controller/layoutController.dart';
 import '../../../Constants/colorConstant.dart';
 import '../../../Constants/textConstant.dart';
+import '../../../Model/collectionModel.dart';
 import '../../../Model/userDataModel.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../Provider/collectionProvider.dart';
 import '../../../Services/Utils/tencent/tencentLiveUtils.dart';
 import '../../SearchPage/searchingPage.dart';
-import '../../TencentLiveStreamRoom/liveStreamChatRoom.dart';
 import '../basketballTournamentDetails.dart';
 
 class BasketballMainPage extends StatefulWidget {
@@ -51,6 +53,10 @@ class _BasketballMainPageState extends State<BasketballMainPage>
   // services and provider
   BasketballMatchProvider matchesProvider = BasketballMatchProvider();
   LiveStreamProvider liveStreamProvider = LiveStreamProvider();
+  BookmarkProvider provider = BookmarkProvider();
+
+  // get language
+  String language = "en_US";
 
   // fetch data from provider
   DateTime now = DateTime.now();
@@ -100,6 +106,9 @@ class _BasketballMainPageState extends State<BasketballMainPage>
   List<MatchesData> pastList7 = [];
   int past7Length = 0;
   int pagePast7 = 1;
+  List<AllCollectMatchesData> collectionList = [];
+  int collectionLength = 0;
+  int page = 1;
 
   List<LiveStreamData> liveStreamList = [];
   int liveStreamLength = 0;
@@ -116,6 +125,24 @@ class _BasketballMainPageState extends State<BasketballMainPage>
   bool isEventLoading = false;
   bool isLoading = false;
   int item = 0;
+
+  Future<void> getBasketballSavedCollections() async {
+    AllCollectMatchesModel? allCollectionModel =
+        await provider.getAllBasketballCollection(page, size);
+    if (!isEventLoading) {
+      setState(() {
+        isEventLoading = true;
+      });
+
+      collectionList.addAll(allCollectionModel?.data ?? []);
+      collectionLength = collectionList.length;
+
+      setState(() {
+        isEventLoading = false;
+        page++;
+      });
+    }
+  }
 
   //choice of main page
   void dropdownCallback(String? selectedValue) {
@@ -278,7 +305,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
         isEventLoading = true;
       });
 
-      if (statusId == 1) {
+      if (statusId == 2) {
         List<DateTime> futureDate = generateFutureDates(7);
         DateTime date = futureDate[futureDateId];
         String formattedDate = DateFormat('yyyy-MM-dd').format(date);
@@ -361,12 +388,12 @@ class _BasketballMainPageState extends State<BasketballMainPage>
             pageFuture7++;
           });
         }
-      } else {
+      } else if (statusId == 3) {
         List<DateTime> pastDate = generatePastDates(7);
-        DateTime date = pastDate[futureDateId];
+        DateTime date = pastDate[pastDateId];
         String formattedDate = DateFormat('yyyy-MM-dd').format(date);
 
-        if (futureDateId == 0) {
+        if (pastDateId == 0) {
           MatchesModel? matchesModel = await matchesProvider.getEventByDate(
               formattedDate, pagePast1, size, false);
 
@@ -600,9 +627,11 @@ class _BasketballMainPageState extends State<BasketballMainPage>
               isLoading: isLoading,
               onEndOfPage: () {
                 setState(() {
-                  if (statusId == 1) {
+                  if (statusId == 0) {
                     print("started");
                     getStartedEventList();
+                  } else if (statusId == 4) {
+                    getBasketballSavedCollections();
                   } else {
                     getEventListByDate();
                   }
@@ -674,32 +703,38 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                 userLoginStatusRes.data;
 
                                             if (status == 1) {
-                                              LiveStreamChatRoom page = LiveStreamChatRoom(
-                                                  userLoginId: userModel
-                                                      .id.value,
-                                                  avChatRoomId:
-                                                      "panda${liveStreamList![index].userId}",
-                                                  anchor: liveStreamList![index]
-                                                          .nickName ??
-                                                      "",
-                                                  streamTitle: liveStreamList![
-                                                              index]
-                                                          .title ??
-                                                      "",
-                                                  anchorPic: liveStreamList![
-                                                              index]
-                                                          .avatar ??
-                                                      "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
-                                                  playMode: V2TXLivePlayMode
-                                                      .v2TXLivePlayModeLeb,
-                                                  liveURL:
-                                                      "rtmp://play.mindark.cloud/live/" +
-                                                          getStreamURL(
-                                                              liveStreamList![
-                                                                      index]
-                                                                  .pushCode));
+                                              // LiveStreamChatRoomTest page = LiveStreamChatRoomTest(
+                                              //     userLoginId: userModel
+                                              //         .id.value,
+                                              //     avChatRoomId:
+                                              //         "panda${liveStreamList![index].userId}",
+                                              //     anchor: liveStreamList![index]
+                                              //             .nickName ??
+                                              //         "",
+                                              //     streamTitle: liveStreamList![
+                                              //                 index]
+                                              //             .title ??
+                                              //         "",
+                                              //     anchorPic: liveStreamList![
+                                              //                 index]
+                                              //             .avatar ??
+                                              //         "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
+                                              //     playMode: V2TXLivePlayMode
+                                              //         .v2TXLivePlayModeLeb,
+                                              //     liveURL:
+                                              //         "rtmp://play.mindark.cloud/live/" +
+                                              //             getStreamURL(
+                                              //                 liveStreamList![
+                                              //                         index]
+                                              //                     .pushCode));
+                                              LivePlayPage2 page =
+                                                  LivePlayPage2(
+                                                streamId: '1111',
+                                                playMode: V2TXLivePlayMode
+                                                    .v2TXLivePlayModeStand,
+                                              );
 
-                                              Navigator.of(context).pop();
+                                              // Navigator.of(context).pop();
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
@@ -713,33 +748,40 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                 userModel.id.value,
                                               );
                                               if (isChangeNickname) {
-                                                LiveStreamChatRoom page = LiveStreamChatRoom(
-                                                    userLoginId:
-                                                        userModel.id.value,
-                                                    avChatRoomId:
-                                                        "panda${liveStreamList![index].userId}",
-                                                    anchor: liveStreamList![
-                                                                index]
-                                                            .nickName ??
-                                                        "",
-                                                    streamTitle:
-                                                        liveStreamList![index]
-                                                                .title ??
-                                                            "",
-                                                    anchorPic: liveStreamList![
-                                                                index]
-                                                            .avatar ??
-                                                        "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
-                                                    playMode: V2TXLivePlayMode
-                                                        .v2TXLivePlayModeLeb,
-                                                    liveURL:
-                                                        "rtmp://play.mindark.cloud/live/" +
-                                                            getStreamURL(
-                                                                liveStreamList![
-                                                                        index]
-                                                                    .pushCode));
+                                                // ignore: unused_local_variable
+                                                LivePlayPage2 page =
+                                                    LivePlayPage2(
+                                                  streamId: '1111',
+                                                  playMode: V2TXLivePlayMode
+                                                      .v2TXLivePlayModeStand,
+                                                );
+                                                // LiveStreamChatRoomTest page = LiveStreamChatRoomTest(
+                                                //     userLoginId:
+                                                //         userModel.id.value,
+                                                //     avChatRoomId:
+                                                //         "panda${liveStreamList![index].userId}",
+                                                //     anchor: liveStreamList![
+                                                //                 index]
+                                                //             .nickName ??
+                                                //         "",
+                                                //     streamTitle:
+                                                //         liveStreamList![index]
+                                                //                 .title ??
+                                                //             "",
+                                                //     anchorPic: liveStreamList![
+                                                //                 index]
+                                                //             .avatar ??
+                                                //         "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
+                                                //     playMode: V2TXLivePlayMode
+                                                //         .v2TXLivePlayModeLeb,
+                                                //     liveURL:
+                                                //         "rtmp://play.mindark.cloud/live/" +
+                                                //             getStreamURL(
+                                                //                 liveStreamList![
+                                                //                         index]
+                                                //                     .pushCode));
 
-                                                Navigator.of(context).pop();
+                                                // Navigator.of(context).pop();
                                                 Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
@@ -881,6 +923,15 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                           onTap: (index) {
                                             setState(() {
                                               statusId = index;
+                                              if (statusId == 0) {
+                                                print("display all");
+                                              } else if (statusId == 1) {
+                                                getStartedEventList();
+                                              } else if (statusId == 4) {
+                                                getBasketballSavedCollections();
+                                              } else {
+                                                getEventListByDate();
+                                              }
                                             });
                                           }),
                                     )
@@ -2040,42 +2091,74 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                                         },
                                                                                                       )
                                                                                             : (statusId == 4)
-                                                                                                ? isEventLoading
-                                                                                                    ? Column(children: [
-                                                                                                        for (int i = 0; i < 4; i++)
-                                                                                                          CardLoading(
-                                                                                                            height: 100 * fem,
-                                                                                                            borderRadius: BorderRadius.circular(8 * fem),
-                                                                                                            margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                                          ),
-                                                                                                      ])
-                                                                                                    : (startedLength == 0)
-                                                                                                        ? searchEmptyWidget()
-                                                                                                        : ListView.builder(
-                                                                                                            physics: const NeverScrollableScrollPhysics(),
-                                                                                                            itemCount: startedLength,
-                                                                                                            shrinkWrap: true,
-                                                                                                            itemBuilder: (context, index) {
-                                                                                                              return GestureDetector(
-                                                                                                                onTap: () {
-                                                                                                                  print("navi into tournament");
-                                                                                                                  BasketballTournamentDetails(id: '${startedList[index].id}', matchDate: '${startedList[index].matchDate}', matchStatus: '${startedList[index].statusStr}', matchName: '${startedList[index].competitionName}').launch(context);
-                                                                                                                },
-                                                                                                                child: GameDisplayComponent(
-                                                                                                                  id: startedList[index].id ?? 0,
-                                                                                                                  competitionType: startedList[index].competitionName ?? "",
-                                                                                                                  duration: startedList[index].matchTimeStr ?? "00:00",
-                                                                                                                  teamAName: startedList[index].homeTeamName ?? "",
-                                                                                                                  teamALogo: startedList[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                                  teamAScore: startedList[index].homeTeamScore.toString(),
-                                                                                                                  teamBName: startedList[index].awayTeamName ?? "",
-                                                                                                                  teamBLogo: startedList[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                                  teamBScore: startedList[index].awayTeamScore.toString(),
-                                                                                                                  isSaved: startedList[index].hasCollected ?? false,
-                                                                                                                ),
-                                                                                                              );
-                                                                                                            },
-                                                                                                          )
+                                                                                                ?
+                                                                                                // ? isEventLoading
+                                                                                                //     ? Column(children: [
+                                                                                                //         for (int i = 0; i < 4; i++)
+                                                                                                //           CardLoading(
+                                                                                                //             height: 100 * fem,
+                                                                                                //             borderRadius: BorderRadius.circular(8 * fem),
+                                                                                                //             margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                                //           ),
+                                                                                                //       ])
+                                                                                                //     :
+                                                                                                (startedLength == 4)
+                                                                                                    ? searchEmptyWidget()
+                                                                                                    : ListView.builder(
+                                                                                                        physics: const NeverScrollableScrollPhysics(),
+                                                                                                        itemCount: collectionLength,
+                                                                                                        shrinkWrap: true,
+                                                                                                        itemBuilder: (context, index) {
+                                                                                                          return isLoading
+                                                                                                              ? Column(children: [
+                                                                                                                  for (int i = 0; i < collectionLength; i++)
+                                                                                                                    CardLoading(
+                                                                                                                      height: 100 * fem,
+                                                                                                                      borderRadius: BorderRadius.circular(8 * fem),
+                                                                                                                      margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                                                    ),
+                                                                                                                ])
+                                                                                                              : Column(
+                                                                                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                                  children: [
+                                                                                                                    Container(
+                                                                                                                      margin: EdgeInsets.fromLTRB(20 * fem, 15 * fem, 20 * fem, 10 * fem),
+                                                                                                                      alignment: Alignment.centerLeft,
+                                                                                                                      child: Text(
+                                                                                                                        DateFormat('yyyy/MM/dd  EEEE', language).format(DateTime.parse(collectionList[index].date)),
+                                                                                                                        style: tCollectionDateTitle,
+                                                                                                                      ),
+                                                                                                                    ),
+                                                                                                                    ListView.builder(
+                                                                                                                      physics: const NeverScrollableScrollPhysics(),
+                                                                                                                      itemCount: collectionList[index].data.length,
+                                                                                                                      shrinkWrap: true,
+                                                                                                                      itemBuilder: (context, i) {
+                                                                                                                        return GestureDetector(
+                                                                                                                          onTap: () {
+                                                                                                                            print("navi into tournament");
+                                                                                                                            BasketballTournamentDetails(id: '${collectionList[index].data[i].id}', matchDate: '${collectionList[index].data[i].matchDate}', matchStatus: '${collectionList[index].data[i].statusStr}', matchName: '${collectionList[index].data[i].competitionName}').launch(context);
+                                                                                                                          },
+                                                                                                                          child: GameDisplayComponent(
+                                                                                                                            id: collectionList[index].data[i].id ?? 0,
+                                                                                                                            competitionType: collectionList[index].data[i].competitionName ?? "",
+                                                                                                                            duration: collectionList[index].data[i].matchTimeStr ?? "00:00",
+                                                                                                                            teamAName: collectionList[index].data[i].homeTeamName ?? "",
+                                                                                                                            teamALogo: collectionList[index].data[i].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                                            teamAScore: collectionList[index].data[i].homeTeamScore.toString(),
+                                                                                                                            teamBName: collectionList[index].data[i].awayTeamName ?? "",
+                                                                                                                            teamBLogo: collectionList[index].data[i].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                                            teamBScore: collectionList[index].data[i].awayTeamScore.toString(),
+                                                                                                                            isSaved: collectionList[index].data[i].hasCollected ?? true,
+                                                                                                                          ),
+                                                                                                                        );
+                                                                                                                      },
+                                                                                                                    )
+                                                                                                                  ],
+                                                                                                                );
+                                                                                                        },
+                                                                                                      )
                                                                                                 : Container(),
                             isLoading
                                 ? Center(

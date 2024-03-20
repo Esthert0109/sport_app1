@@ -467,7 +467,7 @@ class _FootballLivePageState extends State<FootballLivePage>
                                       )
                                     : Padding(
                                         padding: EdgeInsets.symmetric(
-                                            vertical: 15 * fem),
+                                            vertical: 25 * fem),
                                         child: Column(
                                           children: List.generate(
                                               (liveStreamLength / 2).ceil(),
@@ -520,7 +520,7 @@ class _FootballLivePageState extends State<FootballLivePage>
                                                             playMode:
                                                                 V2TXLivePlayMode
                                                                     .v2TXLivePlayModeLeb,
-                                                            liveURL: "rtmp://play.mindark.cloud/live/" +
+                                                            liveURL: "rtmp://mindarker.top/live/" +
                                                                 getStreamURL(
                                                                     footballLiveStreamList![j]
                                                                         .pushCode));

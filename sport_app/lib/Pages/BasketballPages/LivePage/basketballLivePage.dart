@@ -468,7 +468,7 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                                     )
                                   : Padding(
                                       padding: EdgeInsets.symmetric(
-                                          vertical: 15 * fem),
+                                          vertical: 25 * fem),
                                       child: Column(
                                         children: List.generate(
                                             (liveStreamLength / 2).ceil(),

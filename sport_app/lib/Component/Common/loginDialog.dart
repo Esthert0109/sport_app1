@@ -233,8 +233,8 @@ class _LoginAlertDialogState extends State<LoginAlertDialog> {
                       alignment: Alignment.centerRight,
                       child: TextButton(
                         style: TextButton.styleFrom(
-                          primary: Colors.black,
-                          onSurface: kMainGreenColor,
+                          // primary: Colors.black,
+                          // onSurface: kMainGreenColor,
                           foregroundColor: kMainGreenColor,
                         ),
                         onPressed: () {

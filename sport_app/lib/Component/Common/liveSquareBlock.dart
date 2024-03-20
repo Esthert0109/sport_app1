@@ -35,11 +35,16 @@ class _LiveSquareBlockState extends State<LiveSquareBlock> {
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(8 * fem),
                   topRight: Radius.circular(8 * fem)),
-              child: Image.network(
-                "${widget.livePhoto}",
+              child: Container(
                 height: 92 * fem,
                 width: 165 * fem,
-                fit: BoxFit.cover,
+                color: kLightGreyColor,
+                child: Image.network(
+                  "${widget.livePhoto}",
+                  height: 92 * fem,
+                  width: 165 * fem,
+                  fit: BoxFit.cover,
+                ),
               )),
           Container(
             decoration: BoxDecoration(

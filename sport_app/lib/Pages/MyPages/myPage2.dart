@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
+// import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:sport_app/Constants/colorConstant.dart';
 import 'package:sport_app/Model/userDataModel.dart';
 import 'package:sport_app/Pages/MyPages/contactUs.dart';
@@ -35,8 +35,8 @@ class _ProfilePageState extends State<ProfilePage> {
   PopularGameProvider gameProvider = PopularGameProvider();
 
   //controller
-  final RoundedLoadingButtonController btnController =
-      RoundedLoadingButtonController();
+  // final RoundedLoadingButtonController btnController =
+  //     RoundedLoadingButtonController();
 
   // common variables
   bool isLogin = true;
@@ -116,12 +116,14 @@ class _ProfilePageState extends State<ProfilePage> {
                       () => ClipRRect(
                           borderRadius: BorderRadius.circular(100),
                           child: userModel.isLogin.value
-                              ? Image(
-                                  image: NetworkImage(
+                              ? CircleAvatar(
+                                  backgroundColor: kLightGreyColor,
+                                  radius: 30 * fem,
+                                  backgroundImage: NetworkImage(
                                       userModel.profilePicture.value),
-                                  fit: BoxFit.cover,
-                                  height: 60 * fem,
-                                  width: 60 * fem,
+                                  // fit: BoxFit.cover,
+                                  // height: 60 * fem,
+                                  // width: 60 * fem,
                                 )
                               : Image(
                                   image: const NetworkImage(
@@ -556,27 +558,27 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: [
                             Column(
                               children: [
-                                RoundedLoadingButton(
-                                  color: Colors.white,
-                                  valueColor: kMainGreenColor,
-                                  width: 150,
-                                  height: 40,
-                                  elevation: 0,
-                                  child: Text(
-                                      AppLocalizations.of(context)!.logout,
-                                      style: TextStyle(color: kMainGreyColor)),
-                                  controller: btnController,
-                                  onPressed: () {
-                                    SharedPreferencesUtils
-                                        .clearSharedPreferences();
-                                    userModel.isLogin.value = false;
+                                // RoundedLoadingButton(
+                                //   color: Colors.white,
+                                //   valueColor: kMainGreenColor,
+                                //   width: 150,
+                                //   height: 40,
+                                //   elevation: 0,
+                                //   child: Text(
+                                //       AppLocalizations.of(context)!.logout,
+                                //       style: TextStyle(color: kMainGreyColor)),
+                                //   controller: btnController,
+                                //   onPressed: () {
+                                //     SharedPreferencesUtils
+                                //         .clearSharedPreferences();
+                                //     userModel.isLogin.value = false;
 
-                                    Future.delayed(Duration(seconds: 1),
-                                        () async {
-                                      Get.offAllNamed('/auth');
-                                    });
-                                  },
-                                )
+                                //     Future.delayed(Duration(seconds: 1),
+                                //         () async {
+                                //       Get.offAllNamed('/auth');
+                                //     });
+                                //   },
+                                // )
                               ],
                             ),
                           ],

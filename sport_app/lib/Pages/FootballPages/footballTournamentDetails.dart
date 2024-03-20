@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:nb_utils/nb_utils.dart';
 
 import '../../Component/Loading/emptyResultComponent.dart';
 import '../../Component/TournamentDetails/PercentageBarPercentage.dart';
@@ -65,9 +66,9 @@ class _TournamentDetailsState extends State<TournamentDetails> {
 
   ButtonStyle buttonStyle(int buttonNumber) {
     return ElevatedButton.styleFrom(
-      primary: selectedButton == buttonNumber
-          ? Colors.green
-          : Colors.white, // Change the text color based on the button color
+      // primary: selectedButton == buttonNumber
+      // ? Colors.green
+      // : Colors.white, // Change the text color based on the button color
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(53)),
     );
   }
@@ -436,6 +437,66 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                 ),
                               ),
                             ),
+                            Positioned(
+                                top: 160,
+                                left: 85,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    print("navi to live stream");
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "视频直播",
+                                        style: TextStyle(
+                                            fontFamily: "Inter",
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            letterSpacing: 0.3,
+                                            color: white),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        child: Image(
+                                            width: 24,
+                                            height: 24,
+                                            image: AssetImage(
+                                                "images/tournament/videoLiveStream.png")),
+                                      )
+                                    ],
+                                  ),
+                                )),
+                            Positioned(
+                                top: 160,
+                                right: 85,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    print("navi to animation stream");
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        child: Image(
+                                            width: 24,
+                                            height: 24,
+                                            image: AssetImage(
+                                                "images/tournament/animationStream.png")),
+                                      ),
+                                      Text(
+                                        "动画直播",
+                                        style: TextStyle(
+                                            fontFamily: "Inter",
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            letterSpacing: 0.3,
+                                            color: white),
+                                      ),
+                                    ],
+                                  ),
+                                ))
                           ]),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16, 10, 0, 14),
@@ -457,8 +518,10 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                               fontSize: 14,
                               fontFamily: 'NotoSansSC'),
                         ),
-                        style: buttonStyle(1)
-                            .copyWith(elevation: MaterialStateProperty.all(0)),
+                        style: buttonStyle(1).copyWith(
+                            elevation: MaterialStateProperty.all(0),
+                            backgroundColor: MaterialStatePropertyAll(
+                                selectedButton == 1 ? kMainGreenColor : white)),
                       ),
                       SizedBox(
                         width: 10,
@@ -478,8 +541,10 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                               fontSize: 14,
                               fontFamily: 'NotoSansSC'),
                         ),
-                        style: buttonStyle(3)
-                            .copyWith(elevation: MaterialStateProperty.all(0)),
+                        style: buttonStyle(3).copyWith(
+                            elevation: MaterialStateProperty.all(0),
+                            backgroundColor: MaterialStatePropertyAll(
+                                selectedButton == 3 ? kMainGreenColor : white)),
                       ),
                     ],
                   ),
@@ -719,6 +784,14 @@ class _TournamentDetailsState extends State<TournamentDetails> {
     // Case 1
     double parseDouble(String key, Map<String, dynamic> data) {
       if (data[key] != null) {
+        print("check: ${data[key]}");
+
+        String value = data[key].toString();
+        if (value.contains('%')) {
+          value = value.replaceAll("%", '');
+          return double.parse(value);
+        }
+
         return double.parse(data[key].toString());
         // return double.parse("55");
       }

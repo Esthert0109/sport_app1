@@ -12,6 +12,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   nb_utils
   pasteboard
   permission_handler_windows
+  tencent_cloud_chat_sdk
   url_launcher_windows
 )
 

@@ -24,8 +24,8 @@ import 'package:tencent_cloud_av_chat_room/tencent_cloud_chat_sdk_type.dart';
 import 'package:text_scroll/text_scroll.dart';
 import '../../Component/Tencent/liveStreamPlayer.dart';
 import '../../Constants/colorConstant.dart';
-import '../../Model/UserDataModel.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../Model/userDataModel.dart';
 
 class LiveStreamChatRoom extends StatefulWidget {
   final String userLoginId;
@@ -177,6 +177,8 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
       }
     }
     var playStatus = await _livePlayer?.startLivePlay(widget.liveURL);
+
+    print("check live url: ${widget.liveURL}");
     if (playStatus == null || playStatus != V2TXLIVE_OK) {
       return;
     }
@@ -263,7 +265,7 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
 
     return WillPopScope(
         onWillPop: () async {
-          SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+          SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
             statusBarColor: kMainGreenColor, // Set status bar color
           ));
           SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -391,9 +393,10 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                                       width: 4 * fem,
                                                     ),
                                                     Text(
-                                                      AppLocalizations.of(
-                                                              context)!
-                                                          .saySmthg,
+                                                      // AppLocalizations.of(
+                                                      //         context)!
+                                                      //     .saySmthg,
+                                                      "say smthg",
                                                       style: const TextStyle(
                                                           fontSize: 14,
                                                           color: Color.fromARGB(
@@ -413,8 +416,9 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                         data: TencentCloudAvChatRoomData(
                                           isSubscribe: false,
                                           notification:
-                                              AppLocalizations.of(context)!
-                                                  .welcomeStream,
+                                              // AppLocalizations.of(context)!
+                                              //     .welcomeStream,
+                                              "welcome",
                                           anchorInfo: AnchorInfo(
                                               subscribeNum: 200,
                                               fansNum: 5768,
@@ -427,6 +431,7 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                 height: 400,
                                 alignment: Alignment.center,
                                 width: double.infinity,
+                                color: Colors.black,
                                 child: Column(
                                   children: [
                                     Container(
@@ -490,19 +495,19 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                                               mode:
                                                                   TextScrollMode
                                                                       .endless,
-                                                              velocity: Velocity(
+                                                              velocity: const Velocity(
                                                                   pixelsPerSecond:
                                                                       Offset(20,
                                                                           0)),
                                                               delayBefore:
-                                                                  Duration(
+                                                                  const Duration(
                                                                       milliseconds:
                                                                           500),
                                                               pauseBetween:
-                                                                  Duration(
+                                                                  const Duration(
                                                                       milliseconds:
                                                                           500),
-                                                              style: TextStyle(
+                                                              style: const TextStyle(
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w500,
@@ -515,57 +520,63 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                                       SizedBox(
                                                         width: 1,
                                                       ),
-                                                      Container(
-                                                          height: 30 * fem,
-                                                          width:
-                                                              userModel.isCN ==
-                                                                      true
-                                                                  ? 68 * fem
-                                                                  : 78 * fem,
-                                                          padding:
-                                                              EdgeInsets.all(0),
-                                                          child: Padding(
-                                                            padding: EdgeInsets
-                                                                .fromLTRB(
-                                                                    4 * fem,
-                                                                    8 * fem,
-                                                                    1 * fem,
-                                                                    0 * fem),
-                                                            child:
-                                                                ElevatedButton(
-                                                              child: Text(
-                                                                AppLocalizations.of(
-                                                                        context)!
-                                                                    .follow,
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        userModel.isCN ==
+                                                      Obx(
+                                                        () => Container(
+                                                            height: 30 * fem,
+                                                            width: userModel
+                                                                        .isCN
+                                                                        .value ==
+                                                                    true
+                                                                ? 68 * fem
+                                                                : 78 * fem,
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    0),
+                                                            child: Padding(
+                                                              padding: EdgeInsets
+                                                                  .fromLTRB(
+                                                                      4 * fem,
+                                                                      8 * fem,
+                                                                      1 * fem,
+                                                                      0 * fem),
+                                                              child:
+                                                                  ElevatedButton(
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                        backgroundColor:
+                                                                            kButtonOffSecondaryColor,
+                                                                        // primary:
+                                                                        //     kButtonOffSecondaryColor,
+                                                                        side: BorderSide
+                                                                            .none,
+                                                                        elevation:
+                                                                            0.3,
+                                                                        shape: RoundedRectangleBorder(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(30))),
+                                                                onPressed: () {
+                                                                  //点击关注
+                                                                },
+                                                                child: Obx(
+                                                                  () => Text(
+                                                                    // AppLocalizations.of(
+                                                                    //         context)!
+                                                                    //     .follow,
+                                                                    "follow",
+                                                                    style: TextStyle(
+                                                                        fontSize: userModel.isCN.value ==
                                                                                 true
                                                                             ? 13
                                                                             : 12,
-                                                                    color:
-                                                                        kMainGreenColor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
+                                                                        color:
+                                                                            kMainGreenColor,
+                                                                        fontWeight:
+                                                                            FontWeight.w600),
+                                                                  ),
+                                                                ),
                                                               ),
-                                                              style: ElevatedButton.styleFrom(
-                                                                  primary:
-                                                                      kButtonOffSecondaryColor,
-                                                                  side:
-                                                                      BorderSide
-                                                                          .none,
-                                                                  elevation:
-                                                                      0.3,
-                                                                  shape: RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              30))),
-                                                              onPressed: () {
-                                                                //点击关注
-                                                              },
-                                                            ),
-                                                          )),
+                                                            )),
+                                                      ),
                                                       SizedBox(
                                                         width: 30 * fem,
                                                       ),
@@ -599,19 +610,21 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                                             widget.streamTitle,
                                                             mode: TextScrollMode
                                                                 .endless,
-                                                            velocity: Velocity(
-                                                                pixelsPerSecond:
-                                                                    Offset(
-                                                                        20, 0)),
+                                                            velocity:
+                                                                const Velocity(
+                                                                    pixelsPerSecond:
+                                                                        Offset(
+                                                                            20,
+                                                                            0)),
                                                             delayBefore:
-                                                                Duration(
+                                                                const Duration(
                                                                     milliseconds:
                                                                         500),
                                                             pauseBetween:
-                                                                Duration(
+                                                                const Duration(
                                                                     milliseconds:
                                                                         500),
-                                                            style: TextStyle(
+                                                            style: const TextStyle(
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600,
@@ -688,14 +701,14 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                                                               shape: BoxShape.circle,
                                                                               boxShadow: [
                                                                                 _isDanmakuOn
-                                                                                    ? BoxShadow(
+                                                                                    ? const BoxShadow(
                                                                                         color: Color.fromARGB(255, 196, 196, 196),
                                                                                         offset: Offset(-1, 0),
                                                                                         blurRadius: 0.5,
                                                                                         spreadRadius: 0.1,
                                                                                       )
-                                                                                    : BoxShadow(
-                                                                                        color: const Color.fromARGB(255, 60, 134, 62),
+                                                                                    : const BoxShadow(
+                                                                                        color: Color.fromARGB(255, 60, 134, 62),
                                                                                         offset: Offset(1, 0),
                                                                                         blurRadius: 0.5,
                                                                                         spreadRadius: 0.1,
@@ -761,7 +774,6 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                     )
                                   ],
                                 ),
-                                color: Colors.black,
                               ),
                               !_isPlaying
                                   ? Container(
@@ -962,9 +974,10 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                                     width: 4 * fem,
                                                   ),
                                                   Text(
-                                                    AppLocalizations.of(
-                                                            context)!
-                                                        .saySmthg,
+                                                    // AppLocalizations.of(
+                                                    //         context)!
+                                                    //     .saySmthg,
+                                                    "say smthg2",
                                                     style: const TextStyle(
                                                         fontSize: 14,
                                                         color: Color.fromARGB(
@@ -981,8 +994,9 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                       data: TencentCloudAvChatRoomData(
                                         isSubscribe: false,
                                         notification:
-                                            AppLocalizations.of(context)!
-                                                .welcomeStream,
+                                            // AppLocalizations.of(context)!
+                                            //     .welcomeStream,
+                                            "welcome",
                                         anchorInfo: AnchorInfo(
                                             subscribeNum: 200,
                                             fansNum: 5768,

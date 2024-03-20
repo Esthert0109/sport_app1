@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/main.dart';
 
 import '../../Constants/colorConstant.dart';
@@ -114,7 +115,7 @@ class _systemSettingState extends State<SystemSetting> {
                           color: Colors.black,
                         )),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
+                      backgroundColor: white,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
                       side: BorderSide.none,

@@ -1004,22 +1004,42 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                   onTap: () {
                                                     print(
                                                         "navi into tournament");
-                                                    TournamentDetails(
-                                                      id: '${startedList?[index].id}',
-                                                      matchDate:
-                                                          '${startedList?[index].matchDate}',
-                                                      matchStatus: '未开赛',
-                                                      matchName:
-                                                          '${startedList?[index].competitionName}',
-                                                      homeTeamFormation:
-                                                          '${startedList?[index].homeFormation}',
-                                                      awayTeamFormation:
-                                                          '${startedList?[index].awayFormation}',
-                                                      lineUp:
-                                                          startedList?[index]
+
+                                                    Get.to(
+                                                        TournamentDetails(
+                                                          id: '${startedList?[index].id}',
+                                                          matchDate:
+                                                              '${startedList?[index].matchDate}',
+                                                          matchStatus: '未开赛',
+                                                          matchName:
+                                                              '${startedList?[index].competitionName}',
+                                                          homeTeamFormation:
+                                                              '${startedList?[index].homeFormation}',
+                                                          awayTeamFormation:
+                                                              '${startedList?[index].awayFormation}',
+                                                          lineUp: startedList?[
+                                                                      index]
                                                                   .lineUp ??
                                                               0,
-                                                    ).launch(context);
+                                                        ),
+                                                        transition:
+                                                            Transition.fadeIn);
+                                                    // TournamentDetails(
+                                                    //   id: '${startedList?[index].id}',
+                                                    //   matchDate:
+                                                    //       '${startedList?[index].matchDate}',
+                                                    //   matchStatus: '未开赛',
+                                                    //   matchName:
+                                                    //       '${startedList?[index].competitionName}',
+                                                    //   homeTeamFormation:
+                                                    //       '${startedList?[index].homeFormation}',
+                                                    //   awayTeamFormation:
+                                                    //       '${startedList?[index].awayFormation}',
+                                                    //   lineUp:
+                                                    //       startedList?[index]
+                                                    //               .lineUp ??
+                                                    //           0,
+                                                    // ).launch(context);
                                                   },
                                                   child: GameDisplayComponent(
                                                     id: startedList[index].id ??
@@ -1089,22 +1109,27 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                       onTap: () {
                                                         print(
                                                             "navi into tournament");
-                                                        TournamentDetails(
-                                                          id: '${startedList?[index].id}',
-                                                          matchDate:
-                                                              '${startedList?[index].matchDate}',
-                                                          matchStatus: '未开赛',
-                                                          matchName:
-                                                              '${startedList?[index].competitionName}',
-                                                          homeTeamFormation:
-                                                              '${startedList?[index].homeFormation}',
-                                                          awayTeamFormation:
-                                                              '${startedList?[index].awayFormation}',
-                                                          lineUp: startedList?[
-                                                                      index]
-                                                                  .lineUp ??
-                                                              0,
-                                                        ).launch(context);
+                                                        Get.to(
+                                                            TournamentDetails(
+                                                              id: '${startedList?[index].id}',
+                                                              matchDate:
+                                                                  '${startedList?[index].matchDate}',
+                                                              matchStatus:
+                                                                  '未开赛',
+                                                              matchName:
+                                                                  '${startedList?[index].competitionName}',
+                                                              homeTeamFormation:
+                                                                  '${startedList?[index].homeFormation}',
+                                                              awayTeamFormation:
+                                                                  '${startedList?[index].awayFormation}',
+                                                              lineUp: startedList?[
+                                                                          index]
+                                                                      .lineUp ??
+                                                                  0,
+                                                            ),
+                                                            transition:
+                                                                Transition
+                                                                    .fadeIn);
                                                       },
                                                       child:
                                                           GameDisplayComponent(
@@ -1152,45 +1177,173 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                   },
                                                 )
                                       : (statusId == 2 && futureDateId == 0)
-                                          ? isEventLoading
-                                              ? Column(children: [
-                                                  if (future1Length < 4)
-                                                    for (int i = 0; i < 4; i++)
-                                                      CardLoading(
-                                                        height: 100 * fem,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    8 * fem),
-                                                        margin: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal:
-                                                                    10 * fem,
-                                                                vertical:
-                                                                    10 * fem),
+                                          ?
+                                          // isEventLoading
+                                          // ? Column(children: [
+                                          //     if (future1Length < 4)
+                                          //       for (int i = 0; i < 4; i++)
+                                          //         CardLoading(
+                                          //           height: 100 * fem,
+                                          //           borderRadius:
+                                          //               BorderRadius
+                                          //                   .circular(
+                                          //                       8 * fem),
+                                          //           margin: EdgeInsets
+                                          //               .symmetric(
+                                          //                   horizontal:
+                                          //                       10 * fem,
+                                          //                   vertical:
+                                          //                       10 * fem),
+                                          //         ),
+                                          //     for (int i = 0;
+                                          //         i < future1Length;
+                                          //         i++)
+                                          //       CardLoading(
+                                          //         height: 100 * fem,
+                                          //         borderRadius:
+                                          //             BorderRadius.circular(
+                                          //                 8 * fem),
+                                          //         margin:
+                                          //             EdgeInsets.symmetric(
+                                          //                 horizontal:
+                                          //                     10 * fem,
+                                          //                 vertical:
+                                          //                     10 * fem),
+                                          //       ),
+                                          //   ])
+                                          // :
+                                          (future1Length == 0)
+                                              ? searchEmptyWidget()
+                                              : ListView.builder(
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
+                                                  itemCount: future1Length,
+                                                  shrinkWrap: true,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return GestureDetector(
+                                                      onTap: () {
+                                                        print(
+                                                            "navi into tournament");
+
+                                                        Get.to(
+                                                            TournamentDetails(
+                                                              id: '${futureList1?[index].id}',
+                                                              matchDate:
+                                                                  '${futureList1?[index].matchDate}',
+                                                              matchStatus:
+                                                                  '未开赛',
+                                                              matchName:
+                                                                  '${futureList1?[index].competitionName}',
+                                                              homeTeamFormation:
+                                                                  '${futureList1?[index].homeFormation}',
+                                                              awayTeamFormation:
+                                                                  '${futureList1?[index].awayFormation}',
+                                                              lineUp: futureList1?[
+                                                                          index]
+                                                                      .lineUp ??
+                                                                  0,
+                                                            ),
+                                                            transition:
+                                                                Transition
+                                                                    .fadeIn);
+                                                      },
+                                                      child:
+                                                          GameDisplayComponent(
+                                                        id: futureList1[index]
+                                                                .id ??
+                                                            0,
+                                                        competitionType:
+                                                            futureList1[index]
+                                                                    .competitionName ??
+                                                                "",
+                                                        duration: futureList1[
+                                                                    index]
+                                                                .matchTimeStr ??
+                                                            "00:00",
+                                                        teamAName: futureList1[
+                                                                    index]
+                                                                .homeTeamName ??
+                                                            "",
+                                                        teamALogo: futureList1[
+                                                                    index]
+                                                                .homeTeamLogo ??
+                                                            'images/mainpage/sampleLogo.png',
+                                                        teamAScore:
+                                                            futureList1[index]
+                                                                .homeTeamScore
+                                                                .toString(),
+                                                        teamBName: futureList1[
+                                                                    index]
+                                                                .awayTeamName ??
+                                                            "",
+                                                        teamBLogo: futureList1[
+                                                                    index]
+                                                                .awayTeamLogo ??
+                                                            'images/mainpage/sampleLogo.png',
+                                                        teamBScore:
+                                                            futureList1[index]
+                                                                .awayTeamScore
+                                                                .toString(),
+                                                        isSaved: futureList1[
+                                                                    index]
+                                                                .hasCollected ??
+                                                            false,
                                                       ),
-                                                  for (int i = 0;
-                                                      i < future1Length;
-                                                      i++)
-                                                    CardLoading(
-                                                      height: 100 * fem,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8 * fem),
-                                                      margin:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal:
-                                                                  10 * fem,
-                                                              vertical:
-                                                                  10 * fem),
-                                                    ),
-                                                ])
-                                              : (future1Length == 0)
+                                                    );
+                                                  },
+                                                )
+                                          : (statusId == 2 && futureDateId == 1)
+                                              ?
+                                              // isEventLoading
+                                              //     ? Column(children: [
+                                              //         Column(children: [
+                                              //           if (future2Length < 4)
+                                              //             for (int i = 0;
+                                              //                 i < 4;
+                                              //                 i++)
+                                              //               CardLoading(
+                                              //                 height: 100 * fem,
+                                              //                 borderRadius:
+                                              //                     BorderRadius
+                                              //                         .circular(
+                                              //                             8 * fem),
+                                              //                 margin: EdgeInsets
+                                              //                     .symmetric(
+                                              //                         horizontal:
+                                              //                             10 *
+                                              //                                 fem,
+                                              //                         vertical:
+                                              //                             10 *
+                                              //                                 fem),
+                                              //               ),
+                                              //           for (int i = 0;
+                                              //               i < future2Length;
+                                              //               i++)
+                                              //             CardLoading(
+                                              //               height: 100 * fem,
+                                              //               borderRadius:
+                                              //                   BorderRadius
+                                              //                       .circular(
+                                              //                           8 * fem),
+                                              //               margin: EdgeInsets
+                                              //                   .symmetric(
+                                              //                       horizontal:
+                                              //                           10 *
+                                              //                               fem,
+                                              //                       vertical:
+                                              //                           10 *
+                                              //                               fem),
+                                              //             ),
+                                              //         ])
+                                              //       ])
+                                              //     :
+                                              (future2Length == 0)
                                                   ? searchEmptyWidget()
                                                   : ListView.builder(
                                                       physics:
                                                           const NeverScrollableScrollPhysics(),
-                                                      itemCount: future1Length,
+                                                      itemCount: future2Length,
                                                       shrinkWrap: true,
                                                       itemBuilder:
                                                           (context, index) {
@@ -1198,65 +1351,69 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                           onTap: () {
                                                             print(
                                                                 "navi into tournament");
-                                                            TournamentDetails(
-                                                              id: '${futureList1[index].id}',
-                                                              matchDate:
-                                                                  '${futureList1[index].matchDate}',
-                                                              matchStatus:
-                                                                  '未开赛',
-                                                              matchName:
-                                                                  '${futureList1[index].competitionName}',
-                                                              homeTeamFormation:
-                                                                  '${futureList1[index].homeFormation}',
-                                                              awayTeamFormation:
-                                                                  '${futureList1[index].awayFormation}',
-                                                              lineUp: futureList1[
-                                                                          index]
-                                                                      .lineUp ??
-                                                                  0,
-                                                            ).launch(context);
+                                                            Get.to(
+                                                                TournamentDetails(
+                                                                  id: '${futureList2?[index].id}',
+                                                                  matchDate:
+                                                                      '${futureList2?[index].matchDate}',
+                                                                  matchStatus:
+                                                                      '未开赛',
+                                                                  matchName:
+                                                                      '${futureList2?[index].competitionName}',
+                                                                  homeTeamFormation:
+                                                                      '${futureList2?[index].homeFormation}',
+                                                                  awayTeamFormation:
+                                                                      '${futureList2?[index].awayFormation}',
+                                                                  lineUp: futureList2?[
+                                                                              index]
+                                                                          .lineUp ??
+                                                                      0,
+                                                                ),
+                                                                transition:
+                                                                    Transition
+                                                                        .fadeIn);
                                                           },
                                                           child:
                                                               GameDisplayComponent(
-                                                            id: futureList1[
+                                                            id: futureList2[
                                                                         index]
                                                                     .id ??
                                                                 0,
                                                             competitionType:
-                                                                futureList1[index]
+                                                                futureList2[index]
                                                                         .competitionName ??
                                                                     "",
-                                                            duration: futureList1[
+                                                            duration: futureList2[
                                                                         index]
                                                                     .matchTimeStr ??
                                                                 "00:00",
-                                                            teamAName: futureList1[
+                                                            teamAName: futureList2[
                                                                         index]
                                                                     .homeTeamName ??
                                                                 "",
-                                                            teamALogo: futureList1[
+                                                            teamALogo: futureList2[
                                                                         index]
                                                                     .homeTeamLogo ??
                                                                 'images/mainpage/sampleLogo.png',
                                                             teamAScore:
-                                                                futureList1[
+                                                                futureList2[
                                                                         index]
                                                                     .homeTeamScore
                                                                     .toString(),
-                                                            teamBName: futureList1[
+                                                            teamBName: futureList2[
                                                                         index]
                                                                     .awayTeamName ??
                                                                 "",
-                                                            teamBLogo: futureList1[
+                                                            teamBLogo: futureList2[
                                                                         index]
                                                                     .awayTeamLogo ??
                                                                 'images/mainpage/sampleLogo.png',
                                                             teamBScore:
-                                                                futureList1[
+                                                                futureList2[
                                                                         index]
                                                                     .awayTeamScore
                                                                     .toString(),
-                                                            isSaved: futureList1[
+                                                            isSaved: futureList2[
                                                                         index]
                                                                     .hasCollected ??
                                                                 false,
@@ -1264,56 +1421,60 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                         );
                                                       },
                                                     )
-                                          : (statusId == 2 && futureDateId == 1)
-                                              ? isEventLoading
-                                                  ? Column(children: [
-                                                      Column(children: [
-                                                        if (future2Length < 4)
-                                                          for (int i = 0;
-                                                              i < 4;
-                                                              i++)
-                                                            CardLoading(
-                                                              height: 100 * fem,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8 * fem),
-                                                              margin: EdgeInsets
-                                                                  .symmetric(
-                                                                      horizontal:
-                                                                          10 *
-                                                                              fem,
-                                                                      vertical:
-                                                                          10 *
-                                                                              fem),
-                                                            ),
-                                                        for (int i = 0;
-                                                            i < future2Length;
-                                                            i++)
-                                                          CardLoading(
-                                                            height: 100 * fem,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8 * fem),
-                                                            margin: EdgeInsets
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        10 *
-                                                                            fem,
-                                                                    vertical:
-                                                                        10 *
-                                                                            fem),
-                                                          ),
-                                                      ])
-                                                    ])
-                                                  : (future2Length == 0)
+                                              : (statusId == 2 &&
+                                                      futureDateId == 2)
+                                                  ?
+                                                  // isEventLoading
+                                                  //     ? Column(children: [
+                                                  //         Column(children: [
+                                                  //           if (future3Length <
+                                                  //               4)
+                                                  //             for (int i = 0;
+                                                  //                 i < 4;
+                                                  //                 i++)
+                                                  //               CardLoading(
+                                                  //                 height:
+                                                  //                     100 * fem,
+                                                  //                 borderRadius:
+                                                  //                     BorderRadius
+                                                  //                         .circular(8 *
+                                                  //                             fem),
+                                                  //                 margin: EdgeInsets.symmetric(
+                                                  //                     horizontal:
+                                                  //                         10 *
+                                                  //                             fem,
+                                                  //                     vertical:
+                                                  //                         10 *
+                                                  //                             fem),
+                                                  //               ),
+                                                  //           for (int i = 0;
+                                                  //               i < future3Length;
+                                                  //               i++)
+                                                  //             CardLoading(
+                                                  //               height:
+                                                  //                   100 * fem,
+                                                  //               borderRadius:
+                                                  //                   BorderRadius
+                                                  //                       .circular(8 *
+                                                  //                           fem),
+                                                  //               margin: EdgeInsets.symmetric(
+                                                  //                   horizontal:
+                                                  //                       10 *
+                                                  //                           fem,
+                                                  //                   vertical:
+                                                  //                       10 *
+                                                  //                           fem),
+                                                  //             ),
+                                                  //         ])
+                                                  //       ])
+                                                  //     :
+                                                  (future3Length == 0)
                                                       ? searchEmptyWidget()
                                                       : ListView.builder(
                                                           physics:
                                                               const NeverScrollableScrollPhysics(),
                                                           itemCount:
-                                                              future2Length,
+                                                              future3Length,
                                                           shrinkWrap: true,
                                                           itemBuilder:
                                                               (context, index) {
@@ -1321,64 +1482,66 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                               onTap: () {
                                                                 print(
                                                                     "navi into tournament");
-                                                                TournamentDetails(
-                                                                  id: '${futureList2[index].id}',
-                                                                  matchDate:
-                                                                      '${futureList2[index].matchDate}',
-                                                                  matchStatus:
-                                                                      '未开赛',
-                                                                  matchName:
-                                                                      '${futureList2[index].competitionName}',
-                                                                  homeTeamFormation:
-                                                                      '${futureList2[index].homeFormation}',
-                                                                  awayTeamFormation:
-                                                                      '${futureList2[index].awayFormation}',
-                                                                  lineUp: futureList2[
-                                                                              index]
-                                                                          .lineUp ??
-                                                                      0,
-                                                                ).launch(
-                                                                    context);
+                                                                Get.to(
+                                                                    TournamentDetails(
+                                                                      id: '${futureList3?[index].id}',
+                                                                      matchDate:
+                                                                          '${futureList3?[index].matchDate}',
+                                                                      matchStatus:
+                                                                          '未开赛',
+                                                                      matchName:
+                                                                          '${futureList3?[index].competitionName}',
+                                                                      homeTeamFormation:
+                                                                          '${futureList3?[index].homeFormation}',
+                                                                      awayTeamFormation:
+                                                                          '${futureList3?[index].awayFormation}',
+                                                                      lineUp:
+                                                                          futureList3?[index].lineUp ??
+                                                                              0,
+                                                                    ),
+                                                                    transition:
+                                                                        Transition
+                                                                            .fadeIn);
                                                               },
                                                               child:
                                                                   GameDisplayComponent(
-                                                                id: futureList2[
+                                                                id: futureList3[
                                                                             index]
                                                                         .id ??
                                                                     0,
                                                                 competitionType:
-                                                                    futureList2[index]
+                                                                    futureList3[index]
                                                                             .competitionName ??
                                                                         "",
-                                                                duration: futureList2[
+                                                                duration: futureList3[
                                                                             index]
                                                                         .matchTimeStr ??
                                                                     "00:00",
-                                                                teamAName: futureList2[
+                                                                teamAName: futureList3[
                                                                             index]
                                                                         .homeTeamName ??
                                                                     "",
-                                                                teamALogo: futureList2[
+                                                                teamALogo: futureList3[
                                                                             index]
                                                                         .homeTeamLogo ??
                                                                     'images/mainpage/sampleLogo.png',
-                                                                teamAScore: futureList2[
+                                                                teamAScore: futureList3[
                                                                         index]
                                                                     .homeTeamScore
                                                                     .toString(),
-                                                                teamBName: futureList2[
+                                                                teamBName: futureList3[
                                                                             index]
                                                                         .awayTeamName ??
                                                                     "",
-                                                                teamBLogo: futureList2[
+                                                                teamBLogo: futureList3[
                                                                             index]
                                                                         .awayTeamLogo ??
                                                                     'images/mainpage/sampleLogo.png',
-                                                                teamBScore: futureList2[
+                                                                teamBScore: futureList3[
                                                                         index]
                                                                     .awayTeamScore
                                                                     .toString(),
-                                                                isSaved: futureList2[
+                                                                isSaved: futureList3[
                                                                             index]
                                                                         .hasCollected ??
                                                                     false,
@@ -1386,58 +1549,59 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                             );
                                                           },
                                                         )
-                                              : (statusId == 2 &&
-                                                      futureDateId == 2)
-                                                  ? isEventLoading
-                                                      ? Column(children: [
-                                                          Column(children: [
-                                                            if (future3Length <
-                                                                4)
-                                                              for (int i = 0;
-                                                                  i < 4;
-                                                                  i++)
-                                                                CardLoading(
-                                                                  height:
-                                                                      100 * fem,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(8 *
-                                                                              fem),
-                                                                  margin: EdgeInsets.symmetric(
-                                                                      horizontal:
-                                                                          10 *
-                                                                              fem,
-                                                                      vertical:
-                                                                          10 *
-                                                                              fem),
-                                                                ),
-                                                            for (int i = 0;
-                                                                i < future3Length;
-                                                                i++)
-                                                              CardLoading(
-                                                                height:
-                                                                    100 * fem,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(8 *
-                                                                            fem),
-                                                                margin: EdgeInsets.symmetric(
-                                                                    horizontal:
-                                                                        10 *
-                                                                            fem,
-                                                                    vertical:
-                                                                        10 *
-                                                                            fem),
-                                                              ),
-                                                          ])
-                                                        ])
-                                                      : (future3Length == 0)
+                                                  : (statusId == 2 &&
+                                                          futureDateId == 3)
+                                                      ?
+                                                      // isEventLoading
+                                                      //     ? Column(children: [
+                                                      //         Column(children: [
+                                                      //           if (future4Length <
+                                                      //               4)
+                                                      //             for (int i =
+                                                      //                     0;
+                                                      //                 i < 4;
+                                                      //                 i++)
+                                                      //               CardLoading(
+                                                      //                 height:
+                                                      //                     100 *
+                                                      //                         fem,
+                                                      //                 borderRadius:
+                                                      //                     BorderRadius.circular(8 *
+                                                      //                         fem),
+                                                      //                 margin: EdgeInsets.symmetric(
+                                                      //                     horizontal: 10 *
+                                                      //                         fem,
+                                                      //                     vertical:
+                                                      //                         10 * fem),
+                                                      //               ),
+                                                      //           for (int i = 0;
+                                                      //               i < future4Length;
+                                                      //               i++)
+                                                      //             CardLoading(
+                                                      //               height:
+                                                      //                   100 *
+                                                      //                       fem,
+                                                      //               borderRadius:
+                                                      //                   BorderRadius.circular(8 *
+                                                      //                       fem),
+                                                      //               margin: EdgeInsets.symmetric(
+                                                      //                   horizontal:
+                                                      //                       10 *
+                                                      //                           fem,
+                                                      //                   vertical:
+                                                      //                       10 *
+                                                      //                           fem),
+                                                      //             ),
+                                                      //         ])
+                                                      //       ])
+                                                      //     :
+                                                      (future4Length == 0)
                                                           ? searchEmptyWidget()
                                                           : ListView.builder(
                                                               physics:
                                                                   const NeverScrollableScrollPhysics(),
                                                               itemCount:
-                                                                  future3Length,
+                                                                  future4Length,
                                                               shrinkWrap: true,
                                                               itemBuilder:
                                                                   (context,
@@ -1446,114 +1610,99 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                   onTap: () {
                                                                     print(
                                                                         "navi into tournament");
-                                                                    TournamentDetails(
-                                                                      id: '${futureList3[index].id}',
-                                                                      matchDate:
-                                                                          '${futureList3[index].matchDate}',
-                                                                      matchStatus:
-                                                                          '未开赛',
-                                                                      matchName:
-                                                                          '${futureList3[index].competitionName}',
-                                                                      homeTeamFormation:
-                                                                          '${futureList3[index].homeFormation}',
-                                                                      awayTeamFormation:
-                                                                          '${futureList3[index].awayFormation}',
-                                                                      lineUp:
-                                                                          futureList3[index].lineUp ??
-                                                                              0,
-                                                                    ).launch(
-                                                                        context);
+
+                                                                    Get.to(
+                                                                        TournamentDetails(
+                                                                          id: '${futureList4?[index].id}',
+                                                                          matchDate:
+                                                                              '${futureList4?[index].matchDate}',
+                                                                          matchStatus:
+                                                                              '未开赛',
+                                                                          matchName:
+                                                                              '${futureList4?[index].competitionName}',
+                                                                          homeTeamFormation:
+                                                                              '${futureList4?[index].homeFormation}',
+                                                                          awayTeamFormation:
+                                                                              '${futureList4?[index].awayFormation}',
+                                                                          lineUp:
+                                                                              futureList4?[index].lineUp ?? 0,
+                                                                        ),
+                                                                        transition:
+                                                                            Transition.fadeIn);
                                                                   },
                                                                   child:
                                                                       GameDisplayComponent(
-                                                                    id: futureList3[index]
+                                                                    id: futureList4[index]
                                                                             .id ??
                                                                         0,
                                                                     competitionType:
-                                                                        futureList3[index].competitionName ??
+                                                                        futureList4[index].competitionName ??
                                                                             "",
-                                                                    duration: futureList3[index]
+                                                                    duration: futureList4[index]
                                                                             .matchTimeStr ??
                                                                         "00:00",
                                                                     teamAName:
-                                                                        futureList3[index].homeTeamName ??
+                                                                        futureList4[index].homeTeamName ??
                                                                             "",
-                                                                    teamALogo: futureList3[index]
+                                                                    teamALogo: futureList4[index]
                                                                             .homeTeamLogo ??
                                                                         'images/mainpage/sampleLogo.png',
-                                                                    teamAScore: futureList3[
+                                                                    teamAScore: futureList4[
                                                                             index]
                                                                         .homeTeamScore
                                                                         .toString(),
                                                                     teamBName:
-                                                                        futureList3[index].awayTeamName ??
+                                                                        futureList4[index].awayTeamName ??
                                                                             "",
-                                                                    teamBLogo: futureList3[index]
+                                                                    teamBLogo: futureList4[index]
                                                                             .awayTeamLogo ??
                                                                         'images/mainpage/sampleLogo.png',
-                                                                    teamBScore: futureList3[
+                                                                    teamBScore: futureList4[
                                                                             index]
                                                                         .awayTeamScore
                                                                         .toString(),
-                                                                    isSaved: futureList3[index]
+                                                                    isSaved: futureList4[index]
                                                                             .hasCollected ??
                                                                         false,
                                                                   ),
                                                                 );
                                                               },
                                                             )
-                                                  : (statusId == 2 &&
-                                                          futureDateId == 3)
-                                                      ? isEventLoading
-                                                          ? Column(children: [
-                                                              Column(children: [
-                                                                if (future4Length <
-                                                                    4)
-                                                                  for (int i =
-                                                                          0;
-                                                                      i < 4;
-                                                                      i++)
-                                                                    CardLoading(
-                                                                      height:
-                                                                          100 *
-                                                                              fem,
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(8 *
-                                                                              fem),
-                                                                      margin: EdgeInsets.symmetric(
-                                                                          horizontal: 10 *
-                                                                              fem,
-                                                                          vertical:
-                                                                              10 * fem),
-                                                                    ),
-                                                                for (int i = 0;
-                                                                    i < future4Length;
-                                                                    i++)
-                                                                  CardLoading(
-                                                                    height:
-                                                                        100 *
-                                                                            fem,
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(8 *
-                                                                            fem),
-                                                                    margin: EdgeInsets.symmetric(
-                                                                        horizontal:
-                                                                            10 *
-                                                                                fem,
-                                                                        vertical:
-                                                                            10 *
-                                                                                fem),
-                                                                  ),
-                                                              ])
-                                                            ])
-                                                          : (future4Length == 0)
+                                                      : (statusId == 2 &&
+                                                              futureDateId == 4)
+                                                          ?
+                                                          // isEventLoading
+                                                          //     ? Column(
+                                                          //         children: [
+                                                          //             Column(
+                                                          //                 children: [
+                                                          //                   if (future5Length <
+                                                          //                       4)
+                                                          //                     for (int i = 0; i < 4; i++)
+                                                          //                       CardLoading(
+                                                          //                         height: 100 * fem,
+                                                          //                         borderRadius: BorderRadius.circular(8 * fem),
+                                                          //                         margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                          //                       ),
+                                                          //                   for (int i = 0;
+                                                          //                       i < future5Length;
+                                                          //                       i++)
+                                                          //                     CardLoading(
+                                                          //                       height: 100 * fem,
+                                                          //                       borderRadius: BorderRadius.circular(8 * fem),
+                                                          //                       margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                          //                     ),
+                                                          //                 ])
+                                                          //           ])
+                                                          //     :
+                                                          (future5Length == 0)
                                                               ? searchEmptyWidget()
                                                               : ListView
                                                                   .builder(
                                                                   physics:
                                                                       const NeverScrollableScrollPhysics(),
                                                                   itemCount:
-                                                                      future4Length,
+                                                                      future5Length,
                                                                   shrinkWrap:
                                                                       true,
                                                                   itemBuilder:
@@ -1564,84 +1713,81 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                           () {
                                                                         print(
                                                                             "navi into tournament");
-                                                                        TournamentDetails(
-                                                                          id: '${futureList4[index].id}',
-                                                                          matchDate:
-                                                                              '${futureList4[index].matchDate}',
-                                                                          matchStatus:
-                                                                              '未开赛',
-                                                                          matchName:
-                                                                              '${futureList4[index].competitionName}',
-                                                                          homeTeamFormation:
-                                                                              '${futureList4[index].homeFormation}',
-                                                                          awayTeamFormation:
-                                                                              '${futureList4[index].awayFormation}',
-                                                                          lineUp:
-                                                                              futureList4[index].lineUp ?? 0,
-                                                                        ).launch(
-                                                                            context);
+
+                                                                        Get.to(
+                                                                            TournamentDetails(
+                                                                              id: '${futureList5?[index].id}',
+                                                                              matchDate: '${futureList5?[index].matchDate}',
+                                                                              matchStatus: '未开赛',
+                                                                              matchName: '${futureList5?[index].competitionName}',
+                                                                              homeTeamFormation: '${futureList5?[index].homeFormation}',
+                                                                              awayTeamFormation: '${futureList5?[index].awayFormation}',
+                                                                              lineUp: futureList5?[index].lineUp ?? 0,
+                                                                            ),
+                                                                            transition:
+                                                                                Transition.fadeIn);
                                                                       },
                                                                       child:
                                                                           GameDisplayComponent(
-                                                                        id: futureList4[index].id ??
+                                                                        id: futureList5[index].id ??
                                                                             0,
                                                                         competitionType:
-                                                                            futureList4[index].competitionName ??
+                                                                            futureList5[index].competitionName ??
                                                                                 "",
                                                                         duration:
-                                                                            futureList4[index].matchTimeStr ??
+                                                                            futureList5[index].matchTimeStr ??
                                                                                 "00:00",
                                                                         teamAName:
-                                                                            futureList4[index].homeTeamName ??
+                                                                            futureList5[index].homeTeamName ??
                                                                                 "",
                                                                         teamALogo:
-                                                                            futureList4[index].homeTeamLogo ??
+                                                                            futureList5[index].homeTeamLogo ??
                                                                                 'images/mainpage/sampleLogo.png',
-                                                                        teamAScore: futureList4[index]
+                                                                        teamAScore: futureList5[index]
                                                                             .homeTeamScore
                                                                             .toString(),
                                                                         teamBName:
-                                                                            futureList4[index].awayTeamName ??
+                                                                            futureList5[index].awayTeamName ??
                                                                                 "",
                                                                         teamBLogo:
-                                                                            futureList4[index].awayTeamLogo ??
+                                                                            futureList5[index].awayTeamLogo ??
                                                                                 'images/mainpage/sampleLogo.png',
-                                                                        teamBScore: futureList4[index]
+                                                                        teamBScore: futureList5[index]
                                                                             .awayTeamScore
                                                                             .toString(),
                                                                         isSaved:
-                                                                            futureList4[index].hasCollected ??
+                                                                            futureList5[index].hasCollected ??
                                                                                 false,
                                                                       ),
                                                                     );
                                                                   },
                                                                 )
-                                                      : (statusId == 2 &&
-                                                              futureDateId == 4)
-                                                          ? isEventLoading
-                                                              ? Column(
-                                                                  children: [
-                                                                      Column(
-                                                                          children: [
-                                                                            if (future5Length <
-                                                                                4)
-                                                                              for (int i = 0; i < 4; i++)
-                                                                                CardLoading(
-                                                                                  height: 100 * fem,
-                                                                                  borderRadius: BorderRadius.circular(8 * fem),
-                                                                                  margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                ),
-                                                                            for (int i = 0;
-                                                                                i < future5Length;
-                                                                                i++)
-                                                                              CardLoading(
-                                                                                height: 100 * fem,
-                                                                                borderRadius: BorderRadius.circular(8 * fem),
-                                                                                margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                              ),
-                                                                          ])
-                                                                    ])
-                                                              : (future5Length ==
+                                                          : (statusId == 2 &&
+                                                                  futureDateId ==
+                                                                      5)
+                                                              ?
+                                                              // isEventLoading
+                                                              //     ? Column(
+                                                              //         children: [
+                                                              //             Column(
+                                                              //                 children: [
+                                                              //                   if (future6Length < 4)
+                                                              //                     for (int i = 0; i < 4; i++)
+                                                              //                       CardLoading(
+                                                              //                         height: 100 * fem,
+                                                              //                         borderRadius: BorderRadius.circular(8 * fem),
+                                                              //                         margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                              //                       ),
+                                                              //                   for (int i = 0; i < future6Length; i++)
+                                                              //                     CardLoading(
+                                                              //                       height: 100 * fem,
+                                                              //                       borderRadius: BorderRadius.circular(8 * fem),
+                                                              //                       margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                              //                     ),
+                                                              //                 ])
+                                                              //           ])
+                                                              //     :
+                                                              (future6Length ==
                                                                       0)
                                                                   ? searchEmptyWidget()
                                                                   : ListView
@@ -1649,7 +1795,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                       physics:
                                                                           const NeverScrollableScrollPhysics(),
                                                                       itemCount:
-                                                                          future5Length,
+                                                                          future6Length,
                                                                       shrinkWrap:
                                                                           true,
                                                                       itemBuilder:
@@ -1659,66 +1805,71 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                           onTap:
                                                                               () {
                                                                             print("navi into tournament");
-                                                                            TournamentDetails(
-                                                                              id: '${futureList5[index].id}',
-                                                                              matchDate: '${futureList5[index].matchDate}',
-                                                                              matchStatus: '未开赛',
-                                                                              matchName: '${futureList5[index].competitionName}',
-                                                                              homeTeamFormation: '${futureList5[index].homeFormation}',
-                                                                              awayTeamFormation: '${futureList5[index].awayFormation}',
-                                                                              lineUp: futureList5[index].lineUp ?? 0,
-                                                                            ).launch(context);
+
+                                                                            Get.to(
+                                                                                TournamentDetails(
+                                                                                  id: '${futureList6?[index].id}',
+                                                                                  matchDate: '${futureList6?[index].matchDate}',
+                                                                                  matchStatus: '未开赛',
+                                                                                  matchName: '${futureList6?[index].competitionName}',
+                                                                                  homeTeamFormation: '${futureList6?[index].homeFormation}',
+                                                                                  awayTeamFormation: '${futureList6?[index].awayFormation}',
+                                                                                  lineUp: futureList6?[index].lineUp ?? 0,
+                                                                                ),
+                                                                                transition: Transition.fadeIn);
                                                                           },
                                                                           child:
                                                                               GameDisplayComponent(
-                                                                            id: futureList5[index].id ??
+                                                                            id: futureList6[index].id ??
                                                                                 0,
                                                                             competitionType:
-                                                                                futureList5[index].competitionName ?? "",
+                                                                                futureList6[index].competitionName ?? "",
                                                                             duration:
-                                                                                futureList5[index].matchTimeStr ?? "00:00",
+                                                                                futureList6[index].matchTimeStr ?? "00:00",
                                                                             teamAName:
-                                                                                futureList5[index].homeTeamName ?? "",
+                                                                                futureList6[index].homeTeamName ?? "",
                                                                             teamALogo:
-                                                                                futureList5[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                futureList6[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
                                                                             teamAScore:
-                                                                                futureList5[index].homeTeamScore.toString(),
+                                                                                futureList6[index].homeTeamScore.toString(),
                                                                             teamBName:
-                                                                                futureList5[index].awayTeamName ?? "",
+                                                                                futureList6[index].awayTeamName ?? "",
                                                                             teamBLogo:
-                                                                                futureList5[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                futureList6[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
                                                                             teamBScore:
-                                                                                futureList5[index].awayTeamScore.toString(),
+                                                                                futureList6[index].awayTeamScore.toString(),
                                                                             isSaved:
-                                                                                futureList5[index].hasCollected ?? false,
+                                                                                futureList6[index].hasCollected ?? false,
                                                                           ),
                                                                         );
                                                                       },
                                                                     )
-                                                          : (statusId == 2 &&
-                                                                  futureDateId ==
-                                                                      5)
-                                                              ? isEventLoading
-                                                                  ? Column(
-                                                                      children: [
-                                                                          Column(
-                                                                              children: [
-                                                                                if (future6Length < 4)
-                                                                                  for (int i = 0; i < 4; i++)
-                                                                                    CardLoading(
-                                                                                      height: 100 * fem,
-                                                                                      borderRadius: BorderRadius.circular(8 * fem),
-                                                                                      margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                    ),
-                                                                                for (int i = 0; i < future6Length; i++)
-                                                                                  CardLoading(
-                                                                                    height: 100 * fem,
-                                                                                    borderRadius: BorderRadius.circular(8 * fem),
-                                                                                    margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                  ),
-                                                                              ])
-                                                                        ])
-                                                                  : (future6Length ==
+                                                              : (statusId ==
+                                                                          2 &&
+                                                                      futureDateId ==
+                                                                          6)
+                                                                  ?
+                                                                  // isEventLoading
+                                                                  //     ? Column(
+                                                                  //         children: [
+                                                                  //             Column(children: [
+                                                                  //               if (future7Length < 4)
+                                                                  //                 for (int i = 0; i < 4; i++)
+                                                                  //                   CardLoading(
+                                                                  //                     height: 100 * fem,
+                                                                  //                     borderRadius: BorderRadius.circular(8 * fem),
+                                                                  //                     margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                  //                   ),
+                                                                  //               for (int i = 0; i < future7Length; i++)
+                                                                  //                 CardLoading(
+                                                                  //                   height: 100 * fem,
+                                                                  //                   borderRadius: BorderRadius.circular(8 * fem),
+                                                                  //                   margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                  //                 ),
+                                                                  //             ])
+                                                                  //           ])
+                                                                  //     :
+                                                                  (future7Length ==
                                                                           0)
                                                                       ? searchEmptyWidget()
                                                                       : ListView
@@ -1726,7 +1877,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                           physics:
                                                                               const NeverScrollableScrollPhysics(),
                                                                           itemCount:
-                                                                              future6Length,
+                                                                              future7Length,
                                                                           shrinkWrap:
                                                                               true,
                                                                           itemBuilder:
@@ -1734,528 +1885,521 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                             return GestureDetector(
                                                                               onTap: () {
                                                                                 print("navi into tournament");
-                                                                                TournamentDetails(
-                                                                                  id: '${futureList6[index].id}',
-                                                                                  matchDate: '${futureList6[index].matchDate}',
-                                                                                  matchStatus: '未开赛',
-                                                                                  matchName: '${futureList6[index].competitionName}',
-                                                                                  homeTeamFormation: '${futureList6[index].homeFormation}',
-                                                                                  awayTeamFormation: '${futureList6[index].awayFormation}',
-                                                                                  lineUp: futureList6[index].lineUp ?? 0,
-                                                                                ).launch(context);
+
+                                                                                Get.to(
+                                                                                    TournamentDetails(
+                                                                                      id: '${futureList7?[index].id}',
+                                                                                      matchDate: '${futureList7?[index].matchDate}',
+                                                                                      matchStatus: '未开赛',
+                                                                                      matchName: '${futureList7?[index].competitionName}',
+                                                                                      homeTeamFormation: '${futureList7?[index].homeFormation}',
+                                                                                      awayTeamFormation: '${futureList7?[index].awayFormation}',
+                                                                                      lineUp: futureList7?[index].lineUp ?? 0,
+                                                                                    ),
+                                                                                    transition: Transition.fadeIn);
                                                                               },
                                                                               child: GameDisplayComponent(
-                                                                                id: futureList6[index].id ?? 0,
-                                                                                competitionType: futureList6[index].competitionName ?? "",
-                                                                                duration: futureList6[index].matchTimeStr ?? "00:00",
-                                                                                teamAName: futureList6[index].homeTeamName ?? "",
-                                                                                teamALogo: futureList6[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                teamAScore: futureList6[index].homeTeamScore.toString(),
-                                                                                teamBName: futureList6[index].awayTeamName ?? "",
-                                                                                teamBLogo: futureList6[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                teamBScore: futureList6[index].awayTeamScore.toString(),
-                                                                                isSaved: futureList6[index].hasCollected ?? false,
+                                                                                id: futureList7[index].id ?? 0,
+                                                                                competitionType: futureList7[index].competitionName ?? "",
+                                                                                duration: futureList7[index].matchTimeStr ?? "00:00",
+                                                                                teamAName: futureList7[index].homeTeamName ?? "",
+                                                                                teamALogo: futureList7[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                teamAScore: futureList7[index].homeTeamScore.toString(),
+                                                                                teamBName: futureList7[index].awayTeamName ?? "",
+                                                                                teamBLogo: futureList7[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                teamBScore: futureList7[index].awayTeamScore.toString(),
+                                                                                isSaved: futureList7[index].hasCollected ?? false,
                                                                               ),
                                                                             );
                                                                           },
                                                                         )
-                                                              : (statusId ==
-                                                                          2 &&
-                                                                      futureDateId ==
-                                                                          6)
-                                                                  ? isEventLoading
-                                                                      ? Column(
-                                                                          children: [
-                                                                              Column(children: [
-                                                                                if (future7Length < 4)
-                                                                                  for (int i = 0; i < 4; i++)
-                                                                                    CardLoading(
-                                                                                      height: 100 * fem,
-                                                                                      borderRadius: BorderRadius.circular(8 * fem),
-                                                                                      margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                    ),
-                                                                                for (int i = 0; i < future7Length; i++)
-                                                                                  CardLoading(
-                                                                                    height: 100 * fem,
-                                                                                    borderRadius: BorderRadius.circular(8 * fem),
-                                                                                    margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                  ),
-                                                                              ])
-                                                                            ])
-                                                                      : (future7Length ==
+                                                                  : (statusId ==
+                                                                              3 &&
+                                                                          pastDateId ==
+                                                                              0)
+                                                                      ?
+                                                                      // isEventLoading
+                                                                      //     ? Column(children: [
+                                                                      //         Column(children: [
+                                                                      //           if (past1Length < 4)
+                                                                      //             for (int i = 0; i < 4; i++)
+                                                                      //               CardLoading(
+                                                                      //                 height: 100 * fem,
+                                                                      //                 borderRadius: BorderRadius.circular(8 * fem),
+                                                                      //                 margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                      //               ),
+                                                                      //           for (int i = 0; i < past1Length; i++)
+                                                                      //             CardLoading(
+                                                                      //               height: 100 * fem,
+                                                                      //               borderRadius: BorderRadius.circular(8 * fem),
+                                                                      //               margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                      //             ),
+                                                                      //         ])
+                                                                      //       ])
+                                                                      //     :
+                                                                      (past1Length ==
                                                                               0)
                                                                           ? searchEmptyWidget()
                                                                           : ListView
                                                                               .builder(
                                                                               physics: const NeverScrollableScrollPhysics(),
-                                                                              itemCount: future7Length,
+                                                                              itemCount: past1Length,
                                                                               shrinkWrap: true,
                                                                               itemBuilder: (context, index) {
                                                                                 return GestureDetector(
                                                                                   onTap: () {
                                                                                     print("navi into tournament");
 
-                                                                                    TournamentDetails(
-                                                                                      id: '${futureList7[index].id}',
-                                                                                      matchDate: '${futureList7[index].matchDate}',
-                                                                                      matchStatus: '未开赛',
-                                                                                      matchName: '${futureList7[index].competitionName}',
-                                                                                      homeTeamFormation: '${futureList7[index].homeFormation}',
-                                                                                      awayTeamFormation: '${futureList7[index].awayFormation}',
-                                                                                      lineUp: futureList7[index].lineUp ?? 0,
-                                                                                    ).launch(context);
+                                                                                    Get.to(
+                                                                                        TournamentDetails(
+                                                                                          id: '${pastList1?[index].id}',
+                                                                                          matchDate: '${pastList1?[index].matchDate}',
+                                                                                          matchStatus: '未开赛',
+                                                                                          matchName: '${pastList1?[index].competitionName}',
+                                                                                          homeTeamFormation: '${pastList1?[index].homeFormation}',
+                                                                                          awayTeamFormation: '${pastList1?[index].awayFormation}',
+                                                                                          lineUp: pastList1?[index].lineUp ?? 0,
+                                                                                        ),
+                                                                                        transition: Transition.fadeIn);
                                                                                   },
                                                                                   child: GameDisplayComponent(
-                                                                                    id: futureList7[index].id ?? 0,
-                                                                                    competitionType: futureList7[index].competitionName ?? "",
-                                                                                    duration: futureList7[index].matchTimeStr ?? "00:00",
-                                                                                    teamAName: futureList7[index].homeTeamName ?? "",
-                                                                                    teamALogo: futureList7[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                    teamAScore: futureList7[index].homeTeamScore.toString(),
-                                                                                    teamBName: futureList7[index].awayTeamName ?? "",
-                                                                                    teamBLogo: futureList7[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                    teamBScore: futureList7[index].awayTeamScore.toString(),
-                                                                                    isSaved: futureList7[index].hasCollected ?? false,
+                                                                                    id: pastList1[index].id ?? 0,
+                                                                                    competitionType: pastList1[index].competitionName ?? "",
+                                                                                    duration: pastList1[index].matchTimeStr ?? "00:00",
+                                                                                    teamAName: pastList1[index].homeTeamName ?? "",
+                                                                                    teamALogo: pastList1[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                    teamAScore: pastList1[index].homeTeamScore.toString(),
+                                                                                    teamBName: pastList1[index].awayTeamName ?? "",
+                                                                                    teamBLogo: pastList1[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                    teamBScore: pastList1[index].awayTeamScore.toString(),
+                                                                                    isSaved: pastList1[index].hasCollected ?? false,
                                                                                   ),
                                                                                 );
                                                                               },
                                                                             )
-                                                                  : (statusId ==
-                                                                              3 &&
-                                                                          pastDateId ==
-                                                                              0)
-                                                                      ? isEventLoading
-                                                                          ? Column(children: [
-                                                                              Column(children: [
-                                                                                if (past1Length < 4)
-                                                                                  for (int i = 0; i < 4; i++)
-                                                                                    CardLoading(
-                                                                                      height: 100 * fem,
-                                                                                      borderRadius: BorderRadius.circular(8 * fem),
-                                                                                      margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                    ),
-                                                                                for (int i = 0; i < past1Length; i++)
-                                                                                  CardLoading(
-                                                                                    height: 100 * fem,
-                                                                                    borderRadius: BorderRadius.circular(8 * fem),
-                                                                                    margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                  ),
-                                                                              ])
-                                                                            ])
-                                                                          : (past1Length == 0)
+                                                                      : (statusId == 3 &&
+                                                                              pastDateId == 1)
+                                                                          ?
+                                                                          // isEventLoading
+                                                                          //     ? Column(children: [
+                                                                          //         if (past2Length < 4)
+                                                                          //           for (int i = 0; i < 4; i++)
+                                                                          //             CardLoading(
+                                                                          //               height: 100 * fem,
+                                                                          //               borderRadius: BorderRadius.circular(8 * fem),
+                                                                          //               margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                          //             ),
+                                                                          //         for (int i = 0; i < past2Length; i++)
+                                                                          //           CardLoading(
+                                                                          //             height: 100 * fem,
+                                                                          //             borderRadius: BorderRadius.circular(8 * fem),
+                                                                          //             margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                          //           ),
+                                                                          //       ])
+                                                                          //     :
+                                                                          (past2Length == 0)
                                                                               ? searchEmptyWidget()
                                                                               : ListView.builder(
                                                                                   physics: const NeverScrollableScrollPhysics(),
-                                                                                  itemCount: past1Length,
+                                                                                  itemCount: past2Length,
                                                                                   shrinkWrap: true,
                                                                                   itemBuilder: (context, index) {
                                                                                     return GestureDetector(
                                                                                       onTap: () {
                                                                                         print("navi into tournament");
-                                                                                        TournamentDetails(
-                                                                                          id: '${pastList1[index].id}',
-                                                                                          matchDate: '${pastList1[index].matchDate}',
-                                                                                          matchStatus: '未开赛',
-                                                                                          matchName: '${pastList1[index].competitionName}',
-                                                                                          homeTeamFormation: '${pastList1[index].homeFormation}',
-                                                                                          awayTeamFormation: '${pastList1[index].awayFormation}',
-                                                                                          lineUp: pastList1[index].lineUp ?? 0,
-                                                                                        ).launch(context);
+
+                                                                                        Get.to(
+                                                                                            TournamentDetails(
+                                                                                              id: '${pastList2?[index].id}',
+                                                                                              matchDate: '${pastList2?[index].matchDate}',
+                                                                                              matchStatus: '未开赛',
+                                                                                              matchName: '${pastList2?[index].competitionName}',
+                                                                                              homeTeamFormation: '${pastList2?[index].homeFormation}',
+                                                                                              awayTeamFormation: '${pastList2?[index].awayFormation}',
+                                                                                              lineUp: pastList2?[index].lineUp ?? 0,
+                                                                                            ),
+                                                                                            transition: Transition.fadeIn);
                                                                                       },
                                                                                       child: GameDisplayComponent(
-                                                                                        id: pastList1[index].id ?? 0,
-                                                                                        competitionType: pastList1[index].competitionName ?? "",
-                                                                                        duration: pastList1[index].matchTimeStr ?? "00:00",
-                                                                                        teamAName: pastList1[index].homeTeamName ?? "",
-                                                                                        teamALogo: pastList1[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                        teamAScore: pastList1[index].homeTeamScore.toString(),
-                                                                                        teamBName: pastList1[index].awayTeamName ?? "",
-                                                                                        teamBLogo: pastList1[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                        teamBScore: pastList1[index].awayTeamScore.toString(),
-                                                                                        isSaved: pastList1[index].hasCollected ?? false,
+                                                                                        id: pastList2[index].id ?? 0,
+                                                                                        competitionType: pastList2[index].competitionName ?? "",
+                                                                                        duration: pastList2[index].matchTimeStr ?? "00:00",
+                                                                                        teamAName: pastList2[index].homeTeamName ?? "",
+                                                                                        teamALogo: pastList2[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                        teamAScore: pastList2[index].homeTeamScore.toString(),
+                                                                                        teamBName: pastList2[index].awayTeamName ?? "",
+                                                                                        teamBLogo: pastList2[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                        teamBScore: pastList2[index].awayTeamScore.toString(),
+                                                                                        isSaved: pastList2[index].hasCollected ?? false,
                                                                                       ),
                                                                                     );
                                                                                   },
                                                                                 )
-                                                                      : (statusId == 3 && pastDateId == 1)
-                                                                          ? isEventLoading
-                                                                              ? Column(children: [
-                                                                                  if (past2Length < 4)
-                                                                                    for (int i = 0; i < 4; i++)
-                                                                                      CardLoading(
-                                                                                        height: 100 * fem,
-                                                                                        borderRadius: BorderRadius.circular(8 * fem),
-                                                                                        margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                      ),
-                                                                                  for (int i = 0; i < past2Length; i++)
-                                                                                    CardLoading(
-                                                                                      height: 100 * fem,
-                                                                                      borderRadius: BorderRadius.circular(8 * fem),
-                                                                                      margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                    ),
-                                                                                ])
-                                                                              : (past2Length == 0)
+                                                                          : (statusId == 3 && pastDateId == 2)
+                                                                              ?
+                                                                              //  isEventLoading
+                                                                              //     ? Column(children: [
+                                                                              //         if (past3Length < 4)
+                                                                              //           for (int i = 0; i < 4; i++)
+                                                                              //             CardLoading(
+                                                                              //               height: 100 * fem,
+                                                                              //               borderRadius: BorderRadius.circular(8 * fem),
+                                                                              //               margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                              //             ),
+                                                                              //         for (int i = 0; i < past3Length; i++)
+                                                                              //           CardLoading(
+                                                                              //             height: 100 * fem,
+                                                                              //             borderRadius: BorderRadius.circular(8 * fem),
+                                                                              //             margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                              //           ),
+                                                                              //       ])
+                                                                              //     :
+                                                                              (past3Length == 0)
                                                                                   ? searchEmptyWidget()
                                                                                   : ListView.builder(
                                                                                       physics: const NeverScrollableScrollPhysics(),
-                                                                                      itemCount: past2Length,
+                                                                                      itemCount: past3Length,
                                                                                       shrinkWrap: true,
                                                                                       itemBuilder: (context, index) {
                                                                                         return GestureDetector(
                                                                                           onTap: () {
                                                                                             print("navi into tournament");
-                                                                                            TournamentDetails(
-                                                                                              id: '${pastList2[index].id}',
-                                                                                              matchDate: '${pastList2[index].matchDate}',
-                                                                                              matchStatus: '未开赛',
-                                                                                              matchName: '${pastList2[index].competitionName}',
-                                                                                              homeTeamFormation: '${pastList2[index].homeFormation}',
-                                                                                              awayTeamFormation: '${pastList2[index].awayFormation}',
-                                                                                              lineUp: pastList2[index].lineUp ?? 0,
-                                                                                            ).launch(context);
+
+                                                                                            Get.to(
+                                                                                                TournamentDetails(
+                                                                                                  id: '${pastList3?[index].id}',
+                                                                                                  matchDate: '${pastList3?[index].matchDate}',
+                                                                                                  matchStatus: '未开赛',
+                                                                                                  matchName: '${pastList3?[index].competitionName}',
+                                                                                                  homeTeamFormation: '${pastList3?[index].homeFormation}',
+                                                                                                  awayTeamFormation: '${pastList3?[index].awayFormation}',
+                                                                                                  lineUp: pastList3?[index].lineUp ?? 0,
+                                                                                                ),
+                                                                                                transition: Transition.fadeIn);
                                                                                           },
                                                                                           child: GameDisplayComponent(
-                                                                                            id: pastList2[index].id ?? 0,
-                                                                                            competitionType: pastList2[index].competitionName ?? "",
-                                                                                            duration: pastList2[index].matchTimeStr ?? "00:00",
-                                                                                            teamAName: pastList2[index].homeTeamName ?? "",
-                                                                                            teamALogo: pastList2[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                            teamAScore: pastList2[index].homeTeamScore.toString(),
-                                                                                            teamBName: pastList2[index].awayTeamName ?? "",
-                                                                                            teamBLogo: pastList2[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                            teamBScore: pastList2[index].awayTeamScore.toString(),
-                                                                                            isSaved: pastList2[index].hasCollected ?? false,
+                                                                                            id: pastList3[index].id ?? 0,
+                                                                                            competitionType: pastList3[index].competitionName ?? "",
+                                                                                            duration: pastList3[index].matchTimeStr ?? "00:00",
+                                                                                            teamAName: pastList3[index].homeTeamName ?? "",
+                                                                                            teamALogo: pastList3[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                            teamAScore: pastList3[index].homeTeamScore.toString(),
+                                                                                            teamBName: pastList3[index].awayTeamName ?? "",
+                                                                                            teamBLogo: pastList3[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                            teamBScore: pastList3[index].awayTeamScore.toString(),
+                                                                                            isSaved: pastList3[index].hasCollected ?? false,
                                                                                           ),
                                                                                         );
                                                                                       },
                                                                                     )
-                                                                          : (statusId == 3 && pastDateId == 2)
-                                                                              ? isEventLoading
-                                                                                  ? Column(children: [
-                                                                                      if (past3Length < 4)
-                                                                                        for (int i = 0; i < 4; i++)
-                                                                                          CardLoading(
-                                                                                            height: 100 * fem,
-                                                                                            borderRadius: BorderRadius.circular(8 * fem),
-                                                                                            margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                          ),
-                                                                                      for (int i = 0; i < past3Length; i++)
-                                                                                        CardLoading(
-                                                                                          height: 100 * fem,
-                                                                                          borderRadius: BorderRadius.circular(8 * fem),
-                                                                                          margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                        ),
-                                                                                    ])
-                                                                                  : (past3Length == 0)
+                                                                              : (statusId == 3 && pastDateId == 3)
+                                                                                  ?
+                                                                                  //  isEventLoading
+                                                                                  //     ? Column(children: [
+                                                                                  //         if (past4Length < 4)
+                                                                                  //           for (int i = 0; i < 4; i++)
+                                                                                  //             CardLoading(
+                                                                                  //               height: 100 * fem,
+                                                                                  //               borderRadius: BorderRadius.circular(8 * fem),
+                                                                                  //               margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                  //             ),
+                                                                                  //         for (int i = 0; i < past4Length; i++)
+                                                                                  //           CardLoading(
+                                                                                  //             height: 100 * fem,
+                                                                                  //             borderRadius: BorderRadius.circular(8 * fem),
+                                                                                  //             margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                  //           ),
+                                                                                  //       ])
+                                                                                  //     :
+                                                                                  (past4Length == 0)
                                                                                       ? searchEmptyWidget()
                                                                                       : ListView.builder(
                                                                                           physics: const NeverScrollableScrollPhysics(),
-                                                                                          itemCount: past3Length,
+                                                                                          itemCount: past4Length,
                                                                                           shrinkWrap: true,
                                                                                           itemBuilder: (context, index) {
                                                                                             return GestureDetector(
                                                                                               onTap: () {
                                                                                                 print("navi into tournament");
-                                                                                                TournamentDetails(
-                                                                                                  id: '${pastList3[index].id}',
-                                                                                                  matchDate: '${pastList3[index].matchDate}',
-                                                                                                  matchStatus: '未开赛',
-                                                                                                  matchName: '${pastList3[index].competitionName}',
-                                                                                                  homeTeamFormation: '${pastList3[index].homeFormation}',
-                                                                                                  awayTeamFormation: '${pastList3[index].awayFormation}',
-                                                                                                  lineUp: pastList3[index].lineUp ?? 0,
-                                                                                                ).launch(context);
+
+                                                                                                Get.to(
+                                                                                                    TournamentDetails(
+                                                                                                      id: '${pastList4?[index].id}',
+                                                                                                      matchDate: '${pastList4?[index].matchDate}',
+                                                                                                      matchStatus: '未开赛',
+                                                                                                      matchName: '${pastList4?[index].competitionName}',
+                                                                                                      homeTeamFormation: '${pastList4?[index].homeFormation}',
+                                                                                                      awayTeamFormation: '${pastList4?[index].awayFormation}',
+                                                                                                      lineUp: pastList4?[index].lineUp ?? 0,
+                                                                                                    ),
+                                                                                                    transition: Transition.fadeIn);
                                                                                               },
                                                                                               child: GameDisplayComponent(
-                                                                                                id: pastList3[index].id ?? 0,
-                                                                                                competitionType: pastList3[index].competitionName ?? "",
-                                                                                                duration: pastList3[index].matchTimeStr ?? "00:00",
-                                                                                                teamAName: pastList3[index].homeTeamName ?? "",
-                                                                                                teamALogo: pastList3[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                teamAScore: pastList3[index].homeTeamScore.toString(),
-                                                                                                teamBName: pastList3[index].awayTeamName ?? "",
-                                                                                                teamBLogo: pastList3[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                teamBScore: pastList3[index].awayTeamScore.toString(),
-                                                                                                isSaved: pastList3[index].hasCollected ?? false,
+                                                                                                id: pastList4[index].id ?? 0,
+                                                                                                competitionType: pastList4[index].competitionName ?? "",
+                                                                                                duration: pastList4[index].matchTimeStr ?? "00:00",
+                                                                                                teamAName: pastList4[index].homeTeamName ?? "",
+                                                                                                teamALogo: pastList4[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                teamAScore: pastList4[index].homeTeamScore.toString(),
+                                                                                                teamBName: pastList4[index].awayTeamName ?? "",
+                                                                                                teamBLogo: pastList4[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                teamBScore: pastList4[index].awayTeamScore.toString(),
+                                                                                                isSaved: pastList4[index].hasCollected ?? false,
                                                                                               ),
                                                                                             );
                                                                                           },
                                                                                         )
-                                                                              : (statusId == 3 && pastDateId == 3)
-                                                                                  ? isEventLoading
-                                                                                      ? Column(children: [
-                                                                                          if (past4Length < 4)
-                                                                                            for (int i = 0; i < 4; i++)
-                                                                                              CardLoading(
-                                                                                                height: 100 * fem,
-                                                                                                borderRadius: BorderRadius.circular(8 * fem),
-                                                                                                margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                              ),
-                                                                                          for (int i = 0; i < past4Length; i++)
-                                                                                            CardLoading(
-                                                                                              height: 100 * fem,
-                                                                                              borderRadius: BorderRadius.circular(8 * fem),
-                                                                                              margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                            ),
-                                                                                        ])
-                                                                                      : (past4Length == 0)
+                                                                                  : (statusId == 3 && pastDateId == 4)
+                                                                                      ?
+                                                                                      // isEventLoading
+                                                                                      //     ? Column(children: [
+                                                                                      //         if (past5Length < 4)
+                                                                                      //           for (int i = 0; i < 4; i++)
+                                                                                      //             CardLoading(
+                                                                                      //               height: 100 * fem,
+                                                                                      //               borderRadius: BorderRadius.circular(8 * fem),
+                                                                                      //               margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                      //             ),
+                                                                                      //         for (int i = 0; i < past5Length; i++)
+                                                                                      //           CardLoading(
+                                                                                      //             height: 100 * fem,
+                                                                                      //             borderRadius: BorderRadius.circular(8 * fem),
+                                                                                      //             margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                      //           ),
+                                                                                      //       ])
+                                                                                      //     :
+                                                                                      (past5Length == 0)
                                                                                           ? searchEmptyWidget()
                                                                                           : ListView.builder(
                                                                                               physics: const NeverScrollableScrollPhysics(),
-                                                                                              itemCount: past4Length,
+                                                                                              itemCount: past5Length,
                                                                                               shrinkWrap: true,
                                                                                               itemBuilder: (context, index) {
                                                                                                 return GestureDetector(
                                                                                                   onTap: () {
                                                                                                     print("navi into tournament");
-                                                                                                    TournamentDetails(
-                                                                                                      id: '${pastList4[index].id}',
-                                                                                                      matchDate: '${pastList4[index].matchDate}',
-                                                                                                      matchStatus: '未开赛',
-                                                                                                      matchName: '${pastList4[index].competitionName}',
-                                                                                                      homeTeamFormation: '${pastList4[index].homeFormation}',
-                                                                                                      awayTeamFormation: '${pastList4[index].awayFormation}',
-                                                                                                      lineUp: pastList4[index].lineUp ?? 0,
-                                                                                                    ).launch(context);
+
+                                                                                                    Get.to(
+                                                                                                        TournamentDetails(
+                                                                                                          id: '${pastList5?[index].id}',
+                                                                                                          matchDate: '${pastList5?[index].matchDate}',
+                                                                                                          matchStatus: '未开赛',
+                                                                                                          matchName: '${pastList5?[index].competitionName}',
+                                                                                                          homeTeamFormation: '${pastList5?[index].homeFormation}',
+                                                                                                          awayTeamFormation: '${pastList5?[index].awayFormation}',
+                                                                                                          lineUp: pastList5?[index].lineUp ?? 0,
+                                                                                                        ),
+                                                                                                        transition: Transition.fadeIn);
                                                                                                   },
                                                                                                   child: GameDisplayComponent(
-                                                                                                    id: pastList4[index].id ?? 0,
-                                                                                                    competitionType: pastList4[index].competitionName ?? "",
-                                                                                                    duration: pastList4[index].matchTimeStr ?? "00:00",
-                                                                                                    teamAName: pastList4[index].homeTeamName ?? "",
-                                                                                                    teamALogo: pastList4[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                    teamAScore: pastList4[index].homeTeamScore.toString(),
-                                                                                                    teamBName: pastList4[index].awayTeamName ?? "",
-                                                                                                    teamBLogo: pastList4[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                    teamBScore: pastList4[index].awayTeamScore.toString(),
-                                                                                                    isSaved: pastList4[index].hasCollected ?? false,
+                                                                                                    id: pastList5[index].id ?? 0,
+                                                                                                    competitionType: pastList5[index].competitionName ?? "",
+                                                                                                    duration: pastList5[index].matchTimeStr ?? "00:00",
+                                                                                                    teamAName: pastList5[index].homeTeamName ?? "",
+                                                                                                    teamALogo: pastList5[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                    teamAScore: pastList5[index].homeTeamScore.toString(),
+                                                                                                    teamBName: pastList5[index].awayTeamName ?? "",
+                                                                                                    teamBLogo: pastList5[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                    teamBScore: pastList5[index].awayTeamScore.toString(),
+                                                                                                    isSaved: pastList5[index].hasCollected ?? false,
                                                                                                   ),
                                                                                                 );
                                                                                               },
                                                                                             )
-                                                                                  : (statusId == 3 && pastDateId == 4)
-                                                                                      ? isEventLoading
-                                                                                          ? Column(children: [
-                                                                                              if (past5Length < 4)
-                                                                                                for (int i = 0; i < 4; i++)
-                                                                                                  CardLoading(
-                                                                                                    height: 100 * fem,
-                                                                                                    borderRadius: BorderRadius.circular(8 * fem),
-                                                                                                    margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                                  ),
-                                                                                              for (int i = 0; i < past5Length; i++)
-                                                                                                CardLoading(
-                                                                                                  height: 100 * fem,
-                                                                                                  borderRadius: BorderRadius.circular(8 * fem),
-                                                                                                  margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                                ),
-                                                                                            ])
-                                                                                          : (past5Length == 0)
+                                                                                      : (statusId == 3 && pastDateId == 5)
+                                                                                          ?
+                                                                                          //  isEventLoading
+                                                                                          //     ? Column(children: [
+                                                                                          //         if (past6Length < 4)
+                                                                                          //           for (int i = 0; i < 4; i++)
+                                                                                          //             CardLoading(
+                                                                                          //               height: 100 * fem,
+                                                                                          //               borderRadius: BorderRadius.circular(8 * fem),
+                                                                                          //               margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                          //             ),
+                                                                                          //         for (int i = 0; i < past6Length; i++)
+                                                                                          //           CardLoading(
+                                                                                          //             height: 100 * fem,
+                                                                                          //             borderRadius: BorderRadius.circular(8 * fem),
+                                                                                          //             margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                          //           ),
+                                                                                          //       ])
+                                                                                          //     :
+                                                                                          (past6Length == 0)
                                                                                               ? searchEmptyWidget()
                                                                                               : ListView.builder(
                                                                                                   physics: const NeverScrollableScrollPhysics(),
-                                                                                                  itemCount: past5Length,
+                                                                                                  itemCount: past6Length,
                                                                                                   shrinkWrap: true,
                                                                                                   itemBuilder: (context, index) {
                                                                                                     return GestureDetector(
                                                                                                       onTap: () {
                                                                                                         print("navi into tournament");
-                                                                                                        TournamentDetails(
-                                                                                                          id: '${pastList5[index].id}',
-                                                                                                          matchDate: '${pastList5[index].matchDate}',
-                                                                                                          matchStatus: '未开赛',
-                                                                                                          matchName: '${pastList5[index].competitionName}',
-                                                                                                          homeTeamFormation: '${pastList5[index].homeFormation}',
-                                                                                                          awayTeamFormation: '${pastList5[index].awayFormation}',
-                                                                                                          lineUp: pastList5[index].lineUp ?? 0,
-                                                                                                        ).launch(context);
+
+                                                                                                        Get.to(
+                                                                                                            TournamentDetails(
+                                                                                                              id: '${pastList6?[index].id}',
+                                                                                                              matchDate: '${pastList6?[index].matchDate}',
+                                                                                                              matchStatus: '未开赛',
+                                                                                                              matchName: '${pastList6?[index].competitionName}',
+                                                                                                              homeTeamFormation: '${pastList6?[index].homeFormation}',
+                                                                                                              awayTeamFormation: '${pastList6?[index].awayFormation}',
+                                                                                                              lineUp: pastList6?[index].lineUp ?? 0,
+                                                                                                            ),
+                                                                                                            transition: Transition.fadeIn);
                                                                                                       },
                                                                                                       child: GameDisplayComponent(
-                                                                                                        id: pastList5[index].id ?? 0,
-                                                                                                        competitionType: pastList5[index].competitionName ?? "",
-                                                                                                        duration: pastList5[index].matchTimeStr ?? "00:00",
-                                                                                                        teamAName: pastList5[index].homeTeamName ?? "",
-                                                                                                        teamALogo: pastList5[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                        teamAScore: pastList5[index].homeTeamScore.toString(),
-                                                                                                        teamBName: pastList5[index].awayTeamName ?? "",
-                                                                                                        teamBLogo: pastList5[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                        teamBScore: pastList5[index].awayTeamScore.toString(),
-                                                                                                        isSaved: pastList5[index].hasCollected ?? false,
+                                                                                                        id: pastList6[index].id ?? 0,
+                                                                                                        competitionType: pastList6[index].competitionName ?? "",
+                                                                                                        duration: pastList6[index].matchTimeStr ?? "00:00",
+                                                                                                        teamAName: pastList6[index].homeTeamName ?? "",
+                                                                                                        teamALogo: pastList6[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                        teamAScore: pastList6[index].homeTeamScore.toString(),
+                                                                                                        teamBName: pastList6[index].awayTeamName ?? "",
+                                                                                                        teamBLogo: pastList6[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                        teamBScore: pastList6[index].awayTeamScore.toString(),
+                                                                                                        isSaved: pastList6[index].hasCollected ?? false,
                                                                                                       ),
                                                                                                     );
                                                                                                   },
                                                                                                 )
-                                                                                      : (statusId == 3 && pastDateId == 5)
-                                                                                          ? isEventLoading
-                                                                                              ? Column(children: [
-                                                                                                  if (past6Length < 4)
-                                                                                                    for (int i = 0; i < 4; i++)
-                                                                                                      CardLoading(
-                                                                                                        height: 100 * fem,
-                                                                                                        borderRadius: BorderRadius.circular(8 * fem),
-                                                                                                        margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                                      ),
-                                                                                                  for (int i = 0; i < past6Length; i++)
-                                                                                                    CardLoading(
-                                                                                                      height: 100 * fem,
-                                                                                                      borderRadius: BorderRadius.circular(8 * fem),
-                                                                                                      margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                                    ),
-                                                                                                ])
-                                                                                              : (past6Length == 0)
+                                                                                          : (statusId == 3 && pastDateId == 6)
+                                                                                              ?
+                                                                                              // isEventLoading
+                                                                                              //     ? Column(children: [
+                                                                                              //         if (past7Length < 4)
+                                                                                              //           for (int i = 0; i < 4; i++)
+                                                                                              //             CardLoading(
+                                                                                              //               height: 100 * fem,
+                                                                                              //               borderRadius: BorderRadius.circular(8 * fem),
+                                                                                              //               margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                              //             ),
+                                                                                              //         for (int i = 0; i < past7Length; i++)
+                                                                                              //           CardLoading(
+                                                                                              //             height: 100 * fem,
+                                                                                              //             borderRadius: BorderRadius.circular(8 * fem),
+                                                                                              //             margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                              //           ),
+                                                                                              //       ])
+                                                                                              //     :
+                                                                                              (past7Length == 0)
                                                                                                   ? searchEmptyWidget()
                                                                                                   : ListView.builder(
                                                                                                       physics: const NeverScrollableScrollPhysics(),
-                                                                                                      itemCount: past6Length,
+                                                                                                      itemCount: past7Length,
                                                                                                       shrinkWrap: true,
                                                                                                       itemBuilder: (context, index) {
                                                                                                         return GestureDetector(
                                                                                                           onTap: () {
                                                                                                             print("navi into tournament");
-                                                                                                            TournamentDetails(
-                                                                                                              id: '${pastList6[index].id}',
-                                                                                                              matchDate: '${pastList6[index].matchDate}',
-                                                                                                              matchStatus: '未开赛',
-                                                                                                              matchName: '${pastList6[index].competitionName}',
-                                                                                                              homeTeamFormation: '${pastList6[index].homeFormation}',
-                                                                                                              awayTeamFormation: '${pastList6[index].awayFormation}',
-                                                                                                              lineUp: pastList6[index].lineUp ?? 0,
-                                                                                                            ).launch(context);
+
+                                                                                                            Get.to(
+                                                                                                                TournamentDetails(
+                                                                                                                  id: '${pastList7?[index].id}',
+                                                                                                                  matchDate: '${pastList7?[index].matchDate}',
+                                                                                                                  matchStatus: '未开赛',
+                                                                                                                  matchName: '${pastList7?[index].competitionName}',
+                                                                                                                  homeTeamFormation: '${pastList7?[index].homeFormation}',
+                                                                                                                  awayTeamFormation: '${pastList7?[index].awayFormation}',
+                                                                                                                  lineUp: pastList7?[index].lineUp ?? 0,
+                                                                                                                ),
+                                                                                                                transition: Transition.fadeIn);
                                                                                                           },
                                                                                                           child: GameDisplayComponent(
-                                                                                                            id: pastList6[index].id ?? 0,
-                                                                                                            competitionType: pastList6[index].competitionName ?? "",
-                                                                                                            duration: pastList6[index].matchTimeStr ?? "00:00",
-                                                                                                            teamAName: pastList6[index].homeTeamName ?? "",
-                                                                                                            teamALogo: pastList6[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                            teamAScore: pastList6[index].homeTeamScore.toString(),
-                                                                                                            teamBName: pastList6[index].awayTeamName ?? "",
-                                                                                                            teamBLogo: pastList6[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                            teamBScore: pastList6[index].awayTeamScore.toString(),
-                                                                                                            isSaved: pastList6[index].hasCollected ?? false,
+                                                                                                            id: pastList7[index].id ?? 0,
+                                                                                                            competitionType: pastList7[index].competitionName ?? "",
+                                                                                                            duration: pastList7[index].matchTimeStr ?? "00:00",
+                                                                                                            teamAName: pastList7[index].homeTeamName ?? "",
+                                                                                                            teamALogo: pastList7[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                            teamAScore: pastList7[index].homeTeamScore.toString(),
+                                                                                                            teamBName: pastList7[index].awayTeamName ?? "",
+                                                                                                            teamBLogo: pastList7[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                            teamBScore: pastList7[index].awayTeamScore.toString(),
+                                                                                                            isSaved: pastList7[index].hasCollected ?? false,
                                                                                                           ),
                                                                                                         );
                                                                                                       },
                                                                                                     )
-                                                                                          : (statusId == 3 && pastDateId == 6)
-                                                                                              ? isEventLoading
-                                                                                                  ? Column(children: [
-                                                                                                      if (past7Length < 4)
-                                                                                                        for (int i = 0; i < 4; i++)
-                                                                                                          CardLoading(
-                                                                                                            height: 100 * fem,
-                                                                                                            borderRadius: BorderRadius.circular(8 * fem),
-                                                                                                            margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                                          ),
-                                                                                                      for (int i = 0; i < past7Length; i++)
-                                                                                                        CardLoading(
-                                                                                                          height: 100 * fem,
-                                                                                                          borderRadius: BorderRadius.circular(8 * fem),
-                                                                                                          margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                                        ),
-                                                                                                    ])
-                                                                                                  : (past7Length == 0)
+                                                                                              : (statusId == 4)
+                                                                                                  ?
+                                                                                                  // isEventLoading
+                                                                                                  //     ? Column(children: [
+                                                                                                  //         for (int i = 0; i < 4; i++)
+                                                                                                  //           CardLoading(
+                                                                                                  //             height: 100 * fem,
+                                                                                                  //             borderRadius: BorderRadius.circular(8 * fem),
+                                                                                                  //             margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                                  //           ),
+                                                                                                  //       ])
+                                                                                                  //     :
+                                                                                                  (startedLength == 4)
                                                                                                       ? searchEmptyWidget()
                                                                                                       : ListView.builder(
                                                                                                           physics: const NeverScrollableScrollPhysics(),
-                                                                                                          itemCount: past7Length,
+                                                                                                          itemCount: collectionLength,
                                                                                                           shrinkWrap: true,
                                                                                                           itemBuilder: (context, index) {
-                                                                                                            return GestureDetector(
-                                                                                                              onTap: () {
-                                                                                                                print("navi into tournament");
-                                                                                                                TournamentDetails(
-                                                                                                                  id: '${pastList7[index].id}',
-                                                                                                                  matchDate: '${pastList7[index].matchDate}',
-                                                                                                                  matchStatus: '未开赛',
-                                                                                                                  matchName: '${pastList7[index].competitionName}',
-                                                                                                                  homeTeamFormation: '${pastList7[index].homeFormation}',
-                                                                                                                  awayTeamFormation: '${pastList7[index].awayFormation}',
-                                                                                                                  lineUp: pastList7[index].lineUp ?? 0,
-                                                                                                                ).launch(context);
-                                                                                                              },
-                                                                                                              child: GameDisplayComponent(
-                                                                                                                id: pastList7[index].id ?? 0,
-                                                                                                                competitionType: pastList7[index].competitionName ?? "",
-                                                                                                                duration: pastList7[index].matchTimeStr ?? "00:00",
-                                                                                                                teamAName: pastList7[index].homeTeamName ?? "",
-                                                                                                                teamALogo: pastList7[index].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                                teamAScore: pastList7[index].homeTeamScore.toString(),
-                                                                                                                teamBName: pastList7[index].awayTeamName ?? "",
-                                                                                                                teamBLogo: pastList7[index].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                                teamBScore: pastList7[index].awayTeamScore.toString(),
-                                                                                                                isSaved: pastList7[index].hasCollected ?? false,
-                                                                                                              ),
-                                                                                                            );
+                                                                                                            return isLoading
+                                                                                                                ? Column(children: [
+                                                                                                                    for (int i = 0; i < collectionLength; i++)
+                                                                                                                      CardLoading(
+                                                                                                                        height: 100 * fem,
+                                                                                                                        borderRadius: BorderRadius.circular(8 * fem),
+                                                                                                                        margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
+                                                                                                                      ),
+                                                                                                                  ])
+                                                                                                                : Column(
+                                                                                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                                    children: [
+                                                                                                                      Container(
+                                                                                                                        margin: EdgeInsets.fromLTRB(20 * fem, 15 * fem, 20 * fem, 10 * fem),
+                                                                                                                        alignment: Alignment.centerLeft,
+                                                                                                                        child: Text(
+                                                                                                                          DateFormat('yyyy/MM/dd  EEEE', language).format(DateTime.parse(collectionList[index].date)),
+                                                                                                                          style: tCollectionDateTitle,
+                                                                                                                        ),
+                                                                                                                      ),
+                                                                                                                      ListView.builder(
+                                                                                                                        physics: const NeverScrollableScrollPhysics(),
+                                                                                                                        itemCount: collectionList[index].data.length,
+                                                                                                                        shrinkWrap: true,
+                                                                                                                        itemBuilder: (context, i) {
+                                                                                                                          return GestureDetector(
+                                                                                                                            onTap: () {
+                                                                                                                              print("navi into tournament");
+
+                                                                                                                              // Get.to(
+                                                                                                                              //     TournamentDetails(
+                                                                                                                              //       id: '${collectionList[index].data[i].id}',
+                                                                                                                              //       matchDate: '${collectionList[index].data[i].matchDate}',
+                                                                                                                              //       matchStatus: '${collectionList[index].data[i].statusStr}',
+                                                                                                                              //       matchName: '${collectionList[index].data[i].competitionName}',
+                                                                                                                              //       homeTeamFormation: '${collectionList[index].data[i].homeFormation}',
+                                                                                                                              //       awayTeamFormation: '${collectionList[index].data[i].awayFormation}',
+                                                                                                                              //       lineUp: collectionList[index].data[i].lineUp ?? 0,
+                                                                                                                              //     ),
+                                                                                                                              //     transition: Transition.fadeIn);
+                                                                                                                            },
+                                                                                                                            child: GameDisplayComponent(
+                                                                                                                              id: collectionList[index].data[i].id ?? 0,
+                                                                                                                              competitionType: collectionList[index].data[i].competitionName ?? "",
+                                                                                                                              duration: collectionList[index].data[i].matchTimeStr ?? "00:00",
+                                                                                                                              teamAName: collectionList[index].data[i].homeTeamName ?? "",
+                                                                                                                              teamALogo: collectionList[index].data[i].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                                              teamAScore: collectionList[index].data[i].homeTeamScore.toString(),
+                                                                                                                              teamBName: collectionList[index].data[i].awayTeamName ?? "",
+                                                                                                                              teamBLogo: collectionList[index].data[i].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
+                                                                                                                              teamBScore: collectionList[index].data[i].awayTeamScore.toString(),
+                                                                                                                              isSaved: collectionList[index].data[i].hasCollected ?? true,
+                                                                                                                            ),
+                                                                                                                          );
+                                                                                                                        },
+                                                                                                                      )
+                                                                                                                    ],
+                                                                                                                  );
                                                                                                           },
                                                                                                         )
-                                                                                              : (statusId == 4)
-                                                                                                  ? isEventLoading
-                                                                                                      ? Column(children: [
-                                                                                                          for (int i = 0; i < 4; i++)
-                                                                                                            CardLoading(
-                                                                                                              height: 100 * fem,
-                                                                                                              borderRadius: BorderRadius.circular(8 * fem),
-                                                                                                              margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                                            ),
-                                                                                                        ])
-                                                                                                      : (startedLength == 4)
-                                                                                                          ? searchEmptyWidget()
-                                                                                                          : ListView.builder(
-                                                                                                              physics: const NeverScrollableScrollPhysics(),
-                                                                                                              itemCount: collectionLength,
-                                                                                                              shrinkWrap: true,
-                                                                                                              itemBuilder: (context, index) {
-                                                                                                                return isLoading
-                                                                                                                    ? Column(children: [
-                                                                                                                        for (int i = 0; i < collectionLength; i++)
-                                                                                                                          CardLoading(
-                                                                                                                            height: 100 * fem,
-                                                                                                                            borderRadius: BorderRadius.circular(8 * fem),
-                                                                                                                            margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                                                          ),
-                                                                                                                      ])
-                                                                                                                    : Column(
-                                                                                                                        mainAxisAlignment: MainAxisAlignment.start,
-                                                                                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                                                        children: [
-                                                                                                                          Container(
-                                                                                                                            margin: EdgeInsets.fromLTRB(20 * fem, 15 * fem, 20 * fem, 10 * fem),
-                                                                                                                            alignment: Alignment.centerLeft,
-                                                                                                                            child: Text(
-                                                                                                                              DateFormat('yyyy/MM/dd  EEEE', language).format(DateTime.parse(collectionList[index].date)),
-                                                                                                                              style: tCollectionDateTitle,
-                                                                                                                            ),
-                                                                                                                          ),
-                                                                                                                          ListView.builder(
-                                                                                                                            physics: const NeverScrollableScrollPhysics(),
-                                                                                                                            itemCount: collectionList[index].data.length,
-                                                                                                                            shrinkWrap: true,
-                                                                                                                            itemBuilder: (context, i) {
-                                                                                                                              return GestureDetector(
-                                                                                                                                onTap: () {
-                                                                                                                                  print("navi into tournament");
-                                                                                                                                  BasketballTournamentDetails(id: '${collectionList[index].data[i].id}', matchDate: '${collectionList[index].data[i].matchDate}', matchStatus: '${collectionList[index].data[i].statusStr}', matchName: '${collectionList[index].data[i].competitionName}').launch(context);
-                                                                                                                                },
-                                                                                                                                child: GameDisplayComponent(
-                                                                                                                                  id: collectionList[index].data[i].id ?? 0,
-                                                                                                                                  competitionType: collectionList[index].data[i].competitionName ?? "",
-                                                                                                                                  duration: collectionList[index].data[i].matchTimeStr ?? "00:00",
-                                                                                                                                  teamAName: collectionList[index].data[i].homeTeamName ?? "",
-                                                                                                                                  teamALogo: collectionList[index].data[i].homeTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                                                  teamAScore: collectionList[index].data[i].homeTeamScore.toString(),
-                                                                                                                                  teamBName: collectionList[index].data[i].awayTeamName ?? "",
-                                                                                                                                  teamBLogo: collectionList[index].data[i].awayTeamLogo ?? 'images/mainpage/sampleLogo.png',
-                                                                                                                                  teamBScore: collectionList[index].data[i].awayTeamScore.toString(),
-                                                                                                                                  isSaved: collectionList[index].data[i].hasCollected ?? true,
-                                                                                                                                ),
-                                                                                                                              );
-                                                                                                                            },
-                                                                                                                          )
-                                                                                                                        ],
-                                                                                                                      );
-                                                                                                              },
-                                                                                                            )
                                                                                                   : Container(),
                               isLoading
                                   ? Center(

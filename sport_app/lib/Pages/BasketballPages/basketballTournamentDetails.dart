@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import '../../Component/Loading/emptyResultComponent.dart';
 import '../../Component/TournamentDetails/fixedColumnTable2.dart';
@@ -51,7 +52,7 @@ class _BasketballTournamentDetailsState
 
   ButtonStyle buttonStyle(int buttonNumber) {
     return ElevatedButton.styleFrom(
-        primary: selectedButton == buttonNumber ? Colors.green : Colors.white,
+        // primary: selectedButton == buttonNumber ? Colors.green : Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(53)));
   }
 
@@ -62,6 +63,8 @@ class _BasketballTournamentDetailsState
       isDetailNull == true;
     } else {
       basketballMatchById = (await provider.getBasketballLiveData(widget.id))!;
+
+      print("check data: ${basketballMatchById}");
     }
 
     return basketballMatchById;
@@ -383,6 +386,66 @@ class _BasketballTournamentDetailsState
                                 ),
                               ),
                             ),
+                            Positioned(
+                                top: 160,
+                                left: 85,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    print("navi to live stream");
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "视频直播",
+                                        style: TextStyle(
+                                            fontFamily: "Inter",
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            letterSpacing: 0.3,
+                                            color: white),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        child: Image(
+                                            width: 24,
+                                            height: 24,
+                                            image: AssetImage(
+                                                "images/tournament/videoLiveStream.png")),
+                                      )
+                                    ],
+                                  ),
+                                )),
+                            Positioned(
+                                top: 160,
+                                right: 85,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    print("navi to animation stream");
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        child: Image(
+                                            width: 24,
+                                            height: 24,
+                                            image: AssetImage(
+                                                "images/tournament/animationStream.png")),
+                                      ),
+                                      Text(
+                                        "动画直播",
+                                        style: TextStyle(
+                                            fontFamily: "Inter",
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            letterSpacing: 0.3,
+                                            color: white),
+                                      ),
+                                    ],
+                                  ),
+                                ))
                           ],
                         ),
               Padding(
@@ -405,8 +468,10 @@ class _BasketballTournamentDetailsState
                             fontSize: 14,
                             fontFamily: 'NotoSansSC'),
                       ),
-                      style: buttonStyle(1)
-                          .copyWith(elevation: MaterialStateProperty.all(0)),
+                      style: buttonStyle(1).copyWith(
+                          elevation: MaterialStateProperty.all(0),
+                          backgroundColor: MaterialStatePropertyAll(
+                              selectedButton == 1 ? kMainGreenColor : white)),
                     ),
                     SizedBox(
                       width: 10,
@@ -447,8 +512,10 @@ class _BasketballTournamentDetailsState
                             fontSize: 14,
                             fontFamily: 'NotoSansSC'),
                       ),
-                      style: buttonStyle(3)
-                          .copyWith(elevation: MaterialStateProperty.all(0)),
+                      style: buttonStyle(3).copyWith(
+                          elevation: MaterialStateProperty.all(0),
+                          backgroundColor: MaterialStatePropertyAll(
+                              selectedButton == 3 ? kMainGreenColor : white)),
                     )
                   ],
                 ),
@@ -471,6 +538,7 @@ class _BasketballTournamentDetailsState
 
     //parsing function
     double parseDouble(String key, Map<String, dynamic> data) {
+      print("check: ${data[key]}");
       if (data[key] != null && data[key] != '') {
         return double.parse(data[key].toString());
       } else {
@@ -481,25 +549,27 @@ class _BasketballTournamentDetailsState
     //case 1 graph variables
 
     //CN
-    double noHomeThreePointer = parseDouble('hthreeGoal', basketballMatchById);
-    double noAwayThreePointer = parseDouble('athreeGoal', basketballMatchById);
+    double noHomeThreePointer =
+        parseDouble('hthreePointGoals', basketballMatchById);
+    double noAwayThreePointer =
+        parseDouble('athreePointGoals', basketballMatchById);
     double noHomeTwoPointer = parseDouble('htwoGoal', basketballMatchById);
     double noAwayTwoPointer = parseDouble('atwoGoal', basketballMatchById);
-    double noHomeFoul = parseDouble('hnumOfFouls', basketballMatchById);
-    double noAwayFoul = parseDouble('anumOfFouls', basketballMatchById);
+    double noHomeFoul = parseDouble('hpersonalFouls', basketballMatchById);
+    double noAwayFoul = parseDouble('apersonalFouls', basketballMatchById);
     // double noHomeFreeThrow = parseDouble('key', data)
     double noHomeFreeThrowPercentage =
-        parseDouble('hfreeThrowPercentage', basketballMatchById);
+        parseDouble('hfreeThrows', basketballMatchById);
     double noAwayFreeThrowPercentage =
-        parseDouble('afreeThrowPercentage', basketballMatchById);
+        parseDouble('afreeThrows', basketballMatchById);
     double noHomePauseRemain =
         parseDouble('hnumPauseRemain', basketballMatchById);
     double noAwayPauseRemain =
         parseDouble('anumPauseRemain', basketballMatchById);
     double noHomeTotalPause = parseDouble('htotalPause', basketballMatchById);
     double noAwayTotalPause = parseDouble('atotalPause', basketballMatchById);
-    double noHomeFreeThrow = parseDouble('hfreeThrow', basketballMatchById);
-    double noAwayFreeThrow = parseDouble('afreeThrow', basketballMatchById);
+    double noHomeFreeThrow = parseDouble('hfreeThrows', basketballMatchById);
+    double noAwayFreeThrow = parseDouble('afreeThrows', basketballMatchById);
 
     //EN
     double noHomeThreePointerEN =
@@ -1160,95 +1230,95 @@ class _BasketballTournamentDetailsState
                                                         ? 10
                                                         : 20,
                                                   ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(left: 0),
-                                                        child:
-                                                            PercentageBarPercentage2(
-                                                          percent2: userModel
-                                                                      .isCN ==
-                                                                  true
-                                                              ? (percentOfTwoPointerHome ==
-                                                                      0
-                                                                  ? 0
-                                                                  : percentOfTwoPointerHome)
-                                                              : (percentageOfBlocksHomeEN ==
-                                                                      0
-                                                                  ? 0
-                                                                  : percentageOfBlocksHomeEN), //need percentage home team
-                                                          percent2_text: userModel
-                                                                      .isCN ==
-                                                                  true
-                                                              ? (noHomeTwoPointer ==
-                                                                      0
-                                                                  ? 0
-                                                                  : noHomeTwoPointer)
-                                                              : (noHomeBlockEN ==
-                                                                      0
-                                                                  ? 0
-                                                                  : noHomeBlockEN), // need number
-                                                          width2: barWidth,
-                                                          height2: 10,
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 1,
-                                                      ),
-                                                      Text(
-                                                        userModel.isCN == true
-                                                            ? '2分球'
-                                                            : 'Blocks',
-                                                        style: TextStyle(
-                                                            fontSize: 14),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 1,
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(right: 0),
-                                                        child:
-                                                            PercentageBarPercentage(
-                                                          percent: userModel
-                                                                      .isCN ==
-                                                                  true
-                                                              ? (percentOfTwoPointerAway ==
-                                                                      0
-                                                                  ? 0
-                                                                  : percentOfTwoPointerAway)
-                                                              : (percentageOfBlocksAwayEN ==
-                                                                      0
-                                                                  ? 0
-                                                                  : percentageOfBlocksAwayEN),
-                                                          percent_text: userModel
-                                                                      .isCN ==
-                                                                  true
-                                                              ? (noAwayTwoPointer ==
-                                                                      0
-                                                                  ? 0
-                                                                  : noAwayTwoPointer)
-                                                              : (noAwayBlockEN ==
-                                                                      0
-                                                                  ? 0
-                                                                  : noAwayBlockEN),
-                                                          width: barWidth,
-                                                          height: 10.0,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: userModel.isCN.value
-                                                        ? 10
-                                                        : 20,
-                                                  ),
+                                                  // Row(
+                                                  //   mainAxisAlignment:
+                                                  //       MainAxisAlignment
+                                                  //           .spaceBetween,
+                                                  //   children: [
+                                                  //     Padding(
+                                                  //       padding:
+                                                  //           const EdgeInsets
+                                                  //               .only(left: 0),
+                                                  //       child:
+                                                  //           PercentageBarPercentage2(
+                                                  //         percent2: userModel
+                                                  //                     .isCN ==
+                                                  //                 true
+                                                  //             ? (percentOfTwoPointerHome ==
+                                                  //                     0
+                                                  //                 ? 0
+                                                  //                 : percentOfTwoPointerHome)
+                                                  //             : (percentageOfBlocksHomeEN ==
+                                                  //                     0
+                                                  //                 ? 0
+                                                  //                 : percentageOfBlocksHomeEN), //need percentage home team
+                                                  //         percent2_text: userModel
+                                                  //                     .isCN ==
+                                                  //                 true
+                                                  //             ? (noHomeTwoPointer ==
+                                                  //                     0
+                                                  //                 ? 0
+                                                  //                 : noHomeTwoPointer)
+                                                  //             : (noHomeBlockEN ==
+                                                  //                     0
+                                                  //                 ? 0
+                                                  //                 : noHomeBlockEN), // need number
+                                                  //         width2: barWidth,
+                                                  //         height2: 10,
+                                                  //       ),
+                                                  //     ),
+                                                  //     SizedBox(
+                                                  //       width: 1,
+                                                  //     ),
+                                                  //     Text(
+                                                  //       userModel.isCN == true
+                                                  //           ? '2分球'
+                                                  //           : 'Blocks',
+                                                  //       style: TextStyle(
+                                                  //           fontSize: 14),
+                                                  //     ),
+                                                  //     SizedBox(
+                                                  //       width: 1,
+                                                  //     ),
+                                                  //     Padding(
+                                                  //       padding:
+                                                  //           const EdgeInsets
+                                                  //               .only(right: 0),
+                                                  //       child:
+                                                  //           PercentageBarPercentage(
+                                                  //         percent: userModel
+                                                  //                     .isCN ==
+                                                  //                 true
+                                                  //             ? (percentOfTwoPointerAway ==
+                                                  //                     0
+                                                  //                 ? 0
+                                                  //                 : percentOfTwoPointerAway)
+                                                  //             : (percentageOfBlocksAwayEN ==
+                                                  //                     0
+                                                  //                 ? 0
+                                                  //                 : percentageOfBlocksAwayEN),
+                                                  //         percent_text: userModel
+                                                  //                     .isCN ==
+                                                  //                 true
+                                                  //             ? (noAwayTwoPointer ==
+                                                  //                     0
+                                                  //                 ? 0
+                                                  //                 : noAwayTwoPointer)
+                                                  //             : (noAwayBlockEN ==
+                                                  //                     0
+                                                  //                 ? 0
+                                                  //                 : noAwayBlockEN),
+                                                  //         width: barWidth,
+                                                  //         height: 10.0,
+                                                  //       ),
+                                                  //     ),
+                                                  //   ],
+                                                  // ),
+                                                  // SizedBox(
+                                                  //   height: userModel.isCN.value
+                                                  //       ? 10
+                                                  //       : 20,
+                                                  // ),
                                                   Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment

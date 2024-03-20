@@ -101,8 +101,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 alignment: Alignment.centerLeft,
                 child: TextButton(
                   style: TextButton.styleFrom(
-                    primary: Colors.black,
-                    onSurface: kMainGreenColor,
+                    // primary: Colors.black,
+                    // onSurface: kMainGreenColor,
                     foregroundColor: kMainGreenColor,
                   ),
                   onPressed: () {

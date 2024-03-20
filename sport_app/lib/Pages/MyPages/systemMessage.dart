@@ -50,7 +50,16 @@ class _SystemMessagePageState extends State<SystemMessagePage> {
           child: Column(children: [
             Container(
               height: 56 * fem,
-              color: kMainGreenColor,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      spreadRadius: 5,
+                      blurRadius: 10,
+                      offset: Offset(0, 3))
+                ],
+                color: kMainGreenColor,
+              ),
               child: Stack(
                 children: [
                   Padding(

@@ -47,19 +47,19 @@ class ApiConstants {
   //Basketball CN--------------------------------------------------------------------------------------------//
   static const String basketballBaseUrl = '/api/v1/basketballs/match';
 
-  static const String searchBasketballToday = '/now-list';
+  static const String searchBasketballToday = '/zh/now-list';
 
-  static const String getStartBasketballMatch = '/list-start?';
+  static const String getStartBasketballMatch = '/zh/list-start?';
 
-  static const String getFutureBasketballMatch = '/list-future?';
+  static const String getFutureBasketballMatch = '/zh/list-future?';
 
-  static const String getPastBasketballMatch = '/list-past?';
+  static const String getPastBasketballMatch = '/zh/list-past?';
 
-  static const String getBasketballMatchByDate = '/list/';
+  static const String getBasketballMatchByDate = '/zh/list/';
 
-  static const String getBasketballMatchLineUp = '/line-up/';
+  static const String getBasketballMatchLineUp = '/zh/line-up/';
 
-  static const String getBasketballMatchLiveData = '/livedata/';
+  static const String getBasketballMatchLiveData = '/zh/livedata/';
 
   static const String getBasketballLiveAddress = '/address/';
 

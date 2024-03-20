@@ -52,18 +52,20 @@ class _FixedTableState extends State<FixedTable> {
   @override
   void initState() {
     super.initState();
-    getPlayerName();
-    getMinutes();
-    getScores();
-    getRebound();
-    getAssist();
-    getFieldGoal();
-    getThreePointer();
-    getFreeThrow();
-    getSteal();
-    getTurnover();
-    getBlockShot();
-    getFoul();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      // getPlayerName();
+      // getMinutes();
+      // getScores();
+      // getRebound();
+      // getAssist();
+      // getFieldGoal();
+      // getThreePointer();
+      // getFreeThrow();
+      // getSteal();
+      // getTurnover();
+      // getBlockShot();
+      // getFoul();
+    });
   }
 
 //====================== Get Column Data ======================================//
@@ -342,6 +344,19 @@ class _FixedTableState extends State<FixedTable> {
     List<dynamic>? awayTeamLineUp = widget.awayTeamLineUp;
     int homeTeamCount = homeTeamLineUp!.length;
     int awayTeamCount = awayTeamLineUp!.length;
+
+    getPlayerName();
+    getMinutes();
+    getScores();
+    getRebound();
+    getAssist();
+    getFieldGoal();
+    getThreePointer();
+    getFreeThrow();
+    getSteal();
+    getTurnover();
+    getBlockShot();
+    getFoul();
 
     Color getRowBackgroundColor(int i) {
       return i.isOdd ? Colors.white : tableMainColor;

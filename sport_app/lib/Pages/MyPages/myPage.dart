@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
+// import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:sport_app/Provider/userProvider.dart';
 import 'package:tencent_cloud_av_chat_room/liveRoom/live_room.dart';
 
@@ -31,8 +31,8 @@ class _MyPageState extends State<MyPage> {
   UserProvider provider = UserProvider();
 
   //controller
-  final RoundedLoadingButtonController btnController =
-      RoundedLoadingButtonController();
+  // final RoundedLoadingButtonController btnController =
+  //     RoundedLoadingButtonController();
 
   Widget whiteBox(String text, Function()? onTap) {
     double baseWidth = 375;
@@ -221,23 +221,23 @@ class _MyPageState extends State<MyPage> {
                   children: [
                     Column(
                       children: [
-                        RoundedLoadingButton(
-                          color: Colors.white,
-                          valueColor: kMainGreenColor,
-                          width: 150,
-                          height: 40,
-                          elevation: 0,
-                          child: Text(AppLocalizations.of(context)!.logout,
-                              style: TextStyle(color: Colors.black)),
-                          controller: btnController,
-                          onPressed: () {
-                            SharedPreferencesUtils.clearSharedPreferences();
+                        // RoundedLoadingButton(
+                        //   color: Colors.white,
+                        //   valueColor: kMainGreenColor,
+                        //   width: 150,
+                        //   height: 40,
+                        //   elevation: 0,
+                        //   child: Text(AppLocalizations.of(context)!.logout,
+                        //       style: TextStyle(color: Colors.black)),
+                        //   controller: btnController,
+                        //   onPressed: () {
+                        //     SharedPreferencesUtils.clearSharedPreferences();
                             
-                            Future.delayed(Duration(seconds: 2), () async {
-                              Get.offAllNamed('/auth');
-                            });
-                          },
-                        )
+                        //     Future.delayed(Duration(seconds: 2), () async {
+                        //       Get.offAllNamed('/auth');
+                        //     });
+                        //   },
+                        // )
                       ],
                     ),
                   ],

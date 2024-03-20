@@ -16,7 +16,6 @@ import '../../../Component/Tencent/liveStreamPlayer.dart';
 import '../../../Constants/Controller/layoutController.dart';
 import '../../../Constants/colorConstant.dart';
 import '../../../Constants/textConstant.dart';
-import '../../../Model/collectionModel.dart';
 import '../../../Model/liveStreamModel.dart';
 import '../../../Model/userDataModel.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -500,13 +499,11 @@ class _FootballLivePageState extends State<FootballLivePage>
                                                             });
                                                       } else {
                                                         LiveStreamChatRoom page = LiveStreamChatRoom(
-                                                            userLoginId:
-                                                                userModel
-                                                                    .id.value,
+                                                            userLoginId: userModel
+                                                                .id.value,
                                                             avChatRoomId:
                                                                 "panda${footballLiveStreamList[j].userId}",
-                                                            anchor: footballLiveStreamList[
-                                                                        j]
+                                                            anchor: footballLiveStreamList[j]
                                                                     .nickName ??
                                                                 "",
                                                             streamTitle:
@@ -514,16 +511,20 @@ class _FootballLivePageState extends State<FootballLivePage>
                                                                             j]
                                                                         .title ??
                                                                     "",
-                                                            anchorPic: footballLiveStreamList![j]
-                                                                    .avatar ??
-                                                                "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
+                                                            anchorPic:
+                                                                footballLiveStreamList![
+                                                                            j]
+                                                                        .avatar ??
+                                                                    "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
                                                             playMode:
                                                                 V2TXLivePlayMode
                                                                     .v2TXLivePlayModeLeb,
                                                             liveURL: "rtmp://mindarker.top/live/" +
                                                                 getStreamURL(
                                                                     footballLiveStreamList![j]
-                                                                        .pushCode));
+                                                                        .pushCode),
+                                                            anchorId:
+                                                                '${footballLiveStreamList[j].userId}');
 
                                                         Navigator.push(
                                                             context,
@@ -633,8 +634,11 @@ class _FootballLivePageState extends State<FootballLivePage>
                                                                 followingList[
                                                                         index]
                                                                     .streamingStatus,
-                                                            streamTitle:
-                                                                "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊？",
+                                                            streamTitle: followingList[
+                                                                        index]
+                                                                    .liveStreamDetails
+                                                                    ?.title ??
+                                                                "",
                                                             anchorName:
                                                                 followingList[
                                                                         index]
@@ -663,8 +667,11 @@ class _FootballLivePageState extends State<FootballLivePage>
                                                                     followingListDesc[
                                                                             index]
                                                                         .streamingStatus,
-                                                                streamTitle:
-                                                                    "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊？",
+                                                                streamTitle: followingListDesc[
+                                                                            index]
+                                                                        .liveStreamDetails
+                                                                        ?.title ??
+                                                                    "",
                                                                 anchorName: followingListDesc[
                                                                         index]
                                                                     .anchorDetails
@@ -691,8 +698,11 @@ class _FootballLivePageState extends State<FootballLivePage>
                                                                     followingListAsc[
                                                                             index]
                                                                         .streamingStatus,
-                                                                streamTitle:
-                                                                    "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊？",
+                                                                streamTitle: followingListAsc[
+                                                                            index]
+                                                                        .liveStreamDetails
+                                                                        ?.title ??
+                                                                    "",
                                                                 anchorName: followingListAsc[
                                                                         index]
                                                                     .anchorDetails

@@ -10,9 +10,12 @@ import 'package:live_flutter_plugin/v2_tx_live_player.dart';
 import 'package:live_flutter_plugin/v2_tx_live_player_observer.dart';
 import 'package:live_flutter_plugin/widget/v2_tx_live_video_widget.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:sport_app/Model/followingModel.dart';
+import 'package:sport_app/Provider/anchorFollowProvider.dart';
 import 'package:tencent_cloud_av_chat_room/baseWidget/rounded_container.dart';
 import 'package:tencent_cloud_av_chat_room/config/display_config.dart';
 import 'package:tencent_cloud_av_chat_room/liveRoom/chat/gift.dart';
+import 'package:tencent_cloud_av_chat_room/liveRoom/chat/text_input_field.dart';
 import 'package:tencent_cloud_av_chat_room/model/anchor_info.dart';
 import 'package:tencent_cloud_av_chat_room/tencent_cloud_av_chat_room.dart';
 import 'package:tencent_cloud_av_chat_room/tencent_cloud_av_chat_room_config.dart';
@@ -22,6 +25,7 @@ import 'package:tencent_cloud_av_chat_room/tencent_cloud_av_chat_room_data.dart'
 import 'package:tencent_cloud_av_chat_room/tencent_cloud_av_chat_room_theme.dart';
 import 'package:tencent_cloud_av_chat_room/tencent_cloud_chat_sdk_type.dart';
 import 'package:text_scroll/text_scroll.dart';
+import '../../Component/Loading/emptyResultComponent.dart';
 import '../../Component/Tencent/liveStreamPlayer.dart';
 import '../../Constants/colorConstant.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -34,6 +38,7 @@ class LiveStreamChatRoom extends StatefulWidget {
   final String streamTitle;
   final String anchorPic;
   final String liveURL;
+  final String anchorId;
   final V2TXLivePlayMode playMode;
 
   const LiveStreamChatRoom(
@@ -44,6 +49,7 @@ class LiveStreamChatRoom extends StatefulWidget {
       required this.streamTitle,
       required this.anchorPic,
       required this.playMode,
+      required this.anchorId,
       required this.liveURL})
       : super(key: key);
 
@@ -58,6 +64,7 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
   bool _isDanmakuOn = false;
   bool _isFullScreen = false;
   bool _showAppBar = true;
+  bool isFollowed = false;
   int? _localViewId;
   double _currentPage = 1;
 
@@ -67,10 +74,18 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
   //get user information
   UserDataModel userModel = Get.find<UserDataModel>();
 
+  // provider
+  AnchorFollowProvider provider = AnchorFollowProvider();
+
   //tencent controller
   final TencentCloudAvChatRoomController controller =
       TencentCloudAvChatRoomController();
   final PageController _pageController = PageController(initialPage: 1);
+
+  Future<void> createFollow() async {
+    CreateFollowModel? followModel =
+        await provider.createFollow(widget.anchorId);
+  }
 
   //create live stream player--------------------from Tencent----------------------------------//
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -307,7 +322,16 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                           child: Stack(
                             children: [
                               _isDanmakuOn
-                                  ? Container()
+                                  ? Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 0 * fem,
+                                          vertical: 10 * fem),
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 10 * fem,
+                                          vertical: 50 * fem),
+                                      alignment: Alignment.bottomCenter,
+                                      child: searchEmptyWidget(),
+                                    )
                                   : Positioned(
                                       right: -15,
                                       bottom: 25,
@@ -396,7 +420,7 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                                       // AppLocalizations.of(
                                                       //         context)!
                                                       //     .saySmthg,
-                                                      "say smthg",
+                                                      "输入内容...",
                                                       style: const TextStyle(
                                                           fontSize: 14,
                                                           color: Color.fromARGB(
@@ -418,7 +442,7 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                           notification:
                                               // AppLocalizations.of(context)!
                                               //     .welcomeStream,
-                                              "welcome",
+                                              "欢迎来到直播间！严禁未成年人直播、打赏或向末成年人销售酒类商品。若主播销售酒类商品，请未成年人在监护人陪同下观看。直播间内严禁出现违法违规、低俗色情、吸烟酗酒、人身伤害等内容。如主播在直播中以不当方式诱导打赏私下交易请谨慎判断以防人身财产损失购买商品请点击下方购物车按钮，请勿私下交易，请大家注意财产安全，谨防网络诈骗。",
                                           anchorInfo: AnchorInfo(
                                               subscribeNum: 200,
                                               fansNum: 5768,
@@ -527,8 +551,8 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                                                         .isCN
                                                                         .value ==
                                                                     true
-                                                                ? 68 * fem
-                                                                : 78 * fem,
+                                                                ? 78 * fem
+                                                                : 90 * fem,
                                                             padding:
                                                                 EdgeInsets.all(
                                                                     0),
@@ -543,8 +567,9 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                                               child:
                                                                   ElevatedButton(
                                                                 style: ElevatedButton.styleFrom(
-                                                                    backgroundColor:
-                                                                        kButtonOffSecondaryColor,
+                                                                    backgroundColor: isFollowed
+                                                                        ? kMainGreenColor
+                                                                        : kButtonOffSecondaryColor,
                                                                     padding: EdgeInsets.symmetric(
                                                                         horizontal:
                                                                             10 *
@@ -558,20 +583,28 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                                                             BorderRadius.circular(30))),
                                                                 onPressed: () {
                                                                   //点击关注
+                                                                  setState(() {
+                                                                    createFollow();
+                                                                    isFollowed =
+                                                                        !isFollowed;
+                                                                  });
                                                                 },
                                                                 child: Obx(
                                                                   () => Text(
                                                                     // AppLocalizations.of(
                                                                     //         context)!
                                                                     //     .follow,
-                                                                    "关注",
+                                                                    isFollowed
+                                                                        ? "已关注"
+                                                                        : "关注",
                                                                     style: TextStyle(
                                                                         fontSize: userModel.isCN.value ==
                                                                                 true
                                                                             ? 13
                                                                             : 12,
-                                                                        color:
-                                                                            kMainGreenColor,
+                                                                        color: isFollowed
+                                                                            ? white
+                                                                            : kMainGreenColor,
                                                                         fontWeight:
                                                                             FontWeight.w600),
                                                                   ),
@@ -976,10 +1009,7 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                                     width: 4 * fem,
                                                   ),
                                                   Text(
-                                                    // AppLocalizations.of(
-                                                    //         context)!
-                                                    //     .saySmthg,
-                                                    "say smthg2",
+                                                    "输入内容...",
                                                     style: const TextStyle(
                                                         fontSize: 14,
                                                         color: Color.fromARGB(
@@ -987,6 +1017,27 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                                         fontWeight:
                                                             FontWeight.w500),
                                                   )
+                                                  // TextFormField(
+                                                  //   decoration: InputDecoration(
+                                                  //     hintText:
+                                                  //         // AppLocalizations.of(
+                                                  //         //         context)!
+                                                  //         //     .saySmthg,
+                                                  //         "输入内容...",
+                                                  //     hintStyle:
+                                                  //         const TextStyle(
+                                                  //             fontSize: 14,
+                                                  //             color: Color
+                                                  //                 .fromARGB(
+                                                  //                     255,
+                                                  //                     255,
+                                                  //                     255,
+                                                  //                     255),
+                                                  //             fontWeight:
+                                                  //                 FontWeight
+                                                  //                     .w500),
+                                                  //   ),
+                                                  // )
                                                 ],
                                               ),
                                             ),
@@ -998,7 +1049,7 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                         notification:
                                             // AppLocalizations.of(context)!
                                             //     .welcomeStream,
-                                            "welcome",
+                                            "欢迎来到直播间！严禁未成年人直播、打赏或向末成年人销售酒类商品。若主播销售酒类商品，请未成年人在监护人陪同下观看。直播间内严禁出现违法违规、低俗色情、吸烟酗酒、人身伤害等内容。如主播在直播中以不当方式诱导打赏私下交易请谨慎判断以防人身财产损失购买商品请点击下方购物车按钮，请勿私下交易，请大家注意财产安全，谨防网络诈骗。",
                                         anchorInfo: AnchorInfo(
                                             subscribeNum: 200,
                                             fansNum: 5768,

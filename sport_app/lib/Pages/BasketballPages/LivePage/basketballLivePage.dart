@@ -499,30 +499,34 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                                                             return const LoginAlertDialog();
                                                           });
                                                     } else {
-                                                      LiveStreamChatRoom page = LiveStreamChatRoom(
-                                                          userLoginId: userModel
-                                                              .id.value,
-                                                          avChatRoomId:
-                                                              "panda${basketballLiveStreamList[j].userId}",
-                                                          anchor:
-                                                              basketballLiveStreamList[
-                                                                          j]
-                                                                      .nickName ??
-                                                                  "",
-                                                          streamTitle:
-                                                              basketballLiveStreamList[
-                                                                          j]
-                                                                      .title ??
-                                                                  "",
-                                                          anchorPic:
-                                                              basketballLiveStreamList![
-                                                                          j]
-                                                                      .avatar ??
-                                                                  "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
-                                                          playMode: V2TXLivePlayMode
-                                                              .v2TXLivePlayModeLeb,
-                                                          liveURL:
-                                                              "rtmp://mindarker.top/live/${getStreamURL(basketballLiveStreamList[j].pushCode)}");
+                                                      LiveStreamChatRoom page =
+                                                          LiveStreamChatRoom(
+                                                        userLoginId:
+                                                            userModel.id.value,
+                                                        avChatRoomId:
+                                                            "panda${basketballLiveStreamList[j].userId}",
+                                                        anchor:
+                                                            basketballLiveStreamList[
+                                                                        j]
+                                                                    .nickName ??
+                                                                "",
+                                                        streamTitle:
+                                                            basketballLiveStreamList[
+                                                                        j]
+                                                                    .title ??
+                                                                "",
+                                                        anchorPic:
+                                                            basketballLiveStreamList![
+                                                                        j]
+                                                                    .avatar ??
+                                                                "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
+                                                        playMode: V2TXLivePlayMode
+                                                            .v2TXLivePlayModeLeb,
+                                                        liveURL:
+                                                            "rtmp://mindarker.top/live/${getStreamURL(basketballLiveStreamList[j].pushCode)}",
+                                                        anchorId:
+                                                            '${basketballLiveStreamList[j].userId}',
+                                                      );
 
                                                       Navigator.push(
                                                           context,
@@ -631,7 +635,12 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                                                               followingList[
                                                                       index]
                                                                   .streamingStatus,
-                                                          streamTitle: "",
+                                                          streamTitle:
+                                                              followingList[
+                                                                          index]
+                                                                      .liveStreamDetails
+                                                                      ?.title ??
+                                                                  "",
                                                           anchorName:
                                                               followingList[
                                                                       index]
@@ -660,8 +669,11 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                                                                   followingListDesc[
                                                                           index]
                                                                       .streamingStatus,
-                                                              streamTitle:
-                                                                  "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊？",
+                                                              streamTitle: followingListDesc[
+                                                                          index]
+                                                                      .liveStreamDetails
+                                                                      ?.title ??
+                                                                  "",
                                                               anchorName:
                                                                   followingListDesc[
                                                                           index]
@@ -689,8 +701,11 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                                                                   followingListAsc[
                                                                           index]
                                                                       .streamingStatus,
-                                                              streamTitle:
-                                                                  "啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊？",
+                                                              streamTitle: followingListAsc[
+                                                                          index]
+                                                                      .liveStreamDetails
+                                                                      ?.title ??
+                                                                  "",
                                                               anchorName:
                                                                   followingListAsc[
                                                                           index]

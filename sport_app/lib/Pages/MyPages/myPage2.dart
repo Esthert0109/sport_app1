@@ -558,6 +558,143 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: [
                             Column(
                               children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              backgroundColor: white,
+                                              surfaceTintColor: white,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              8.0))),
+                                              content: Text(
+                                                "确认登出？",
+                                                style: tMain,
+                                              ),
+                                              actions: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: [
+                                                    Container(
+                                                      // margin:
+                                                      //     EdgeInsets.symmetric(horizontal: 5 * fem),
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal:
+                                                                  10 * fem),
+                                                      width: 120 * fem,
+                                                      child: TextButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        style: ButtonStyle(
+                                                            shape: MaterialStateProperty
+                                                                .all<
+                                                                    RoundedRectangleBorder>(
+                                                              RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            6),
+                                                              ),
+                                                            ),
+                                                            backgroundColor:
+                                                                MaterialStateProperty
+                                                                    .all(Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            215,
+                                                                            236,
+                                                                            191))),
+                                                        child: Text(
+                                                          "取消",
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                'NotoSansSC',
+                                                            fontSize: 12 * fem,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color: greenColor,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      // margin:
+                                                      //     EdgeInsets.symmetric(horizontal: 5 * fem),
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal:
+                                                                  10 * fem),
+                                                      width: 120 * fem,
+                                                      child: TextButton(
+                                                        onPressed: () async {
+                                                          SharedPreferencesUtils
+                                                              .clearSharedPreferences();
+                                                          userModel.isLogin
+                                                              .value = false;
+
+                                                          Future.delayed(
+                                                              Duration(
+                                                                  seconds: 1),
+                                                              () async {
+                                                            Get.offAllNamed(
+                                                                '/auth');
+                                                          });
+                                                        },
+                                                        style: ButtonStyle(
+                                                            shape: MaterialStateProperty
+                                                                .all<
+                                                                    RoundedRectangleBorder>(
+                                                              RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            6),
+                                                              ),
+                                                            ),
+                                                            backgroundColor:
+                                                                MaterialStateProperty
+                                                                    .all(
+                                                                        kMainGreenColor)),
+                                                        child: Text(
+                                                          "确认",
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                'NotoSansSC',
+                                                            fontSize: 12 * fem,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color: white,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                )
+                                              ],
+                                            );
+                                          });
+                                    });
+                                  },
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStatePropertyAll(white),
+                                      surfaceTintColor:
+                                          MaterialStatePropertyAll(white)),
+                                  child: Text(
+                                      AppLocalizations.of(context)!.logout,
+                                      style: TextStyle(color: kMainGreyColor)),
+                                )
+
                                 // RoundedLoadingButton(
                                 //   color: Colors.white,
                                 //   valueColor: kMainGreenColor,

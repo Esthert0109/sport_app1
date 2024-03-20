@@ -726,7 +726,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                     playMode: V2TXLivePlayMode
                                                         .v2TXLivePlayModeLeb,
                                                     liveURL:
-                                                        "rtmp://play.mindark.cloud/live/" +
+                                                        "rtmp://mindarker.top/live/" +
                                                             getStreamURL(
                                                                 liveStreamList![
                                                                         index]
@@ -766,7 +766,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                       playMode: V2TXLivePlayMode
                                                           .v2TXLivePlayModeLeb,
                                                       liveURL:
-                                                          "rtmp://play.mindark.cloud/live/" +
+                                                          "rtmp://mindarker.top/live/" +
                                                               getStreamURL(
                                                                   liveStreamList![
                                                                           index]

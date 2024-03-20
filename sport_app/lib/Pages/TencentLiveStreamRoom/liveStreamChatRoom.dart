@@ -312,7 +312,7 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                       right: -15,
                                       bottom: 25,
                                       child: Lottie.asset(
-                                        'images/hearts.json',
+                                        'images/livepage/hearts.json',
                                         width: 100,
                                         height: 400,
                                         repeat: true,
@@ -482,7 +482,7 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                                       ),
                                                       Container(
                                                         height: 50 * fem,
-                                                        width: 70 * fem,
+                                                        width: 140 * fem,
                                                         child: Padding(
                                                             padding: EdgeInsets
                                                                 .fromLTRB(
@@ -506,7 +506,7 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                                               pauseBetween:
                                                                   const Duration(
                                                                       milliseconds:
-                                                                          500),
+                                                                          5000),
                                                               style: const TextStyle(
                                                                   fontWeight:
                                                                       FontWeight
@@ -534,26 +534,28 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                                                     0),
                                                             child: Padding(
                                                               padding: EdgeInsets
-                                                                  .fromLTRB(
-                                                                      4 * fem,
-                                                                      8 * fem,
-                                                                      1 * fem,
-                                                                      0 * fem),
+                                                                  .symmetric(
+                                                                      horizontal:
+                                                                          5 *
+                                                                              fem,
+                                                                      vertical:
+                                                                          1 * fem),
                                                               child:
                                                                   ElevatedButton(
-                                                                style: ElevatedButton
-                                                                    .styleFrom(
-                                                                        backgroundColor:
-                                                                            kButtonOffSecondaryColor,
-                                                                        // primary:
-                                                                        //     kButtonOffSecondaryColor,
-                                                                        side: BorderSide
-                                                                            .none,
-                                                                        elevation:
-                                                                            0.3,
-                                                                        shape: RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(30))),
+                                                                style: ElevatedButton.styleFrom(
+                                                                    backgroundColor:
+                                                                        kButtonOffSecondaryColor,
+                                                                    padding: EdgeInsets.symmetric(
+                                                                        horizontal:
+                                                                            10 *
+                                                                                fem),
+                                                                    side: BorderSide
+                                                                        .none,
+                                                                    elevation:
+                                                                        0.3,
+                                                                    shape: RoundedRectangleBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(30))),
                                                                 onPressed: () {
                                                                   //点击关注
                                                                 },
@@ -562,7 +564,7 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                                                     // AppLocalizations.of(
                                                                     //         context)!
                                                                     //     .follow,
-                                                                    "follow",
+                                                                    "关注",
                                                                     style: TextStyle(
                                                                         fontSize: userModel.isCN.value ==
                                                                                 true

@@ -522,7 +522,7 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                                                           playMode: V2TXLivePlayMode
                                                               .v2TXLivePlayModeLeb,
                                                           liveURL:
-                                                              "rtmp://play.mindark.cloud/live/${getStreamURL(basketballLiveStreamList[j].pushCode)}");
+                                                              "rtmp://mindarker.top/live/${getStreamURL(basketballLiveStreamList[j].pushCode)}");
 
                                                       Navigator.push(
                                                           context,

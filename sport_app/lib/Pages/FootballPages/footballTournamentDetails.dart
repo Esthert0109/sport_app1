@@ -19,8 +19,10 @@ import '../../Component/TournamentDetails/mapContent.dart';
 import '../../Component/TournamentDetails/substituteList.dart';
 import '../../Constants/colorConstant.dart';
 import '../../Model/footballMatchesModel.dart';
+import '../../Model/liveStreamModel.dart';
 import '../../Model/userDataModel.dart';
 import '../../Provider/footballMatchProvider.dart';
+import '../../Provider/liveStreamProvider.dart';
 
 class TournamentDetails extends StatefulWidget {
   const TournamentDetails(
@@ -46,8 +48,8 @@ class TournamentDetails extends StatefulWidget {
 }
 
 class _TournamentDetailsState extends State<TournamentDetails> {
-  TextEditingController _searchController = TextEditingController();
   FootballMatchProvider provider = FootballMatchProvider();
+  LiveStreamProvider liveProvider = LiveStreamProvider();
   Map<String, dynamic> footballMatchById = new Map<String, dynamic>();
 
   int selectedButton = 1;
@@ -57,6 +59,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
   bool isCN = true;
   String matchStatusStr = '';
   // int lineUp = 1;
+  String animationUrl = "";
   UserDataModel userModel = Get.find<UserDataModel>();
 
   // get football live data
@@ -78,6 +81,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
     super.initState();
     getFootballLiveData();
     getFootballLineUpData();
+    getAnimationUrl();
 
     if (widget.matchStatus == '未') {
       matchStatusStr = userModel.isCN == true ? '未开赛' : 'Not Started Yet';
@@ -94,6 +98,12 @@ class _TournamentDetailsState extends State<TournamentDetails> {
     });
 
     getTournamentLineup();
+  }
+
+  Future<void> getAnimationUrl() async {
+    AnimationStreamModel? animationModel =
+        await liveProvider.getAnimationUrl("football", widget.id);
+    animationUrl = animationModel?.data ?? "";
   }
 
   Future<void> getFootballLiveData() async {
@@ -472,7 +482,17 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                 right: 85,
                                 child: GestureDetector(
                                   onTap: () {
-                                    print("navi to animation stream");
+                                    print(
+                                        "navi to animation stream:${animationUrl}");
+
+                                    if (animationUrl == "" ||
+                                        animationUrl == null) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content: Text("没有直播"),
+                                        backgroundColor: redColor,
+                                      ));
+                                    }
                                   },
                                   child: Row(
                                     children: [

@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:sport_app/Model/liveStreamModel.dart';
+import 'package:sport_app/Provider/liveStreamProvider.dart';
 
 import '../../Component/Loading/emptyResultComponent.dart';
 import '../../Component/TournamentDetails/fixedColumnTable2.dart';
@@ -35,10 +37,12 @@ class _BasketballTournamentDetailsState
     extends State<BasketballTournamentDetails> {
   //Provider
   BasketballMatchProvider provider = BasketballMatchProvider();
+  LiveStreamProvider liveProvider = LiveStreamProvider();
   Map<String, dynamic> basketballMatchById = new Map<String, dynamic>();
   Map<String, dynamic>? basketballMatchLineUpById;
   List<dynamic>? homeTeamLineUp;
   List<dynamic>? awayTeamLineUp;
+  String animationUrl = "";
 
   //Variables
   int selectedButton = 1;
@@ -70,6 +74,12 @@ class _BasketballTournamentDetailsState
     return basketballMatchById;
   }
 
+  Future<void> getAnimationUrl() async {
+    AnimationStreamModel? animationModel =
+        await liveProvider.getAnimationUrl("basketball", widget.id);
+    animationUrl = animationModel?.data ?? "";
+  }
+
   Future<Map<String, dynamic>> getBasketballMatchLineUpById() async {
     return basketballMatchLineUpById =
         await provider.getBasketballLineUp(widget.id);
@@ -79,6 +89,7 @@ class _BasketballTournamentDetailsState
   @override
   void initState() {
     super.initState();
+    getAnimationUrl();
 
     if (widget.matchStatus == '未') {
       matchStatusStr = userModel.isCN == true ? '未开赛' : 'Not Started Yet';
@@ -421,7 +432,16 @@ class _BasketballTournamentDetailsState
                                 right: 85,
                                 child: GestureDetector(
                                   onTap: () {
-                                    print("navi to animation stream");
+                                    print(
+                                        "navi to animation stream: ${animationUrl}");
+                                    if (animationUrl == "" ||
+                                        animationUrl == null) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content: Text("没有直播"),
+                                        backgroundColor: redColor,
+                                      ));
+                                    }
                                   },
                                   child: Row(
                                     children: [

@@ -124,8 +124,8 @@ class _LivePlayPage2State extends State<LivePlayPage2> {
     //   url = URLUtils.generateLedPlayUrl(widget.streamId);
     // }
     debugPrint("play url: $url");
-    var playStatus = await _livePlayer
-        ?.startLivePlay("rtmp://mindarker.top/live/201_2539144_574861");
+    var playStatus =
+        await _livePlayer?.startLivePlay("rtmp://mindarker.top/sport/202_2607576_574939");
     if (playStatus == null || playStatus != V2TXLIVE_OK) {
       debugPrint("play error: $playStatus url: $url");
       return;
@@ -156,7 +156,7 @@ class _LivePlayPage2State extends State<LivePlayPage2> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text(widget.streamId),
+          title: Text("test"),
           leading: IconButton(
               onPressed: () => {Navigator.pop(context)},
               icon: const Icon(Icons.arrow_back_ios)),

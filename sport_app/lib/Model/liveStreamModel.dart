@@ -83,3 +83,31 @@ class LiveStreamData {
     );
   }
 }
+
+class AnimationStreamModel {
+  final int code;
+  final String msg;
+  final String data;
+
+  AnimationStreamModel({
+    required this.code,
+    required this.msg,
+    required this.data,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      "code": code,
+      "msg": msg,
+      "data": data,
+    };
+  }
+
+  factory AnimationStreamModel.fromJson(Map<String, dynamic> json) {
+    return AnimationStreamModel(
+      code: json['code'],
+      msg: json['msg'],
+      data: json['data'],
+    );
+  }
+}

@@ -1007,7 +1007,9 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                               return GestureDetector(
                                                 onTap: () {
                                                   print("navi into tournament");
-                                                  BasketballTournamentDetails(
+
+                                                  Get.to(
+                                                      () => BasketballTournamentDetails(
                                                           id:
                                                               '${startedList[index].id}',
                                                           matchDate:
@@ -1015,8 +1017,9 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                           matchStatus:
                                                               '${startedList[index].statusStr}',
                                                           matchName:
-                                                              '${startedList[index].competitionName}')
-                                                      .launch(context);
+                                                              '${startedList[index].competitionName}'),
+                                                      transition:
+                                                          Transition.fadeIn);
                                                 },
                                                 child: GameDisplayComponent(
                                                   id: startedList[index].id ??
@@ -1079,7 +1082,9 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                     onTap: () {
                                                       print(
                                                           "navi into tournament");
-                                                      BasketballTournamentDetails(
+
+                                                      Get.to(
+                                                          () => BasketballTournamentDetails(
                                                               id:
                                                                   '${startedList[index].id}',
                                                               matchDate:
@@ -1087,8 +1092,9 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                               matchStatus:
                                                                   '${startedList[index].statusStr}',
                                                               matchName:
-                                                                  '${startedList[index].competitionName}')
-                                                          .launch(context);
+                                                                  '${startedList[index].competitionName}'),
+                                                          transition: Transition
+                                                              .fadeIn);
                                                     },
                                                     child: GameDisplayComponent(
                                                       id: startedList[index]
@@ -1179,7 +1185,9 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                         onTap: () {
                                                           print(
                                                               "navi into tournament");
-                                                          BasketballTournamentDetails(
+
+                                                          Get.to(
+                                                              () => BasketballTournamentDetails(
                                                                   id:
                                                                       '${futureList1[index].id}',
                                                                   matchDate:
@@ -1187,8 +1195,10 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                   matchStatus:
                                                                       '${futureList1[index].statusStr}',
                                                                   matchName:
-                                                                      '${futureList1[index].competitionName}')
-                                                              .launch(context);
+                                                                      '${futureList1[index].competitionName}'),
+                                                              transition:
+                                                                  Transition
+                                                                      .fadeIn);
                                                         },
                                                         child:
                                                             GameDisplayComponent(
@@ -1290,7 +1300,8 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                             onTap: () {
                                                               print(
                                                                   "navi into tournament");
-                                                              BasketballTournamentDetails(
+                                                              Get.to(
+                                                                  () => BasketballTournamentDetails(
                                                                       id:
                                                                           '${futureList2[index].id}',
                                                                       matchDate:
@@ -1298,9 +1309,10 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                       matchStatus:
                                                                           '${futureList2[index].statusStr}',
                                                                       matchName:
-                                                                          '${futureList2[index].competitionName}')
-                                                                  .launch(
-                                                                      context);
+                                                                          '${futureList2[index].competitionName}'),
+                                                                  transition:
+                                                                      Transition
+                                                                          .fadeIn);
                                                             },
                                                             child:
                                                                 GameDisplayComponent(
@@ -1407,7 +1419,9 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                 onTap: () {
                                                                   print(
                                                                       "navi into tournament");
-                                                                  BasketballTournamentDetails(
+
+                                                                  Get.to(
+                                                                      () => BasketballTournamentDetails(
                                                                           id:
                                                                               '${futureList3[index].id}',
                                                                           matchDate:
@@ -1415,9 +1429,10 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                           matchStatus:
                                                                               '${futureList3[index].statusStr}',
                                                                           matchName:
-                                                                              '${futureList3[index].competitionName}')
-                                                                      .launch(
-                                                                          context);
+                                                                              '${futureList3[index].competitionName}'),
+                                                                      transition:
+                                                                          Transition
+                                                                              .fadeIn);
                                                                 },
                                                                 child:
                                                                     GameDisplayComponent(
@@ -1526,12 +1541,14 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                     onTap: () {
                                                                       print(
                                                                           "navi into tournament");
-                                                                      BasketballTournamentDetails(
+
+                                                                      Get.to(
+                                                                          () => BasketballTournamentDetails(
                                                                               id: '${futureList4[index].id}',
                                                                               matchDate: '${futureList4[index].matchDate}',
                                                                               matchStatus: '${futureList4[index].statusStr}',
-                                                                              matchName: '${futureList4[index].competitionName}')
-                                                                          .launch(context);
+                                                                              matchName: '${futureList4[index].competitionName}'),
+                                                                          transition: Transition.fadeIn);
                                                                     },
                                                                     child:
                                                                         GameDisplayComponent(
@@ -1625,8 +1642,9 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                             () {
                                                                           print(
                                                                               "navi into tournament");
-                                                                          BasketballTournamentDetails(id: '${futureList5[index].id}', matchDate: '${futureList5[index].matchDate}', matchStatus: '${futureList5[index].statusStr}', matchName: '${futureList5[index].competitionName}')
-                                                                              .launch(context);
+                                                                          Get.to(
+                                                                              () => BasketballTournamentDetails(id: '${futureList5[index].id}', matchDate: '${futureList5[index].matchDate}', matchStatus: '${futureList5[index].statusStr}', matchName: '${futureList5[index].competitionName}'),
+                                                                              transition: Transition.fadeIn);
                                                                         },
                                                                         child:
                                                                             GameDisplayComponent(
@@ -1697,7 +1715,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                             onTap:
                                                                                 () {
                                                                               print("navi into tournament");
-                                                                              BasketballTournamentDetails(id: '${futureList6[index].id}', matchDate: '${futureList6[index].matchDate}', matchStatus: '${futureList6[index].statusStr}', matchName: '${futureList6[index].competitionName}').launch(context);
+                                                                              Get.to(() => BasketballTournamentDetails(id: '${futureList6[index].id}', matchDate: '${futureList6[index].matchDate}', matchStatus: '${futureList6[index].statusStr}', matchName: '${futureList6[index].competitionName}'), transition: Transition.fadeIn);
                                                                             },
                                                                             child:
                                                                                 GameDisplayComponent(
@@ -1754,7 +1772,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                 onTap: () {
                                                                                   print("navi into tournament");
 
-                                                                                  BasketballTournamentDetails(id: '${futureList7[index].id}', matchDate: '${futureList7[index].matchDate}', matchStatus: '${futureList7[index].statusStr}', matchName: '${futureList7[index].competitionName}').launch(context);
+                                                                                  Get.to(() => BasketballTournamentDetails(id: '${futureList7[index].id}', matchDate: '${futureList7[index].matchDate}', matchStatus: '${futureList7[index].statusStr}', matchName: '${futureList7[index].competitionName}'), transition: Transition.fadeIn);
                                                                                 },
                                                                                 child: GameDisplayComponent(
                                                                                   id: futureList7[index].id ?? 0,
@@ -1806,7 +1824,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                   return GestureDetector(
                                                                                     onTap: () {
                                                                                       print("navi into tournament");
-                                                                                      BasketballTournamentDetails(id: '${pastList1[index].id}', matchDate: '${pastList1[index].matchDate}', matchStatus: '${pastList1[index].statusStr}', matchName: '${pastList1[index].competitionName}').launch(context);
+                                                                                      Get.to(() => BasketballTournamentDetails(id: '${pastList1[index].id}', matchDate: '${pastList1[index].matchDate}', matchStatus: '${pastList1[index].statusStr}', matchName: '${pastList1[index].competitionName}'), transition: Transition.fadeIn);
                                                                                     },
                                                                                     child: GameDisplayComponent(
                                                                                       id: pastList1[index].id ?? 0,
@@ -1853,7 +1871,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                       return GestureDetector(
                                                                                         onTap: () {
                                                                                           print("navi into tournament");
-                                                                                          BasketballTournamentDetails(id: '${pastList2[index].id}', matchDate: '${pastList2[index].matchDate}', matchStatus: '${pastList2[index].statusStr}', matchName: '${pastList2[index].competitionName}').launch(context);
+                                                                                          Get.to(() => BasketballTournamentDetails(id: '${pastList2[index].id}', matchDate: '${pastList2[index].matchDate}', matchStatus: '${pastList2[index].statusStr}', matchName: '${pastList2[index].competitionName}'), transition: Transition.fadeIn);
                                                                                         },
                                                                                         child: GameDisplayComponent(
                                                                                           id: pastList2[index].id ?? 0,
@@ -1897,7 +1915,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                           return GestureDetector(
                                                                                             onTap: () {
                                                                                               print("navi into tournament");
-                                                                                              BasketballTournamentDetails(id: '${pastList3[index].id}', matchDate: '${pastList3[index].matchDate}', matchStatus: '${pastList3[index].statusStr}', matchName: '${pastList3[index].competitionName}').launch(context);
+                                                                                              Get.to(() => BasketballTournamentDetails(id: '${pastList3[index].id}', matchDate: '${pastList3[index].matchDate}', matchStatus: '${pastList3[index].statusStr}', matchName: '${pastList3[index].competitionName}'), transition: Transition.fadeIn);
                                                                                             },
                                                                                             child: GameDisplayComponent(
                                                                                               id: pastList3[index].id ?? 0,
@@ -1941,7 +1959,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                               return GestureDetector(
                                                                                                 onTap: () {
                                                                                                   print("navi into tournament");
-                                                                                                  BasketballTournamentDetails(id: '${pastList4[index].id}', matchDate: '${pastList4[index].matchDate}', matchStatus: '${pastList4[index].statusStr}', matchName: '${pastList4[index].competitionName}').launch(context);
+                                                                                                  Get.to(() => BasketballTournamentDetails(id: '${pastList4[index].id}', matchDate: '${pastList4[index].matchDate}', matchStatus: '${pastList4[index].statusStr}', matchName: '${pastList4[index].competitionName}'), transition: Transition.fadeIn);
                                                                                                 },
                                                                                                 child: GameDisplayComponent(
                                                                                                   id: pastList4[index].id ?? 0,
@@ -1985,7 +2003,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                                   return GestureDetector(
                                                                                                     onTap: () {
                                                                                                       print("navi into tournament");
-                                                                                                      BasketballTournamentDetails(id: '${pastList5[index].id}', matchDate: '${pastList5[index].matchDate}', matchStatus: '${pastList5[index].statusStr}', matchName: '${pastList5[index].competitionName}').launch(context);
+                                                                                                      Get.to(() => BasketballTournamentDetails(id: '${pastList5[index].id}', matchDate: '${pastList5[index].matchDate}', matchStatus: '${pastList5[index].statusStr}', matchName: '${pastList5[index].competitionName}'), transition: Transition.fadeIn);
                                                                                                     },
                                                                                                     child: GameDisplayComponent(
                                                                                                       id: pastList5[index].id ?? 0,
@@ -2029,7 +2047,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                                       return GestureDetector(
                                                                                                         onTap: () {
                                                                                                           print("navi into tournament");
-                                                                                                          BasketballTournamentDetails(id: '${pastList6[index].id}', matchDate: '${pastList6[index].matchDate}', matchStatus: '${pastList6[index].statusStr}', matchName: '${pastList6[index].competitionName}').launch(context);
+                                                                                                          Get.to(() => BasketballTournamentDetails(id: '${pastList6[index].id}', matchDate: '${pastList6[index].matchDate}', matchStatus: '${pastList6[index].statusStr}', matchName: '${pastList6[index].competitionName}'), transition: Transition.fadeIn);
                                                                                                         },
                                                                                                         child: GameDisplayComponent(
                                                                                                           id: pastList6[index].id ?? 0,
@@ -2073,7 +2091,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                                           return GestureDetector(
                                                                                                             onTap: () {
                                                                                                               print("navi into tournament");
-                                                                                                              BasketballTournamentDetails(id: '${pastList7[index].id}', matchDate: '${pastList7[index].matchDate}', matchStatus: '${pastList7[index].statusStr}', matchName: '${pastList7[index].competitionName}').launch(context);
+                                                                                                              Get.to(() => BasketballTournamentDetails(id: '${pastList7[index].id}', matchDate: '${pastList7[index].matchDate}', matchStatus: '${pastList7[index].statusStr}', matchName: '${pastList7[index].competitionName}'), transition: Transition.fadeIn);
                                                                                                             },
                                                                                                             child: GameDisplayComponent(
                                                                                                               id: pastList7[index].id ?? 0,
@@ -2138,7 +2156,8 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                                                         return GestureDetector(
                                                                                                                           onTap: () {
                                                                                                                             print("navi into tournament");
-                                                                                                                            BasketballTournamentDetails(id: '${collectionList[index].data[i].id}', matchDate: '${collectionList[index].data[i].matchDate}', matchStatus: '${collectionList[index].data[i].statusStr}', matchName: '${collectionList[index].data[i].competitionName}').launch(context);
+
+                                                                                                                            Get.to(() => BasketballTournamentDetails(id: '${collectionList[index].data[i].id}', matchDate: '${collectionList[index].data[i].matchDate}', matchStatus: '${collectionList[index].data[i].statusStr}', matchName: '${collectionList[index].data[i].competitionName}'), transition: Transition.fadeIn);
                                                                                                                           },
                                                                                                                           child: GameDisplayComponent(
                                                                                                                             id: collectionList[index].data[i].id ?? 0,

@@ -22,26 +22,24 @@ class ContactUs extends StatefulWidget {
   State<ContactUs> createState() => _ContactUsState();
 }
 
+String? encodeQueryParameters(Map<String, String> params) {
+  return params.entries
+      .map((MapEntry<String, String> e) =>
+          '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+      .join('&');
+}
+
+// ···
+final Uri emailLaunchUri = Uri(
+  scheme: 'mailto',
+  path: 'mindark@gmail.com',
+  query: encodeQueryParameters(<String, String>{
+    'subject': 'Contact Us Here!',
+  }),
+);
+
 class _ContactUsState extends State<ContactUs> {
   UserDataModel userModel = Get.find<UserDataModel>();
-
-  void _launchEmail() async {
-    final Uri _emailLaunchUri = Uri(
-      scheme: 'mailto',
-      path: 'recipient@example.com', // Add your recipient's email address here
-      queryParameters: {
-        'subject': 'Hello from Flutter', // Add your subject here
-        'body':
-            'This is a test email sent from a Flutter app.', // Add your email body here
-      },
-    );
-    final String _emailLaunchString = _emailLaunchUri.toString();
-    if (await canLaunch(_emailLaunchString)) {
-      await launch(_emailLaunchString);
-    } else {
-      throw 'Could not launch $_emailLaunchString';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -384,7 +382,8 @@ class _ContactUsState extends State<ContactUs> {
                         InkWell(
                           onTap: () {
                             print("navi to email");
-                            _launchEmail();
+                            launchUrl(emailLaunchUri);
+                            // _launchEmail();
                           },
                           child: Container(
                             height: 65 * fem,

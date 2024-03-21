@@ -729,7 +729,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                               //                     .pushCode));
                                               LivePlayPage2 page =
                                                   LivePlayPage2(
-                                                streamId: '1111',
+                                                streamId: '201_2601344_574816',
                                                 playMode: V2TXLivePlayMode
                                                     .v2TXLivePlayModeStand,
                                               );
@@ -751,7 +751,8 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                 // ignore: unused_local_variable
                                                 LivePlayPage2 page =
                                                     LivePlayPage2(
-                                                  streamId: '1111',
+                                                  streamId:
+                                                      '201_2601344_574816',
                                                   playMode: V2TXLivePlayMode
                                                       .v2TXLivePlayModeStand,
                                                 );

@@ -25,7 +25,8 @@ class LivePlayPage2 extends StatefulWidget {
   final String streamId;
   final V2TXLivePlayMode playMode;
 
-  const LivePlayPage2({Key? key, required this.streamId, required this.playMode})
+  const LivePlayPage2(
+      {Key? key, required this.streamId, required this.playMode})
       : super(key: key);
 
   @override
@@ -124,7 +125,7 @@ class _LivePlayPage2State extends State<LivePlayPage2> {
     // }
     debugPrint("play url: $url");
     var playStatus = await _livePlayer
-        ?.startLivePlay("rtmp://mindarker.top/live/testing123");
+        ?.startLivePlay("rtmp://mindarker.top/live/201_2539144_574861");
     if (playStatus == null || playStatus != V2TXLIVE_OK) {
       debugPrint("play error: $playStatus url: $url");
       return;

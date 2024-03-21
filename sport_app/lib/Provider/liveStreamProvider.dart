@@ -100,4 +100,37 @@ class LiveStreamProvider extends ChangeNotifier {
       return null;
     }
   }
+
+  Future<AnimationStreamModel?> getLiveUrl(
+      String sportType, String matchId) async {
+    String url = ApiConstants.baseUrl +
+        ApiConstants.getLiveUrl +
+        "${sportType}/${matchId}";
+
+    Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=utf-8',
+    };
+
+    try {
+      final response = await sendGetRequest(url, headers);
+      int responseCode = response['code'];
+      String responseMsg = response['msg'];
+
+      if (responseCode == 0) {
+        String responseData = response['data'];
+
+        AnimationStreamModel model = AnimationStreamModel(
+            code: responseCode, msg: responseMsg, data: responseData);
+
+        return model;
+      } else {
+        AnimationStreamModel model = AnimationStreamModel(
+            code: responseCode, msg: responseMsg, data: "");
+        return model;
+      }
+    } catch (e) {
+      print("Error in live url: $e");
+      return null;
+    }
+  }
 }

@@ -244,7 +244,7 @@ class UserProvider extends ChangeNotifier {
         ApiConstants.baseUrl + ApiConstants.updateHeadUrl + usertToken;
 
     final String imageTokenUrl =
-        "https://live-stream-1321239144.cos.ap-singapore.myqcloud.com/head/" +
+        "https://live-stream-1324939077.cos.ap-singapore.myqcloud.com/head/" +
             imageToken;
 
     Map<String, dynamic> requestBody = {'head': imageTokenUrl};

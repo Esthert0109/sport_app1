@@ -8,6 +8,7 @@ import 'package:live_flutter_plugin/widget/v2_tx_live_video_widget.dart';
 import 'package:live_flutter_plugin/v2_tx_live_player_observer.dart';
 
 import '../../Component/Tencent/liveStreamPlayer.dart';
+import '../../Services/Utils/tencent/tencentUrlUtils.dart';
 
 // enum V2TXLivePlayMode {
 //   /// 标准直播拉流
@@ -113,7 +114,7 @@ class _LivePlayPage2State extends State<LivePlayPage2> {
         debugPrint("StartPlay error： please check remoteView load");
       }
     }
-    var url = "";
+    var url = URLUtils.generateRtmpPlayUrl("test");
     // if (widget.playMode == V2TXLivePlayMode.v2TXLivePlayModeStand) {
     //   url = URLUtils.generateRtmpPlayUrl(widget.streamId);
     // }
@@ -124,8 +125,8 @@ class _LivePlayPage2State extends State<LivePlayPage2> {
     //   url = URLUtils.generateLedPlayUrl(widget.streamId);
     // }
     debugPrint("play url: $url");
-    var playStatus =
-        await _livePlayer?.startLivePlay("rtmp://mindarker.top/sport/202_2607576_574939");
+
+    var playStatus = await _livePlayer?.startLivePlay(url);
     if (playStatus == null || playStatus != V2TXLIVE_OK) {
       debugPrint("play error: $playStatus url: $url");
       return;

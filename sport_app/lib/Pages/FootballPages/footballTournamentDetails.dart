@@ -60,6 +60,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
   String matchStatusStr = '';
   // int lineUp = 1;
   String animationUrl = "";
+  String liveUrl = "";
   UserDataModel userModel = Get.find<UserDataModel>();
 
   // get football live data
@@ -82,6 +83,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
     getFootballLiveData();
     getFootballLineUpData();
     getAnimationUrl();
+    getLiveUrl();
 
     if (widget.matchStatus == '未') {
       matchStatusStr = userModel.isCN == true ? '未开赛' : 'Not Started Yet';
@@ -104,6 +106,12 @@ class _TournamentDetailsState extends State<TournamentDetails> {
     AnimationStreamModel? animationModel =
         await liveProvider.getAnimationUrl("football", widget.id);
     animationUrl = animationModel?.data ?? "";
+  }
+
+  Future<void> getLiveUrl() async {
+    AnimationStreamModel? animationModel =
+        await liveProvider.getLiveUrl("football", widget.id);
+    liveUrl = animationModel?.data ?? "";
   }
 
   Future<void> getFootballLiveData() async {
@@ -453,6 +461,14 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                 child: GestureDetector(
                                   onTap: () {
                                     print("navi to live stream");
+
+                                    if (liveUrl == "" || liveUrl == null) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content: Text("没有直播"),
+                                        backgroundColor: redColor,
+                                      ));
+                                    }
                                   },
                                   child: Row(
                                     children: [
@@ -489,7 +505,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                         animationUrl == null) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
-                                        content: Text("没有直播"),
+                                        content: Text("没有动画直播"),
                                         backgroundColor: redColor,
                                       ));
                                     }

@@ -43,6 +43,7 @@ class _BasketballTournamentDetailsState
   List<dynamic>? homeTeamLineUp;
   List<dynamic>? awayTeamLineUp;
   String animationUrl = "";
+  String liveUrl = "";
 
   //Variables
   int selectedButton = 1;
@@ -80,6 +81,12 @@ class _BasketballTournamentDetailsState
     animationUrl = animationModel?.data ?? "";
   }
 
+  Future<void> getLiveUrl() async {
+    AnimationStreamModel? animationModel =
+        await liveProvider.getLiveUrl("football", widget.id);
+    liveUrl = animationModel?.data ?? "";
+  }
+
   Future<Map<String, dynamic>> getBasketballMatchLineUpById() async {
     return basketballMatchLineUpById =
         await provider.getBasketballLineUp(widget.id);
@@ -90,6 +97,7 @@ class _BasketballTournamentDetailsState
   void initState() {
     super.initState();
     getAnimationUrl();
+    getLiveUrl();
 
     if (widget.matchStatus == '未') {
       matchStatusStr = userModel.isCN == true ? '未开赛' : 'Not Started Yet';
@@ -403,6 +411,13 @@ class _BasketballTournamentDetailsState
                                 child: GestureDetector(
                                   onTap: () {
                                     print("navi to live stream");
+                                    if (liveUrl == "" || liveUrl == null) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content: Text("没有直播"),
+                                        backgroundColor: redColor,
+                                      ));
+                                    }
                                   },
                                   child: Row(
                                     children: [
@@ -438,7 +453,7 @@ class _BasketballTournamentDetailsState
                                         animationUrl == null) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
-                                        content: Text("没有直播"),
+                                        content: Text("没有动画直播"),
                                         backgroundColor: redColor,
                                       ));
                                     }

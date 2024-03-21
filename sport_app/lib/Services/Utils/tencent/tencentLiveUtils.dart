@@ -19,12 +19,12 @@ Future<bool> userLogin(String userID) async {
       "0abda76ec2364e9e96a986d703cee89b86c82a4f6f4224af20830899d3e76466";
 
   GenerateTestUserSig generateTestUserSig = GenerateTestUserSig(
-    sdkappid: sdkAppId,
+    sdkappId: sdkAppId,
     key: key,
   );
 
   String userSig =
-      generateTestUserSig.genSig(identifier: userID, expire: 99999);
+      GenerateTestUserSig.genTestSig( userID);
 
   var data = await coreInstance.login(
     userID: userID,

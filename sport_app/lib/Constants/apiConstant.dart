@@ -384,4 +384,5 @@ class ApiConstants {
 
   // get animation
   static const getAnimationUrl = 'api/v1/animation/';
+  static const getLiveUrl = "api/v1/live-address/";
 }

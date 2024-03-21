@@ -87,6 +87,9 @@ class ApiConstants {
   static const String searchBasketballTodayUrl = basketballBaseUrl +
       searchBasketballToday; // get today's matchs via matches or team name
 
+  static const String basketballMatchesInSevenDays =
+      "/api/v1/basketballs/match/zh/list?";
+
   //---Basketball EN-----------------------------------------------------------------------------------------//
 
   static const String EN = '/en';
@@ -111,6 +114,9 @@ class ApiConstants {
 
   static const String getBasketballMatchLiveDataENurl =
       basketballBaseUrl + EN + getBasketballMatchLiveData;
+
+  static const String basketballMatchesInSevenDaysEn =
+      "/api/v1/basketballs/match/en/list?";
 
   //Football CN----------------------------------------------------------------------------------------------//
   static const String footballBaseUrl = '/api/v1/footballs';
@@ -160,6 +166,9 @@ class ApiConstants {
   static const String getFootballLiveAddressUrl =
       footballBaseUrl + getFootballLiveAddress;
 
+  static const String footballMatchesInSevenDays =
+      "/api/v1/footballs/match/zh/list?";
+
 //--------------------------------------------------------------------------------------------------------------------//
 //Football EN---------------------------------------------------------------------------------------------------------//
 
@@ -202,6 +211,9 @@ class ApiConstants {
 
   static const String getFootballMatchLineUpENurl =
       footballBaseUrl + getFootballMatchLineUpEN;
+
+  static const String footballMatchesInSevenDaysEn =
+      "/api/v1/footballs/match/ens/list?";
 
 //---------------------------------------------------------------------------------------------------------------------//
 

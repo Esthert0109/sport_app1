@@ -13,7 +13,51 @@ class BasketballMatchProvider extends ChangeNotifier {
   UserDataModel userDataModel = Get.find<UserDataModel>();
   CommonServices service = CommonServices();
 
-  
+  Future<AllMatches?> getAllBasketballMatchesInSevens(int page, int size) async {
+    String url = "";
+
+    if (userDataModel.isCN.value) {
+      url = ApiConstants.baseUrl +
+          ApiConstants.basketballMatchesInSevenDays +
+          "page=${page}&size=${size}";
+    } else {
+      url = ApiConstants.baseUrl +
+          ApiConstants.basketballMatchesInSevenDaysEn +
+          "page=${page}&size=${size}";
+    }
+
+    Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=utf-8',
+    };
+
+    try {
+      final response = await sendGetRequest(url, headers);
+
+      int responseCode = response['code'];
+      String responseMsg = response['msg'];
+
+      if (responseCode == 0) {
+        Map<String, dynamic> jsonData = response['data'];
+        MatchList responseData = MatchList.fromJson(jsonData);
+
+        AllMatches model = AllMatches(
+            code: responseCode, msg: responseMsg, matchList: responseData);
+
+        return model;
+      } else {
+        Map<String, dynamic> jsonData = response['data'];
+        MatchList responseData = MatchList.fromJson(jsonData);
+
+        AllMatches model = AllMatches(
+            code: responseCode, msg: responseMsg, matchList: responseData);
+
+        return model;
+      }
+    } catch (e) {
+      print("Error in get all data: $e");
+      return null;
+    }
+  }
 
   Future<StartedMatchesModel?> getStartedEventList(int page, int size) async {
     String url = "";

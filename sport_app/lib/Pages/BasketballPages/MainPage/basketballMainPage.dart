@@ -6,11 +6,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:lottie/lottie.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/Component/Common/selectionButtonText.dart';
 import 'package:sport_app/Model/liveStreamModel.dart';
 import 'package:sport_app/Model/matchesModel.dart';
-import 'package:sport_app/Pages/TencentLiveStreamRoom/livePlayPage.dart';
 import 'package:sport_app/Provider/basketballMatchProvider.dart';
 import 'package:sport_app/Provider/liveStreamProvider.dart';
 import 'package:tencent_cloud_chat_uikit/tencent_cloud_chat_uikit.dart';
@@ -33,8 +31,6 @@ import '../../../Provider/collectionProvider.dart';
 import '../../../Services/Utils/tencent/tencentLiveUtils.dart';
 import '../../SearchPage/searchingPage.dart';
 import '../../TencentLiveStreamRoom/liveStreamChatRoom.dart';
-import '../../TencentLiveStreamRoom/streamPlayer.dart';
-import '../../TencentLiveStreamRoom/testVlc.dart';
 import '../basketballTournamentDetails.dart';
 
 class BasketballMainPage extends StatefulWidget {
@@ -64,6 +60,11 @@ class _BasketballMainPageState extends State<BasketballMainPage>
   // fetch data from provider
   DateTime now = DateTime.now();
   int size = 10;
+
+  List<MatchesData> allList = [];
+  int allLength = 0;
+  int pageAll = 1;
+
   List<MatchesData> startedList = [];
   int startedLength = 0;
   int pageStarted = 1;
@@ -193,6 +194,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
     _scrollController = ScrollController()..addListener(bottomScrollController);
     getStartedEventList();
     getPopularLiveStreamRoomList();
+    getAllMatches();
   }
 
   @override
@@ -281,6 +283,24 @@ class _BasketballMainPageState extends State<BasketballMainPage>
       pagePast6 = 1;
       pagePast7 = 1;
     });
+  }
+
+  // get all event
+  Future<void> getAllMatches() async {
+    AllMatches? allMatchesModel =
+        await matchesProvider.getAllBasketballMatchesInSevens(pageAll, size);
+    if (!isEventLoading) {
+      setState(() {
+        isEventLoading = true;
+      });
+
+      allList.addAll(allMatchesModel?.matchList.matchList ?? []);
+      allLength = allList.length;
+
+      setState(() {
+        isEventLoading = false;
+      });
+    }
   }
 
   // get event
@@ -935,6 +955,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                               statusId = index;
                                               if (statusId == 0) {
                                                 print("display all");
+                                                getAllMatches();
                                               } else if (statusId == 1) {
                                                 getStartedEventList();
                                               } else if (statusId == 4) {
@@ -1011,7 +1032,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                         : ListView.builder(
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
-                                            itemCount: startedLength,
+                                            itemCount: allLength,
                                             shrinkWrap: true,
                                             itemBuilder: (context, index) {
                                               return GestureDetector(
@@ -1021,45 +1042,44 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                   Get.to(
                                                       () => BasketballTournamentDetails(
                                                           id:
-                                                              '${startedList[index].id}',
+                                                              '${allList[index].id}',
                                                           matchDate:
-                                                              '${startedList[index].matchDate}',
+                                                              '${allList[index].matchDate}',
                                                           matchStatus:
-                                                              '${startedList[index].statusStr}',
+                                                              '${allList[index].statusStr}',
                                                           matchName:
-                                                              '${startedList[index].competitionName}'),
+                                                              '${allList[index].competitionName}'),
                                                       transition:
                                                           Transition.fadeIn);
                                                 },
                                                 child: GameDisplayComponent(
-                                                  id: startedList[index].id ??
-                                                      0,
-                                                  competitionType: startedList[
+                                                  id: allList[index].id ?? 0,
+                                                  competitionType: allList[
                                                               index]
                                                           .competitionName ??
                                                       "",
-                                                  duration: startedList[index]
+                                                  duration: allList[index]
                                                           .matchTimeStr ??
                                                       "00:00",
-                                                  teamAName: startedList[index]
+                                                  teamAName: allList[index]
                                                           .homeTeamName ??
                                                       "",
-                                                  teamALogo: startedList[index]
+                                                  teamALogo: allList[index]
                                                           .homeTeamLogo ??
                                                       'images/mainpage/sampleLogo.png',
-                                                  teamAScore: startedList[index]
+                                                  teamAScore: allList[index]
                                                       .homeTeamScore
                                                       .toString(),
-                                                  teamBName: startedList[index]
+                                                  teamBName: allList[index]
                                                           .awayTeamName ??
                                                       "",
-                                                  teamBLogo: startedList[index]
+                                                  teamBLogo: allList[index]
                                                           .awayTeamLogo ??
                                                       'images/mainpage/sampleLogo.png',
-                                                  teamBScore: startedList[index]
+                                                  teamBScore: allList[index]
                                                       .awayTeamScore
                                                       .toString(),
-                                                  isSaved: startedList[index]
+                                                  isSaved: allList[index]
                                                           .hasCollected ??
                                                       false,
                                                 ),

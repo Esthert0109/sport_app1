@@ -1,3 +1,95 @@
+class AllMatches {
+  final int code;
+  final String msg;
+  final MatchList matchList;
+
+  AllMatches({
+    required this.code,
+    required this.msg,
+    required this.matchList,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      "code": code,
+      "msg": msg,
+      "matchList": matchList,
+    };
+  }
+
+  factory AllMatches.fromJson(Map<String, dynamic> json) {
+    return AllMatches(
+      code: json['code'],
+      msg: json['msg'],
+      matchList: MatchList.fromJson(json['matchList']),
+    );
+  }
+}
+
+class MatchList {
+  final List<MatchesData> matchList;
+
+  MatchList({required this.matchList});
+
+  Map<String, dynamic> toJson() {
+    return {'matchList': matchList.map((e) => e.toJson()).toList()};
+  }
+
+  factory MatchList.fromJson(Map<String, dynamic> json) {
+    return MatchList(
+        matchList: json['matchList'] != null
+            ? List<MatchesData>.from(
+                json['matchList'].map((data) => MatchesData.fromJson(data)))
+            : []);
+  }
+}
+
+class AllMatchesFootball {
+  final int code;
+  final String msg;
+  final MatchListFootball matchList;
+
+  AllMatchesFootball({
+    required this.code,
+    required this.msg,
+    required this.matchList,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      "code": code,
+      "msg": msg,
+      "matchList": matchList,
+    };
+  }
+
+  factory AllMatchesFootball.fromJson(Map<String, dynamic> json) {
+    return AllMatchesFootball(
+      code: json['code'],
+      msg: json['msg'],
+      matchList: MatchListFootball.fromJson(json['matchList']),
+    );
+  }
+}
+
+class MatchListFootball {
+  final List<FootballMatchesData> matchList;
+
+  MatchListFootball({required this.matchList});
+
+  Map<String, dynamic> toJson() {
+    return {'matchList': matchList.map((e) => e.toJson()).toList()};
+  }
+
+  factory MatchListFootball.fromJson(Map<String, dynamic> json) {
+    return MatchListFootball(
+        matchList: json['matchList'] != null
+            ? List<FootballMatchesData>.from(json['matchList']
+                .map((data) => FootballMatchesData.fromJson(data)))
+            : []);
+  }
+}
+
 class MatchesModel {
   final int code;
   final String msg;

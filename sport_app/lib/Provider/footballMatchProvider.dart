@@ -14,6 +14,53 @@ class FootballMatchProvider extends ChangeNotifier {
   UserDataModel userDataModel = Get.find<UserDataModel>();
   CommonServices service = CommonServices();
 
+  Future<AllMatchesFootball?> getAllFootballMatchesInSevens(
+      int page, int size) async {
+    String url = "";
+
+    if (userDataModel.isCN.value) {
+      url = ApiConstants.baseUrl +
+          ApiConstants.footballMatchesInSevenDays +
+          "page=${page}&size=${size}";
+    } else {
+      url = ApiConstants.baseUrl +
+          ApiConstants.footballMatchesInSevenDaysEn +
+          "page=${page}&size=${size}";
+    }
+
+    Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=utf-8',
+    };
+
+    try {
+      final response = await sendGetRequest(url, headers);
+
+      int responseCode = response['code'];
+      String responseMsg = response['msg'];
+
+      if (responseCode == 0) {
+        Map<String, dynamic> jsonData = response['data'];
+        MatchListFootball responseData = MatchListFootball.fromJson(jsonData);
+
+        AllMatchesFootball model = AllMatchesFootball(
+            code: responseCode, msg: responseMsg, matchList: responseData);
+
+        return model;
+      } else {
+        Map<String, dynamic> jsonData = response['data'];
+        MatchListFootball responseData = MatchListFootball.fromJson(jsonData);
+
+        AllMatchesFootball model = AllMatchesFootball(
+            code: responseCode, msg: responseMsg, matchList: responseData);
+
+        return model;
+      }
+    } catch (e) {
+      print("Error in get all data: $e");
+      return null;
+    }
+  }
+
   Future<FootballStartedMatchesModel?> getStartedEventList(
       int page, int size) async {
     String url = "";

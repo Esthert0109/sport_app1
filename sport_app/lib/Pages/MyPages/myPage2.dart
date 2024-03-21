@@ -641,7 +641,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                                               .clearSharedPreferences();
                                                           userModel.isLogin
                                                               .value = false;
-
+                                                          Navigator.pop(
+                                                              context);
                                                           Future.delayed(
                                                               Duration(
                                                                   seconds: 1),

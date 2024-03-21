@@ -1008,40 +1008,25 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                         "navi into tournament");
 
                                                     Get.to(
-                                                        TournamentDetails(
-                                                          id: '${startedList?[index].id}',
-                                                          matchDate:
-                                                              '${startedList?[index].matchDate}',
-                                                          matchStatus: '未开赛',
-                                                          matchName:
-                                                              '${startedList?[index].competitionName}',
-                                                          homeTeamFormation:
-                                                              '${startedList?[index].homeFormation}',
-                                                          awayTeamFormation:
-                                                              '${startedList?[index].awayFormation}',
-                                                          lineUp: startedList?[
-                                                                      index]
-                                                                  .lineUp ??
-                                                              0,
-                                                        ),
+                                                        () => TournamentDetails(
+                                                              id: '${startedList?[index].id}',
+                                                              matchDate:
+                                                                  '${startedList?[index].matchDate}',
+                                                              matchStatus:
+                                                                  '未开赛',
+                                                              matchName:
+                                                                  '${startedList?[index].competitionName}',
+                                                              homeTeamFormation:
+                                                                  '${startedList?[index].homeFormation}',
+                                                              awayTeamFormation:
+                                                                  '${startedList?[index].awayFormation}',
+                                                              lineUp: startedList?[
+                                                                          index]
+                                                                      .lineUp ??
+                                                                  0,
+                                                            ),
                                                         transition:
                                                             Transition.fadeIn);
-                                                    // TournamentDetails(
-                                                    //   id: '${startedList?[index].id}',
-                                                    //   matchDate:
-                                                    //       '${startedList?[index].matchDate}',
-                                                    //   matchStatus: '未开赛',
-                                                    //   matchName:
-                                                    //       '${startedList?[index].competitionName}',
-                                                    //   homeTeamFormation:
-                                                    //       '${startedList?[index].homeFormation}',
-                                                    //   awayTeamFormation:
-                                                    //       '${startedList?[index].awayFormation}',
-                                                    //   lineUp:
-                                                    //       startedList?[index]
-                                                    //               .lineUp ??
-                                                    //           0,
-                                                    // ).launch(context);
                                                   },
                                                   child: GameDisplayComponent(
                                                     id: startedList[index].id ??
@@ -1229,23 +1214,24 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                             "navi into tournament");
 
                                                         Get.to(
-                                                            TournamentDetails(
-                                                              id: '${futureList1?[index].id}',
-                                                              matchDate:
-                                                                  '${futureList1?[index].matchDate}',
-                                                              matchStatus:
-                                                                  '未开赛',
-                                                              matchName:
-                                                                  '${futureList1?[index].competitionName}',
-                                                              homeTeamFormation:
-                                                                  '${futureList1?[index].homeFormation}',
-                                                              awayTeamFormation:
-                                                                  '${futureList1?[index].awayFormation}',
-                                                              lineUp: futureList1?[
-                                                                          index]
-                                                                      .lineUp ??
-                                                                  0,
-                                                            ),
+                                                            () =>
+                                                                TournamentDetails(
+                                                                  id: '${futureList1?[index].id}',
+                                                                  matchDate:
+                                                                      '${futureList1?[index].matchDate}',
+                                                                  matchStatus:
+                                                                      '未开赛',
+                                                                  matchName:
+                                                                      '${futureList1?[index].competitionName}',
+                                                                  homeTeamFormation:
+                                                                      '${futureList1?[index].homeFormation}',
+                                                                  awayTeamFormation:
+                                                                      '${futureList1?[index].awayFormation}',
+                                                                  lineUp: futureList1?[
+                                                                              index]
+                                                                          .lineUp ??
+                                                                      0,
+                                                                ),
                                                             transition:
                                                                 Transition
                                                                     .fadeIn);
@@ -1354,23 +1340,23 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                             print(
                                                                 "navi into tournament");
                                                             Get.to(
-                                                                TournamentDetails(
-                                                                  id: '${futureList2?[index].id}',
-                                                                  matchDate:
-                                                                      '${futureList2?[index].matchDate}',
-                                                                  matchStatus:
-                                                                      '未开赛',
-                                                                  matchName:
-                                                                      '${futureList2?[index].competitionName}',
-                                                                  homeTeamFormation:
-                                                                      '${futureList2?[index].homeFormation}',
-                                                                  awayTeamFormation:
-                                                                      '${futureList2?[index].awayFormation}',
-                                                                  lineUp: futureList2?[
-                                                                              index]
-                                                                          .lineUp ??
-                                                                      0,
-                                                                ),
+                                                                () =>
+                                                                    TournamentDetails(
+                                                                      id: '${futureList2?[index].id}',
+                                                                      matchDate:
+                                                                          '${futureList2?[index].matchDate}',
+                                                                      matchStatus:
+                                                                          '未开赛',
+                                                                      matchName:
+                                                                          '${futureList2?[index].competitionName}',
+                                                                      homeTeamFormation:
+                                                                          '${futureList2?[index].homeFormation}',
+                                                                      awayTeamFormation:
+                                                                          '${futureList2?[index].awayFormation}',
+                                                                      lineUp:
+                                                                          futureList2?[index].lineUp ??
+                                                                              0,
+                                                                    ),
                                                                 transition:
                                                                     Transition
                                                                         .fadeIn);
@@ -1485,22 +1471,22 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                 print(
                                                                     "navi into tournament");
                                                                 Get.to(
-                                                                    TournamentDetails(
-                                                                      id: '${futureList3?[index].id}',
-                                                                      matchDate:
-                                                                          '${futureList3?[index].matchDate}',
-                                                                      matchStatus:
-                                                                          '未开赛',
-                                                                      matchName:
-                                                                          '${futureList3?[index].competitionName}',
-                                                                      homeTeamFormation:
-                                                                          '${futureList3?[index].homeFormation}',
-                                                                      awayTeamFormation:
-                                                                          '${futureList3?[index].awayFormation}',
-                                                                      lineUp:
-                                                                          futureList3?[index].lineUp ??
-                                                                              0,
-                                                                    ),
+                                                                    () =>
+                                                                        TournamentDetails(
+                                                                          id: '${futureList3?[index].id}',
+                                                                          matchDate:
+                                                                              '${futureList3?[index].matchDate}',
+                                                                          matchStatus:
+                                                                              '未开赛',
+                                                                          matchName:
+                                                                              '${futureList3?[index].competitionName}',
+                                                                          homeTeamFormation:
+                                                                              '${futureList3?[index].homeFormation}',
+                                                                          awayTeamFormation:
+                                                                              '${futureList3?[index].awayFormation}',
+                                                                          lineUp:
+                                                                              futureList3?[index].lineUp ?? 0,
+                                                                        ),
                                                                     transition:
                                                                         Transition
                                                                             .fadeIn);
@@ -1614,21 +1600,16 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                         "navi into tournament");
 
                                                                     Get.to(
-                                                                        TournamentDetails(
-                                                                          id: '${futureList4?[index].id}',
-                                                                          matchDate:
-                                                                              '${futureList4?[index].matchDate}',
-                                                                          matchStatus:
-                                                                              '未开赛',
-                                                                          matchName:
-                                                                              '${futureList4?[index].competitionName}',
-                                                                          homeTeamFormation:
-                                                                              '${futureList4?[index].homeFormation}',
-                                                                          awayTeamFormation:
-                                                                              '${futureList4?[index].awayFormation}',
-                                                                          lineUp:
-                                                                              futureList4?[index].lineUp ?? 0,
-                                                                        ),
+                                                                        () =>
+                                                                            TournamentDetails(
+                                                                              id: '${futureList4?[index].id}',
+                                                                              matchDate: '${futureList4?[index].matchDate}',
+                                                                              matchStatus: '未开赛',
+                                                                              matchName: '${futureList4?[index].competitionName}',
+                                                                              homeTeamFormation: '${futureList4?[index].homeFormation}',
+                                                                              awayTeamFormation: '${futureList4?[index].awayFormation}',
+                                                                              lineUp: futureList4?[index].lineUp ?? 0,
+                                                                            ),
                                                                         transition:
                                                                             Transition.fadeIn);
                                                                   },
@@ -1717,15 +1698,16 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                             "navi into tournament");
 
                                                                         Get.to(
-                                                                            TournamentDetails(
-                                                                              id: '${futureList5?[index].id}',
-                                                                              matchDate: '${futureList5?[index].matchDate}',
-                                                                              matchStatus: '未开赛',
-                                                                              matchName: '${futureList5?[index].competitionName}',
-                                                                              homeTeamFormation: '${futureList5?[index].homeFormation}',
-                                                                              awayTeamFormation: '${futureList5?[index].awayFormation}',
-                                                                              lineUp: futureList5?[index].lineUp ?? 0,
-                                                                            ),
+                                                                            () =>
+                                                                                TournamentDetails(
+                                                                                  id: '${futureList5?[index].id}',
+                                                                                  matchDate: '${futureList5?[index].matchDate}',
+                                                                                  matchStatus: '未开赛',
+                                                                                  matchName: '${futureList5?[index].competitionName}',
+                                                                                  homeTeamFormation: '${futureList5?[index].homeFormation}',
+                                                                                  awayTeamFormation: '${futureList5?[index].awayFormation}',
+                                                                                  lineUp: futureList5?[index].lineUp ?? 0,
+                                                                                ),
                                                                             transition:
                                                                                 Transition.fadeIn);
                                                                       },
@@ -1809,15 +1791,15 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                             print("navi into tournament");
 
                                                                             Get.to(
-                                                                                TournamentDetails(
-                                                                                  id: '${futureList6?[index].id}',
-                                                                                  matchDate: '${futureList6?[index].matchDate}',
-                                                                                  matchStatus: '未开赛',
-                                                                                  matchName: '${futureList6?[index].competitionName}',
-                                                                                  homeTeamFormation: '${futureList6?[index].homeFormation}',
-                                                                                  awayTeamFormation: '${futureList6?[index].awayFormation}',
-                                                                                  lineUp: futureList6?[index].lineUp ?? 0,
-                                                                                ),
+                                                                                () => TournamentDetails(
+                                                                                      id: '${futureList6?[index].id}',
+                                                                                      matchDate: '${futureList6?[index].matchDate}',
+                                                                                      matchStatus: '未开赛',
+                                                                                      matchName: '${futureList6?[index].competitionName}',
+                                                                                      homeTeamFormation: '${futureList6?[index].homeFormation}',
+                                                                                      awayTeamFormation: '${futureList6?[index].awayFormation}',
+                                                                                      lineUp: futureList6?[index].lineUp ?? 0,
+                                                                                    ),
                                                                                 transition: Transition.fadeIn);
                                                                           },
                                                                           child:
@@ -1889,15 +1871,15 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                 print("navi into tournament");
 
                                                                                 Get.to(
-                                                                                    TournamentDetails(
-                                                                                      id: '${futureList7?[index].id}',
-                                                                                      matchDate: '${futureList7?[index].matchDate}',
-                                                                                      matchStatus: '未开赛',
-                                                                                      matchName: '${futureList7?[index].competitionName}',
-                                                                                      homeTeamFormation: '${futureList7?[index].homeFormation}',
-                                                                                      awayTeamFormation: '${futureList7?[index].awayFormation}',
-                                                                                      lineUp: futureList7?[index].lineUp ?? 0,
-                                                                                    ),
+                                                                                    () => TournamentDetails(
+                                                                                          id: '${futureList7?[index].id}',
+                                                                                          matchDate: '${futureList7?[index].matchDate}',
+                                                                                          matchStatus: '未开赛',
+                                                                                          matchName: '${futureList7?[index].competitionName}',
+                                                                                          homeTeamFormation: '${futureList7?[index].homeFormation}',
+                                                                                          awayTeamFormation: '${futureList7?[index].awayFormation}',
+                                                                                          lineUp: futureList7?[index].lineUp ?? 0,
+                                                                                        ),
                                                                                     transition: Transition.fadeIn);
                                                                               },
                                                                               child: GameDisplayComponent(
@@ -1953,15 +1935,15 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                     print("navi into tournament");
 
                                                                                     Get.to(
-                                                                                        TournamentDetails(
-                                                                                          id: '${pastList1?[index].id}',
-                                                                                          matchDate: '${pastList1?[index].matchDate}',
-                                                                                          matchStatus: '未开赛',
-                                                                                          matchName: '${pastList1?[index].competitionName}',
-                                                                                          homeTeamFormation: '${pastList1?[index].homeFormation}',
-                                                                                          awayTeamFormation: '${pastList1?[index].awayFormation}',
-                                                                                          lineUp: pastList1?[index].lineUp ?? 0,
-                                                                                        ),
+                                                                                        () => TournamentDetails(
+                                                                                              id: '${pastList1?[index].id}',
+                                                                                              matchDate: '${pastList1?[index].matchDate}',
+                                                                                              matchStatus: '未开赛',
+                                                                                              matchName: '${pastList1?[index].competitionName}',
+                                                                                              homeTeamFormation: '${pastList1?[index].homeFormation}',
+                                                                                              awayTeamFormation: '${pastList1?[index].awayFormation}',
+                                                                                              lineUp: pastList1?[index].lineUp ?? 0,
+                                                                                            ),
                                                                                         transition: Transition.fadeIn);
                                                                                   },
                                                                                   child: GameDisplayComponent(
@@ -2011,15 +1993,15 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                         print("navi into tournament");
 
                                                                                         Get.to(
-                                                                                            TournamentDetails(
-                                                                                              id: '${pastList2?[index].id}',
-                                                                                              matchDate: '${pastList2?[index].matchDate}',
-                                                                                              matchStatus: '未开赛',
-                                                                                              matchName: '${pastList2?[index].competitionName}',
-                                                                                              homeTeamFormation: '${pastList2?[index].homeFormation}',
-                                                                                              awayTeamFormation: '${pastList2?[index].awayFormation}',
-                                                                                              lineUp: pastList2?[index].lineUp ?? 0,
-                                                                                            ),
+                                                                                            () => TournamentDetails(
+                                                                                                  id: '${pastList2?[index].id}',
+                                                                                                  matchDate: '${pastList2?[index].matchDate}',
+                                                                                                  matchStatus: '未开赛',
+                                                                                                  matchName: '${pastList2?[index].competitionName}',
+                                                                                                  homeTeamFormation: '${pastList2?[index].homeFormation}',
+                                                                                                  awayTeamFormation: '${pastList2?[index].awayFormation}',
+                                                                                                  lineUp: pastList2?[index].lineUp ?? 0,
+                                                                                                ),
                                                                                             transition: Transition.fadeIn);
                                                                                       },
                                                                                       child: GameDisplayComponent(
@@ -2068,15 +2050,15 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                             print("navi into tournament");
 
                                                                                             Get.to(
-                                                                                                TournamentDetails(
-                                                                                                  id: '${pastList3?[index].id}',
-                                                                                                  matchDate: '${pastList3?[index].matchDate}',
-                                                                                                  matchStatus: '未开赛',
-                                                                                                  matchName: '${pastList3?[index].competitionName}',
-                                                                                                  homeTeamFormation: '${pastList3?[index].homeFormation}',
-                                                                                                  awayTeamFormation: '${pastList3?[index].awayFormation}',
-                                                                                                  lineUp: pastList3?[index].lineUp ?? 0,
-                                                                                                ),
+                                                                                                () => TournamentDetails(
+                                                                                                      id: '${pastList3?[index].id}',
+                                                                                                      matchDate: '${pastList3?[index].matchDate}',
+                                                                                                      matchStatus: '未开赛',
+                                                                                                      matchName: '${pastList3?[index].competitionName}',
+                                                                                                      homeTeamFormation: '${pastList3?[index].homeFormation}',
+                                                                                                      awayTeamFormation: '${pastList3?[index].awayFormation}',
+                                                                                                      lineUp: pastList3?[index].lineUp ?? 0,
+                                                                                                    ),
                                                                                                 transition: Transition.fadeIn);
                                                                                           },
                                                                                           child: GameDisplayComponent(
@@ -2125,15 +2107,15 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                                 print("navi into tournament");
 
                                                                                                 Get.to(
-                                                                                                    TournamentDetails(
-                                                                                                      id: '${pastList4?[index].id}',
-                                                                                                      matchDate: '${pastList4?[index].matchDate}',
-                                                                                                      matchStatus: '未开赛',
-                                                                                                      matchName: '${pastList4?[index].competitionName}',
-                                                                                                      homeTeamFormation: '${pastList4?[index].homeFormation}',
-                                                                                                      awayTeamFormation: '${pastList4?[index].awayFormation}',
-                                                                                                      lineUp: pastList4?[index].lineUp ?? 0,
-                                                                                                    ),
+                                                                                                    () => TournamentDetails(
+                                                                                                          id: '${pastList4?[index].id}',
+                                                                                                          matchDate: '${pastList4?[index].matchDate}',
+                                                                                                          matchStatus: '未开赛',
+                                                                                                          matchName: '${pastList4?[index].competitionName}',
+                                                                                                          homeTeamFormation: '${pastList4?[index].homeFormation}',
+                                                                                                          awayTeamFormation: '${pastList4?[index].awayFormation}',
+                                                                                                          lineUp: pastList4?[index].lineUp ?? 0,
+                                                                                                        ),
                                                                                                     transition: Transition.fadeIn);
                                                                                               },
                                                                                               child: GameDisplayComponent(
@@ -2182,15 +2164,15 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                                     print("navi into tournament");
 
                                                                                                     Get.to(
-                                                                                                        TournamentDetails(
-                                                                                                          id: '${pastList5?[index].id}',
-                                                                                                          matchDate: '${pastList5?[index].matchDate}',
-                                                                                                          matchStatus: '未开赛',
-                                                                                                          matchName: '${pastList5?[index].competitionName}',
-                                                                                                          homeTeamFormation: '${pastList5?[index].homeFormation}',
-                                                                                                          awayTeamFormation: '${pastList5?[index].awayFormation}',
-                                                                                                          lineUp: pastList5?[index].lineUp ?? 0,
-                                                                                                        ),
+                                                                                                        () => TournamentDetails(
+                                                                                                              id: '${pastList5?[index].id}',
+                                                                                                              matchDate: '${pastList5?[index].matchDate}',
+                                                                                                              matchStatus: '未开赛',
+                                                                                                              matchName: '${pastList5?[index].competitionName}',
+                                                                                                              homeTeamFormation: '${pastList5?[index].homeFormation}',
+                                                                                                              awayTeamFormation: '${pastList5?[index].awayFormation}',
+                                                                                                              lineUp: pastList5?[index].lineUp ?? 0,
+                                                                                                            ),
                                                                                                         transition: Transition.fadeIn);
                                                                                                   },
                                                                                                   child: GameDisplayComponent(
@@ -2239,15 +2221,15 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                                         print("navi into tournament");
 
                                                                                                         Get.to(
-                                                                                                            TournamentDetails(
-                                                                                                              id: '${pastList6?[index].id}',
-                                                                                                              matchDate: '${pastList6?[index].matchDate}',
-                                                                                                              matchStatus: '未开赛',
-                                                                                                              matchName: '${pastList6?[index].competitionName}',
-                                                                                                              homeTeamFormation: '${pastList6?[index].homeFormation}',
-                                                                                                              awayTeamFormation: '${pastList6?[index].awayFormation}',
-                                                                                                              lineUp: pastList6?[index].lineUp ?? 0,
-                                                                                                            ),
+                                                                                                            () => TournamentDetails(
+                                                                                                                  id: '${pastList6?[index].id}',
+                                                                                                                  matchDate: '${pastList6?[index].matchDate}',
+                                                                                                                  matchStatus: '未开赛',
+                                                                                                                  matchName: '${pastList6?[index].competitionName}',
+                                                                                                                  homeTeamFormation: '${pastList6?[index].homeFormation}',
+                                                                                                                  awayTeamFormation: '${pastList6?[index].awayFormation}',
+                                                                                                                  lineUp: pastList6?[index].lineUp ?? 0,
+                                                                                                                ),
                                                                                                             transition: Transition.fadeIn);
                                                                                                       },
                                                                                                       child: GameDisplayComponent(
@@ -2296,15 +2278,15 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                                             print("navi into tournament");
 
                                                                                                             Get.to(
-                                                                                                                TournamentDetails(
-                                                                                                                  id: '${pastList7?[index].id}',
-                                                                                                                  matchDate: '${pastList7?[index].matchDate}',
-                                                                                                                  matchStatus: '未开赛',
-                                                                                                                  matchName: '${pastList7?[index].competitionName}',
-                                                                                                                  homeTeamFormation: '${pastList7?[index].homeFormation}',
-                                                                                                                  awayTeamFormation: '${pastList7?[index].awayFormation}',
-                                                                                                                  lineUp: pastList7?[index].lineUp ?? 0,
-                                                                                                                ),
+                                                                                                                () => TournamentDetails(
+                                                                                                                      id: '${pastList7?[index].id}',
+                                                                                                                      matchDate: '${pastList7?[index].matchDate}',
+                                                                                                                      matchStatus: '未开赛',
+                                                                                                                      matchName: '${pastList7?[index].competitionName}',
+                                                                                                                      homeTeamFormation: '${pastList7?[index].homeFormation}',
+                                                                                                                      awayTeamFormation: '${pastList7?[index].awayFormation}',
+                                                                                                                      lineUp: pastList7?[index].lineUp ?? 0,
+                                                                                                                    ),
                                                                                                                 transition: Transition.fadeIn);
                                                                                                           },
                                                                                                           child: GameDisplayComponent(
@@ -2371,17 +2353,17 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                                                             onTap: () {
                                                                                                                               print("navi into tournament");
 
-                                                                                                                              // Get.to(
-                                                                                                                              //     TournamentDetails(
-                                                                                                                              //       id: '${collectionList[index].data[i].id}',
-                                                                                                                              //       matchDate: '${collectionList[index].data[i].matchDate}',
-                                                                                                                              //       matchStatus: '${collectionList[index].data[i].statusStr}',
-                                                                                                                              //       matchName: '${collectionList[index].data[i].competitionName}',
-                                                                                                                              //       homeTeamFormation: '${collectionList[index].data[i].homeFormation}',
-                                                                                                                              //       awayTeamFormation: '${collectionList[index].data[i].awayFormation}',
-                                                                                                                              //       lineUp: collectionList[index].data[i].lineUp ?? 0,
-                                                                                                                              //     ),
-                                                                                                                              //     transition: Transition.fadeIn);
+                                                                                                                              Get.to(
+                                                                                                                                  TournamentDetails(
+                                                                                                                                    id: '${collectionList[index].data[i].id}',
+                                                                                                                                    matchDate: '${collectionList[index].data[i].matchDate}',
+                                                                                                                                    matchStatus: '${collectionList[index].data[i].statusStr}',
+                                                                                                                                    matchName: '${collectionList[index].data[i].competitionName}',
+                                                                                                                                    homeTeamFormation: '${collectionList[index].data[i].homeFormation}',
+                                                                                                                                    awayTeamFormation: '${collectionList[index].data[i].awayFormation}',
+                                                                                                                                    lineUp: collectionList[index].data[i].lineUp ?? 0,
+                                                                                                                                  ),
+                                                                                                                                  transition: Transition.fadeIn);
                                                                                                                             },
                                                                                                                             child: GameDisplayComponent(
                                                                                                                               id: collectionList[index].data[i].id ?? 0,

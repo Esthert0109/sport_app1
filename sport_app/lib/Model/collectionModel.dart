@@ -174,6 +174,9 @@ class CollectMatchesData {
   final String? statusStr;
   final String? matchDate;
   final bool? hasCollected;
+  final String? homeFormation;
+  final String? awayFormation;
+  final int? lineUp;
 
   CollectMatchesData({
     this.id,
@@ -193,6 +196,9 @@ class CollectMatchesData {
     this.statusStr,
     this.matchDate,
     this.hasCollected,
+    this.awayFormation,
+    this.homeFormation,
+    this.lineUp,
   });
 
   Map<String, dynamic> toJson() {
@@ -214,6 +220,9 @@ class CollectMatchesData {
       'statusStr': statusStr,
       'matchDate': matchDate,
       'hasCollected': hasCollected,
+      "awayFormation": awayFormation,
+      "homeFormation": homeFormation,
+      "lineUp": lineUp,
     };
   }
 
@@ -236,6 +245,9 @@ class CollectMatchesData {
       statusStr: json['statusStr'],
       matchDate: json['matchDate'],
       hasCollected: json['hasCollected'],
+      awayFormation: json['awayFormation'],
+      homeFormation: json['homeFormation'],
+      lineUp: json['lineUp'],
     );
   }
 }

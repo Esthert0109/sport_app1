@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/Model/liveStreamModel.dart';
@@ -13,6 +12,7 @@ import '../../Component/TournamentDetails/percentageBarPercentage.dart';
 import '../../Constants/colorConstant.dart';
 import '../../Model/userDataModel.dart';
 import '../../Provider/basketballMatchProvider.dart';
+import '../TencentLiveStreamRoom/livePlayPage.dart';
 
 class BasketballTournamentDetails extends StatefulWidget {
   const BasketballTournamentDetails({
@@ -417,6 +417,13 @@ class _BasketballTournamentDetailsState
                                         content: Text("没有直播"),
                                         backgroundColor: redColor,
                                       ));
+                                    } else {
+                                      Get.to(
+                                          () => LivePlayPage2(
+                                                streamId: liveUrl,
+                                                title: widget.matchName,
+                                              ),
+                                          transition: Transition.fadeIn);
                                     }
                                   },
                                   child: Row(
@@ -456,7 +463,16 @@ class _BasketballTournamentDetailsState
                                         content: Text("没有动画直播"),
                                         backgroundColor: redColor,
                                       ));
+                                    }else{
+                                       Get.to(
+                                        () => LivePlayPage2(
+                                              streamId: animationUrl,
+                                              title: widget.matchName,
+                                            ),
+                                        transition: Transition.fadeIn);
                                     }
+
+                                   
                                   },
                                   child: Row(
                                     children: [

@@ -38,8 +38,8 @@ class _SingleTabState extends State<SingleTab> {
     ),
     //
     const VideoData(
-      name: 'HLS Streaming Video 1',
-      path: 'http://mindarker.top/sport/202_2607295_575025.m3u8',
+      name: 'Tencent',
+      path: 'http://play.mindarker.top/sport/202_2540924_575886.m3u8',
       type: VideoType.network,
     ),
     //

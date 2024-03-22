@@ -28,6 +28,7 @@ import '../../Component/Loading/emptyResultComponent.dart';
 import '../../Component/Tencent/liveStreamPlayer.dart';
 import '../../Constants/colorConstant.dart';
 import '../../../Model/userDataModel.dart';
+import '../../Services/Utils/tencent/tencentUrlUtils.dart';
 
 class LiveStreamChatRoom extends StatefulWidget {
   final String userLoginId;
@@ -189,7 +190,9 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
         debugPrint("Start Play error: check the remote view Id");
       }
     }
-    var playStatus = await _livePlayer?.startLivePlay(widget.liveURL);
+
+    var url = URLUtils.generateRtmpPlayUrl(widget.liveURL);
+    var playStatus = await _livePlayer?.startLivePlay(url);
 
     print("check live url: ${widget.liveURL}");
     if (playStatus == null || playStatus != V2TXLIVE_OK) {
@@ -306,6 +309,7 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                             [DeviceOrientation.portraitUp]),
                     icon: const Icon(
                       Icons.arrow_back_ios,
+                      color: white,
                       size: 20,
                     ),
                   ),

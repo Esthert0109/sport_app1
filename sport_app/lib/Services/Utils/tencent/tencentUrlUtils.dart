@@ -34,7 +34,7 @@ class URLUtils {
     return "rtmp://${GenerateTestUserSig.PUSH_DOMAIN}/live/$streamId?${_getSafeUrl(streamId)}";
   }
   static String generateRtmpPlayUrl(String streamId) {
-    return "rtmp://${GenerateTestUserSig.PLAY_DOMAIN}/live/$streamId";
+    return "rtmp://${GenerateTestUserSig.PLAY_DOMAIN}/sport/$streamId";
   }
 
   static String generateTRTCPushUrl(String streamId, String? userId) {

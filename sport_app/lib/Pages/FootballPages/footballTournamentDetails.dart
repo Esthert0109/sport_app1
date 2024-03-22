@@ -23,6 +23,7 @@ import '../../Model/liveStreamModel.dart';
 import '../../Model/userDataModel.dart';
 import '../../Provider/footballMatchProvider.dart';
 import '../../Provider/liveStreamProvider.dart';
+import '../TencentLiveStreamRoom/livePlayPage.dart';
 
 class TournamentDetails extends StatefulWidget {
   const TournamentDetails(
@@ -468,6 +469,13 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                         content: Text("没有直播"),
                                         backgroundColor: redColor,
                                       ));
+                                    } else {
+                                      Get.to(
+                                          () => LivePlayPage2(
+                                                streamId: liveUrl,
+                                                title: widget.matchName,
+                                              ),
+                                          transition: Transition.fadeIn);
                                     }
                                   },
                                   child: Row(
@@ -508,6 +516,13 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                         content: Text("没有动画直播"),
                                         backgroundColor: redColor,
                                       ));
+                                    } else {
+                                      Get.to(
+                                          () => LivePlayPage2(
+                                                streamId: animationUrl,
+                                                title: widget.matchName,
+                                              ),
+                                          transition: Transition.fadeIn);
                                     }
                                   },
                                   child: Row(

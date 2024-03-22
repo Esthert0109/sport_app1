@@ -523,7 +523,7 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                                                         playMode: V2TXLivePlayMode
                                                             .v2TXLivePlayModeLeb,
                                                         liveURL:
-                                                            "rtmp://mindarker.top/live/${getStreamURL(basketballLiveStreamList[j].pushCode)}",
+                                                            "${getStreamURL(basketballLiveStreamList[j].pushCode)}",
                                                         anchorId:
                                                             '${basketballLiveStreamList[j].userId}',
                                                       );

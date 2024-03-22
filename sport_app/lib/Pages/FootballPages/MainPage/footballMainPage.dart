@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:lottie/lottie.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/Provider/footballMatchProvider.dart';
 import 'package:tencent_cloud_chat_uikit/tencent_cloud_chat_uikit.dart';
 
@@ -734,34 +733,30 @@ class _FootballMainPageState extends State<FootballMainPage>
 
                                               if (status == 1) {
                                                 LiveStreamChatRoom page = LiveStreamChatRoom(
-                                                    userLoginId:
-                                                        userModel.id.value,
+                                                    userLoginId: userModel
+                                                        .id.value,
                                                     avChatRoomId:
                                                         "panda${liveStreamList![index].userId}",
                                                     anchor:
                                                         liveStreamList![index]
                                                                 .nickName ??
                                                             "",
-                                                    streamTitle:
-                                                        liveStreamList![index]
-                                                                .title ??
-                                                            "",
-                                                    anchorPic:
-                                                        liveStreamList![index]
-                                                                .avatar ??
-                                                            "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
+                                                    streamTitle: liveStreamList![
+                                                                index]
+                                                            .title ??
+                                                        "",
+                                                    anchorPic: liveStreamList![
+                                                                index]
+                                                            .avatar ??
+                                                        "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
                                                     playMode: V2TXLivePlayMode
                                                         .v2TXLivePlayModeLeb,
-                                                    liveURL:
-                                                        "rtmp://mindarker.top/live/" +
-                                                            getStreamURL(
-                                                                liveStreamList![
-                                                                        index]
-                                                                    .pushCode),
+                                                    liveURL: getStreamURL(
+                                                        liveStreamList![index]
+                                                            .pushCode),
                                                     anchorId:
                                                         '${liveStreamList[index].userId}');
 
-                                                // Navigator.of(context).pop();
                                                 Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
@@ -780,28 +775,27 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                           .id.value,
                                                       avChatRoomId:
                                                           "panda${liveStreamList![index].userId}",
-                                                      anchor:
-                                                          liveStreamList![index]
-                                                                  .nickName ??
-                                                              "",
-                                                      streamTitle: liveStreamList![
+                                                      anchor: liveStreamList![
                                                                   index]
-                                                              .title ??
+                                                              .nickName ??
                                                           "",
+                                                      streamTitle:
+                                                          liveStreamList![
+                                                                      index]
+                                                                  .title ??
+                                                              "",
                                                       anchorPic: liveStreamList![
                                                                   index]
                                                               .avatar ??
                                                           "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
                                                       playMode: V2TXLivePlayMode
                                                           .v2TXLivePlayModeLeb,
-                                                      liveURL: "rtmp://mindarker.top/live/" +
-                                                          getStreamURL(
-                                                              liveStreamList![index]
-                                                                  .pushCode),
+                                                      liveURL: getStreamURL(
+                                                          liveStreamList![index]
+                                                              .pushCode),
                                                       anchorId:
                                                           '${liveStreamList[index].userId}');
 
-                                                  // Navigator.of(context).pop();
                                                   Navigator.push(
                                                       context,
                                                       MaterialPageRoute(

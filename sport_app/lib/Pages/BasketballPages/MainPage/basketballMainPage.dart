@@ -30,6 +30,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../Provider/collectionProvider.dart';
 import '../../../Services/Utils/tencent/tencentLiveUtils.dart';
 import '../../SearchPage/searchingPage.dart';
+import '../../TencentLiveStreamRoom/livePlayPage.dart';
 import '../../TencentLiveStreamRoom/liveStreamChatRoom.dart';
 import '../basketballTournamentDetails.dart';
 
@@ -753,23 +754,13 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                     "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
                                                 playMode: V2TXLivePlayMode
                                                     .v2TXLivePlayModeLeb,
-                                                liveURL:
-                                                    "rtmp://play.mindark.cloud/live/" +
-                                                        getStreamURL(
-                                                            liveStreamList![
-                                                                    index]
-                                                                .pushCode),
+                                                liveURL: getStreamURL(
+                                                    liveStreamList![index]
+                                                        .pushCode),
                                                 anchorId:
                                                     '${liveStreamList![index].userId}',
                                               );
-                                              // LivePlayPage2 page =
-                                              //     LivePlayPage2(
-                                              //   streamId: '201_2601344_574816',
-                                              //   playMode: V2TXLivePlayMode
-                                              //       .v2TXLivePlayModeStand,
-                                              // );
 
-                                              // Navigator.of(context).pop();
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
@@ -783,14 +774,6 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                 userModel.id.value,
                                               );
                                               if (isChangeNickname) {
-                                                // ignore: unused_local_variable
-                                                // LivePlayPage2 page =
-                                                //     LivePlayPage2(
-                                                //   streamId:
-                                                //       '201_2601344_574816',
-                                                //   playMode: V2TXLivePlayMode
-                                                //       .v2TXLivePlayModeStand,
-                                                // );
                                                 LiveStreamChatRoom page =
                                                     LiveStreamChatRoom(
                                                   userLoginId:
@@ -810,12 +793,9 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                       "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
                                                   playMode: V2TXLivePlayMode
                                                       .v2TXLivePlayModeLeb,
-                                                  liveURL:
-                                                      "rtmp://play.mindark.cloud/live/" +
-                                                          getStreamURL(
-                                                              liveStreamList![
-                                                                      index]
-                                                                  .pushCode),
+                                                  liveURL: getStreamURL(
+                                                      liveStreamList![index]
+                                                          .pushCode),
                                                   anchorId:
                                                       '${liveStreamList![index].userId}',
                                                 );

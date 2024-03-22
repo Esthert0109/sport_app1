@@ -130,7 +130,7 @@ class GenerateTestUserSig {
    *  配置拉流地址
    *  腾讯云域名管理页面： https://console.cloud.tencent.com/live/domainmanage
    */
-  static String PLAY_DOMAIN = "mindarker.top";
+  static String PLAY_DOMAIN = "play.mindarker.top";
   /*
    * URL 鉴权Key
    */

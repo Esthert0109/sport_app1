@@ -480,11 +480,11 @@ class _FootballMainPageState extends State<FootballMainPage>
       statusId = 0;
       futureDateId = 0;
       pastDateId = 6;
-      getStartedEventList();
+
       startedList.clear();
       startedLength = startedList.length;
       pageStarted = 1;
-      getEventListByDate();
+
       futureList1.clear();
       futureList2.clear();
       futureList3.clear();
@@ -527,6 +527,10 @@ class _FootballMainPageState extends State<FootballMainPage>
       pagePast5 = 1;
       pagePast6 = 1;
       pagePast7 = 1;
+
+      getAllMatches();
+      getStartedEventList();
+      getEventListByDate();
     });
   }
 
@@ -652,7 +656,8 @@ class _FootballMainPageState extends State<FootballMainPage>
                 onEndOfPage: () {
                   setState(() {
                     if (statusId == 0) {
-                      print("started");
+                      getAllMatches();
+                    } else if (statusId == 1) {
                       getStartedEventList();
                     } else if (statusId == 4) {
                       getFootballSavedCollections();

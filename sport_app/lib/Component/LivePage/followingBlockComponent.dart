@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/Model/followingModel.dart';
+import 'package:sport_app/Model/userDataModel.dart';
 import 'package:sport_app/Provider/anchorFollowProvider.dart';
 import 'package:text_scroll/text_scroll.dart';
 
 import '../../Constants/colorConstant.dart';
 import '../../Constants/textConstant.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../Pages/TencentLiveStreamRoom/liveStreamChatRoom.dart';
+import '../Tencent/liveStreamPlayer.dart';
 
 class FollowingBlockComponent extends StatefulWidget {
   final bool isStreaming;
@@ -36,6 +41,7 @@ ValueNotifier<bool> followNotifier = ValueNotifier<bool>(false);
 class _FollowingBlockComponentState extends State<FollowingBlockComponent> {
   // provider
   AnchorFollowProvider provider = AnchorFollowProvider();
+  UserDataModel userModel = Get.find<UserDataModel>();
 
   Future<void> createUnfollow() async {
     CreateFollowModel? model =
@@ -73,14 +79,10 @@ class _FollowingBlockComponentState extends State<FollowingBlockComponent> {
           Expanded(
             flex: 15,
             child: Center(
-                child: ClipRRect(
-              borderRadius: BorderRadius.circular(100),
-              child: Image(
-                image: NetworkImage(anchorPic),
-                fit: BoxFit.cover,
-                height: 40 * fem,
-                width: 40 * fem,
-              ),
+                child: CircleAvatar(
+              backgroundColor: kLightGreyColor,
+              radius: 40 * fem,
+              backgroundImage: NetworkImage(anchorPic),
             )),
           ),
           Expanded(
@@ -244,29 +246,47 @@ class _FollowingBlockComponentState extends State<FollowingBlockComponent> {
                   flex: 22,
                   child: Padding(
                     padding: EdgeInsets.only(left: 5 * fem),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image(
-                          image: const AssetImage("images/livepage/stream.png"),
-                          height: 24 * fem,
-                          width: 24 * fem,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 1 * fem),
-                          child: Container(
-                            width: 70 * fem,
-                            child: Text(
-                              "${AppLocalizations.of(context)!.streaming}🔥",
-                              style: tUnfollowText,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                            ),
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(
+                            () => LiveStreamChatRoom(
+                                userLoginId: userModel.id.value,
+                                avChatRoomId: "panda${widget.anchorId}",
+                                anchor: widget.anchorName,
+                                streamTitle: "",
+                                anchorPic: widget.anchorPic ??
+                                    "https://www.sinchew.com.my/wp-content/uploads/2022/05/e5bc80e79bb4e692ade68082e681bfe7b289e4b89dtage588b6e78987e696b9e5819ae68ea8e88d90-e69da8e8b685e8b68ae4b88de8aea4e8b4a6e981ade5bc80-scaled.jpg",
+                                playMode: V2TXLivePlayMode.v2TXLivePlayModeLeb,
+                                liveURL:
+                                    "getStreamURL(footballLiveStreamList![j].pushCode)",
+                                anchorId: '${widget.anchorId}'),
+                            transition: Transition.fadeIn);
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image(
+                            image:
+                                const AssetImage("images/livepage/stream.png"),
+                            height: 24 * fem,
+                            width: 24 * fem,
                           ),
-                        )
-                      ],
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 1 * fem),
+                            child: Container(
+                              width: 70 * fem,
+                              child: Text(
+                                "${AppLocalizations.of(context)!.streaming}🔥",
+                                style: tUnfollowText,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 )

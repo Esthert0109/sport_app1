@@ -264,6 +264,7 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
   @override
   void dispose() {
     super.dispose();
+    deactivate();
   }
 
   @override

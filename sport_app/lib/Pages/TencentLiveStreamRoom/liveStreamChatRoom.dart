@@ -109,10 +109,12 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
           if (code != V2TXLIVE_OK) {
             debugPrint("Start Play error");
           }
-          var playStatus = await _livePlayer?.startLivePlay(widget.liveURL);
+
+          var url = URLUtils.generateRtmpPlayUrl(widget.liveURL);
+          var playStatus = await _livePlayer?.startLivePlay(url);
           print("check player 3: $playStatus");
           if (playStatus == null || playStatus != V2TXLIVE_OK) {
-            debugPrint("play error: $playStatus url: ${widget.liveURL}");
+            debugPrint("play error: $playStatus url: ${url}");
             return;
           }
           await _livePlayer?.setPlayoutVolume(100);

@@ -5,11 +5,13 @@ import 'package:get/get.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:sport_app/Component/Common/selectionButtonText.dart';
+import 'package:sport_app/Provider/infoProvider.dart';
 
 import '../../../Component/News/pinNewsComponent.dart';
 import '../../../Constants/Controller/layoutController.dart';
 import '../../../Constants/colorConstant.dart';
 import '../../../Constants/textConstant.dart';
+import '../../../Model/infoModel.dart';
 import '../../../Model/userDataModel.dart';
 import '../../SearchPage/searchingPage.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -25,6 +27,15 @@ class NewsPage extends StatefulWidget {
 }
 
 class _NewsPageState extends State<NewsPage> {
+  List<String> categoryList = [];
+  int categoryLength = 0;
+  List<InfoListData> infoList = [];
+  int infoLength = 0;
+  List<InfoListData> infoList1 = [];
+  int infoLength1 = 0;
+  List<InfoListData> infoList2 = [];
+  int infoLength2 = 0;
+
   List<String> tagList = [
     '最新',
     "热门",
@@ -67,13 +78,78 @@ class _NewsPageState extends State<NewsPage> {
   bool isScrollingDown = false;
   bool isLoading = false;
   int tagId = 0;
+  int page = 1;
+  int page1 = 1;
+  int page2 = 1;
+  int size = 15;
+  // int search = 0;
 
   //controller
   ScrollController _scrollController = ScrollController();
   final LayoutController lc = Get.find<LayoutController>();
 
+  // provider
+  InfoProvider infoProvider = InfoProvider();
+
   //get user info
   UserDataModel userModel = Get.find<UserDataModel>();
+
+  Future<void> getCategoryList() async {
+    InfoCategoryModel? categoryModel = await infoProvider.getInfoCategories();
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+      List<InfoCategoryData> list = [];
+      list.addAll(categoryModel?.data ?? []);
+      categoryLength = list.length;
+
+      for (int i = 0; i < categoryLength; i++) {
+        categoryList.add(list[i].category);
+      }
+
+      print("check cat: ${categoryList}");
+
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> getInfoList() async {
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+
+      if (tagId == 0) {
+        InfoListModel? infoModel =
+            await infoProvider.getInfoList(page, size, tagId + 1);
+        infoList.addAll(infoModel?.data ?? []);
+        infoLength = infoList.length;
+        print("check list: ${infoList}");
+        page++;
+      } else if (tagId == 1) {
+        InfoListModel? infoModel =
+            await infoProvider.getInfoList(page1, size, tagId + 1);
+        infoList1.addAll(infoModel?.data ?? []);
+        infoLength1 = infoList.length;
+        print("check list: ${infoList1}");
+        page1++;
+      } else {
+        InfoListModel? infoModel =
+            await infoProvider.getInfoList(page2, size, tagId + 1);
+        infoList2.addAll(infoModel?.data ?? []);
+        infoLength2 = infoList.length;
+        print("check list: ${infoList2}");
+        page2++;
+      }
+
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   //choice of main page
   void dropdownCallback(String? selectedValue) {
@@ -116,6 +192,8 @@ class _NewsPageState extends State<NewsPage> {
   @override
   void initState() {
     super.initState();
+    getCategoryList();
+    getInfoList();
     _scrollController = ScrollController()..addListener(bottomScrollController);
   }
 
@@ -134,8 +212,7 @@ class _NewsPageState extends State<NewsPage> {
     tagLength = tagList.length;
     topNewsLength = topNewsList.length;
 
-    // SystemChrome.setSystemUIOverlayStyle(
-    //     SystemUiOverlayStyle(statusBarColor: kMainGreenColor));
+    // getInfoList();
 
     return Scaffold(
       backgroundColor: kMainBackgroundColor,
@@ -225,11 +302,12 @@ class _NewsPageState extends State<NewsPage> {
                             horizontal: 20 * fem, vertical: 10 * fem),
                         child: SelectionButtonTextComponent(
                             index: tagId,
-                            selectionList: tagList,
+                            selectionList: categoryList,
                             isMainPage: false,
                             onTap: (index) {
                               setState(() {
                                 tagId = index;
+                                getInfoList();
                               });
                             }),
                       ),
@@ -245,303 +323,9 @@ class _NewsPageState extends State<NewsPage> {
                                       CrossAxisAlignment.stretch,
                                   children: [
                                     for (int index = 0;
-                                        index < topNewsLength;
+                                        index < infoLength;
                                         index++)
                                       InkWell(
-                                        onTap: () {
-                                          print("navi to news detail");
-                                        },
-                                        child: PinNewsComponent(
-                                          title: topNewsList[index].title,
-                                          timeAgo: topNewsList[index].timeAgo,
-                                          read: topNewsList[index].read,
-                                        ),
-                                      ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          : (tagId == 2)
-                              ? Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      20 * fem, 0 * fem, 20 * fem, 10 * fem),
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.vertical,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
-                                      children: [
-                                        for (int index = 0;
-                                            index < topNewsLength;
-                                            index++)
-                                          InkWell(
-                                            onTap: () {
-                                              print("navi to news detail");
-                                            },
-                                            child: PinNewsComponent(
-                                              title: topNewsList[index].title,
-                                              timeAgo:
-                                                  topNewsList[index].timeAgo,
-                                              read: topNewsList[index].read,
-                                            ),
-                                          ),
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              : (tagId == 3)
-                                  ? Container(
-                                      margin: EdgeInsets.fromLTRB(20 * fem,
-                                          0 * fem, 20 * fem, 10 * fem),
-                                      child: SingleChildScrollView(
-                                        scrollDirection: Axis.vertical,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          children: [
-                                            for (int index = 0;
-                                                index < topNewsLength;
-                                                index++)
-                                              InkWell(
-                                                onTap: () {
-                                                  print("navi to news detail");
-                                                },
-                                                child: PinNewsComponent(
-                                                  title:
-                                                      topNewsList[index].title,
-                                                  timeAgo: topNewsList[index]
-                                                      .timeAgo,
-                                                  read: topNewsList[index].read,
-                                                ),
-                                              ),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                  : Container(),
-                      (tagId == 0)
-                          ? Container(
-                              padding:
-                                  EdgeInsets.symmetric(horizontal: 10 * fem),
-                              height: 183 * fem,
-                              width: 343 * fem,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: InkWell(
-                                onTap: () {
-                                  print("navi to news info");
-                                },
-                                child: Swiper(
-                                  pagination: SwiperPagination(
-                                    builder: DotSwiperPaginationBuilder(
-                                      color: kUnactivePaginationColor,
-                                      activeColor: kActivePaginationColor,
-                                      activeSize: 6,
-                                      size: 6,
-                                      space: 2,
-                                    ),
-                                    alignment: Alignment.topRight,
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal: 15 * fem,
-                                        vertical: 5 * fem),
-                                  ),
-                                  autoplay: true,
-                                  autoplayDelay: 3000,
-                                  viewportFraction: 0.95,
-                                  scale: 0.9,
-                                  itemCount: img.length,
-                                  itemBuilder: (context, index) {
-                                    return ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: Container(
-                                        width: 343 * fem,
-                                        height: 183 * fem,
-                                        child: Image(
-                                          image: NetworkImage(img[index]),
-                                          fit: BoxFit.cover,
-                                          loadingBuilder: (context, child,
-                                              loadingProgress) {
-                                            if (loadingProgress == null) {
-                                              return child;
-                                            }
-                                            return Center(
-                                              child: LoadingAnimationWidget
-                                                  .staggeredDotsWave(
-                                                color: kMainGreenColor,
-                                                size: 50 * fem,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            )
-                          : (tagId == 2)
-                              ? Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10 * fem),
-                                  height: 183 * fem,
-                                  width: 343 * fem,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      print("navi to news info");
-                                    },
-                                    child: Swiper(
-                                      pagination: SwiperPagination(
-                                        builder: DotSwiperPaginationBuilder(
-                                          color: kUnactivePaginationColor,
-                                          activeColor: kActivePaginationColor,
-                                          activeSize: 6,
-                                          size: 6,
-                                          space: 2,
-                                        ),
-                                        alignment: Alignment.topRight,
-                                        margin: EdgeInsets.symmetric(
-                                            horizontal: 15 * fem,
-                                            vertical: 5 * fem),
-                                      ),
-                                      autoplay: true,
-                                      autoplayDelay: 3000,
-                                      viewportFraction: 0.95,
-                                      scale: 0.9,
-                                      itemCount: img.length,
-                                      itemBuilder: (context, index) {
-                                        return ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          child: Container(
-                                            width: 343 * fem,
-                                            height: 183 * fem,
-                                            child: Image(
-                                              image: NetworkImage(img[index]),
-                                              fit: BoxFit.cover,
-                                              loadingBuilder: (context, child,
-                                                  loadingProgress) {
-                                                if (loadingProgress == null) {
-                                                  return child;
-                                                }
-                                                return Center(
-                                                  child: LoadingAnimationWidget
-                                                      .staggeredDotsWave(
-                                                    color: kMainGreenColor,
-                                                    size: 50 * fem,
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                )
-                              : Container(),
-                      (tagId == 0)
-                          ? Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10 * fem),
-                              child: ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: 10,
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  return InkWell(
-                                    onTap: () {
-                                      print("navi into news info");
-                                      Get.to(() => InfoPageDetail(),
-                                          transition: Transition.fadeIn);
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.symmetric(
-                                          vertical: 10 * fem,
-                                          horizontal: 10 * fem),
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 0 * fem,
-                                          horizontal: 10 * fem),
-                                      height: 80 * fem,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            child: Container(
-                                              width: 100 * fem,
-                                              height: 80 * fem,
-                                              child: Image(
-                                                image: NetworkImage(
-                                                  "https://i.redd.it/o6dt2yg2i90b1.png",
-                                                ),
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            height: 80 * fem,
-                                            width: 230 * fem,
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 10 * fem),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.stretch,
-                                              children: [
-                                                Expanded(
-                                                    flex: 7,
-                                                    child: Text(
-                                                      "阿森纳全场零射正客场0-1波尔图，加莱诺读秒世界波绝杀阿森纳全场零射正客场0-1波尔图，加莱诺读秒世界波绝杀",
-                                                      maxLines: 2,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      textAlign: TextAlign.left,
-                                                      style: tInfoTitle,
-                                                    )),
-                                                Expanded(
-                                                    flex: 3,
-                                                    child: Text(
-                                                      "3002 " +
-                                                          AppLocalizations.of(
-                                                                  context)!
-                                                              .read,
-                                                      textAlign:
-                                                          TextAlign.right,
-                                                      style: tRead,
-                                                    ))
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            )
-                          : (tagId == 3)
-                              ? Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(vertical: 10 * fem),
-                                  child: ListView.builder(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    itemCount: 10,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      return InkWell(
                                         onTap: () {
                                           print("navi into news info");
                                           Get.to(() => InfoPageDetail(),
@@ -569,8 +353,7 @@ class _NewsPageState extends State<NewsPage> {
                                                   height: 80 * fem,
                                                   child: Image(
                                                     image: NetworkImage(
-                                                      "https://i.redd.it/o6dt2yg2i90b1.png",
-                                                    ),
+                                                        infoList[index].imgUrl),
                                                     fit: BoxFit.cover,
                                                   ),
                                                 ),
@@ -590,7 +373,7 @@ class _NewsPageState extends State<NewsPage> {
                                                     Expanded(
                                                         flex: 7,
                                                         child: Text(
-                                                          "阿森纳全场零射正客场0-1波尔图，加莱诺读秒世界波绝杀阿森纳全场零射正客场0-1波尔图，加莱诺读秒世界波绝杀",
+                                                          infoList[index].title,
                                                           maxLines: 2,
                                                           overflow: TextOverflow
                                                               .ellipsis,
@@ -615,11 +398,619 @@ class _NewsPageState extends State<NewsPage> {
                                             ],
                                           ),
                                         ),
-                                      );
-                                    },
+                                      )
+                                    // InkWell(
+                                    //   onTap: () {
+                                    //     print("navi to news detail");
+                                    //   },
+                                    //   child:
+                                    //   PinNewsComponent(
+                                    //     title: topNewsList[index].title,
+                                    //     timeAgo: topNewsList[index].timeAgo,
+                                    //     read: topNewsList[index].read,
+                                    //   ),
+                                    // ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : (tagId == 1)
+                              ? Container(
+                                  margin: EdgeInsets.fromLTRB(
+                                      20 * fem, 0 * fem, 20 * fem, 10 * fem),
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.vertical,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        for (int index = 0;
+                                            index < infoLength1;
+                                            index++)
+                                          InkWell(
+                                            onTap: () {
+                                              print("navi into news info");
+                                              Get.to(() => InfoPageDetail(),
+                                                  transition:
+                                                      Transition.fadeIn);
+                                            },
+                                            child: Container(
+                                              margin: EdgeInsets.symmetric(
+                                                  vertical: 10 * fem,
+                                                  horizontal: 10 * fem),
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 0 * fem,
+                                                  horizontal: 10 * fem),
+                                              height: 80 * fem,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    child: Container(
+                                                      width: 100 * fem,
+                                                      height: 80 * fem,
+                                                      child: Image(
+                                                        image: NetworkImage(
+                                                            infoList1[index]
+                                                                .imgUrl),
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    height: 80 * fem,
+                                                    width: 230 * fem,
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                10 * fem),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .stretch,
+                                                      children: [
+                                                        Expanded(
+                                                            flex: 7,
+                                                            child: Text(
+                                                              infoList1[index]
+                                                                  .title,
+                                                              maxLines: 2,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .left,
+                                                              style: tInfoTitle,
+                                                            )),
+                                                        Expanded(
+                                                            flex: 3,
+                                                            child: Text(
+                                                              "3002 " +
+                                                                  AppLocalizations.of(
+                                                                          context)!
+                                                                      .read,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .right,
+                                                              style: tRead,
+                                                            ))
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                      ],
+                                    ),
                                   ),
                                 )
-                              : Container()
+                              : (tagId == 2)
+                                  ? Container(
+                                      margin: EdgeInsets.fromLTRB(20 * fem,
+                                          0 * fem, 20 * fem, 10 * fem),
+                                      child: SingleChildScrollView(
+                                        scrollDirection: Axis.vertical,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          children: [
+                                            for (int index = 0;
+                                                index < infoLength2;
+                                                index++)
+                                              InkWell(
+                                                onTap: () {
+                                                  print("navi into news info");
+                                                  Get.to(() => InfoPageDetail(),
+                                                      transition:
+                                                          Transition.fadeIn);
+                                                },
+                                                child: Container(
+                                                  margin: EdgeInsets.symmetric(
+                                                      vertical: 10 * fem,
+                                                      horizontal: 10 * fem),
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 0 * fem,
+                                                      horizontal: 10 * fem),
+                                                  height: 80 * fem,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                        child: Container(
+                                                          width: 100 * fem,
+                                                          height: 80 * fem,
+                                                          child: Image(
+                                                            image: NetworkImage(
+                                                                infoList2[index]
+                                                                    .imgUrl),
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        height: 80 * fem,
+                                                        width: 230 * fem,
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal:
+                                                                    10 * fem),
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .stretch,
+                                                          children: [
+                                                            Expanded(
+                                                                flex: 7,
+                                                                child: Text(
+                                                                  infoList2[
+                                                                          index]
+                                                                      .title,
+                                                                  maxLines: 2,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .left,
+                                                                  style:
+                                                                      tInfoTitle,
+                                                                )),
+                                                            Expanded(
+                                                                flex: 3,
+                                                                child: Text(
+                                                                  "3002 " +
+                                                                      AppLocalizations.of(
+                                                                              context)!
+                                                                          .read,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .right,
+                                                                  style: tRead,
+                                                                ))
+                                                          ],
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  : Container(),
+                      // (tagId == 0)
+                      //     ? Container(
+                      //         padding:
+                      //             EdgeInsets.symmetric(horizontal: 10 * fem),
+                      //         height: 183 * fem,
+                      //         width: 343 * fem,
+                      //         decoration: BoxDecoration(
+                      //           borderRadius: BorderRadius.circular(8),
+                      //         ),
+                      //         child: InkWell(
+                      //           onTap: () {
+                      //             print("navi to news info");
+                      //           },
+                      //           child: Swiper(
+                      //             pagination: SwiperPagination(
+                      //               builder: DotSwiperPaginationBuilder(
+                      //                 color: kUnactivePaginationColor,
+                      //                 activeColor: kActivePaginationColor,
+                      //                 activeSize: 6,
+                      //                 size: 6,
+                      //                 space: 2,
+                      //               ),
+                      //               alignment: Alignment.topRight,
+                      //               margin: EdgeInsets.symmetric(
+                      //                   horizontal: 15 * fem,
+                      //                   vertical: 5 * fem),
+                      //             ),
+                      //             autoplay: true,
+                      //             autoplayDelay: 3000,
+                      //             viewportFraction: 0.95,
+                      //             scale: 0.9,
+                      //             itemCount: img.length,
+                      //             itemBuilder: (context, index) {
+                      //               return ClipRRect(
+                      //                 borderRadius: BorderRadius.circular(8),
+                      //                 child: Container(
+                      //                   width: 343 * fem,
+                      //                   height: 183 * fem,
+                      //                   child: Image(
+                      //                     image: NetworkImage(img[index]),
+                      //                     fit: BoxFit.cover,
+                      //                     loadingBuilder: (context, child,
+                      //                         loadingProgress) {
+                      //                       if (loadingProgress == null) {
+                      //                         return child;
+                      //                       }
+                      //                       return Center(
+                      //                         child: LoadingAnimationWidget
+                      //                             .staggeredDotsWave(
+                      //                           color: kMainGreenColor,
+                      //                           size: 50 * fem,
+                      //                         ),
+                      //                       );
+                      //                     },
+                      //                   ),
+                      //                 ),
+                      //               );
+                      //             },
+                      //           ),
+                      //         ),
+                      //       )
+                      //     : (tagId == 1)
+                      //         ? Container(
+                      //             padding: EdgeInsets.symmetric(
+                      //                 horizontal: 10 * fem),
+                      //             height: 183 * fem,
+                      //             width: 343 * fem,
+                      //             decoration: BoxDecoration(
+                      //               borderRadius: BorderRadius.circular(8),
+                      //             ),
+                      //             child: InkWell(
+                      //               onTap: () {
+                      //                 print("navi to news info");
+                      //               },
+                      //               child: Swiper(
+                      //                 pagination: SwiperPagination(
+                      //                   builder: DotSwiperPaginationBuilder(
+                      //                     color: kUnactivePaginationColor,
+                      //                     activeColor: kActivePaginationColor,
+                      //                     activeSize: 6,
+                      //                     size: 6,
+                      //                     space: 2,
+                      //                   ),
+                      //                   alignment: Alignment.topRight,
+                      //                   margin: EdgeInsets.symmetric(
+                      //                       horizontal: 15 * fem,
+                      //                       vertical: 5 * fem),
+                      //                 ),
+                      //                 autoplay: true,
+                      //                 autoplayDelay: 3000,
+                      //                 viewportFraction: 0.95,
+                      //                 scale: 0.9,
+                      //                 itemCount: img.length,
+                      //                 itemBuilder: (context, index) {
+                      //                   return ClipRRect(
+                      //                     borderRadius:
+                      //                         BorderRadius.circular(8),
+                      //                     child: Container(
+                      //                       width: 343 * fem,
+                      //                       height: 183 * fem,
+                      //                       child: Image(
+                      //                         image: NetworkImage(img[index]),
+                      //                         fit: BoxFit.cover,
+                      //                         loadingBuilder: (context, child,
+                      //                             loadingProgress) {
+                      //                           if (loadingProgress == null) {
+                      //                             return child;
+                      //                           }
+                      //                           return Center(
+                      //                             child: LoadingAnimationWidget
+                      //                                 .staggeredDotsWave(
+                      //                               color: kMainGreenColor,
+                      //                               size: 50 * fem,
+                      //                             ),
+                      //                           );
+                      //                         },
+                      //                       ),
+                      //                     ),
+                      //                   );
+                      //                 },
+                      //               ),
+                      //             ),
+                      //           )
+                      //         : Container(),
+
+                      // (tagId == 0)
+                      //     ? Container(
+                      //         padding: EdgeInsets.symmetric(vertical: 10 * fem),
+                      //         child: ListView.builder(
+                      //           physics: const NeverScrollableScrollPhysics(),
+                      //           itemCount: infoLength,
+                      //           shrinkWrap: true,
+                      //           itemBuilder: (context, index) {
+                      //             return InkWell(
+                      //               onTap: () {
+                      //                 print("navi into news info");
+                      //                 Get.to(() => InfoPageDetail(),
+                      //                     transition: Transition.fadeIn);
+                      //               },
+                      //               child: Container(
+                      //                 margin: EdgeInsets.symmetric(
+                      //                     vertical: 10 * fem,
+                      //                     horizontal: 10 * fem),
+                      //                 padding: EdgeInsets.symmetric(
+                      //                     vertical: 0 * fem,
+                      //                     horizontal: 10 * fem),
+                      //                 height: 80 * fem,
+                      //                 child: Row(
+                      //                   mainAxisAlignment:
+                      //                       MainAxisAlignment.start,
+                      //                   crossAxisAlignment:
+                      //                       CrossAxisAlignment.start,
+                      //                   children: [
+                      //                     ClipRRect(
+                      //                       borderRadius:
+                      //                           BorderRadius.circular(8),
+                      //                       child: Container(
+                      //                         width: 100 * fem,
+                      //                         height: 80 * fem,
+                      //                         child: Image(
+                      //                           image: NetworkImage(
+                      //                               infoList[index].imgUrl),
+                      //                           fit: BoxFit.cover,
+                      //                         ),
+                      //                       ),
+                      //                     ),
+                      //                     Container(
+                      //                       height: 80 * fem,
+                      //                       width: 230 * fem,
+                      //                       padding: EdgeInsets.symmetric(
+                      //                           horizontal: 10 * fem),
+                      //                       child: Column(
+                      //                         mainAxisAlignment:
+                      //                             MainAxisAlignment.start,
+                      //                         crossAxisAlignment:
+                      //                             CrossAxisAlignment.stretch,
+                      //                         children: [
+                      //                           Expanded(
+                      //                               flex: 7,
+                      //                               child: Text(
+                      //                                 infoList[index].title,
+                      //                                 maxLines: 2,
+                      //                                 overflow:
+                      //                                     TextOverflow.ellipsis,
+                      //                                 textAlign: TextAlign.left,
+                      //                                 style: tInfoTitle,
+                      //                               )),
+                      //                           Expanded(
+                      //                               flex: 3,
+                      //                               child: Text(
+                      //                                 "3002 " +
+                      //                                     AppLocalizations.of(
+                      //                                             context)!
+                      //                                         .read,
+                      //                                 textAlign:
+                      //                                     TextAlign.right,
+                      //                                 style: tRead,
+                      //                               ))
+                      //                         ],
+                      //                       ),
+                      //                     )
+                      //                   ],
+                      //                 ),
+                      //               ),
+                      //             );
+                      //           },
+                      //         ),
+                      //       )
+                      //     : (tagId == 1)
+                      //         ? Container(
+                      //             padding:
+                      //                 EdgeInsets.symmetric(vertical: 10 * fem),
+                      //             child: ListView.builder(
+                      //               physics:
+                      //                   const NeverScrollableScrollPhysics(),
+                      //               itemCount: infoLength1,
+                      //               shrinkWrap: true,
+                      //               itemBuilder: (context, index) {
+                      //                 return InkWell(
+                      //                   onTap: () {
+                      //                     print("navi into news info");
+                      //                     Get.to(() => InfoPageDetail(),
+                      //                         transition: Transition.fadeIn);
+                      //                   },
+                      //                   child: Container(
+                      //                     margin: EdgeInsets.symmetric(
+                      //                         vertical: 10 * fem,
+                      //                         horizontal: 10 * fem),
+                      //                     padding: EdgeInsets.symmetric(
+                      //                         vertical: 0 * fem,
+                      //                         horizontal: 10 * fem),
+                      //                     height: 80 * fem,
+                      //                     child: Row(
+                      //                       mainAxisAlignment:
+                      //                           MainAxisAlignment.start,
+                      //                       crossAxisAlignment:
+                      //                           CrossAxisAlignment.start,
+                      //                       children: [
+                      //                         ClipRRect(
+                      //                           borderRadius:
+                      //                               BorderRadius.circular(8),
+                      //                           child: Container(
+                      //                             width: 100 * fem,
+                      //                             height: 80 * fem,
+                      //                             child: Image(
+                      //                               image: NetworkImage(
+                      //                                   infoList1[index].imgUrl
+                      //                                   // "https://i.redd.it/o6dt2yg2i90b1.png",
+                      //                                   ),
+                      //                               fit: BoxFit.cover,
+                      //                             ),
+                      //                           ),
+                      //                         ),
+                      //                         Container(
+                      //                           height: 80 * fem,
+                      //                           width: 230 * fem,
+                      //                           padding: EdgeInsets.symmetric(
+                      //                               horizontal: 10 * fem),
+                      //                           child: Column(
+                      //                             mainAxisAlignment:
+                      //                                 MainAxisAlignment.start,
+                      //                             crossAxisAlignment:
+                      //                                 CrossAxisAlignment
+                      //                                     .stretch,
+                      //                             children: [
+                      //                               Expanded(
+                      //                                   flex: 7,
+                      //                                   child: Text(
+                      //                                     infoList1[index]
+                      //                                         .title,
+                      //                                     maxLines: 2,
+                      //                                     overflow: TextOverflow
+                      //                                         .ellipsis,
+                      //                                     textAlign:
+                      //                                         TextAlign.left,
+                      //                                     style: tInfoTitle,
+                      //                                   )),
+                      //                               Expanded(
+                      //                                   flex: 3,
+                      //                                   child: Text(
+                      //                                     "3002 " +
+                      //                                         AppLocalizations.of(
+                      //                                                 context)!
+                      //                                             .read,
+                      //                                     textAlign:
+                      //                                         TextAlign.right,
+                      //                                     style: tRead,
+                      //                                   ))
+                      //                             ],
+                      //                           ),
+                      //                         )
+                      //                       ],
+                      //                     ),
+                      //                   ),
+                      //                 );
+                      //               },
+                      //             ),
+                      //           )
+                      //         : Container(
+                      //             padding:
+                      //                 EdgeInsets.symmetric(vertical: 10 * fem),
+                      //             child: ListView.builder(
+                      //               physics:
+                      //                   const NeverScrollableScrollPhysics(),
+                      //               itemCount: infoLength2,
+                      //               shrinkWrap: true,
+                      //               itemBuilder: (context, index) {
+                      //                 return InkWell(
+                      //                   onTap: () {
+                      //                     print("navi into news info");
+                      //                     Get.to(() => InfoPageDetail(),
+                      //                         transition: Transition.fadeIn);
+                      //                   },
+                      //                   child: Container(
+                      //                     margin: EdgeInsets.symmetric(
+                      //                         vertical: 10 * fem,
+                      //                         horizontal: 10 * fem),
+                      //                     padding: EdgeInsets.symmetric(
+                      //                         vertical: 0 * fem,
+                      //                         horizontal: 10 * fem),
+                      //                     height: 80 * fem,
+                      //                     child: Row(
+                      //                       mainAxisAlignment:
+                      //                           MainAxisAlignment.start,
+                      //                       crossAxisAlignment:
+                      //                           CrossAxisAlignment.start,
+                      //                       children: [
+                      //                         ClipRRect(
+                      //                           borderRadius:
+                      //                               BorderRadius.circular(8),
+                      //                           child: Container(
+                      //                             width: 100 * fem,
+                      //                             height: 80 * fem,
+                      //                             child: Image(
+                      //                               image: NetworkImage(
+                      //                                 // infoList1[index].imgUrl
+                      //                                 "https://i.redd.it/o6dt2yg2i90b1.png",
+                      //                               ),
+                      //                               fit: BoxFit.cover,
+                      //                             ),
+                      //                           ),
+                      //                         ),
+                      //                         Container(
+                      //                           height: 80 * fem,
+                      //                           width: 230 * fem,
+                      //                           padding: EdgeInsets.symmetric(
+                      //                               horizontal: 10 * fem),
+                      //                           child: Column(
+                      //                             mainAxisAlignment:
+                      //                                 MainAxisAlignment.start,
+                      //                             crossAxisAlignment:
+                      //                                 CrossAxisAlignment
+                      //                                     .stretch,
+                      //                             children: [
+                      //                               Expanded(
+                      //                                   flex: 7,
+                      //                                   child: Text(
+                      //                                     infoList2[index]
+                      //                                         .title,
+                      //                                     maxLines: 2,
+                      //                                     overflow: TextOverflow
+                      //                                         .ellipsis,
+                      //                                     textAlign:
+                      //                                         TextAlign.left,
+                      //                                     style: tInfoTitle,
+                      //                                   )),
+                      //                               Expanded(
+                      //                                   flex: 3,
+                      //                                   child: Text(
+                      //                                     "3002 " +
+                      //                                         AppLocalizations.of(
+                      //                                                 context)!
+                      //                                             .read,
+                      //                                     textAlign:
+                      //                                         TextAlign.right,
+                      //                                     style: tRead,
+                      //                                   ))
+                      //                             ],
+                      //                           ),
+                      //                         )
+                      //                       ],
+                      //                     ),
+                      //                   ),
+                      //                 );
+                      //               },
+                      //             ),
+                      //           )
                     ],
                   ),
                 ),

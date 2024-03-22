@@ -399,4 +399,9 @@ class ApiConstants {
   // get animation
   static const getAnimationUrl = 'api/v1/animation/';
   static const getLiveUrl = "api/v1/live-address/";
+
+  // info
+  static const getCategoriesList = "/api/v1/info/categories";
+  static const getInfoList = "/api/v1/info/list?";
+  static const getInfoDetail = "/api/v1/info/";
 }

@@ -594,9 +594,6 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                                                 },
                                                                 child: Obx(
                                                                   () => Text(
-                                                                    // AppLocalizations.of(
-                                                                    //         context)!
-                                                                    //     .follow,
                                                                     userModel
                                                                             .isCN
                                                                             .value

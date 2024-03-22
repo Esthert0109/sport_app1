@@ -40,7 +40,6 @@ class UserProvider extends ChangeNotifier {
       final response = await service.postRequest(url, liveStreamUserData);
 
       String phoneWithoutPlus = phone.replaceAll('+', '');
-      
 
       String code = response['code'].toString();
       String msg = response['msg'].toString();
@@ -52,7 +51,7 @@ class UserProvider extends ChangeNotifier {
       if (code == '0') {
         print("success");
         bool isRegister = await registerTencent(phoneWithoutPlus, userNickname,
-          "https://live-stream-1321239144.cos.ap-singapore.myqcloud.com/head/000153ed8cd649019e5659f9456419ae.png");
+            "https://live-stream-1321239144.cos.ap-singapore.myqcloud.com/head/000153ed8cd649019e5659f9456419ae.png");
 
         userModel.userName.value = userNickname;
         userModel.id.value = phoneWithoutPlus;
@@ -243,9 +242,7 @@ class UserProvider extends ChangeNotifier {
     final String url =
         ApiConstants.baseUrl + ApiConstants.updateHeadUrl + usertToken;
 
-    final String imageTokenUrl =
-        "https://live-stream-1324939077.cos.ap-singapore.myqcloud.com/head/" +
-            imageToken;
+    final String imageTokenUrl = imageToken;
 
     Map<String, dynamic> requestBody = {'head': imageTokenUrl};
 

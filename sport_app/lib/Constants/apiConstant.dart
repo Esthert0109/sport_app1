@@ -47,6 +47,8 @@ class ApiConstants {
   //Basketball CN--------------------------------------------------------------------------------------------//
   static const String basketballBaseUrl = '/api/v1/basketballs/match';
 
+  static const String cn = "/zh";
+
   static const String searchBasketballToday = '/zh/now-list';
 
   static const String getStartBasketballMatch = '/zh/list-start?';
@@ -95,13 +97,13 @@ class ApiConstants {
   static const String EN = '/en';
 
   static const String searchBasketballTodayENurl =
-      basketballBaseUrl + EN + searchBasketballToday;
+      basketballBaseUrl + EN + "/now-list";
 
   static const String getBasketballMatchByDateENurl =
-      basketballBaseUrl + EN + getBasketballMatchByDate;
+      basketballBaseUrl + EN + "/list/";
 
   static const String getStartBasketballMatchENurl =
-      basketballBaseUrl + EN + getStartBasketballMatch;
+      basketballBaseUrl + EN + "/list-start?";
 
   static const String getFutureBasketballMatchENurl =
       basketballBaseUrl + EN + getFutureBasketballMatch;
@@ -110,10 +112,10 @@ class ApiConstants {
       basketballBaseUrl + EN + getPastBasketballMatch;
 
   static const String getBasketballLineUpENurl =
-      basketballBaseUrl + EN + getBasketballMatchLineUp;
+      basketballBaseUrl + EN + "/line-up/";
 
   static const String getBasketballMatchLiveDataENurl =
-      basketballBaseUrl + EN + getBasketballMatchLiveData;
+      basketballBaseUrl + EN + "/livedata/";
 
   static const String basketballMatchesInSevenDaysEn =
       "/api/v1/basketballs/match/en/list?";
@@ -213,7 +215,7 @@ class ApiConstants {
       footballBaseUrl + getFootballMatchLineUpEN;
 
   static const String footballMatchesInSevenDaysEn =
-      "/api/v1/footballs/match/ens/list?";
+      "/api/v1/footballs/match/en/list?";
 
 //---------------------------------------------------------------------------------------------------------------------//
 
@@ -348,7 +350,7 @@ class ApiConstants {
   static const verifyMsgUrl = smsBaseUrl + verifyMsg; //verify 3 types of OTP
 
   //Upload File
-  static const uploadFileBaseUrl = '/api/v1/files';
+  static const uploadFileBaseUrl = '/api/v1/files/upload/tx';
 
   static const uploadFile = '';
 

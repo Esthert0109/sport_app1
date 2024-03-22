@@ -13,6 +13,7 @@ import '../../Constants/colorConstant.dart';
 import '../../Model/userDataModel.dart';
 import '../../Provider/basketballMatchProvider.dart';
 import '../TencentLiveStreamRoom/livePlayPage.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BasketballTournamentDetails extends StatefulWidget {
   const BasketballTournamentDetails({
@@ -414,7 +415,9 @@ class _BasketballTournamentDetailsState
                                     if (liveUrl == "" || liveUrl == null) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
-                                        content: Text("没有直播"),
+                                        content: Text(
+                                            AppLocalizations.of(context)!
+                                                .noLive),
                                         backgroundColor: redColor,
                                       ));
                                     } else {
@@ -429,7 +432,8 @@ class _BasketballTournamentDetailsState
                                   child: Row(
                                     children: [
                                       Text(
-                                        "视频直播",
+                                        AppLocalizations.of(context)!
+                                            .liveStream,
                                         style: TextStyle(
                                             fontFamily: "Inter",
                                             fontSize: 12,
@@ -460,19 +464,19 @@ class _BasketballTournamentDetailsState
                                         animationUrl == null) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
-                                        content: Text("没有动画直播"),
+                                        content: Text(
+                                            AppLocalizations.of(context)!
+                                                .noAnimation),
                                         backgroundColor: redColor,
                                       ));
-                                    }else{
-                                       Get.to(
-                                        () => LivePlayPage2(
-                                              streamId: animationUrl,
-                                              title: widget.matchName,
-                                            ),
-                                        transition: Transition.fadeIn);
+                                    } else {
+                                      Get.to(
+                                          () => LivePlayPage2(
+                                                streamId: animationUrl,
+                                                title: widget.matchName,
+                                              ),
+                                          transition: Transition.fadeIn);
                                     }
-
-                                   
                                   },
                                   child: Row(
                                     children: [
@@ -486,7 +490,8 @@ class _BasketballTournamentDetailsState
                                                 "images/tournament/animationStream.png")),
                                       ),
                                       Text(
-                                        "动画直播",
+                                        AppLocalizations.of(context)!
+                                            .animationStream,
                                         style: TextStyle(
                                             fontFamily: "Inter",
                                             fontSize: 12,

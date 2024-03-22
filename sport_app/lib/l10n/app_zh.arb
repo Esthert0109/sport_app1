@@ -20,8 +20,8 @@
     "systemSetting": "系统设置",
     "changeLanguage": "修改语言",
     "noInternet": "无网络连接，请再重试",
-    "successNickname": "已经更换新的昵称",
-    "successProfilePic": "已经更新新头像了",
+    "successNickname": "昵称已更新",
+    "successProfilePic": "头像已更新",
     "updateInfo": "信息编辑",
     "myCollection": "我收藏的直播",
     "logout": "退出登录",
@@ -115,6 +115,11 @@
     "ascendingSort": "最早关注",
     "popularGames": "热门游戏",
     "noFollowing": "-关注您的第一个主播吧！-",
-    "unfollow": "取消关注"
+    "unfollow": "取消关注",
+
+    "noLive": "没有直播",
+    "liveStream":"视频直播",
+    "noAnimation": "没有动画直播",
+    "animationStream": "动画直播"
     
 }

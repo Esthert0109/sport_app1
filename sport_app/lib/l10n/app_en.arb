@@ -113,5 +113,9 @@
     "ascendingSort": "Earliest Followed",
     "popularGames": "Popular Games",
     "noFollowing": "-Let''s get your first Follow!-",
-    "unfollow": "Unfollow"
+    "unfollow": "Unfollow",
+    "noLive": "No Live Stream",
+    "liveStream": "Live Stream",
+    "noAnimation": "No 3D Animation Stream",
+    "animationStream": "Animation Stream"
 }

@@ -358,6 +358,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     Container(
                       margin: EdgeInsets.only(bottom: 10 * fem),
+                      padding: EdgeInsets.only(left: 10 * fem),
                       height: 50 * fem,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
@@ -425,6 +426,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     Container(
                       margin: EdgeInsets.only(bottom: 10 * fem),
+                      padding: EdgeInsets.only(left: 10 * fem),
                       height: 50 * fem,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
@@ -481,6 +483,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     Container(
                       margin: EdgeInsets.only(bottom: 10 * fem),
+                      padding: EdgeInsets.only(left: 10 * fem),
                       height: 50 * fem,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
@@ -573,7 +576,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                                           Radius.circular(
                                                               8.0))),
                                               content: Text(
-                                                "确认登出？",
+                                                userModel.isCN.value
+                                                    ? "确认登出？"
+                                                    : "Log out now?",
                                                 style: tMain,
                                               ),
                                               actions: [
@@ -615,7 +620,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                             236,
                                                                             191))),
                                                         child: Text(
-                                                          "取消",
+                                                          userModel.isCN.value
+                                                              ? "取消"
+                                                              : "Cancel",
                                                           style: TextStyle(
                                                             fontFamily:
                                                                 'NotoSansSC',
@@ -667,7 +674,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                     .all(
                                                                         kMainGreenColor)),
                                                         child: Text(
-                                                          "确认",
+                                                          userModel.isCN.value
+                                                              ? "确认"
+                                                              : "Yes",
                                                           style: TextStyle(
                                                             fontFamily:
                                                                 'NotoSansSC',
@@ -695,28 +704,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                       AppLocalizations.of(context)!.logout,
                                       style: TextStyle(color: kMainGreyColor)),
                                 )
-
-                                // RoundedLoadingButton(
-                                //   color: Colors.white,
-                                //   valueColor: kMainGreenColor,
-                                //   width: 150,
-                                //   height: 40,
-                                //   elevation: 0,
-                                //   child: Text(
-                                //       AppLocalizations.of(context)!.logout,
-                                //       style: TextStyle(color: kMainGreyColor)),
-                                //   controller: btnController,
-                                //   onPressed: () {
-                                //     SharedPreferencesUtils
-                                //         .clearSharedPreferences();
-                                //     userModel.isLogin.value = false;
-
-                                //     Future.delayed(Duration(seconds: 1),
-                                //         () async {
-                                //       Get.offAllNamed('/auth');
-                                //     });
-                                //   },
-                                // )
                               ],
                             ),
                           ],

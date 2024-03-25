@@ -272,6 +272,9 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
 
   @override
   void dispose() {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: kMainGreenColor,
+    ));
     super.dispose();
     deactivate();
   }

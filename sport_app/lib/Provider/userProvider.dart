@@ -276,15 +276,10 @@ class UserProvider extends ChangeNotifier {
 
   Future<bool> updateUserNickname(String nickname) async {
     String userToken = userModel.token.value;
-    final String url = ApiConstants.baseUrl +
-        ApiConstants.updateNickNameUrl +
-        userToken +
-        "/" +
-        nickname;
+    final String url =
+        ApiConstants.baseUrl + ApiConstants.updateNickNameUrl + userToken;
 
-    print(url);
-
-    Map<String, dynamic> requestBody = {};
+    Map<String, dynamic> requestBody = {'nickName': nickname};
 
     try {
       final response = await service.patchRequest(url, requestBody);

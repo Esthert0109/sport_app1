@@ -120,6 +120,7 @@ class InfoListData {
   final String content;
   final String imgUrl;
   final String popular;
+  final int readCount;
   final int createdDate;
 
   InfoListData({
@@ -132,6 +133,7 @@ class InfoListData {
     required this.content,
     required this.imgUrl,
     required this.popular,
+    required this.readCount,
     required this.createdDate,
   });
 
@@ -146,6 +148,7 @@ class InfoListData {
       "content": content,
       "imgUrl": imgUrl,
       "popular": popular,
+      "readCount": readCount,
       "createdDate": createdDate,
     };
   }
@@ -159,9 +162,10 @@ class InfoListData {
       sportType: json['sportType'],
       title: json['title'],
       content: json['content'],
-      imgUrl: json['imgUrl']?? "",
+      imgUrl: json['imgUrl'] ?? "",
       popular: json['popular'],
-      createdDate: json['createdDate'],
+      readCount: json['readCount'] ?? 0,
+      createdDate: json['createdDate'] ?? 0,
     );
   }
 }

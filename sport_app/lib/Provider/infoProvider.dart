@@ -56,6 +56,8 @@ class InfoProvider extends ChangeNotifier {
 
       if (responseCode == 0) {
         List<dynamic> jsonData = response['data'];
+
+        print("check data: ${jsonData}");
         List<InfoListData> responseData =
             jsonData.map((e) => InfoListData.fromJson(e)).toList();
 
@@ -109,10 +111,9 @@ class InfoProvider extends ChangeNotifier {
     }
   }
 
-  Future<InfoListModel?> getPopularInfoList(int id)async {
-    String url = ApiConstants.baseUrl +
-        ApiConstants.getPopularInfoList +
-        "${id}";
+  Future<InfoListModel?> getPopularInfoList(int id) async {
+    String url =
+        ApiConstants.baseUrl + ApiConstants.getPopularInfoList + "${id}";
 
     Map<String, String> headers = {
       'Content-Type': 'application/json; charset=utf-8',

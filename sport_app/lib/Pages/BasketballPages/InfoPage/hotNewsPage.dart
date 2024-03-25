@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../Component/News/hotNewsComponent.dart';
@@ -108,35 +109,47 @@ class _HotNewsPageState extends State<HotNewsPage> {
                     decoration: BoxDecoration(color: kMainComponentColor),
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
-                      child: Column(
-                        children: [
-                          for (int i = 0; i < 3; i++)
-                            InkWell(
-                              onTap: () {
-                                print("navi to news");
-                                Get.to(
-                                    () => InfoPageDetail(
-                                        id: popularInfoList[i].id),
-                                    transition: Transition.fadeIn);
-                              },
-                              child: TopHotNewsComponent(
-                                hotLogo: "images/info/hotTop${i + 1}.png",
-                                title: popularInfoList[i].title,
-                                read: random.nextInt(99999),
+                      child: isLoading
+                          ? Center(
+                              child: Lottie.asset(
+                                'images/common/pandahappy.json', // Replace 'loading.json' with the path to your Lottie animation
+                                width: 250, // Adjust the width as needed
+                                height: 250, // Adjust the height as needed
                               ),
-                            ),
-                          for (int i = 3; i < infoLength; i++)
-                            InkWell(
-                              onTap: () {
-                                print("navi to news");
-                              },
-                              child: HotNewsComponent(
-                                  index: i,
-                                  title: popularInfoList[i].title,
-                                  read: 12613),
                             )
-                        ],
-                      ),
+                          : Column(
+                              children: [
+                                for (int i = 0; i < 3; i++)
+                                  InkWell(
+                                    onTap: () {
+                                      print("navi to news");
+                                      Get.to(
+                                          () => InfoPageDetail(
+                                              id: popularInfoList[i].id),
+                                          transition: Transition.fadeIn);
+                                    },
+                                    child: TopHotNewsComponent(
+                                      hotLogo: "images/info/hotTop${i + 1}.png",
+                                      title: popularInfoList[i].title,
+                                      read: popularInfoList[i].readCount,
+                                    ),
+                                  ),
+                                for (int i = 3; i < infoLength; i++)
+                                  InkWell(
+                                    onTap: () {
+                                      print("navi to news");
+                                      Get.to(
+                                          () => InfoPageDetail(
+                                              id: popularInfoList[i].id),
+                                          transition: Transition.fadeIn);
+                                    },
+                                    child: HotNewsComponent(
+                                        index: i,
+                                        title: popularInfoList[i].title,
+                                        read: popularInfoList[i].readCount),
+                                  )
+                              ],
+                            ),
                     ),
                   )),
             )

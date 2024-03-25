@@ -195,6 +195,10 @@ class _BasketballMainPageState extends State<BasketballMainPage>
     getStartedEventList();
     getPopularLiveStreamRoomList();
     getAllMatches();
+
+    if (userModel.isCN.value) {
+      language = "zh_CN";
+    }
   }
 
   @override

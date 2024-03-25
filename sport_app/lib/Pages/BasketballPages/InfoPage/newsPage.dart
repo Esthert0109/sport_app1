@@ -306,7 +306,31 @@ class _NewsPageState extends State<NewsPage> {
                                   onTap: (index) {
                                     setState(() {
                                       tagId = index;
-                                      getInfoList();
+                                      if (tagId == 0) {
+                                        infoList.clear();
+                                        infoLength = infoList.length;
+                                        page = 1;
+
+                                        getInfoList();
+                                      } else if (tagId == 1) {
+                                        infoList1.clear();
+                                        infoLength1 = infoList1.length;
+                                        page1 = 1;
+
+                                        getInfoList();
+                                      } else if (tagId == 2) {
+                                        infoList2.clear();
+                                        infoLength2 = infoList2.length;
+                                        page2 = 1;
+
+                                        getInfoList();
+                                      } else {
+                                        infoList3.clear();
+                                        infoLength3 = infoList3.length;
+                                        page3 = 1;
+
+                                        getInfoList();
+                                      }
                                     });
                                   }),
                             ),
@@ -389,7 +413,7 @@ class _NewsPageState extends State<NewsPage> {
                                                         Expanded(
                                                             flex: 3,
                                                             child: Text(
-                                                              "3002 " +
+                                                              "${infoList[index].readCount}" +
                                                                   AppLocalizations.of(
                                                                           context)!
                                                                       .read,
@@ -489,7 +513,7 @@ class _NewsPageState extends State<NewsPage> {
                                                             Expanded(
                                                                 flex: 3,
                                                                 child: Text(
-                                                                  "3002 " +
+                                                                  "${infoList1[index].readCount}" +
                                                                       AppLocalizations.of(
                                                                               context)!
                                                                           .read,
@@ -602,7 +626,7 @@ class _NewsPageState extends State<NewsPage> {
                                                                 Expanded(
                                                                     flex: 3,
                                                                     child: Text(
-                                                                      "3002 " +
+                                                                      "${infoList2[index].readCount}" +
                                                                           AppLocalizations.of(context)!
                                                                               .read,
                                                                       textAlign:
@@ -714,7 +738,7 @@ class _NewsPageState extends State<NewsPage> {
                                                                 Expanded(
                                                                     flex: 3,
                                                                     child: Text(
-                                                                      "3002 " +
+                                                                      "${infoList3[index].readCount}" +
                                                                           AppLocalizations.of(context)!
                                                                               .read,
                                                                       textAlign:

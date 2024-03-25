@@ -29,7 +29,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../Provider/collectionProvider.dart';
 import '../../../Provider/liveStreamProvider.dart';
 import '../../../Services/Utils/tencent/tencentLiveUtils.dart';
-import '../../BasketballPages/basketballTournamentDetails.dart';
 import '../../SearchPage/searchingPage.dart';
 import '../../TencentLiveStreamRoom/liveStreamChatRoom.dart';
 import '../footballTournamentDetails.dart';
@@ -241,6 +240,10 @@ class _FootballMainPageState extends State<FootballMainPage>
     getStartedEventList();
     getPopularLiveStreamRoomList();
     getAllMatches();
+
+    if (userModel.isCN.value) {
+      language = "zh_CN";
+    }
   }
 
   @override

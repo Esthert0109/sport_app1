@@ -97,7 +97,7 @@ class _StatusDateButtonComponentState extends State<StatusDateButtonComponent> {
               ),
               padding:
                   EdgeInsets.symmetric(horizontal: 8 * fem, vertical: 2 * fem),
-              margin: EdgeInsets.fromLTRB(0, 0, 5 * fem, 0),
+              margin: EdgeInsets.fromLTRB(0, 0, 8 * fem, 0),
               child: InkWell(
                 onTap: () => widget.onTap(index),
                 child: (index == 0 && widget.isFuture) ||

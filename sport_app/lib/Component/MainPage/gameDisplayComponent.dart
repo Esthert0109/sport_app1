@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/Model/userDataModel.dart';
 
 import '../../Constants/colorConstant.dart';
@@ -108,48 +109,44 @@ class _GameDisplayComponentState extends State<GameDisplayComponent> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IntrinsicWidth(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Flexible(
-                          child: Container(
-                            // No fixed width needed here
-                            height: 20 * fem,
-                            margin: EdgeInsets.symmetric(horizontal: 2 * fem),
-                            alignment: Alignment.topLeft,
-                            padding: EdgeInsets.symmetric(horizontal: 8 * fem),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: kLightGreyColor,
-                            ),
-                            child: FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Text(
-                                competitionType,
-                                style: tTagButton,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                softWrap: false,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
+                  SizedBox(
+                    width: 220 * fem,
+                    child: FittedBox(
+                      alignment: Alignment.centerLeft,
+                      fit: BoxFit.scaleDown,
+                      child: Container(
+                        height: 20 * fem,
+                        margin: EdgeInsets.symmetric(horizontal: 2 * fem),
+                        alignment: Alignment.topLeft,
+                        padding: EdgeInsets.symmetric(horizontal: 8 * fem),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: kLightGreyColor,
                         ),
-                        Container(
-                          // color: Colors.amber,
-                          height: 20 * fem,
-                          width: 80 * fem,
-                          alignment: Alignment.topCenter,
-                          padding: EdgeInsets.symmetric(horizontal: 5 * fem),
-                          child: Text(
-                            duration,
-                            style: tDate,
-                            textAlign: TextAlign.start,
-                          ),
+                        child: Text(
+                          competitionType,
+                          style: tTagButton,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          softWrap: false,
+                          textAlign: TextAlign.center,
                         ),
-                      ],
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      // color: Colors.amber,
+                      height: 20 * fem,
+                      width: 50 * fem,
+                      alignment: Alignment.topCenter,
+                      padding: EdgeInsets.symmetric(horizontal: 5 * fem),
+                      child: Text(
+                        duration,
+                        style: tDate,
+                        textAlign: TextAlign.start,
+                      ),
                     ),
                   ),
                   Container(

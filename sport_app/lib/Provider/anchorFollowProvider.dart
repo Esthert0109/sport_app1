@@ -47,6 +47,38 @@ class AnchorFollowProvider extends ChangeNotifier {
     }
   }
 
+  Future<CreateFollowModel?> getIfFollowed(int anchorId) async {
+    final String url =
+        ApiConstants.baseUrl + ApiConstants.ifFollowed + "${anchorId}";
+
+    final token = await SharedPreferencesUtils.getSavedToken();
+    Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=utf-8',
+      'token': token!,
+    };
+
+    try {
+      final response = await sendGetRequest(url, headers);
+
+      int responseCode = response['code'];
+      String responseMsg = response['msg'];
+
+      if (responseCode == 0) {
+        bool responseData = response['data'];
+        CreateFollowModel followModel = CreateFollowModel(
+            code: responseCode, msg: responseMsg, data: responseData);
+        return followModel;
+      } else {
+        CreateFollowModel followModel = CreateFollowModel(
+            code: responseCode, msg: responseMsg, data: false);
+        return followModel;
+      }
+    } catch (e) {
+      print("Error in get if followed: $e");
+      return null;
+    }
+  }
+
   Future<FollowModel?> getFollowingList(int page, int size) async {
     String url = ApiConstants.baseUrl +
         ApiConstants.getFollowingList +

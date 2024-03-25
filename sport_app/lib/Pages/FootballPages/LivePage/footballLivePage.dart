@@ -365,13 +365,13 @@ class _FootballLivePageState extends State<FootballLivePage>
               isLoading: isLiveLoading,
               onEndOfPage: () {
                 setState(() {
-                  (statusId == 0) ? getAllLiveList() : null;
+                  (statusId == 0) ? getAllLiveList() : getFollowingList();
                 });
               },
               child: RefreshIndicator(
                 color: kMainGreenColor,
                 onRefresh: () async {
-                  (statusId == 0) ? toggleRefresh() : null;
+                  (statusId == 0) ? toggleRefresh() : toggleRefresh();
                 },
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
@@ -397,6 +397,23 @@ class _FootballLivePageState extends State<FootballLivePage>
                                                 onTap: () {
                                                   setState(() {
                                                     statusId = index;
+                                                    if (statusId == 0) {
+                                                      footballLiveStreamList
+                                                          .clear();
+                                                      liveStreamLength =
+                                                          footballLiveStreamList
+                                                              .length;
+                                                      page = 1;
+
+                                                      getAllLiveList();
+                                                    } else {
+                                                      followStatusId = 0;
+                                                      followingList.clear();
+                                                      followingLength =
+                                                          followingList.length;
+                                                      followPage = 1;
+                                                      getFollowingList();
+                                                    }
                                                   });
                                                 },
                                                 child: Text(
@@ -483,7 +500,9 @@ class _FootballLivePageState extends State<FootballLivePage>
                                                     j++)
                                                   InkWell(
                                                     onTap: () {
-                                                      if (!isLogin) {
+                                                      if (userModel
+                                                              .isLogin.value ==
+                                                          false) {
                                                         showModalBottomSheet(
                                                             context: context,
                                                             isScrollControlled:

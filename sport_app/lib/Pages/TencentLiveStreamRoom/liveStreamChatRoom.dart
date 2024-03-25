@@ -86,6 +86,14 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
         await provider.createFollow(widget.anchorId);
   }
 
+  Future<void> ifFollowed() async {
+    CreateFollowModel? model =
+        await provider.getIfFollowed(int.parse(widget.anchorId));
+    setState(() {
+      isFollowed = model?.data ?? false;
+    });
+  }
+
   //create live stream player--------------------from Tencent----------------------------------//
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
@@ -244,6 +252,7 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
     renderView();
     startPlay();
     countDownWidget();
+    ifFollowed();
 
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,

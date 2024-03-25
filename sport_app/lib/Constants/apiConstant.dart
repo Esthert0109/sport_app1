@@ -395,6 +395,7 @@ class ApiConstants {
   static const getFollowingListDesc = '/api/v1/follow/following/desc?';
   static const getFollowingListAsc = '/api/v1/follow/following/asc?';
   static const createFollow = "/api/v1/follow/create";
+  static const ifFollowed = "/api/v1/follow/check/";
 
   // get animation
   static const getAnimationUrl = 'api/v1/animation/';

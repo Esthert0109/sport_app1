@@ -108,4 +108,40 @@ class InfoProvider extends ChangeNotifier {
       return null;
     }
   }
+
+  Future<InfoListModel?> getPopularInfoList(int id)async {
+    String url = ApiConstants.baseUrl +
+        ApiConstants.getPopularInfoList +
+        "${id}";
+
+    Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=utf-8',
+    };
+
+    try {
+      final response = await sendGetRequest(url, headers);
+
+      int responseCode = response['code'];
+      String responseMsg = response['msg'];
+
+      if (responseCode == 0) {
+        List<dynamic> jsonData = response['data'];
+        List<InfoListData> responseData =
+            jsonData.map((e) => InfoListData.fromJson(e)).toList();
+
+        InfoListModel infoModel = InfoListModel(
+            code: responseCode, msg: responseMsg, data: responseData);
+
+        return infoModel;
+      } else {
+        InfoListModel infoModel =
+            InfoListModel(code: responseCode, msg: responseMsg, data: []);
+
+        return infoModel;
+      }
+    } catch (e) {
+      print("Error in popular info list: $e");
+      return null;
+    }
+  }
 }

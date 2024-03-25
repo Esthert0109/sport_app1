@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -7,6 +9,8 @@ import '../../../Component/News/hotNewsComponent.dart';
 import '../../../Component/News/topHotNewsComponent.dart';
 import '../../../Constants/colorConstant.dart';
 import '../../../Constants/textConstant.dart';
+import '../../../Model/infoModel.dart';
+import '../../../Provider/infoProvider.dart';
 import 'infoPageDetail.dart';
 
 class HotNewsPage extends StatefulWidget {
@@ -17,12 +21,22 @@ class HotNewsPage extends StatefulWidget {
 }
 
 class _HotNewsPageState extends State<HotNewsPage> {
+  // provider
+  InfoProvider infoProvider = InfoProvider();
+
+  List<InfoListData> popularInfoList = [];
+  int infoLength = 0;
+  Random random = Random();
+
+  bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: kMainHotNewsColor,
     ));
+    getPopularInfoList();
   }
 
   @override
@@ -31,6 +45,21 @@ class _HotNewsPageState extends State<HotNewsPage> {
       statusBarColor: kMainGreenColor,
     ));
     super.dispose();
+  }
+
+  Future<void> getPopularInfoList() async {
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+      InfoListModel? infoModel = await infoProvider.getPopularInfoList(4);
+
+      popularInfoList.addAll(infoModel?.data ?? []);
+      infoLength = popularInfoList.length;
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -81,27 +110,29 @@ class _HotNewsPageState extends State<HotNewsPage> {
                       physics: const BouncingScrollPhysics(),
                       child: Column(
                         children: [
-                          for (int i = 1; i < 4; i++)
+                          for (int i = 0; i < 3; i++)
                             InkWell(
                               onTap: () {
                                 print("navi to news");
-                                Get.to(() => const InfoPageDetail(),
+                                Get.to(
+                                    () => InfoPageDetail(
+                                        id: popularInfoList[i].id),
                                     transition: Transition.fadeIn);
                               },
                               child: TopHotNewsComponent(
-                                hotLogo: "images/info/hotTop$i.png",
-                                title: "🤣阿森纳全场零射正客场0-1波尔图，加莱诺读秒世界波绝杀",
-                                read: 15522,
+                                hotLogo: "images/info/hotTop${i + 1}.png",
+                                title: popularInfoList[i].title,
+                                read: random.nextInt(99999),
                               ),
                             ),
-                          for (int i = 4; i < 27; i++)
+                          for (int i = 3; i < infoLength; i++)
                             InkWell(
                               onTap: () {
                                 print("navi to news");
                               },
                               child: HotNewsComponent(
                                   index: i,
-                                  title: "💥加莱诺读秒世界波绝杀，阿森纳全场零射正客场0-1波尔图。",
+                                  title: popularInfoList[i].title,
                                   read: 12613),
                             )
                         ],

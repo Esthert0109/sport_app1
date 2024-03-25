@@ -404,4 +404,5 @@ class ApiConstants {
   static const getCategoriesList = "/api/v1/info/categories";
   static const getInfoList = "/api/v1/info/list?";
   static const getInfoDetail = "/api/v1/info/";
+  static const getPopularInfoList = "/api/v1/info/popular/";
 }

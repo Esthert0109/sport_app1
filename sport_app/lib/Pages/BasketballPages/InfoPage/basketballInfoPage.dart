@@ -199,7 +199,7 @@ class _BasketballInfoPageState extends State<BasketballInfoPage>
                         return InkWell(
                           onTap: () {
                             print("navi into news info");
-                            Get.to(() => InfoPageDetail(),
+                            Get.to(() => InfoPageDetail(id: 1),
                                 transition: Transition.fadeIn);
                           },
                           child: Container(

@@ -143,6 +143,7 @@ class _FootballMainPageState extends State<FootballMainPage>
 
       setState(() {
         isEventLoading = false;
+        pageAll++;
       });
     }
   }
@@ -512,6 +513,8 @@ class _FootballMainPageState extends State<FootballMainPage>
       past5Length = pastList5.length;
       past6Length = pastList6.length;
       past7Length = pastList7.length;
+      collectionList.clear();
+      collectionLength = collectionList.length;
       pageFuture1 = 1;
       pageFuture2 = 1;
       pageFuture3 = 1;
@@ -526,10 +529,13 @@ class _FootballMainPageState extends State<FootballMainPage>
       pagePast5 = 1;
       pagePast6 = 1;
       pagePast7 = 1;
+      page = 1;
 
       getAllMatches();
       getStartedEventList();
       getEventListByDate();
+
+      getFootballSavedCollections();
     });
   }
 
@@ -882,12 +888,80 @@ class _FootballMainPageState extends State<FootballMainPage>
                                               setState(() {
                                                 statusId = index;
                                                 if (statusId == 0) {
+                                                  allList.clear();
+                                                  allLength = allList.length;
+                                                  pageAll = 1;
                                                   getAllMatches();
                                                 } else if (statusId == 1) {
+                                                  startedList.clear();
+                                                  startedLength =
+                                                      startedList.length;
+                                                  pageStarted = 1;
                                                   getStartedEventList();
                                                 } else if (statusId == 4) {
+                                                  collectionList.clear();
+                                                  collectionLength =
+                                                      collectionList.length;
+                                                  page = 1;
                                                   getFootballSavedCollections();
                                                 } else {
+                                                  futureList1.clear();
+                                                  futureList2.clear();
+                                                  futureList3.clear();
+                                                  futureList4.clear();
+                                                  futureList5.clear();
+                                                  futureList6.clear();
+                                                  futureList7.clear();
+                                                  pastList1.clear();
+                                                  pastList2.clear();
+                                                  pastList3.clear();
+                                                  pastList4.clear();
+                                                  pastList5.clear();
+                                                  pastList6.clear();
+                                                  pastList7.clear();
+                                                  allLength = allList.length;
+                                                  future1Length =
+                                                      futureList1.length;
+                                                  future2Length =
+                                                      futureList2.length;
+                                                  future3Length =
+                                                      futureList3.length;
+                                                  future4Length =
+                                                      futureList4.length;
+                                                  future5Length =
+                                                      futureList5.length;
+                                                  future6Length =
+                                                      futureList6.length;
+                                                  future7Length =
+                                                      futureList7.length;
+                                                  past1Length =
+                                                      pastList1.length;
+                                                  past2Length =
+                                                      pastList2.length;
+                                                  past3Length =
+                                                      pastList3.length;
+                                                  past4Length =
+                                                      pastList4.length;
+                                                  past5Length =
+                                                      pastList5.length;
+                                                  past6Length =
+                                                      pastList6.length;
+                                                  past7Length =
+                                                      pastList7.length;
+                                                  pageFuture1 = 1;
+                                                  pageFuture2 = 1;
+                                                  pageFuture3 = 1;
+                                                  pageFuture4 = 1;
+                                                  pageFuture5 = 1;
+                                                  pageFuture6 = 1;
+                                                  pageFuture7 = 1;
+                                                  pagePast1 = 1;
+                                                  pagePast2 = 1;
+                                                  pagePast3 = 1;
+                                                  pagePast4 = 1;
+                                                  pagePast5 = 1;
+                                                  pagePast6 = 1;
+                                                  pagePast7 = 1;
                                                   getEventListByDate();
                                                 }
                                               });
@@ -904,70 +978,81 @@ class _FootballMainPageState extends State<FootballMainPage>
                                             onTap: (index) {
                                               setState(() {
                                                 statusId = index;
+                                                if (statusId == 0) {
+                                                  allList.clear();
+                                                  allLength = allList.length;
+                                                  pageAll = 1;
+                                                  getAllMatches();
+                                                } else if (statusId == 1) {
+                                                  startedList.clear();
+                                                  startedLength =
+                                                      startedList.length;
+                                                  pageStarted = 1;
+                                                  getStartedEventList();
+                                                } else {
+                                                  futureList1.clear();
+                                                  futureList2.clear();
+                                                  futureList3.clear();
+                                                  futureList4.clear();
+                                                  futureList5.clear();
+                                                  futureList6.clear();
+                                                  futureList7.clear();
+                                                  pastList1.clear();
+                                                  pastList2.clear();
+                                                  pastList3.clear();
+                                                  pastList4.clear();
+                                                  pastList5.clear();
+                                                  pastList6.clear();
+                                                  pastList7.clear();
+                                                  allLength = allList.length;
+                                                  future1Length =
+                                                      futureList1.length;
+                                                  future2Length =
+                                                      futureList2.length;
+                                                  future3Length =
+                                                      futureList3.length;
+                                                  future4Length =
+                                                      futureList4.length;
+                                                  future5Length =
+                                                      futureList5.length;
+                                                  future6Length =
+                                                      futureList6.length;
+                                                  future7Length =
+                                                      futureList7.length;
+                                                  past1Length =
+                                                      pastList1.length;
+                                                  past2Length =
+                                                      pastList2.length;
+                                                  past3Length =
+                                                      pastList3.length;
+                                                  past4Length =
+                                                      pastList4.length;
+                                                  past5Length =
+                                                      pastList5.length;
+                                                  past6Length =
+                                                      pastList6.length;
+                                                  past7Length =
+                                                      pastList7.length;
+                                                  pageFuture1 = 1;
+                                                  pageFuture2 = 1;
+                                                  pageFuture3 = 1;
+                                                  pageFuture4 = 1;
+                                                  pageFuture5 = 1;
+                                                  pageFuture6 = 1;
+                                                  pageFuture7 = 1;
+                                                  pagePast1 = 1;
+                                                  pagePast2 = 1;
+                                                  pagePast3 = 1;
+                                                  pagePast4 = 1;
+                                                  pagePast5 = 1;
+                                                  pagePast6 = 1;
+                                                  pagePast7 = 1;
+                                                  getEventListByDate();
+                                                }
                                               });
                                             }),
                                       ),
                               ),
-                              // StatusButtonComponent(
-                              //   statusId: statusId,
-                              //   statusList: statusList,
-                              //   onTap: (index) {
-                              //     setState(() {
-                              //       statusId = index;
-                              //       if (statusId == 0) {
-                              //         startedList.clear();
-                              //         startedLength = startedList.length;
-                              //         pageStarted = 1;
-                              //         getStartedEventList();
-                              //       } else {
-                              //         futureDateId = 0;
-                              //         futureList1.clear();
-                              //         futureList2.clear();
-                              //         futureList3.clear();
-                              //         futureList4.clear();
-                              //         futureList5.clear();
-                              //         futureList6.clear();
-                              //         futureList7.clear();
-                              //         pastList1.clear();
-                              //         pastList2.clear();
-                              //         pastList3.clear();
-                              //         pastList4.clear();
-                              //         pastList5.clear();
-                              //         pastList6.clear();
-                              //         pastList7.clear();
-                              //         future1Length = futureList1.length;
-                              //         future2Length = futureList2.length;
-                              //         future3Length = futureList3.length;
-                              //         future4Length = futureList4.length;
-                              //         future5Length = futureList5.length;
-                              //         future6Length = futureList6.length;
-                              //         future7Length = futureList7.length;
-                              //         past1Length = pastList1.length;
-                              //         past2Length = pastList2.length;
-                              //         past3Length = pastList3.length;
-                              //         past4Length = pastList4.length;
-                              //         past5Length = pastList5.length;
-                              //         past6Length = pastList6.length;
-                              //         past7Length = pastList7.length;
-                              //         pageFuture1 = 1;
-                              //         pageFuture2 = 1;
-                              //         pageFuture3 = 1;
-                              //         pageFuture4 = 1;
-                              //         pageFuture5 = 1;
-                              //         pageFuture6 = 1;
-                              //         pageFuture7 = 1;
-                              //         pagePast1 = 1;
-                              //         pagePast2 = 1;
-                              //         pagePast3 = 1;
-                              //         pagePast4 = 1;
-                              //         pagePast5 = 1;
-                              //         pagePast6 = 1;
-                              //         pagePast7 = 1;
-                              //         getEventListByDate();
-                              //       }
-                              //     });
-                              //   },
-                              // ),
                               (statusId == 2)
                                   ? Container(
                                       margin: EdgeInsets.symmetric(
@@ -1178,42 +1263,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                   },
                                                 )
                                       : (statusId == 2 && futureDateId == 0)
-                                          ?
-                                          // isEventLoading
-                                          // ? Column(children: [
-                                          //     if (future1Length < 4)
-                                          //       for (int i = 0; i < 4; i++)
-                                          //         CardLoading(
-                                          //           height: 100 * fem,
-                                          //           borderRadius:
-                                          //               BorderRadius
-                                          //                   .circular(
-                                          //                       8 * fem),
-                                          //           margin: EdgeInsets
-                                          //               .symmetric(
-                                          //                   horizontal:
-                                          //                       10 * fem,
-                                          //                   vertical:
-                                          //                       10 * fem),
-                                          //         ),
-                                          //     for (int i = 0;
-                                          //         i < future1Length;
-                                          //         i++)
-                                          //       CardLoading(
-                                          //         height: 100 * fem,
-                                          //         borderRadius:
-                                          //             BorderRadius.circular(
-                                          //                 8 * fem),
-                                          //         margin:
-                                          //             EdgeInsets.symmetric(
-                                          //                 horizontal:
-                                          //                     10 * fem,
-                                          //                 vertical:
-                                          //                     10 * fem),
-                                          //       ),
-                                          //   ])
-                                          // :
-                                          (future1Length == 0)
+                                          ? (future1Length == 0)
                                               ? searchEmptyWidget()
                                               : ListView.builder(
                                                   physics:
@@ -1296,51 +1346,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                   },
                                                 )
                                           : (statusId == 2 && futureDateId == 1)
-                                              ?
-                                              // isEventLoading
-                                              //     ? Column(children: [
-                                              //         Column(children: [
-                                              //           if (future2Length < 4)
-                                              //             for (int i = 0;
-                                              //                 i < 4;
-                                              //                 i++)
-                                              //               CardLoading(
-                                              //                 height: 100 * fem,
-                                              //                 borderRadius:
-                                              //                     BorderRadius
-                                              //                         .circular(
-                                              //                             8 * fem),
-                                              //                 margin: EdgeInsets
-                                              //                     .symmetric(
-                                              //                         horizontal:
-                                              //                             10 *
-                                              //                                 fem,
-                                              //                         vertical:
-                                              //                             10 *
-                                              //                                 fem),
-                                              //               ),
-                                              //           for (int i = 0;
-                                              //               i < future2Length;
-                                              //               i++)
-                                              //             CardLoading(
-                                              //               height: 100 * fem,
-                                              //               borderRadius:
-                                              //                   BorderRadius
-                                              //                       .circular(
-                                              //                           8 * fem),
-                                              //               margin: EdgeInsets
-                                              //                   .symmetric(
-                                              //                       horizontal:
-                                              //                           10 *
-                                              //                               fem,
-                                              //                       vertical:
-                                              //                           10 *
-                                              //                               fem),
-                                              //             ),
-                                              //         ])
-                                              //       ])
-                                              //     :
-                                              (future2Length == 0)
+                                              ? (future2Length == 0)
                                                   ? searchEmptyWidget()
                                                   : ListView.builder(
                                                       physics:
@@ -1425,52 +1431,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                     )
                                               : (statusId == 2 &&
                                                       futureDateId == 2)
-                                                  ?
-                                                  // isEventLoading
-                                                  //     ? Column(children: [
-                                                  //         Column(children: [
-                                                  //           if (future3Length <
-                                                  //               4)
-                                                  //             for (int i = 0;
-                                                  //                 i < 4;
-                                                  //                 i++)
-                                                  //               CardLoading(
-                                                  //                 height:
-                                                  //                     100 * fem,
-                                                  //                 borderRadius:
-                                                  //                     BorderRadius
-                                                  //                         .circular(8 *
-                                                  //                             fem),
-                                                  //                 margin: EdgeInsets.symmetric(
-                                                  //                     horizontal:
-                                                  //                         10 *
-                                                  //                             fem,
-                                                  //                     vertical:
-                                                  //                         10 *
-                                                  //                             fem),
-                                                  //               ),
-                                                  //           for (int i = 0;
-                                                  //               i < future3Length;
-                                                  //               i++)
-                                                  //             CardLoading(
-                                                  //               height:
-                                                  //                   100 * fem,
-                                                  //               borderRadius:
-                                                  //                   BorderRadius
-                                                  //                       .circular(8 *
-                                                  //                           fem),
-                                                  //               margin: EdgeInsets.symmetric(
-                                                  //                   horizontal:
-                                                  //                       10 *
-                                                  //                           fem,
-                                                  //                   vertical:
-                                                  //                       10 *
-                                                  //                           fem),
-                                                  //             ),
-                                                  //         ])
-                                                  //       ])
-                                                  //     :
-                                                  (future3Length == 0)
+                                                  ? (future3Length == 0)
                                                       ? searchEmptyWidget()
                                                       : ListView.builder(
                                                           physics:
@@ -1553,51 +1514,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                         )
                                                   : (statusId == 2 &&
                                                           futureDateId == 3)
-                                                      ?
-                                                      // isEventLoading
-                                                      //     ? Column(children: [
-                                                      //         Column(children: [
-                                                      //           if (future4Length <
-                                                      //               4)
-                                                      //             for (int i =
-                                                      //                     0;
-                                                      //                 i < 4;
-                                                      //                 i++)
-                                                      //               CardLoading(
-                                                      //                 height:
-                                                      //                     100 *
-                                                      //                         fem,
-                                                      //                 borderRadius:
-                                                      //                     BorderRadius.circular(8 *
-                                                      //                         fem),
-                                                      //                 margin: EdgeInsets.symmetric(
-                                                      //                     horizontal: 10 *
-                                                      //                         fem,
-                                                      //                     vertical:
-                                                      //                         10 * fem),
-                                                      //               ),
-                                                      //           for (int i = 0;
-                                                      //               i < future4Length;
-                                                      //               i++)
-                                                      //             CardLoading(
-                                                      //               height:
-                                                      //                   100 *
-                                                      //                       fem,
-                                                      //               borderRadius:
-                                                      //                   BorderRadius.circular(8 *
-                                                      //                       fem),
-                                                      //               margin: EdgeInsets.symmetric(
-                                                      //                   horizontal:
-                                                      //                       10 *
-                                                      //                           fem,
-                                                      //                   vertical:
-                                                      //                       10 *
-                                                      //                           fem),
-                                                      //             ),
-                                                      //         ])
-                                                      //       ])
-                                                      //     :
-                                                      (future4Length == 0)
+                                                      ? (future4Length == 0)
                                                           ? searchEmptyWidget()
                                                           : ListView.builder(
                                                               physics:
@@ -1667,32 +1584,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                             )
                                                       : (statusId == 2 &&
                                                               futureDateId == 4)
-                                                          ?
-                                                          // isEventLoading
-                                                          //     ? Column(
-                                                          //         children: [
-                                                          //             Column(
-                                                          //                 children: [
-                                                          //                   if (future5Length <
-                                                          //                       4)
-                                                          //                     for (int i = 0; i < 4; i++)
-                                                          //                       CardLoading(
-                                                          //                         height: 100 * fem,
-                                                          //                         borderRadius: BorderRadius.circular(8 * fem),
-                                                          //                         margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                          //                       ),
-                                                          //                   for (int i = 0;
-                                                          //                       i < future5Length;
-                                                          //                       i++)
-                                                          //                     CardLoading(
-                                                          //                       height: 100 * fem,
-                                                          //                       borderRadius: BorderRadius.circular(8 * fem),
-                                                          //                       margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                          //                     ),
-                                                          //                 ])
-                                                          //           ])
-                                                          //     :
-                                                          (future5Length == 0)
+                                                          ? (future5Length == 0)
                                                               ? searchEmptyWidget()
                                                               : ListView
                                                                   .builder(
@@ -1763,29 +1655,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                           : (statusId == 2 &&
                                                                   futureDateId ==
                                                                       5)
-                                                              ?
-                                                              // isEventLoading
-                                                              //     ? Column(
-                                                              //         children: [
-                                                              //             Column(
-                                                              //                 children: [
-                                                              //                   if (future6Length < 4)
-                                                              //                     for (int i = 0; i < 4; i++)
-                                                              //                       CardLoading(
-                                                              //                         height: 100 * fem,
-                                                              //                         borderRadius: BorderRadius.circular(8 * fem),
-                                                              //                         margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                              //                       ),
-                                                              //                   for (int i = 0; i < future6Length; i++)
-                                                              //                     CardLoading(
-                                                              //                       height: 100 * fem,
-                                                              //                       borderRadius: BorderRadius.circular(8 * fem),
-                                                              //                       margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                              //                     ),
-                                                              //                 ])
-                                                              //           ])
-                                                              //     :
-                                                              (future6Length ==
+                                                              ? (future6Length ==
                                                                       0)
                                                                   ? searchEmptyWidget()
                                                                   : ListView
@@ -1846,28 +1716,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                           2 &&
                                                                       futureDateId ==
                                                                           6)
-                                                                  ?
-                                                                  // isEventLoading
-                                                                  //     ? Column(
-                                                                  //         children: [
-                                                                  //             Column(children: [
-                                                                  //               if (future7Length < 4)
-                                                                  //                 for (int i = 0; i < 4; i++)
-                                                                  //                   CardLoading(
-                                                                  //                     height: 100 * fem,
-                                                                  //                     borderRadius: BorderRadius.circular(8 * fem),
-                                                                  //                     margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                  //                   ),
-                                                                  //               for (int i = 0; i < future7Length; i++)
-                                                                  //                 CardLoading(
-                                                                  //                   height: 100 * fem,
-                                                                  //                   borderRadius: BorderRadius.circular(8 * fem),
-                                                                  //                   margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                  //                 ),
-                                                                  //             ])
-                                                                  //           ])
-                                                                  //     :
-                                                                  (future7Length ==
+                                                                  ? (future7Length ==
                                                                           0)
                                                                       ? searchEmptyWidget()
                                                                       : ListView
@@ -1915,27 +1764,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                               3 &&
                                                                           pastDateId ==
                                                                               0)
-                                                                      ?
-                                                                      // isEventLoading
-                                                                      //     ? Column(children: [
-                                                                      //         Column(children: [
-                                                                      //           if (past1Length < 4)
-                                                                      //             for (int i = 0; i < 4; i++)
-                                                                      //               CardLoading(
-                                                                      //                 height: 100 * fem,
-                                                                      //                 borderRadius: BorderRadius.circular(8 * fem),
-                                                                      //                 margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                      //               ),
-                                                                      //           for (int i = 0; i < past1Length; i++)
-                                                                      //             CardLoading(
-                                                                      //               height: 100 * fem,
-                                                                      //               borderRadius: BorderRadius.circular(8 * fem),
-                                                                      //               margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                      //             ),
-                                                                      //         ])
-                                                                      //       ])
-                                                                      //     :
-                                                                      (past1Length ==
+                                                                      ? (past1Length ==
                                                                               0)
                                                                           ? searchEmptyWidget()
                                                                           : ListView
@@ -2034,25 +1863,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                   },
                                                                                 )
                                                                           : (statusId == 3 && pastDateId == 2)
-                                                                              ?
-                                                                              //  isEventLoading
-                                                                              //     ? Column(children: [
-                                                                              //         if (past3Length < 4)
-                                                                              //           for (int i = 0; i < 4; i++)
-                                                                              //             CardLoading(
-                                                                              //               height: 100 * fem,
-                                                                              //               borderRadius: BorderRadius.circular(8 * fem),
-                                                                              //               margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                              //             ),
-                                                                              //         for (int i = 0; i < past3Length; i++)
-                                                                              //           CardLoading(
-                                                                              //             height: 100 * fem,
-                                                                              //             borderRadius: BorderRadius.circular(8 * fem),
-                                                                              //             margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                              //           ),
-                                                                              //       ])
-                                                                              //     :
-                                                                              (past3Length == 0)
+                                                                              ? (past3Length == 0)
                                                                                   ? searchEmptyWidget()
                                                                                   : ListView.builder(
                                                                                       physics: const NeverScrollableScrollPhysics(),
@@ -2091,25 +1902,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                       },
                                                                                     )
                                                                               : (statusId == 3 && pastDateId == 3)
-                                                                                  ?
-                                                                                  //  isEventLoading
-                                                                                  //     ? Column(children: [
-                                                                                  //         if (past4Length < 4)
-                                                                                  //           for (int i = 0; i < 4; i++)
-                                                                                  //             CardLoading(
-                                                                                  //               height: 100 * fem,
-                                                                                  //               borderRadius: BorderRadius.circular(8 * fem),
-                                                                                  //               margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                  //             ),
-                                                                                  //         for (int i = 0; i < past4Length; i++)
-                                                                                  //           CardLoading(
-                                                                                  //             height: 100 * fem,
-                                                                                  //             borderRadius: BorderRadius.circular(8 * fem),
-                                                                                  //             margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                  //           ),
-                                                                                  //       ])
-                                                                                  //     :
-                                                                                  (past4Length == 0)
+                                                                                  ? (past4Length == 0)
                                                                                       ? searchEmptyWidget()
                                                                                       : ListView.builder(
                                                                                           physics: const NeverScrollableScrollPhysics(),
@@ -2148,25 +1941,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                           },
                                                                                         )
                                                                                   : (statusId == 3 && pastDateId == 4)
-                                                                                      ?
-                                                                                      // isEventLoading
-                                                                                      //     ? Column(children: [
-                                                                                      //         if (past5Length < 4)
-                                                                                      //           for (int i = 0; i < 4; i++)
-                                                                                      //             CardLoading(
-                                                                                      //               height: 100 * fem,
-                                                                                      //               borderRadius: BorderRadius.circular(8 * fem),
-                                                                                      //               margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                      //             ),
-                                                                                      //         for (int i = 0; i < past5Length; i++)
-                                                                                      //           CardLoading(
-                                                                                      //             height: 100 * fem,
-                                                                                      //             borderRadius: BorderRadius.circular(8 * fem),
-                                                                                      //             margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                      //           ),
-                                                                                      //       ])
-                                                                                      //     :
-                                                                                      (past5Length == 0)
+                                                                                      ? (past5Length == 0)
                                                                                           ? searchEmptyWidget()
                                                                                           : ListView.builder(
                                                                                               physics: const NeverScrollableScrollPhysics(),
@@ -2205,25 +1980,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                               },
                                                                                             )
                                                                                       : (statusId == 3 && pastDateId == 5)
-                                                                                          ?
-                                                                                          //  isEventLoading
-                                                                                          //     ? Column(children: [
-                                                                                          //         if (past6Length < 4)
-                                                                                          //           for (int i = 0; i < 4; i++)
-                                                                                          //             CardLoading(
-                                                                                          //               height: 100 * fem,
-                                                                                          //               borderRadius: BorderRadius.circular(8 * fem),
-                                                                                          //               margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                          //             ),
-                                                                                          //         for (int i = 0; i < past6Length; i++)
-                                                                                          //           CardLoading(
-                                                                                          //             height: 100 * fem,
-                                                                                          //             borderRadius: BorderRadius.circular(8 * fem),
-                                                                                          //             margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                          //           ),
-                                                                                          //       ])
-                                                                                          //     :
-                                                                                          (past6Length == 0)
+                                                                                          ? (past6Length == 0)
                                                                                               ? searchEmptyWidget()
                                                                                               : ListView.builder(
                                                                                                   physics: const NeverScrollableScrollPhysics(),
@@ -2262,25 +2019,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                                   },
                                                                                                 )
                                                                                           : (statusId == 3 && pastDateId == 6)
-                                                                                              ?
-                                                                                              // isEventLoading
-                                                                                              //     ? Column(children: [
-                                                                                              //         if (past7Length < 4)
-                                                                                              //           for (int i = 0; i < 4; i++)
-                                                                                              //             CardLoading(
-                                                                                              //               height: 100 * fem,
-                                                                                              //               borderRadius: BorderRadius.circular(8 * fem),
-                                                                                              //               margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                              //             ),
-                                                                                              //         for (int i = 0; i < past7Length; i++)
-                                                                                              //           CardLoading(
-                                                                                              //             height: 100 * fem,
-                                                                                              //             borderRadius: BorderRadius.circular(8 * fem),
-                                                                                              //             margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                              //           ),
-                                                                                              //       ])
-                                                                                              //     :
-                                                                                              (past7Length == 0)
+                                                                                              ? (past7Length == 0)
                                                                                                   ? searchEmptyWidget()
                                                                                                   : ListView.builder(
                                                                                                       physics: const NeverScrollableScrollPhysics(),
@@ -2319,18 +2058,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                                                       },
                                                                                                     )
                                                                                               : (statusId == 4)
-                                                                                                  ?
-                                                                                                  // isEventLoading
-                                                                                                  //     ? Column(children: [
-                                                                                                  //         for (int i = 0; i < 4; i++)
-                                                                                                  //           CardLoading(
-                                                                                                  //             height: 100 * fem,
-                                                                                                  //             borderRadius: BorderRadius.circular(8 * fem),
-                                                                                                  //             margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                                  //           ),
-                                                                                                  //       ])
-                                                                                                  //     :
-                                                                                                  (startedLength == 4)
+                                                                                                  ? (startedLength == 4)
                                                                                                       ? searchEmptyWidget()
                                                                                                       : ListView.builder(
                                                                                                           physics: const NeverScrollableScrollPhysics(),

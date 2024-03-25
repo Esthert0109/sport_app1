@@ -28,9 +28,20 @@ class FootballMatchProvider extends ChangeNotifier {
           "page=${page}&size=${size}";
     }
 
-    Map<String, String> headers = {
-      'Content-Type': 'application/json; charset=utf-8',
-    };
+    final token = await SharedPreferencesUtils.getSavedToken();
+    Map<String, String> headers = {};
+
+    print("check token: $token");
+    if (token == null) {
+      headers = {
+        'Content-Type': 'application/json; charset=utf-8',
+      };
+    } else {
+      headers = {
+        'Content-Type': 'application/json; charset=utf-8',
+        'token': token,
+      };
+    }
 
     try {
       final response = await sendGetRequest(url, headers);
@@ -40,6 +51,8 @@ class FootballMatchProvider extends ChangeNotifier {
 
       if (responseCode == 0) {
         Map<String, dynamic> jsonData = response['data'];
+
+        print("check data seven: ${jsonData}");
         MatchListFootball responseData = MatchListFootball.fromJson(jsonData);
 
         AllMatchesFootball model = AllMatchesFootball(

@@ -13,7 +13,8 @@ class BasketballMatchProvider extends ChangeNotifier {
   UserDataModel userDataModel = Get.find<UserDataModel>();
   CommonServices service = CommonServices();
 
-  Future<AllMatches?> getAllBasketballMatchesInSevens(int page, int size) async {
+  Future<AllMatches?> getAllBasketballMatchesInSevens(
+      int page, int size) async {
     String url = "";
 
     if (userDataModel.isCN.value) {
@@ -26,9 +27,20 @@ class BasketballMatchProvider extends ChangeNotifier {
           "page=${page}&size=${size}";
     }
 
-    Map<String, String> headers = {
-      'Content-Type': 'application/json; charset=utf-8',
-    };
+    final token = await SharedPreferencesUtils.getSavedToken();
+    Map<String, String> headers = {};
+
+    print("check token: $token");
+    if (token == null) {
+      headers = {
+        'Content-Type': 'application/json; charset=utf-8',
+      };
+    } else {
+      headers = {
+        'Content-Type': 'application/json; charset=utf-8',
+        'token': token,
+      };
+    }
 
     try {
       final response = await sendGetRequest(url, headers);
@@ -38,6 +50,8 @@ class BasketballMatchProvider extends ChangeNotifier {
 
       if (responseCode == 0) {
         Map<String, dynamic> jsonData = response['data'];
+
+        print("check data seven: ${jsonData}");
         MatchList responseData = MatchList.fromJson(jsonData);
 
         AllMatches model = AllMatches(

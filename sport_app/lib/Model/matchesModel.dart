@@ -245,7 +245,7 @@ class MatchesData {
       matchTimeStr: json['matchTimeStr'],
       statusStr: json['statusStr'],
       matchDate: json['matchDate'],
-      hasCollected: json['hasCollected'],
+      hasCollected: json['hasCollected'] ?? false,
     );
   }
 }
@@ -410,7 +410,7 @@ class FootballMatchesData {
       homeFormation: json['homeFormation'],
       awayFormation: json['awayFormation'],
       matchDate: json['matchDate'],
-      hasCollected: json['hasCollected'],
+      hasCollected: json['hasCollected']?? false,
     );
   }
 }
@@ -542,7 +542,7 @@ class SearchMatchesData {
       homeFormation: json['homeFormation'],
       awayFormation: json['awayFormation'],
       matchDate: json['matchDate'],
-      hasCollected: json['hasCollected'],
+      hasCollected: json['hasCollected'] ?? false,
     );
   }
 }

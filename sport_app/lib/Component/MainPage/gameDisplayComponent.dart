@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:sport_app/Model/userDataModel.dart';
 
 import '../../Constants/colorConstant.dart';
 import '../../Constants/textConstant.dart';
 import '../../Model/collectionModel.dart';
 import '../../Provider/collectionProvider.dart';
+import '../Common/loginDialog.dart';
 
 class GameDisplayComponent extends StatefulWidget {
   final int id;
@@ -42,6 +45,7 @@ class GameDisplayComponent extends StatefulWidget {
 class _GameDisplayComponentState extends State<GameDisplayComponent> {
   //services and provider
   BookmarkProvider bookmarkProvider = BookmarkProvider();
+  UserDataModel userModel = Get.find<UserDataModel>();
 
   // required variables
   bool isSaved = false;
@@ -156,17 +160,27 @@ class _GameDisplayComponentState extends State<GameDisplayComponent> {
                       child: GestureDetector(
                         onTap: () {
                           setState(() {
-                            if (isSaved) {
-                              delBookmark(id);
-                              isSaved = !isSaved;
+                            if (userModel.isLogin.value) {
+                              if (isSaved) {
+                                delBookmark(id);
+                                isSaved = !isSaved;
+                              } else {
+                                createBookmark(id);
+                                isSaved = !isSaved;
+                              }
                             } else {
-                              createBookmark(id);
-                              isSaved = !isSaved;
+                              showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(20))),
+                                  builder: (context) {
+                                    return LoginAlertDialog();
+                                  });
                             }
-
                             print("isSaved: $isSaved");
                           });
-                          // widget.saveGameCallBack!();
                         },
                         child: Container(
                           width: 24 * fem,

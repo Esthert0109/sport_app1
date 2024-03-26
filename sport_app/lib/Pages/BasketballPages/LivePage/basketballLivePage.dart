@@ -412,6 +412,7 @@ class _BasketballLivePageState extends State<BasketballLivePage>
 
                                                     getAllLiveList();
                                                   } else {
+                                                    isFollowLoading = false;
                                                     followStatusId = 0;
                                                     followingList.clear();
                                                     followingLength =

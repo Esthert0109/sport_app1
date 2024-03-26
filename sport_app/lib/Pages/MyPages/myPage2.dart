@@ -34,10 +34,6 @@ class _ProfilePageState extends State<ProfilePage> {
   UserProvider provider = UserProvider();
   PopularGameProvider gameProvider = PopularGameProvider();
 
-  //controller
-  // final RoundedLoadingButtonController btnController =
-  //     RoundedLoadingButtonController();
-
   // common variables
   bool isLogin = true;
   bool isLoading = false;
@@ -121,14 +117,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                   radius: 30 * fem,
                                   backgroundImage: NetworkImage(
                                       userModel.profilePicture.value),
-                                  // fit: BoxFit.cover,
-                                  // height: 60 * fem,
-                                  // width: 60 * fem,
                                 )
                               : Image(
-                                  image: const NetworkImage(
-                                      "https://cc.tvbs.com.tw/img/upload/2022/05/20/20220520170357-1298d211.jpg"
-                                      // "images/myPage/profilePic.png"
+                                  image: const AssetImage(
+                                      "images/common/pandalogo.png"
                                       ),
                                   fit: BoxFit.cover,
                                   height: 60 * fem,
@@ -159,8 +151,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                           )),
                                       InkWell(
                                         onTap: () {
-                                          print(
-                                              "edit projecxxxxxxxxxxxxxxxxxxxxxxxxxxxxy");
                                           Get.to(() => EditProfile(),
                                               transition: Transition.fadeIn);
                                         },

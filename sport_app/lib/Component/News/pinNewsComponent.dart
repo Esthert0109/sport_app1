@@ -19,6 +19,15 @@ class PinNewsComponent extends StatefulWidget {
 }
 
 class _PinNewsComponentState extends State<PinNewsComponent> {
+  String formatDateString(String dateTimeString) {
+    DateTime dateTime = DateTime.parse(dateTimeString);
+
+    String formattedDateString =
+        '${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}';
+
+    return formattedDateString;
+  }
+
   @override
   Widget build(BuildContext context) {
     // standard size
@@ -26,12 +35,14 @@ class _PinNewsComponentState extends State<PinNewsComponent> {
     double fem = MediaQuery.of(context).size.width / baseWidth;
 
     String title = widget.title;
-    String timeAgo = widget.timeAgo;
+    String timeAgo = formatDateString(widget.timeAgo);
     int read = widget.read;
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 5 * fem, vertical: 5 * fem),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
@@ -50,6 +61,7 @@ class _PinNewsComponentState extends State<PinNewsComponent> {
                   child: Text(
                     AppLocalizations.of(context)!.pin,
                     style: tPinNews,
+                    textAlign: TextAlign.left,
                   ),
                 ),
                 Padding(

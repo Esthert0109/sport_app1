@@ -276,6 +276,13 @@ const tNewsDetails = TextStyle(
     fontWeight: FontWeight.w400,
     color: kMainGreyColor);
 
+const tSwiperTitle = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 14,
+    letterSpacing: 0.3,
+    fontWeight: FontWeight.w500,
+    color: kMainComponentColor);
+
 //my page
 const tUsername = TextStyle(
     fontFamily: 'Inter',

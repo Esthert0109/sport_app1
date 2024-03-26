@@ -122,20 +122,21 @@ class InfoListData {
   final String popular;
   final int readCount;
   final int createdDate;
+  final String dateStr;
 
-  InfoListData({
-    required this.id,
-    required this.recordId,
-    required this.categoryId,
-    required this.type,
-    required this.sportType,
-    required this.title,
-    required this.content,
-    required this.imgUrl,
-    required this.popular,
-    required this.readCount,
-    required this.createdDate,
-  });
+  InfoListData(
+      {required this.id,
+      required this.recordId,
+      required this.categoryId,
+      required this.type,
+      required this.sportType,
+      required this.title,
+      required this.content,
+      required this.imgUrl,
+      required this.popular,
+      required this.readCount,
+      required this.createdDate,
+      required this.dateStr});
 
   Map<String, dynamic> toJson() {
     return {
@@ -150,6 +151,7 @@ class InfoListData {
       "popular": popular,
       "readCount": readCount,
       "createdDate": createdDate,
+      "dateStr": dateStr
     };
   }
 
@@ -166,6 +168,7 @@ class InfoListData {
       popular: json['popular'],
       readCount: json['readCount'] ?? 0,
       createdDate: json['createdDate'] ?? 0,
+      dateStr: json['dateStr'] ?? "",
     );
   }
 }

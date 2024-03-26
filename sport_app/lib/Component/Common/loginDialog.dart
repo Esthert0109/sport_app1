@@ -178,7 +178,6 @@ class _LoginAlertDialogState extends State<LoginAlertDialog> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(child: ErrorText(Msg: _responseMsg)),
-                        //忘记密码按钮
                         PressableWord(
                             text: AppLocalizations.of(context)!.forgotPassword,
                             fontWeight: FontWeight.w600,
@@ -197,8 +196,6 @@ class _LoginAlertDialogState extends State<LoginAlertDialog> {
                             text: AppLocalizations.of(context)!.login,
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                // SEND LOGIN REQUEST PUT HERE
-                                // showLoadingDialog(context);
 
                                 checkContactNumber();
 
@@ -209,6 +206,7 @@ class _LoginAlertDialogState extends State<LoginAlertDialog> {
                                   SharedPreferencesUtils.saveUsername(phone);
                                   SharedPreferencesUtils.savePasswordLocally(
                                       passwordController.text);
+                                      // SharedPreferencesUtils.saveTokenLocally()
                                   print(
                                       "check token saved: ${SharedPreferencesUtils.getSavedToken().toString()}");
                                   Navigator.of(context).pop();
@@ -233,8 +231,6 @@ class _LoginAlertDialogState extends State<LoginAlertDialog> {
                       alignment: Alignment.centerRight,
                       child: TextButton(
                         style: TextButton.styleFrom(
-                          // primary: Colors.black,
-                          // onSurface: kMainGreenColor,
                           foregroundColor: kMainGreenColor,
                         ),
                         onPressed: () {

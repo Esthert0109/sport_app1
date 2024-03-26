@@ -407,6 +407,7 @@ class _FootballLivePageState extends State<FootballLivePage>
 
                                                       getAllLiveList();
                                                     } else {
+                                                      isFollowLoading = false;
                                                       followStatusId = 0;
                                                       followingList.clear();
                                                       followingLength =
@@ -753,3 +754,4 @@ class _FootballLivePageState extends State<FootballLivePage>
     );
   }
 }
+

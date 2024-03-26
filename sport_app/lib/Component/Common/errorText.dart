@@ -7,14 +7,17 @@ class ErrorText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color fontRed = Color(0xfff14336);
+    Color fontRed = Color.fromARGB(255, 168, 43, 31);
     double baseWidth = 375;
     double fem = MediaQuery.of(context).size.width / baseWidth;
-    return Text(Msg,
-        style: GoogleFonts.notoSansSc(
-          color: fontRed,
-          fontSize: 14 * fem,
-          fontWeight: FontWeight.w600,
-        ));
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20 * fem),
+      child: Text(Msg,
+          style: GoogleFonts.notoSansSc(
+            color: fontRed,
+            fontSize: 13 * fem,
+            fontWeight: FontWeight.w400,
+          )),
+    );
   }
 }

@@ -296,20 +296,34 @@ class _RegisterState extends State<Register> {
                                   ).launch(context);
                                 }
                               } else {
-                                Navigator.of(context).pop();
+                                // Navigator.of(context).pop();
                                 setState(() {
                                   _responseMsg = AppLocalizations.of(context)!
                                       .passwordNotSame;
+
+                                  openSnackbar(context, _responseMsg,
+                                      kComponentErrorTextColor);
                                 });
                                 print("password not same");
                               }
                             } else {
-                              Navigator.of(context).pop();
-                              openSnackbar(
-                                  context,
-                                  AppLocalizations.of(context)!
-                                      .keyInRequirements,
-                                  kComponentErrorTextColor);
+
+                              bool passwordsMatch = arePasswordsEqual();
+                              if(!passwordsMatch){
+                                setState(() {
+                                  _responseMsg = AppLocalizations.of(context)!
+                                      .passwordNotSame;
+
+                                });
+                                print("password not same");
+                              }
+                              // Navigator.of(context).pop();
+                              // openSnackbar(
+                              //     context,
+                              //     AppLocalizations.of(context)!
+                              //         .keyInRequirements,
+                              //     kComponentErrorTextColor);
+                              print("fail");
                             }
                           }),
                   SizedBox(

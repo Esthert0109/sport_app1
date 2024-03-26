@@ -50,26 +50,23 @@ class _NewsPageState extends State<NewsPage> {
   List<InfoListData> infoList3 = [];
   int infoLength3 = 0;
 
-  // List<MockClass> topNewsList = [
-  //   MockClass(
-  //       title: '🤣阿森纳全场零射正客场0-1波尔图，加莱诺读秒世界波绝杀', timeAgo: '1小时前', read: 1324),
-  //   MockClass(
-  //       title: '💥加莱诺读秒世界波绝杀，阿森纳全场零射正客场0-1波尔图。', timeAgo: '1小时前', read: 1654),
-  //   MockClass(
-  //       title: '🤣阿森纳全场零射正客场0-1波尔图，加莱诺读秒世界波绝杀 💥加莱诺读秒世界波绝杀，阿森纳全场零射正客场0-1波尔图。',
-  //       timeAgo: '1小时前',
-  //       read: 64521)
-  // ];
-  // int topNewsLength = 0;
+  List<InfoListData> imgList = [];
+  int imgLength = 0;
+  List<InfoListData> imgList1 = [];
+  int imgLength1 = 0;
+  List<InfoListData> imgList2 = [];
+  int imgLength2 = 0;
+  List<InfoListData> imgList3 = [];
+  int imgLength3 = 0;
 
-  List<String> img = [
-    "https://apicms.thestar.com.my/uploads/images/2022/10/27/1793451.jpeg",
-    "https://d3544la1u8djza.cloudfront.net/APHI/Blog/2016/10_October/persians/Persian+Cat+Facts+History+Personality+and+Care+_+ASPCA+Pet+Health+Insurance+_+white+Persian+cat+resting+on+a+brown+sofa-min.jpg",
-    "https://www.dutch.com/cdn/shop/articles/shutterstock_538333303.jpg?v=1683242960",
-    "https://i.ytimg.com/vi/xvQk-qV1070/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCHK8qn2BR3DrfXETOUGrmen3kNlw",
-    "https://us-tuna-sounds-images.voicemod.net/54a00490-7037-4e33-b837-061e21a639a1-1674436281444.png",
-    "https://i.pinimg.com/280x280_RS/f7/64/9c/f7649c2a35ba2ad5d85a7474c4afa482.jpg"
-  ];
+  // List<String> img = [
+  //   "https://apicms.thestar.com.my/uploads/images/2022/10/27/1793451.jpeg",
+  //   "https://d3544la1u8djza.cloudfront.net/APHI/Blog/2016/10_October/persians/Persian+Cat+Facts+History+Personality+and+Care+_+ASPCA+Pet+Health+Insurance+_+white+Persian+cat+resting+on+a+brown+sofa-min.jpg",
+  //   "https://www.dutch.com/cdn/shop/articles/shutterstock_538333303.jpg?v=1683242960",
+  //   "https://i.ytimg.com/vi/xvQk-qV1070/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCHK8qn2BR3DrfXETOUGrmen3kNlw",
+  //   "https://us-tuna-sounds-images.voicemod.net/54a00490-7037-4e33-b837-061e21a639a1-1674436281444.png",
+  //   "https://i.pinimg.com/280x280_RS/f7/64/9c/f7649c2a35ba2ad5d85a7474c4afa482.jpg"
+  // ];
 
   //variables
   bool _showAppBar = true;
@@ -141,6 +138,44 @@ class _NewsPageState extends State<NewsPage> {
         topList3.addAll(infoModel?.data ?? []);
         topLength3 = topList3.length;
         print("check list: ${topList3}");
+      }
+
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> getImgInfoList() async {
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+
+      if (tagId == 0) {
+        InfoListModel? infoModel =
+            await infoProvider.getImageInfoUrl(tagId + 1);
+        imgList.addAll(infoModel?.data ?? []);
+        imgLength = imgList.length;
+        print("check list: ${imgList}");
+      } else if (tagId == 1) {
+        InfoListModel? infoModel =
+            await infoProvider.getImageInfoUrl(tagId + 1);
+        imgList1.addAll(infoModel?.data ?? []);
+        imgLength1 = imgList1.length;
+        print("check list: ${imgList1}");
+      } else if (tagId == 2) {
+        InfoListModel? infoModel =
+            await infoProvider.getImageInfoUrl(tagId + 1);
+        imgList2.addAll(infoModel?.data ?? []);
+        imgLength2 = imgList2.length;
+        print("check list: ${imgList2}");
+      } else {
+        InfoListModel? infoModel =
+            await infoProvider.getImageInfoUrl(tagId + 1);
+        imgList3.addAll(infoModel?.data ?? []);
+        imgLength3 = imgList3.length;
+        print("check list: ${imgList3}");
       }
 
       setState(() {
@@ -254,8 +289,18 @@ class _NewsPageState extends State<NewsPage> {
       topLength2 = topList2.length;
       topLength3 = topList3.length;
 
+      imgList.clear();
+      imgList1.clear();
+      imgList2.clear();
+      imgList3.clear();
+      imgLength = imgList.length;
+      imgLength1 = imgList1.length;
+      imgLength2 = imgList2.length;
+      imgLength3 = imgList3.length;
+
       getInfoList();
       getTopInfoList();
+      getImgInfoList();
     });
   }
 
@@ -266,6 +311,8 @@ class _NewsPageState extends State<NewsPage> {
     getInfoList();
     isLoading = false;
     getTopInfoList();
+    isLoading = false;
+    getImgInfoList();
     _scrollController = ScrollController()..addListener(bottomScrollController);
   }
 
@@ -389,48 +436,67 @@ class _NewsPageState extends State<NewsPage> {
                                         infoLength = infoList.length;
                                         topList.clear();
                                         topLength = topList.length;
+                                        imgList.clear();
+                                        imgLength = imgList.length;
                                         page = 1;
 
                                         getInfoList();
                                         isLoading = false;
                                         getTopInfoList();
+                                        isLoading = false;
+                                        getImgInfoList();
                                       } else if (tagId == 1) {
                                         infoList1.clear();
                                         infoLength1 = infoList1.length;
                                         topList1.clear();
                                         topLength1 = topList1.length;
+                                        imgList1.clear();
+                                        imgLength1 = imgList1.length;
 
                                         page1 = 1;
 
                                         getInfoList();
                                         isLoading = false;
                                         getTopInfoList();
+
+                                        isLoading = false;
+                                        getImgInfoList();
                                       } else if (tagId == 2) {
                                         infoList2.clear();
                                         infoLength2 = infoList2.length;
                                         topList2.clear();
                                         topLength2 = topList2.length;
+                                        imgList2.clear();
+                                        imgLength2 = imgList2.length;
                                         page2 = 1;
 
                                         getInfoList();
                                         isLoading = false;
                                         getTopInfoList();
+                                        isLoading = false;
+                                        getImgInfoList();
                                       } else {
                                         infoList3.clear();
                                         infoLength3 = infoList3.length;
                                         topList3.clear();
                                         topLength3 = topList3.length;
+                                        imgList3.clear();
+                                        imgLength3 = imgList3.length;
                                         page3 = 1;
 
                                         getInfoList();
                                         isLoading = false;
                                         getTopInfoList();
+                                        isLoading = false;
+                                        getImgInfoList();
                                       }
                                     });
                                   }),
                             ),
                             (tagId == 0)
-                                ? (infoLength == 0 && topLength == 0)
+                                ? (infoLength == 0 &&
+                                        topLength == 0 &&
+                                        imgList.length == 0)
                                     ? searchEmptyWidget()
                                     : Column(
                                         mainAxisAlignment:
@@ -495,12 +561,6 @@ class _NewsPageState extends State<NewsPage> {
                                             child: InkWell(
                                               onTap: () {
                                                 print("navi to news info");
-                                                Get.to(
-                                                    () => InfoPageDetail(
-                                                          id: infoList[1].id,
-                                                        ),
-                                                    transition:
-                                                        Transition.fadeIn);
                                               },
                                               child: Swiper(
                                                 pagination: SwiperPagination(
@@ -523,57 +583,71 @@ class _NewsPageState extends State<NewsPage> {
                                                 autoplayDelay: 3000,
                                                 viewportFraction: 0.95,
                                                 scale: 0.9,
-                                                itemCount: img.length,
+                                                itemCount: imgList.length,
                                                 itemBuilder: (context, index) {
-                                                  return Stack(children: [
-                                                    ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                      child: Container(
-                                                        width: 343 * fem,
-                                                        height: 183 * fem,
-                                                        child: Image(
-                                                          image: NetworkImage(
-                                                              img[index]),
-                                                          fit: BoxFit.cover,
-                                                          loadingBuilder: (context,
-                                                              child,
-                                                              loadingProgress) {
-                                                            if (loadingProgress ==
-                                                                null) {
-                                                              return child;
-                                                            }
-                                                            return Center(
-                                                              child: LoadingAnimationWidget
-                                                                  .staggeredDotsWave(
-                                                                color:
-                                                                    kMainGreenColor,
-                                                                size: 50 * fem,
-                                                              ),
-                                                            );
-                                                          },
+                                                  return GestureDetector(
+                                                    onTap: () {
+                                                      Get.to(
+                                                          () => InfoPageDetail(
+                                                              id: imgList[index]
+                                                                  .id),
+                                                          transition: Transition
+                                                              .fadeIn);
+                                                    },
+                                                    child: Stack(children: [
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                        child: Container(
+                                                          width: 343 * fem,
+                                                          height: 183 * fem,
+                                                          child: Image(
+                                                            image: NetworkImage(
+                                                                imgList[index]
+                                                                    .imgUrl),
+                                                            fit: BoxFit.cover,
+                                                            loadingBuilder:
+                                                                (context, child,
+                                                                    loadingProgress) {
+                                                              if (loadingProgress ==
+                                                                  null) {
+                                                                return child;
+                                                              }
+                                                              return Center(
+                                                                child: LoadingAnimationWidget
+                                                                    .staggeredDotsWave(
+                                                                  color:
+                                                                      kMainGreenColor,
+                                                                  size:
+                                                                      50 * fem,
+                                                                ),
+                                                              );
+                                                            },
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                    Positioned(
-                                                      left: 0,
-                                                      right: 0,
-                                                      bottom: 5 * fem,
-                                                      child: Container(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal:
-                                                                    8 * fem),
-                                                        child: Text(
-                                                          "利雅得胜利2-0费哈总分3-0晋级亚冠八强，C罗利雅得胜利2-0费哈总分3-0晋级亚冠八强，C罗利雅得胜利2-0费哈总分3-0晋级亚冠八强，C罗利雅得胜利2-0费哈总分3-0晋级亚冠八强，C罗",
-                                                          style: tSwiperTitle,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
+                                                      Positioned(
+                                                        left: 0,
+                                                        right: 0,
+                                                        bottom: 5 * fem,
+                                                        child: Container(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  horizontal:
+                                                                      8 * fem),
+                                                          child: Text(
+                                                            imgList[index]
+                                                                .title,
+                                                            style: tSwiperTitle,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                          ),
                                                         ),
-                                                      ),
-                                                    )
-                                                  ]);
+                                                      )
+                                                    ]),
+                                                  );
                                                 },
                                               ),
                                             ),
@@ -679,7 +753,9 @@ class _NewsPageState extends State<NewsPage> {
                                         ],
                                       )
                                 : (tagId == 1)
-                                    ? (infoLength1 == 0 && topLength1 == 0)
+                                    ? (infoLength1 == 0 &&
+                                            topLength1 == 0 &&
+                                            imgList1.length == 0)
                                         ? searchEmptyWidget()
                                         : Column(
                                             mainAxisAlignment:
@@ -784,62 +860,79 @@ class _NewsPageState extends State<NewsPage> {
                                                     autoplayDelay: 3000,
                                                     viewportFraction: 0.95,
                                                     scale: 0.9,
-                                                    itemCount: img.length,
+                                                    itemCount: imgList1.length,
                                                     itemBuilder:
                                                         (context, index) {
-                                                      return Stack(children: [
-                                                        ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                          child: Container(
-                                                            width: 343 * fem,
-                                                            height: 183 * fem,
-                                                            child: Image(
-                                                              image: NetworkImage(
-                                                                  img[index]),
-                                                              fit: BoxFit.cover,
-                                                              loadingBuilder:
-                                                                  (context,
-                                                                      child,
-                                                                      loadingProgress) {
-                                                                if (loadingProgress ==
-                                                                    null) {
-                                                                  return child;
-                                                                }
-                                                                return Center(
-                                                                  child: LoadingAnimationWidget
-                                                                      .staggeredDotsWave(
-                                                                    color:
-                                                                        kMainGreenColor,
-                                                                    size: 50 *
-                                                                        fem,
-                                                                  ),
-                                                                );
-                                                              },
+                                                      return GestureDetector(
+                                                        onTap: () {
+                                                          Get.to(
+                                                              () => InfoPageDetail(
+                                                                  id: imgList1[
+                                                                          index]
+                                                                      .id),
+                                                              transition:
+                                                                  Transition
+                                                                      .fadeIn);
+                                                        },
+                                                        child: Stack(children: [
+                                                          ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8),
+                                                            child: Container(
+                                                              width: 343 * fem,
+                                                              height: 183 * fem,
+                                                              child: Image(
+                                                                image: NetworkImage(
+                                                                    imgList1[
+                                                                            index]
+                                                                        .imgUrl),
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                                loadingBuilder:
+                                                                    (context,
+                                                                        child,
+                                                                        loadingProgress) {
+                                                                  if (loadingProgress ==
+                                                                      null) {
+                                                                    return child;
+                                                                  }
+                                                                  return Center(
+                                                                    child: LoadingAnimationWidget
+                                                                        .staggeredDotsWave(
+                                                                      color:
+                                                                          kMainGreenColor,
+                                                                      size: 50 *
+                                                                          fem,
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                        Positioned(
-                                                          left: 0,
-                                                          right: 0,
-                                                          bottom: 5 * fem,
-                                                          child: Container(
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        8 * fem),
-                                                            child: Text(
-                                                              "利雅得胜利2-0费哈总分3-0晋级亚冠八强，C罗利雅得胜利2-0费哈总分3-0晋级亚冠八强，C罗利雅得胜利2-0费哈总分3-0晋级亚冠八强，C罗利雅得胜利2-0费哈总分3-0晋级亚冠八强，C罗",
-                                                              style:
-                                                                  tSwiperTitle,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
+                                                          Positioned(
+                                                            left: 0,
+                                                            right: 0,
+                                                            bottom: 5 * fem,
+                                                            child: Container(
+                                                              padding: EdgeInsets
+                                                                  .symmetric(
+                                                                      horizontal:
+                                                                          8 * fem),
+                                                              child: Text(
+                                                                imgList1[index]
+                                                                    .title,
+                                                                style:
+                                                                    tSwiperTitle,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                              ),
                                                             ),
-                                                          ),
-                                                        )
-                                                      ]);
+                                                          )
+                                                        ]),
+                                                      );
                                                     },
                                                   ),
                                                 ),
@@ -957,7 +1050,9 @@ class _NewsPageState extends State<NewsPage> {
                                             ],
                                           )
                                     : (tagId == 2)
-                                        ? (infoLength2 == 0 && topLength2 == 0)
+                                        ? (infoLength2 == 0 &&
+                                                topLength2 == 0 &&
+                                                imgList2.length == 0)
                                             ? searchEmptyWidget()
                                             : Column(
                                                 mainAxisAlignment:
@@ -1071,70 +1166,81 @@ class _NewsPageState extends State<NewsPage> {
                                                         autoplayDelay: 3000,
                                                         viewportFraction: 0.95,
                                                         scale: 0.9,
-                                                        itemCount: img.length,
+                                                        itemCount:
+                                                            imgList2.length,
                                                         itemBuilder:
                                                             (context, index) {
-                                                          return Stack(
-                                                              children: [
-                                                                ClipRRect(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8),
-                                                                  child:
-                                                                      Container(
-                                                                    width: 343 *
-                                                                        fem,
-                                                                    height:
-                                                                        183 *
-                                                                            fem,
+                                                          return GestureDetector(
+                                                            onTap: () {
+                                                              Get.to(
+                                                                  () => InfoPageDetail(
+                                                                      id: imgList2[
+                                                                              index]
+                                                                          .id),
+                                                                  transition:
+                                                                      Transition
+                                                                          .fadeIn);
+                                                            },
+                                                            child: Stack(
+                                                                children: [
+                                                                  ClipRRect(
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(8),
                                                                     child:
-                                                                        Image(
-                                                                      image: NetworkImage(
-                                                                          img[index]),
-                                                                      fit: BoxFit
-                                                                          .cover,
-                                                                      loadingBuilder: (context,
-                                                                          child,
-                                                                          loadingProgress) {
-                                                                        if (loadingProgress ==
-                                                                            null) {
-                                                                          return child;
-                                                                        }
-                                                                        return Center(
-                                                                          child:
-                                                                              LoadingAnimationWidget.staggeredDotsWave(
-                                                                            color:
-                                                                                kMainGreenColor,
-                                                                            size:
-                                                                                50 * fem,
-                                                                          ),
-                                                                        );
-                                                                      },
+                                                                        Container(
+                                                                      width: 343 *
+                                                                          fem,
+                                                                      height:
+                                                                          183 *
+                                                                              fem,
+                                                                      child:
+                                                                          Image(
+                                                                        image: NetworkImage(
+                                                                            imgList2[index].imgUrl),
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                        loadingBuilder: (context,
+                                                                            child,
+                                                                            loadingProgress) {
+                                                                          if (loadingProgress ==
+                                                                              null) {
+                                                                            return child;
+                                                                          }
+                                                                          return Center(
+                                                                            child:
+                                                                                LoadingAnimationWidget.staggeredDotsWave(
+                                                                              color: kMainGreenColor,
+                                                                              size: 50 * fem,
+                                                                            ),
+                                                                          );
+                                                                        },
+                                                                      ),
                                                                     ),
                                                                   ),
-                                                                ),
-                                                                Positioned(
-                                                                  left: 0,
-                                                                  right: 0,
-                                                                  bottom:
-                                                                      5 * fem,
-                                                                  child:
-                                                                      Container(
-                                                                    padding: EdgeInsets.symmetric(
-                                                                        horizontal:
-                                                                            8 * fem),
-                                                                    child: Text(
-                                                                      "利雅得胜利2-0费哈总分3-0晋级亚冠八强，C罗利雅得胜利2-0费哈总分3-0晋级亚冠八强，C罗利雅得胜利2-0费哈总分3-0晋级亚冠八强，C罗利雅得胜利2-0费哈总分3-0晋级亚冠八强，C罗",
-                                                                      style:
-                                                                          tSwiperTitle,
-                                                                      overflow:
-                                                                          TextOverflow
-                                                                              .ellipsis,
+                                                                  Positioned(
+                                                                    left: 0,
+                                                                    right: 0,
+                                                                    bottom:
+                                                                        5 * fem,
+                                                                    child:
+                                                                        Container(
+                                                                      padding: EdgeInsets.symmetric(
+                                                                          horizontal:
+                                                                              8 * fem),
+                                                                      child:
+                                                                          Text(
+                                                                        imgList2[index]
+                                                                            .title,
+                                                                        style:
+                                                                            tSwiperTitle,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                      ),
                                                                     ),
-                                                                  ),
-                                                                )
-                                                              ]);
+                                                                  )
+                                                                ]),
+                                                          );
                                                         },
                                                       ),
                                                     ),
@@ -1254,7 +1360,9 @@ class _NewsPageState extends State<NewsPage> {
                                                   ),
                                                 ],
                                               )
-                                        : (infoLength3 == 0 && topLength3 == 0)
+                                        : (infoLength3 == 0 &&
+                                                topLength3 == 0 &&
+                                                imgList3.length == 0)
                                             ? searchEmptyWidget()
                                             : Column(
                                                 mainAxisAlignment:
@@ -1368,70 +1476,81 @@ class _NewsPageState extends State<NewsPage> {
                                                         autoplayDelay: 3000,
                                                         viewportFraction: 0.95,
                                                         scale: 0.9,
-                                                        itemCount: img.length,
+                                                        itemCount:
+                                                            imgList3.length,
                                                         itemBuilder:
                                                             (context, index) {
-                                                          return Stack(
-                                                              children: [
-                                                                ClipRRect(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8),
-                                                                  child:
-                                                                      Container(
-                                                                    width: 343 *
-                                                                        fem,
-                                                                    height:
-                                                                        183 *
-                                                                            fem,
+                                                          return GestureDetector(
+                                                            onTap: () {
+                                                              Get.to(
+                                                                  () => InfoPageDetail(
+                                                                      id: imgList3[
+                                                                              index]
+                                                                          .id),
+                                                                  transition:
+                                                                      Transition
+                                                                          .fadeIn);
+                                                            },
+                                                            child: Stack(
+                                                                children: [
+                                                                  ClipRRect(
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(8),
                                                                     child:
-                                                                        Image(
-                                                                      image: NetworkImage(
-                                                                          img[index]),
-                                                                      fit: BoxFit
-                                                                          .cover,
-                                                                      loadingBuilder: (context,
-                                                                          child,
-                                                                          loadingProgress) {
-                                                                        if (loadingProgress ==
-                                                                            null) {
-                                                                          return child;
-                                                                        }
-                                                                        return Center(
-                                                                          child:
-                                                                              LoadingAnimationWidget.staggeredDotsWave(
-                                                                            color:
-                                                                                kMainGreenColor,
-                                                                            size:
-                                                                                50 * fem,
-                                                                          ),
-                                                                        );
-                                                                      },
+                                                                        Container(
+                                                                      width: 343 *
+                                                                          fem,
+                                                                      height:
+                                                                          183 *
+                                                                              fem,
+                                                                      child:
+                                                                          Image(
+                                                                        image: NetworkImage(
+                                                                            imgList3[index].imgUrl),
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                        loadingBuilder: (context,
+                                                                            child,
+                                                                            loadingProgress) {
+                                                                          if (loadingProgress ==
+                                                                              null) {
+                                                                            return child;
+                                                                          }
+                                                                          return Center(
+                                                                            child:
+                                                                                LoadingAnimationWidget.staggeredDotsWave(
+                                                                              color: kMainGreenColor,
+                                                                              size: 50 * fem,
+                                                                            ),
+                                                                          );
+                                                                        },
+                                                                      ),
                                                                     ),
                                                                   ),
-                                                                ),
-                                                                Positioned(
-                                                                  left: 0,
-                                                                  right: 0,
-                                                                  bottom:
-                                                                      5 * fem,
-                                                                  child:
-                                                                      Container(
-                                                                    padding: EdgeInsets.symmetric(
-                                                                        horizontal:
-                                                                            8 * fem),
-                                                                    child: Text(
-                                                                      "利雅得胜利2-0费哈总分3-0晋级亚冠八强，C罗利雅得胜利2-0费哈总分3-0晋级亚冠八强，C罗利雅得胜利2-0费哈总分3-0晋级亚冠八强，C罗利雅得胜利2-0费哈总分3-0晋级亚冠八强，C罗",
-                                                                      style:
-                                                                          tSwiperTitle,
-                                                                      overflow:
-                                                                          TextOverflow
-                                                                              .ellipsis,
+                                                                  Positioned(
+                                                                    left: 0,
+                                                                    right: 0,
+                                                                    bottom:
+                                                                        5 * fem,
+                                                                    child:
+                                                                        Container(
+                                                                      padding: EdgeInsets.symmetric(
+                                                                          horizontal:
+                                                                              8 * fem),
+                                                                      child:
+                                                                          Text(
+                                                                        imgList3[index]
+                                                                            .title,
+                                                                        style:
+                                                                            tSwiperTitle,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                      ),
                                                                     ),
-                                                                  ),
-                                                                )
-                                                              ]);
+                                                                  )
+                                                                ]),
+                                                          );
                                                         },
                                                       ),
                                                     ),

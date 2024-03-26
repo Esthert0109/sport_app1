@@ -39,6 +39,42 @@ class InfoProvider extends ChangeNotifier {
     }
   }
 
+  Future<InfoListModel?> getImageInfoUrl(int search) async {
+    String url = ApiConstants.baseUrl + ApiConstants.getImageInfoList;
+
+    Map<String, String> headers = {
+      'Content-Type': 'application/json; charset=utf-8',
+    };
+
+    try {
+      final response = await sendGetRequest(url, headers);
+
+      int responseCode = response['code'];
+      String responseMsg = response['msg'];
+
+      if (responseCode == 0) {
+        List<dynamic> jsonData = response['data'];
+
+        print("check data: ${jsonData}");
+        List<InfoListData> responseData =
+            jsonData.map((e) => InfoListData.fromJson(e)).toList();
+
+        InfoListModel infoModel = InfoListModel(
+            code: responseCode, msg: responseMsg, data: responseData);
+
+        return infoModel;
+      } else {
+        InfoListModel infoModel =
+            InfoListModel(code: responseCode, msg: responseMsg, data: []);
+
+        return infoModel;
+      }
+    } catch (e) {
+      print("Error in image info list: $e");
+      return null;
+    }
+  }
+
   Future<InfoListModel?> getTopInfoList(int search) async {
     String url =
         ApiConstants.baseUrl + ApiConstants.getTopInfoList + "${search}";

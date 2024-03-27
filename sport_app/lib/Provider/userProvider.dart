@@ -120,6 +120,7 @@ class UserProvider extends ChangeNotifier {
 
         userModel.saveNameAndContact(token!, username!, mobile!, head!);
         userModel.isLogin.value = true;
+        await userLogin(mobile);
 
         // Print the extracted values
         print('head: $head');
@@ -226,6 +227,7 @@ class UserProvider extends ChangeNotifier {
       } else {
         if (code == '0') {
           print('Picture Upload Successful');
+          setAvatarTencent(userModel.id.value, data);
           return true;
         } else {
           print("Picture upload to database unsuccessful: $code");

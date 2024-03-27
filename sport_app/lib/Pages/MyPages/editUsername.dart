@@ -120,7 +120,6 @@ class _EditUserNicknameState extends State<EditUserNickname> {
                     text: AppLocalizations.of(context)!.updateNickname,
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        // showLoadingDialog(context);
                         String newNickname = _userNameController.text;
                         bool isChangeNickname =
                             await provider.updateUserNickname(newNickname);

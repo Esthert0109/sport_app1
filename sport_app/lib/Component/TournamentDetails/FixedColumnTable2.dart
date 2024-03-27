@@ -52,20 +52,7 @@ class _FixedTableState extends State<FixedTable> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      // getPlayerName();
-      // getMinutes();
-      // getScores();
-      // getRebound();
-      // getAssist();
-      // getFieldGoal();
-      // getThreePointer();
-      // getFreeThrow();
-      // getSteal();
-      // getTurnover();
-      // getBlockShot();
-      // getFoul();
-    });
+    WidgetsBinding.instance!.addPostFrameCallback((_) {});
   }
 
 //====================== Get Column Data ======================================//
@@ -85,11 +72,7 @@ class _FixedTableState extends State<FixedTable> {
   }
 
   List<dynamic> getMinutes() {
-    // if (userDataModel.isCN.value) {
-    //   minutes = ['时间'];
-    // } else {
     minutes = [AppLocalizations.of(context)!.time];
-    // }
 
     if (widget.isHome) {
       for (int i = 0; i < widget.homeTeamLineUp!.length; i++) {
@@ -105,11 +88,7 @@ class _FixedTableState extends State<FixedTable> {
   }
 
   List<dynamic> getScores() {
-    // if (userDataModel.isCN.value) {
-    //   scores = ['得分'];
-    // } else {
     scores = [AppLocalizations.of(context)!.score];
-    // }
 
     if (widget.isHome) {
       for (int i = 0; i < widget.homeTeamLineUp!.length; i++) {
@@ -125,11 +104,7 @@ class _FixedTableState extends State<FixedTable> {
   }
 
   List<dynamic> getRebound() {
-    // if (userDataModel.isCN.value) {
-    //   rebound = ['篮板'];
-    // } else {
     rebound = [AppLocalizations.of(context)!.rebound];
-    // }
 
     if (widget.isHome) {
       for (int i = 0; i < widget.homeTeamLineUp!.length; i++) {
@@ -145,11 +120,7 @@ class _FixedTableState extends State<FixedTable> {
   }
 
   List<dynamic> getAssist() {
-    // if (userDataModel.isCN.value) {
-    //   assist = ['助攻'];
-    // } else {
     assist = [AppLocalizations.of(context)!.assist];
-    // }
 
     if (widget.isHome) {
       for (int i = 0; i < widget.homeTeamLineUp!.length; i++) {
@@ -165,11 +136,7 @@ class _FixedTableState extends State<FixedTable> {
   }
 
   List<dynamic> getFieldGoal() {
-    // if (userDataModel.isCN.value) {
-    //   fieldGoal = ['投篮'];
-    // } else {
     fieldGoal = [AppLocalizations.of(context)!.fieldGoal];
-    // }
 
     if (widget.isHome) {
       for (int i = 0; i < widget.homeTeamLineUp!.length; i++) {
@@ -189,11 +156,7 @@ class _FixedTableState extends State<FixedTable> {
   }
 
   List<dynamic> getThreePointer() {
-    // if (userDataModel.isCN.value) {
-    //   threePointer = ['三分'];
-    // } else {
     threePointer = [AppLocalizations.of(context)!.threePointer];
-    // }
 
     if (widget.isHome) {
       for (int i = 0; i < widget.homeTeamLineUp!.length; i++) {
@@ -215,11 +178,7 @@ class _FixedTableState extends State<FixedTable> {
   }
 
   List<dynamic> getFreeThrow() {
-    // if (userDataModel.isCN.value) {
-    //   freeThrow = ['罚球'];
-    // } else {
     freeThrow = [AppLocalizations.of(context)!.freeThrow];
-    // }
 
     if (widget.isHome) {
       for (int i = 0; i < widget.homeTeamLineUp!.length; i++) {
@@ -241,11 +200,7 @@ class _FixedTableState extends State<FixedTable> {
   }
 
   List<dynamic> getSteal() {
-    // if (userDataModel.isCN.value) {
-    //   steal = ['抢断'];
-    // } else {
     steal = [AppLocalizations.of(context)!.steal];
-    // }
 
     if (widget.isHome) {
       for (int i = 0; i < widget.homeTeamLineUp!.length; i++) {
@@ -261,11 +216,7 @@ class _FixedTableState extends State<FixedTable> {
   }
 
   List<dynamic> getTurnover() {
-    // if (userDataModel.isCN.value) {
-    //   turnover = ['失误'];
-    // } else {
     turnover = [AppLocalizations.of(context)!.turnover];
-    // }
 
     if (widget.isHome) {
       for (int i = 0; i < widget.homeTeamLineUp!.length; i++) {
@@ -281,11 +232,7 @@ class _FixedTableState extends State<FixedTable> {
   }
 
   List<dynamic> getBlockShot() {
-    // if (userDataModel.isCN.value) {
-    //   blockShot = ['盖帽'];
-    // } else {
     blockShot = [AppLocalizations.of(context)!.blockShot];
-    // }
 
     if (widget.isHome) {
       for (int i = 0; i < widget.homeTeamLineUp!.length; i++) {
@@ -301,11 +248,7 @@ class _FixedTableState extends State<FixedTable> {
   }
 
   List<dynamic> getFoul() {
-    // if (userDataModel.isCN.value) {
-    //   foul = ['犯规'];
-    // } else {
     foul = [AppLocalizations.of(context)!.foul];
-    // }
 
     if (widget.isHome) {
       for (int i = 0; i < widget.homeTeamLineUp!.length; i++) {
@@ -805,6 +748,5 @@ class _FixedTableState extends State<FixedTable> {
         ],
       ),
     );
-    // return
   }
 }

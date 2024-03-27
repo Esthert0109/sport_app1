@@ -359,9 +359,7 @@ class _FootballLivePageState extends State<FootballLivePage>
               ),
             ),
             Expanded(
-                child:
-                    // Obx(() =>
-                    LazyLoadScrollView(
+                child: LazyLoadScrollView(
               isLoading: isLiveLoading,
               onEndOfPage: () {
                 setState(() {
@@ -754,4 +752,3 @@ class _FootballLivePageState extends State<FootballLivePage>
     );
   }
 }
-

@@ -6,13 +6,11 @@ import 'package:get/get.dart';
 import 'Constants/colorConstant.dart';
 import 'Constants/textConstant.dart';
 import 'Model/userDataModel.dart';
-import 'Pages/BasketballPages/InfoPage/BasketballInfoPage.dart';
 import 'Pages/BasketballPages/InfoPage/newsPage.dart';
 import 'Pages/BasketballPages/LivePage/BasketballLivePage.dart';
 import 'Pages/BasketballPages/MainPage/BasketballMainPage.dart';
 import 'Pages/FootballPages/LivePage/footballLivePage.dart';
 import 'Pages/FootballPages/MainPage/footballMainPage.dart';
-import 'Pages/MyPages/myPage.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'Pages/MyPages/myPage2.dart';
@@ -36,8 +34,6 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
     const FootballMainPage(),
     const FootballLivePage(),
     const NewsPage(),
-    // const BasketballInfoPage(),
-    // const MyPage(),
     const ProfilePage(),
   ];
 
@@ -46,7 +42,6 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
     const BasketballMainPage(),
     const BasketballLivePage(),
     const NewsPage(),
-    // const BasketballInfoPage(),
     const ProfilePage(),
   ];
 

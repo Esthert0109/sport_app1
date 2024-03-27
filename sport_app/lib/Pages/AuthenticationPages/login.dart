@@ -217,9 +217,6 @@ class _LoginState extends State<Login> {
                         text: AppLocalizations.of(context)!.login,
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            // SEND LOGIN REQUEST PUT HERE
-
-                            // showLoadingDialog(context);
 
                             checkContactNumber();
 

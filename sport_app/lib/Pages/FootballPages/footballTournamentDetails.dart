@@ -53,7 +53,6 @@ class _TournamentDetailsState extends State<TournamentDetails> {
   bool isDetailNull = false;
   bool isCN = true;
   String matchStatusStr = '';
-  // int lineUp = 1;
   String animationUrl = "";
   String liveUrl = "";
   UserDataModel userModel = Get.find<UserDataModel>();
@@ -65,9 +64,6 @@ class _TournamentDetailsState extends State<TournamentDetails> {
 
   ButtonStyle buttonStyle(int buttonNumber) {
     return ElevatedButton.styleFrom(
-      // primary: selectedButton == buttonNumber
-      // ? Colors.green
-      // : Colors.white, // Change the text color based on the button color
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(53)),
     );
   }
@@ -598,7 +594,6 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                   // set height to your preference// optional
                   child: isDetailNull
                       ? searchEmptyWidget()
-                      // ? SizedBox()
                       : getContentForSelectedButton(),
                 ),
               ],
@@ -610,7 +605,6 @@ class _TournamentDetailsState extends State<TournamentDetails> {
   }
 
   Widget getContentForSelectedButton() {
-    // FootballMatchProvider FootballMatchProvider
     final screenWidth = MediaQuery.of(context).size.width;
 
     final barWidth = (screenWidth - 0) * 0.2; // 调整为需要的宽度

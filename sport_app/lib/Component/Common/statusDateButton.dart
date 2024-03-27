@@ -87,7 +87,6 @@ class _StatusDateButtonComponentState extends State<StatusDateButtonComponent> {
           children: List.generate(
             widget.dateList.length,
             (index) => Container(
-              // width: 60 * fem,
               height: 46 * fem,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),

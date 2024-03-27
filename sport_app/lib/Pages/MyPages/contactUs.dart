@@ -29,7 +29,6 @@ String? encodeQueryParameters(Map<String, String> params) {
       .join('&');
 }
 
-// ···
 final Uri emailLaunchUri = Uri(
   scheme: 'mailto',
   path: 'mindark@gmail.com',
@@ -383,7 +382,6 @@ class _ContactUsState extends State<ContactUs> {
                           onTap: () {
                             print("navi to email");
                             launchUrl(emailLaunchUri);
-                            // _launchEmail();
                           },
                           child: Container(
                             height: 65 * fem,
@@ -434,55 +432,7 @@ class _ContactUsState extends State<ContactUs> {
                     ),
                   )
 
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     // ADD WHATSAPP LINK HERE
-                  //     var phone = "601159122104";
-                  //     var whatsappUrl = "https://wa.me/${phone}?text=Hello";
-                  //     launchUrl(Uri.parse(whatsappUrl));
-                  //   },
-                  //   child: Padding(
-                  //     padding: EdgeInsets.symmetric(
-                  //         vertical: 20 * fem, horizontal: 24 * fem),
-                  //     child: Row(
-                  //       children: [
-                  //         Container(
-                  //           color: redColor,
-
-                  //           padding: EdgeInsets.symmetric(
-                  //               horizontal: 10 * fem, vertical: 5 * fem),
-                  //           margin: EdgeInsets.symmetric(vertical: 10 * fem),
-                  //           child: Row(
-                  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //             crossAxisAlignment: CrossAxisAlignment.stretch,
-                  //             children: [
-                  //               Container(
-                  //                 width: 56 * fem,
-                  //                 height: 56 * fem,
-                  //                 child: SvgPicture.asset(
-                  //                   'images/myPage/insta.svg',
-                  //                   width: 56 * fem,
-                  //                   height: 56 * fem,
-                  //                 ),
-                  //               )
-                  //             ],
-                  //           ),
-                  //         )
-                  //         // Text(
-                  //         //   UserModel.isCN == true
-                  //         //       ? '联系我们的WhatsApp'
-                  //         //       : "Contact our Whatsapp",
-                  //         //   style: tContactUsTitle,
-                  //         // ),
-                  //         // Spacer(),
-                  //         // SvgPicture.asset(
-                  //         //   'images/common/right-arrow.svg',
-                  //         //   color: kMainComponentColor,
-                  //         // ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // )
+                  
                 ]),
           ),
         ));

@@ -181,10 +181,6 @@ class _ForgotPassState extends State<ForgotPass> {
                                       password: '',
                                       userNickname: '',
                                     ));
-                                // Get.to(() => EditPassword(
-                                //       isLogin: false,
-                                //       phoneNumber: "60127659785",
-                                //     ));
                               }
                             } else {
                               setState(() {

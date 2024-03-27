@@ -22,7 +22,6 @@ class LiveDisplayBlock extends StatefulWidget {
   String? teamBLogo;
   String? teamBScore;
   String? status;
-  // Function? onTapCallback;
   List<dynamic> getBookmarkBlockList = [];
 
   LiveDisplayBlock({
@@ -40,7 +39,6 @@ class LiveDisplayBlock extends StatefulWidget {
     required this.teamBLogo,
     required this.teamBScore,
     required this.status,
-    // required this.onTapCallback,
     required this.getBookmarkBlockList,
   });
 
@@ -49,7 +47,6 @@ class LiveDisplayBlock extends StatefulWidget {
 }
 
 class _LiveDisplayBlockState extends State<LiveDisplayBlock> {
-  // SearchLiveStreamProvider searchProvider = SearchLiveStreamProvider();
   Map<String, dynamic> saveBookmarkResult = {};
   List<dynamic> getBookmarkList = [];
   bool checkBookmarkSaved = true;
@@ -151,9 +148,7 @@ class _LiveDisplayBlockState extends State<LiveDisplayBlock> {
                   width: 10 * fem,
                 ),
                 GestureDetector(
-                  onTap: () async {
-                   
-                  },
+                  onTap: () async {},
                   child: SvgPicture.asset(isSaved
                       ? 'images/Bookmark-1.svg'
                       : 'images/Bookmark-0.svg'),

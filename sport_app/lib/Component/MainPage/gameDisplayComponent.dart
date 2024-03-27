@@ -22,7 +22,6 @@ class GameDisplayComponent extends StatefulWidget {
   final String teamBLogo;
   final String teamBScore;
   final bool isSaved;
-  // Function? saveGameCallBack;
 
   GameDisplayComponent({
     super.key,
@@ -36,7 +35,6 @@ class GameDisplayComponent extends StatefulWidget {
     required this.teamBLogo,
     required this.teamBScore,
     required this.isSaved,
-    // this.saveGameCallBack
   });
 
   @override
@@ -137,7 +135,6 @@ class _GameDisplayComponentState extends State<GameDisplayComponent> {
                   Align(
                     alignment: Alignment.center,
                     child: Container(
-                      // color: Colors.amber,
                       height: 20 * fem,
                       width: 50 * fem,
                       alignment: Alignment.topCenter,
@@ -151,7 +148,6 @@ class _GameDisplayComponentState extends State<GameDisplayComponent> {
                   ),
                   Container(
                     width: 30 * fem,
-                    // color: Colors.amber,
                     child: Align(
                       alignment: Alignment.topRight,
                       child: GestureDetector(

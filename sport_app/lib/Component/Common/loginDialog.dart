@@ -131,7 +131,6 @@ class _LoginAlertDialogState extends State<LoginAlertDialog> {
                       onTapOutside: (event) {
                         FocusScope.of(context).unfocus();
                       },
-                      // focusNode: _contactFocusNode,
                       controller: passwordController,
                       textInputAction: TextInputAction.done,
                       cursorColor: kMainGreenColor,
@@ -196,7 +195,6 @@ class _LoginAlertDialogState extends State<LoginAlertDialog> {
                             text: AppLocalizations.of(context)!.login,
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-
                                 checkContactNumber();
 
                                 bool isPasswordValid = await provider.loginUser(
@@ -206,7 +204,6 @@ class _LoginAlertDialogState extends State<LoginAlertDialog> {
                                   SharedPreferencesUtils.saveUsername(phone);
                                   SharedPreferencesUtils.savePasswordLocally(
                                       passwordController.text);
-                                      // SharedPreferencesUtils.saveTokenLocally()
                                   print(
                                       "check token saved: ${SharedPreferencesUtils.getSavedToken().toString()}");
                                   Navigator.of(context).pop();
@@ -269,8 +266,6 @@ class _LoginAlertDialogState extends State<LoginAlertDialog> {
             ),
           ),
         );
-        //   },
-        // );
       },
     );
   }

@@ -54,7 +54,6 @@ class GiftPanel extends StatelessWidget {
                                     fit: BoxFit.contain,
                                     image: AssetImage(
                                       e.icon,
-                                      // package: "tencent_av_chat_room_kit",
                                     )),
                                 color: Colors.black.withOpacity(0.3)),
                           ),

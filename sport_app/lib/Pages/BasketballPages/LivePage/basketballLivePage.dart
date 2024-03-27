@@ -365,9 +365,7 @@ class _BasketballLivePageState extends State<BasketballLivePage>
               ),
             ),
             Expanded(
-                child:
-                    // Obx(() =>
-                    LazyLoadScrollView(
+                child: LazyLoadScrollView(
               isLoading: isLiveLoading,
               onEndOfPage: () {
                 setState(() {
@@ -591,7 +589,6 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                                   children: [
                                     Container(
                                       margin: EdgeInsets.symmetric(
-                                          // horizontal: 15 * fem,
                                           vertical: 10 * fem),
                                       child: SelectionButtonTextComponent(
                                           index: followStatusId,
@@ -753,7 +750,6 @@ class _BasketballLivePageState extends State<BasketballLivePage>
                 ),
               ),
             ))
-            // )
           ],
         ),
       ),

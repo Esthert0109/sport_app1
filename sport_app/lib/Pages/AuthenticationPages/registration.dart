@@ -264,7 +264,6 @@ class _RegisterState extends State<Register> {
                       : WidthButton(
                           text: AppLocalizations.of(context)!.reg,
                           onPressed: () async {
-                            // showLoadingDialog(context);
                             if (formKey.currentState!.validate()) {
                               bool passwordsMatch = arePasswordsEqual();
                               if (passwordsMatch) {
@@ -296,7 +295,6 @@ class _RegisterState extends State<Register> {
                                   ).launch(context);
                                 }
                               } else {
-                                // Navigator.of(context).pop();
                                 setState(() {
                                   _responseMsg = AppLocalizations.of(context)!
                                       .passwordNotSame;
@@ -307,22 +305,14 @@ class _RegisterState extends State<Register> {
                                 print("password not same");
                               }
                             } else {
-
                               bool passwordsMatch = arePasswordsEqual();
-                              if(!passwordsMatch){
+                              if (!passwordsMatch) {
                                 setState(() {
                                   _responseMsg = AppLocalizations.of(context)!
                                       .passwordNotSame;
-
                                 });
                                 print("password not same");
                               }
-                              // Navigator.of(context).pop();
-                              // openSnackbar(
-                              //     context,
-                              //     AppLocalizations.of(context)!
-                              //         .keyInRequirements,
-                              //     kComponentErrorTextColor);
                               print("fail");
                             }
                           }),

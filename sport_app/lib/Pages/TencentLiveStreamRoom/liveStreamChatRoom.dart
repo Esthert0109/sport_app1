@@ -362,7 +362,6 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                               Padding(
                                 padding: EdgeInsets.fromLTRB(0, 0, 0, 15 * fem),
 
-                                //see if wan use container to set the size and background color
                                 child: _isDanmakuOn
                                     ? Positioned(
                                         bottom: 25,
@@ -1037,27 +1036,7 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                                         fontWeight:
                                                             FontWeight.w500),
                                                   )
-                                                  // TextFormField(
-                                                  //   decoration: InputDecoration(
-                                                  //     hintText:
-                                                  //         // AppLocalizations.of(
-                                                  //         //         context)!
-                                                  //         //     .saySmthg,
-                                                  //         "输入内容...",
-                                                  //     hintStyle:
-                                                  //         const TextStyle(
-                                                  //             fontSize: 14,
-                                                  //             color: Color
-                                                  //                 .fromARGB(
-                                                  //                     255,
-                                                  //                     255,
-                                                  //                     255,
-                                                  //                     255),
-                                                  //             fontWeight:
-                                                  //                 FontWeight
-                                                  //                     .w500),
-                                                  //   ),
-                                                  // )
+                                                  
                                                 ],
                                               ),
                                             ),
@@ -1067,8 +1046,6 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                       data: TencentCloudAvChatRoomData(
                                         isSubscribe: false,
                                         notification:
-                                            // AppLocalizations.of(context)!
-                                            //     .welcomeStream,
                                             userModel.isCN.value
                                                 ? "欢迎来到直播间！严禁未成年人直播、打赏或向末成年人销售酒类商品。若主播销售酒类商品，请未成年人在监护人陪同下观看。直播间内严禁出现违法违规、低俗色情、吸烟酗酒、人身伤害等内容。如主播在直播中以不当方式诱导打赏私下交易请谨慎判断以防人身财产损失购买商品请点击下方购物车按钮，请勿私下交易，请大家注意财产安全，谨防网络诈骗。"
                                                 : "Welcome to the live broadcast room! It is strictly prohibited for minors to live stream, tip or sell alcoholic products to under-adults. If the anchor sells alcohol, minors are asked to watch with the supervision of a guardian. Contents that violate laws and regulations, vulgar pornography, smoking, alcoholism, personal injury, etc. are strictly prohibited in the live broadcast room. If the anchor improperly induces rewards during the live broadcast and makes private transactions, please use caution to prevent personal and property losses. To purchase goods, please click the shopping cart button below. Please do not make private transactions. Please pay attention to property safety and beware of online fraud.",

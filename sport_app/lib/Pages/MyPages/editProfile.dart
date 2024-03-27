@@ -172,8 +172,6 @@ class _editProfileState extends State<EditProfile> {
           SizedBox(
             height: 14 * fem,
           ),
-          // Obx(
-          //   () =>
 
           sectionBox(AppLocalizations.of(context)!.editPassword, () {
             showNoticeDialog(
@@ -182,7 +180,6 @@ class _editProfileState extends State<EditProfile> {
                 AppLocalizations.of(context)!.yes, () async {
               Timer.periodic(Duration(seconds: 1), (timer) {
                 setState(() async {
-                  // showLoadingDialog(context);
 
                   String isGetOTP =
                       await provider.getOTP(userModel.id.value, "2");
@@ -248,7 +245,6 @@ class _editProfileState extends State<EditProfile> {
               });
             });
           }),
-          // ),
           SizedBox(
             height: 14 * fem,
           ),

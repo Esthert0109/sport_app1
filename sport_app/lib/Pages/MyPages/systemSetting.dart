@@ -83,8 +83,6 @@ class _systemSettingState extends State<SystemSetting> {
                     ),
                     Center(
                       child:
-                          //  Obx(
-                          //   () =>
                           Text(
                         AppLocalizations.of(context)!.systemSetting,
                         style: TextStyle(
@@ -95,7 +93,6 @@ class _systemSettingState extends State<SystemSetting> {
                           color: kMainComponentColor,
                         ),
                       ),
-                      // ),
                     )
                   ],
                 ),
@@ -107,7 +104,6 @@ class _systemSettingState extends State<SystemSetting> {
                     width: 114 * fem,
                     height: 114 * fem,
                   ),
-                  // Obx(() =>
                   Center(
                       child: ElevatedButton(
                     child: Text(AppLocalizations.of(context)!.changeLanguage,
@@ -160,7 +156,6 @@ class _systemSettingState extends State<SystemSetting> {
                             ),
                           );
                         })),
-                    // ),
                   )),
                 ],
               )

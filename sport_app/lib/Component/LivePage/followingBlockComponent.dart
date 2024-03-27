@@ -147,8 +147,6 @@ class _FollowingBlockComponentState extends State<FollowingBlockComponent> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Container(
-                                  // margin:
-                                  //     EdgeInsets.symmetric(horizontal: 5 * fem),
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 10 * fem),
                                   width: 120 * fem,
@@ -180,8 +178,6 @@ class _FollowingBlockComponentState extends State<FollowingBlockComponent> {
                                   ),
                                 ),
                                 Container(
-                                  // margin:
-                                  //     EdgeInsets.symmetric(horizontal: 5 * fem),
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 10 * fem),
                                   width: 120 * fem,

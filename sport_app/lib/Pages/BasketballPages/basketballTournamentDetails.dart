@@ -58,8 +58,7 @@ class _BasketballTournamentDetailsState
 
   ButtonStyle buttonStyle(int buttonNumber) {
     return ElevatedButton.styleFrom(
-        // primary: selectedButton == buttonNumber ? Colors.green : Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(53)));
+       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(53)));
   }
 
   //provider body
@@ -532,24 +531,6 @@ class _BasketballTournamentDetailsState
                     SizedBox(
                       width: 10,
                     ),
-                    // ElevatedButton(
-                    //   onPressed: () {
-                    //     setState(() {
-                    //       selectedButton = 2;
-                    //     });
-                    //   },
-                    //   child: Text(
-                    //     userModel.isCN == true ? "直播" : "Live",
-                    //     style: TextStyle(
-                    //         color: selectedButton == 2
-                    //             ? Colors.white
-                    //             : kHintTextColor,
-                    //         fontSize: 14,
-                    //         fontFamily: 'NotoSansSC'),
-                    //   ),
-                    //   style: buttonStyle(2)
-                    //       .copyWith(elevation: MaterialStateProperty.all(0)),
-                    // ),
                     SizedBox(
                       width: 10,
                     ),
@@ -613,7 +594,6 @@ class _BasketballTournamentDetailsState
     double noAwayTwoPointer = parseDouble('atwoGoal', basketballMatchById);
     double noHomeFoul = parseDouble('hpersonalFouls', basketballMatchById);
     double noAwayFoul = parseDouble('apersonalFouls', basketballMatchById);
-    // double noHomeFreeThrow = parseDouble('key', data)
     double noHomeFreeThrowPercentage =
         parseDouble('hfreeThrows', basketballMatchById);
     double noAwayFreeThrowPercentage =
@@ -1286,95 +1266,6 @@ class _BasketballTournamentDetailsState
                                                         ? 10
                                                         : 20,
                                                   ),
-                                                  // Row(
-                                                  //   mainAxisAlignment:
-                                                  //       MainAxisAlignment
-                                                  //           .spaceBetween,
-                                                  //   children: [
-                                                  //     Padding(
-                                                  //       padding:
-                                                  //           const EdgeInsets
-                                                  //               .only(left: 0),
-                                                  //       child:
-                                                  //           PercentageBarPercentage2(
-                                                  //         percent2: userModel
-                                                  //                     .isCN ==
-                                                  //                 true
-                                                  //             ? (percentOfTwoPointerHome ==
-                                                  //                     0
-                                                  //                 ? 0
-                                                  //                 : percentOfTwoPointerHome)
-                                                  //             : (percentageOfBlocksHomeEN ==
-                                                  //                     0
-                                                  //                 ? 0
-                                                  //                 : percentageOfBlocksHomeEN), //need percentage home team
-                                                  //         percent2_text: userModel
-                                                  //                     .isCN ==
-                                                  //                 true
-                                                  //             ? (noHomeTwoPointer ==
-                                                  //                     0
-                                                  //                 ? 0
-                                                  //                 : noHomeTwoPointer)
-                                                  //             : (noHomeBlockEN ==
-                                                  //                     0
-                                                  //                 ? 0
-                                                  //                 : noHomeBlockEN), // need number
-                                                  //         width2: barWidth,
-                                                  //         height2: 10,
-                                                  //       ),
-                                                  //     ),
-                                                  //     SizedBox(
-                                                  //       width: 1,
-                                                  //     ),
-                                                  //     Text(
-                                                  //       userModel.isCN == true
-                                                  //           ? '2分球'
-                                                  //           : 'Blocks',
-                                                  //       style: TextStyle(
-                                                  //           fontSize: 14),
-                                                  //     ),
-                                                  //     SizedBox(
-                                                  //       width: 1,
-                                                  //     ),
-                                                  //     Padding(
-                                                  //       padding:
-                                                  //           const EdgeInsets
-                                                  //               .only(right: 0),
-                                                  //       child:
-                                                  //           PercentageBarPercentage(
-                                                  //         percent: userModel
-                                                  //                     .isCN ==
-                                                  //                 true
-                                                  //             ? (percentOfTwoPointerAway ==
-                                                  //                     0
-                                                  //                 ? 0
-                                                  //                 : percentOfTwoPointerAway)
-                                                  //             : (percentageOfBlocksAwayEN ==
-                                                  //                     0
-                                                  //                 ? 0
-                                                  //                 : percentageOfBlocksAwayEN),
-                                                  //         percent_text: userModel
-                                                  //                     .isCN ==
-                                                  //                 true
-                                                  //             ? (noAwayTwoPointer ==
-                                                  //                     0
-                                                  //                 ? 0
-                                                  //                 : noAwayTwoPointer)
-                                                  //             : (noAwayBlockEN ==
-                                                  //                     0
-                                                  //                 ? 0
-                                                  //                 : noAwayBlockEN),
-                                                  //         width: barWidth,
-                                                  //         height: 10.0,
-                                                  //       ),
-                                                  //     ),
-                                                  //   ],
-                                                  // ),
-                                                  // SizedBox(
-                                                  //   height: userModel.isCN.value
-                                                  //       ? 10
-                                                  //       : 20,
-                                                  // ),
                                                   Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
@@ -1905,192 +1796,7 @@ class _BasketballTournamentDetailsState
                               ))),
                     ),
                   );
-      // case 2:
-      //   return Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       Padding(
-      //         padding: const EdgeInsets.fromLTRB(16, 10, 0, 10),
-      //         child: Container(
-      //           width: 89,
-      //           height: 24,
-      //           child: Stack(
-      //             children: [
-      //               Positioned(
-      //                 left: 0,
-      //                 top: 0,
-      //                 child: Container(
-      //                   width: 24,
-      //                   height: 24,
-      //                   clipBehavior: Clip.antiAlias,
-      //                   decoration: BoxDecoration(),
-      //                   child: Column(
-      //                     mainAxisSize: MainAxisSize.min,
-      //                     mainAxisAlignment: MainAxisAlignment.start,
-      //                     crossAxisAlignment: CrossAxisAlignment.start,
-      //                     children: [SvgPicture.asset('images/live-0.svg')],
-      //                   ),
-      //                 ),
-      //               ),
-      //               Positioned(
-      //                 left: 32,
-      //                 top: 0,
-      //                 child: Text(
-      //                   userModel.isCN.value ? '本场主播' : "Anchor",
-      //                   style: TextStyle(
-      //                       color: kBlackColor,
-      //                       fontSize: 14,
-      //                       fontFamily: 'NotoSansSC',
-      //                       fontWeight: FontWeight.w400,
-      //                       height: 1.71,
-      //                       letterSpacing: 0.3),
-      //                 ),
-      //               )
-      //             ],
-      //           ),
-      //         ),
-      //       ),
-      //       Padding(
-      //         padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
-      //         child: Row(
-      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //           children: [
-      //             GestureDetector(
-      //               onTap: () {
-      //                 LiveStreamChatRoom page = LiveStreamChatRoom(
-      //                     userLoginId: userModel.id.value,
-      //                     avChatRoomId: "@TGS#aCXDLWE5CR",
-      //                     anchor: "i['anchor']",
-      //                     streamTitle: "i['title']",
-      //                     anchorPic: userModel.profilePicture.value,
-      //                     playMode: V2TXLivePlayMode.v2TXLivePlayModeLeb,
-      //                     liveURL:
-      //                         "rtmp://play.mindark.cloud/live/sd-1-4037281");
-      //               },
-      //               child: LiveSquareBlock(
-      //                 anchor: '主播昵称',
-      //                 title: '测试直播',
-      //                 anchorPhoto: 'images/pandalogo.png',
-      //                 livePhoto: 'images/image 107.png',
-      //               ),
-      //             ),
-      //             LiveSquareBlock(
-      //               anchor: '主播昵称',
-      //               title: '测试直播',
-      //               anchorPhoto: 'images/pandalogo.png',
-      //               livePhoto: 'images/image 107.png',
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      //       Padding(
-      //         padding: const EdgeInsets.fromLTRB(16, 14, 0, 10),
-      //         child: Container(
-      //           width: 300,
-      //           height: 24,
-      //           child: Stack(
-      //             children: [
-      //               Positioned(
-      //                 left: 0,
-      //                 top: 0,
-      //                 child: Container(
-      //                   width: 24,
-      //                   height: 24,
-      //                   clipBehavior: Clip.antiAlias,
-      //                   decoration: BoxDecoration(),
-      //                   child: Column(
-      //                     mainAxisAlignment: MainAxisAlignment.start,
-      //                     mainAxisSize: MainAxisSize.min,
-      //                     crossAxisAlignment: CrossAxisAlignment.start,
-      //                     children: [SvgPicture.asset('images/live-0.svg')],
-      //                   ),
-      //                 ),
-      //               ),
-      //               Positioned(
-      //                   left: 32,
-      //                   top: 0,
-      //                   child: Container(
-      //                     height: 24,
-      //                     width: 300,
-      //                     child: Text(
-      //                       userModel.isCN.value ? '比赛直播' : "Live Stream",
-      //                       style: TextStyle(
-      //                           color: kBlackColor,
-      //                           fontSize: 14,
-      //                           fontFamily: 'NotoSansSC',
-      //                           fontWeight: FontWeight.w400,
-      //                           height: 1.71,
-      //                           letterSpacing: 0.30),
-      //                     ),
-      //                   ))
-      //             ],
-      //           ),
-      //         ),
-      //       ),
-      //       Padding(
-      //         padding: const EdgeInsets.fromLTRB(16, 0, 0, 10),
-      //         child: Container(
-      //           width: 100,
-      //           height: 28,
-      //           padding: const EdgeInsets.symmetric(horizontal: 12),
-      //           decoration: ShapeDecoration(
-      //               color: Colors.white,
-      //               shape: RoundedRectangleBorder(
-      //                 borderRadius: BorderRadius.circular(53),
-      //               )),
-      //           child: Row(
-      //             mainAxisAlignment: MainAxisAlignment.center,
-      //             mainAxisSize: MainAxisSize.min,
-      //             crossAxisAlignment: CrossAxisAlignment.center,
-      //             children: [
-      //               Text(
-      //                 userModel.isCN.value ? "直播地址" : "Address 01",
-      //                 textAlign: TextAlign.right,
-      //                 style: TextStyle(
-      //                     color: kGreyColor,
-      //                     fontSize: 14,
-      //                     fontFamily: 'NotoSansSC',
-      //                     fontWeight: FontWeight.w500,
-      //                     height: 2,
-      //                     letterSpacing: 0.3),
-      //               )
-      //             ],
-      //           ),
-      //         ),
-      //       ),
-      //       Padding(
-      //         padding: const EdgeInsets.fromLTRB(16, 0, 0, 10),
-      //         child: Container(
-      //           width: 100,
-      //           height: 28,
-      //           padding: const EdgeInsets.symmetric(horizontal: 12),
-      //           decoration: ShapeDecoration(
-      //               color: Colors.white,
-      //               shape: RoundedRectangleBorder(
-      //                 borderRadius: BorderRadius.circular(53),
-      //               )),
-      //           child: Row(
-      //             mainAxisAlignment: MainAxisAlignment.center,
-      //             mainAxisSize: MainAxisSize.min,
-      //             crossAxisAlignment: CrossAxisAlignment.center,
-      //             children: [
-      //               Text(
-      //                 userModel.isCN.value ? "直播地址" : "Address 02",
-      //                 textAlign: TextAlign.right,
-      //                 style: TextStyle(
-      //                     color: kGreyColor,
-      //                     fontSize: 14,
-      //                     fontFamily: 'NotoSansSC',
-      //                     fontWeight: FontWeight.w500,
-      //                     height: 2,
-      //                     letterSpacing: 0.3),
-      //               )
-      //             ],
-      //           ),
-      //         ),
-      //       )
-      //     ],
-      //   );
+      
       case 3:
         return SingleChildScrollView(
           child: Column(

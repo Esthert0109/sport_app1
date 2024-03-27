@@ -8,7 +8,6 @@ import 'package:live_flutter_plugin/v2_tx_live_player.dart';
 import 'package:live_flutter_plugin/widget/v2_tx_live_video_widget.dart';
 import 'package:live_flutter_plugin/v2_tx_live_player_observer.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:sport_app/Pages/TencentLiveStreamRoom/testVlc.dart';
 
 import '../../Component/Tencent/liveStreamPlayer.dart';
 import '../../Constants/colorConstant.dart';
@@ -225,11 +224,9 @@ class _LivePlayPage2State extends State<LivePlayPage2> {
                         constraints: const BoxConstraints.expand(),
                         child: Stack(
                           alignment: Alignment.center,
-                          // fit: StackFit.expand,
                           children: <Widget>[
                             Container(
                               height: 280,
-                              // width: 400,
                               alignment: Alignment.center,
                               child: GestureDetector(
                                   onTap: () {

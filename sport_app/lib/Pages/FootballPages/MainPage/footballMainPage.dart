@@ -856,7 +856,6 @@ class _FootballMainPageState extends State<FootballMainPage>
                         Container(
                           margin: EdgeInsets.symmetric(
                               horizontal: 10 * fem, vertical: 10 * fem),
-                          // padding: EdgeInsets.symmetric(horizontal: 10 * fem),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1810,23 +1809,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                       : (statusId == 3 &&
                                                                               pastDateId == 1)
                                                                           ?
-                                                                          // isEventLoading
-                                                                          //     ? Column(children: [
-                                                                          //         if (past2Length < 4)
-                                                                          //           for (int i = 0; i < 4; i++)
-                                                                          //             CardLoading(
-                                                                          //               height: 100 * fem,
-                                                                          //               borderRadius: BorderRadius.circular(8 * fem),
-                                                                          //               margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                          //             ),
-                                                                          //         for (int i = 0; i < past2Length; i++)
-                                                                          //           CardLoading(
-                                                                          //             height: 100 * fem,
-                                                                          //             borderRadius: BorderRadius.circular(8 * fem),
-                                                                          //             margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                          //           ),
-                                                                          //       ])
-                                                                          //     :
+                                                                         
                                                                           (past2Length == 0)
                                                                               ? searchEmptyWidget()
                                                                               : ListView.builder(

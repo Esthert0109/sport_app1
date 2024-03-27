@@ -120,8 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 )
                               : Image(
                                   image: const AssetImage(
-                                      "images/common/pandalogo.png"
-                                      ),
+                                      "images/common/pandalogo.png"),
                                   fit: BoxFit.cover,
                                   height: 60 * fem,
                                   width: 60 * fem,
@@ -578,8 +577,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                                           .spaceEvenly,
                                                   children: [
                                                     Container(
-                                                      // margin:
-                                                      //     EdgeInsets.symmetric(horizontal: 5 * fem),
                                                       padding:
                                                           EdgeInsets.symmetric(
                                                               horizontal:
@@ -625,8 +622,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                                       ),
                                                     ),
                                                     Container(
-                                                      // margin:
-                                                      //     EdgeInsets.symmetric(horizontal: 5 * fem),
                                                       padding:
                                                           EdgeInsets.symmetric(
                                                               horizontal:

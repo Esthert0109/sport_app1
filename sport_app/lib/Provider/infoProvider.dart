@@ -40,7 +40,8 @@ class InfoProvider extends ChangeNotifier {
   }
 
   Future<InfoListModel?> getImageInfoUrl(int search) async {
-    String url = ApiConstants.baseUrl + ApiConstants.getImageInfoList;
+    String url =
+        ApiConstants.baseUrl + ApiConstants.getImageInfoList + "${search}";
 
     Map<String, String> headers = {
       'Content-Type': 'application/json; charset=utf-8',

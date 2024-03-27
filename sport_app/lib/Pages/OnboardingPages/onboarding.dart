@@ -101,16 +101,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 alignment: Alignment.centerLeft,
                 child: TextButton(
                   style: TextButton.styleFrom(
-                    // primary: Colors.black,
-                    // onSurface: kMainGreenColor,
                     foregroundColor: kMainGreenColor,
                   ),
                   onPressed: () {
-                    // showModalBottomSheet(
-                    //     context: context,
-                    //     builder: (context) {
-                    //       return TagDialog();
-                    //     });
                     userModel.isLogin.value = false;
                     Get.off(() => const BottomNaviBar());
                   },

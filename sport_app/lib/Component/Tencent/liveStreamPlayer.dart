@@ -114,9 +114,6 @@ class _LivePlayPageState extends State<LivePlayPage> {
   Future<void> initPlatformState() async {
     _livePlayer = await V2TXLivePlayer.create();
     _livePlayer?.addListener(onPlayerObserver);
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
     if (!mounted) return;
     debugPrint("CreatePlayer result is ${_livePlayer?.status}");
   }
@@ -320,7 +317,6 @@ class _LivePlayPageState extends State<LivePlayPage> {
                                             fontWeight: FontWeight.w600),
                                       ),
                                       style: ElevatedButton.styleFrom(
-                                          // primary: kButtonOffSecondaryColor,
                                           side: BorderSide.none,
                                           elevation: 0.3,
                                           shape: RoundedRectangleBorder(

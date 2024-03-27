@@ -808,7 +808,6 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                       '${liveStreamList![index].userId}',
                                                 );
 
-                                                // Navigator.of(context).pop();
                                                 Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
@@ -2143,18 +2142,7 @@ class _BasketballMainPageState extends State<BasketballMainPage>
                                                                                                         },
                                                                                                       )
                                                                                             : (statusId == 4)
-                                                                                                ?
-                                                                                                // ? isEventLoading
-                                                                                                //     ? Column(children: [
-                                                                                                //         for (int i = 0; i < 4; i++)
-                                                                                                //           CardLoading(
-                                                                                                //             height: 100 * fem,
-                                                                                                //             borderRadius: BorderRadius.circular(8 * fem),
-                                                                                                //             margin: EdgeInsets.symmetric(horizontal: 10 * fem, vertical: 10 * fem),
-                                                                                                //           ),
-                                                                                                //       ])
-                                                                                                //     :
-                                                                                                (startedLength == 4)
+                                                                                                ? (startedLength == 4)
                                                                                                     ? searchEmptyWidget()
                                                                                                     : ListView.builder(
                                                                                                         physics: const NeverScrollableScrollPhysics(),

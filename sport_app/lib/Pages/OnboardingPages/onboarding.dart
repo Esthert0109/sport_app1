@@ -8,7 +8,6 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../Component/Common/errorText.dart';
 import '../../Component/Common/loginDialog.dart';
 import '../../Component/Common/pressableWord.dart';
-import '../../Component/Common/tagDialog.dart';
 import '../../Component/Common/widthButton.dart';
 import '../../Constants/colorConstant.dart';
 import '../../Constants/textConstant.dart';

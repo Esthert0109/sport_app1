@@ -2,8 +2,6 @@ class ApiConstants {
   //Base Url for all API
   static const String baseUrl = 'http://103.224.93.197:8080';
 
-  static const String localhost = 'http://localhost:8080';
-
   //Login
   static const String loginBaseUrl = '/api/v1/login';
 

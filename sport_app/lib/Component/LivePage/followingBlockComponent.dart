@@ -126,7 +126,6 @@ class _FollowingBlockComponentState extends State<FollowingBlockComponent> {
             flex: 20,
             child: InkWell(
               onTap: () async {
-                print("unfollow");
 
                 setState(() {
                   showDialog(
@@ -139,7 +138,7 @@ class _FollowingBlockComponentState extends State<FollowingBlockComponent> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8.0))),
                           content: Text(
-                            "确认取关？",
+                            userModel.isCN.value ? "确认取关？" : "Unfollow Now? ",
                             style: tMain,
                           ),
                           actions: [
@@ -167,7 +166,7 @@ class _FollowingBlockComponentState extends State<FollowingBlockComponent> {
                                                 Color.fromARGB(
                                                     255, 215, 236, 191))),
                                     child: Text(
-                                      "取消",
+                                      userModel.isCN.value ? "取消" : "Cancel",
                                       style: TextStyle(
                                         fontFamily: 'NotoSansSC',
                                         fontSize: 12 * fem,
@@ -202,7 +201,7 @@ class _FollowingBlockComponentState extends State<FollowingBlockComponent> {
                                             MaterialStateProperty.all(
                                                 kMainGreenColor)),
                                     child: Text(
-                                      "确认",
+                                      userModel.isCN.value ? "确认" : "Yes",
                                       style: TextStyle(
                                         fontFamily: 'NotoSansSC',
                                         fontSize: 12 * fem,

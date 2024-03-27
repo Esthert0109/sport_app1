@@ -55,7 +55,6 @@ dependencies:
   intl: any
   flutter_localizations:
     sdk: flutter
-  # rounded_loading_button: ^2.1.0
   image_picker: ^0.8.9
   card_swiper: ^3.0.1
   carousel_slider: ^4.2.1
@@ -64,7 +63,6 @@ dependencies:
   loading_animation_widget: ^1.2.0+4
   chat_bubbles: ^1.5.0
   flutter_styled_toast: ^2.2.1
-  flutter_vlc_player: ^7.4.1
 
 dependency_overrides:
   http: 0.13.3

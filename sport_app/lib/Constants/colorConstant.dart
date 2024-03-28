@@ -29,6 +29,9 @@ const tableMainColor = Color.fromARGB(255, 236, 236, 236);
 const kUnactivePaginationColor = Color(0xffD8E9D8);
 const kActivePaginationColor = Color(0xff16B13B);
 const kFollowButtonColor = Color(0xffEBEBEB);
+const kTournamentChatBannerColor = Color(0xffFFF7EC);
+const kTournamentChatBannerTextColor = Color(0xffF9AB37);
+const kTableRowColor = Color(0xffF7F7F8);
 
 //danmaku button
 const kButtonOnColor = Color.fromARGB(255, 216, 216, 216);

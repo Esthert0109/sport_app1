@@ -1,17 +1,25 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:nb_utils/nb_utils.dart';
+import 'package:sport_app/Component/Common/statusButton.dart';
 
+import '../../Component/Common/selectionButtonText.dart';
+import '../../Component/Common/selectionButtonTournament.dart';
 import '../../Component/Loading/emptyResultComponent.dart';
 import '../../Component/TournamentDetails/PercentageBarPercentage.dart';
+import '../../Component/TournamentDetails/concedeTable.dart';
 import '../../Component/TournamentDetails/infoDisplay.dart';
 import '../../Component/TournamentDetails/mapContent.dart';
 import '../../Component/TournamentDetails/substituteList.dart';
+import '../../Component/TournamentDetails/tournamentChat.dart';
+import '../../Component/TournamentDetails/winLossDrawTable.dart';
 import '../../Constants/colorConstant.dart';
+import '../../Constants/textConstant.dart';
 import '../../Model/footballMatchesModel.dart';
 import '../../Model/liveStreamModel.dart';
 import '../../Model/userDataModel.dart';
@@ -42,16 +50,20 @@ class TournamentDetails extends StatefulWidget {
   State<TournamentDetails> createState() => _TournamentDetailsState();
 }
 
-class _TournamentDetailsState extends State<TournamentDetails> {
+class _TournamentDetailsState extends State<TournamentDetails>
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   FootballMatchProvider provider = FootballMatchProvider();
   LiveStreamProvider liveProvider = LiveStreamProvider();
   Map<String, dynamic> footballMatchById = new Map<String, dynamic>();
 
-  int selectedButton = 1;
-  int selectedTextButton = 1;
+  List<String> selectionList = ['赛况', '聊天', '阵容', '指数', '数据'];
+  List<String> selectionButtonText = ['让球', '胜平负', '总进球', '角球'];
+  int selectedButton = 0;
+  int selectedTextButton = 0;
   bool isLoading = false;
   bool isDetailNull = false;
   bool isCN = true;
+  bool _isKeyboardVisible = false;
   String matchStatusStr = '';
   String animationUrl = "";
   String liveUrl = "";
@@ -76,6 +88,8 @@ class _TournamentDetailsState extends State<TournamentDetails> {
     getAnimationUrl();
     getLiveUrl();
 
+    // WidgetsBinding.instance?.addObserver(this);
+
     if (widget.matchStatus == '未') {
       matchStatusStr = userModel.isCN == true ? '未开赛' : 'Not Started Yet';
     } else if (widget.matchStatus == '已') {
@@ -92,6 +106,24 @@ class _TournamentDetailsState extends State<TournamentDetails> {
 
     getTournamentLineup();
   }
+
+  // @override
+  // void dispose() {
+  //   // Remove the observer when the widget is disposed
+  //   WidgetsBinding.instance?.removeObserver(this);
+  //   super.dispose();
+  // }
+
+  // @override
+  // void didChangeMetrics() {
+  //   // Check if the keyboard is visible
+  //   final bool isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
+  //   if (_isKeyboardVisible != isKeyboardVisible) {
+  //     setState(() {
+  //       _isKeyboardVisible = isKeyboardVisible;
+  //     });
+  //   }
+  // }
 
   Future<void> getAnimationUrl() async {
     AnimationStreamModel? animationModel =
@@ -172,71 +204,94 @@ class _TournamentDetailsState extends State<TournamentDetails> {
 
     return SafeArea(
       child: Scaffold(
-        extendBodyBehindAppBar: true,
-        backgroundColor: kMainBackgroundColor,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: const Icon(
-              Icons.arrow_back_ios_new,
-              size: 18,
+          resizeToAvoidBottomInset: true,
+          extendBodyBehindAppBar: true,
+          backgroundColor: kMainBackgroundColor,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            leading: IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: const Icon(
+                Icons.arrow_back_ios_new,
+                size: 18,
+              ),
+            ),
+            elevation: 0,
+            centerTitle: true,
+            iconTheme: const IconThemeData(color: Colors.white),
+            title: Text(
+              widget.matchName,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontFamily: 'NotoSansSC',
+                fontWeight: FontWeight.w600,
+                height: 1.56,
+                letterSpacing: 0.30,
+              ),
             ),
           ),
-          elevation: 0,
-          centerTitle: true,
-          iconTheme: const IconThemeData(color: Colors.white),
-          title: Text(
-            widget.matchName,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontFamily: 'NotoSansSC',
-              fontWeight: FontWeight.w600,
-              height: 1.56,
-              letterSpacing: 0.30,
-            ),
-          ),
-        ),
-        body: Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                isLoading
-                    ? Stack(
-                        alignment: Alignment.center,
-                        children: <Widget>[
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: Image.asset(
-                              'images/tournament/tournament_detail.png',
-                              fit: BoxFit.fill,
+          body: Expanded(
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  isLoading
+                      ? Stack(
+                          alignment: Alignment.center,
+                          children: <Widget>[
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              child: Image.asset(
+                                'images/tournament/tournament_detail.png',
+                                fit: BoxFit.fill,
+                              ),
                             ),
-                          ),
-                          CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.green),
-                          ),
-                        ],
-                      )
-                    : (footballMatchById?.isEmpty ?? false)
-                        ? userModel.isCN.value
-                            ? Stack(
-                                alignment: Alignment.center,
-                                children: <Widget>[
+                            CircularProgressIndicator(
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.green),
+                            ),
+                          ],
+                        )
+                      : (footballMatchById?.isEmpty ?? false)
+                          ? userModel.isCN.value
+                              ? Stack(
+                                  alignment: Alignment.center,
+                                  children: <Widget>[
+                                      Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          child: Image.asset(
+                                            'images/tournament/tournament_detail.png',
+                                            fit: BoxFit.fill,
+                                          )),
+                                      Text("无信息数据",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.bold,
+                                            height: 1,
+                                            letterSpacing: 0.46,
+                                          )),
+                                    ])
+                              : Stack(
+                                  alignment: Alignment.center,
+                                  children: [
                                     Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        child: Image.asset(
-                                          'images/tournament/tournament_detail.png',
-                                          fit: BoxFit.fill,
-                                        )),
-                                    Text("无信息数据",
+                                      width: MediaQuery.of(context).size.width,
+                                      child: Image.asset(
+                                        'images/tournament/tournament_detail.png',
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                    Text("No Match Data",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           color: Colors.white,
@@ -246,178 +301,141 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                           height: 1,
                                           letterSpacing: 0.46,
                                         )),
-                                  ])
-                            : Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Image.asset(
-                                      'images/tournament/tournament_detail.png',
+                                  ],
+                                )
+                          : Stack(children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                child: Image.asset(
+                                  'images/tournament/tournament_detail.png',
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              Positioned(
+                                top: 54,
+                                left: 0,
+                                right: 0,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    '${widget.matchDate}',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0xFFF8FEE4),
+                                      fontSize: 12,
+                                      fontFamily: 'NotoSansSC',
+                                      fontWeight: FontWeight.w400,
+                                      height: 1,
+                                      letterSpacing: 0.46,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: 72,
+                                left: 0,
+                                right: 0,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    matchStatusStr,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0xFFF8FEE4),
+                                      fontSize: 12,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w400,
+                                      height: 1,
+                                      letterSpacing: 0.46,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: 76,
+                                left: 48,
+                                child: Container(
+                                  width: 46,
+                                  height: 46,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                          footballMatchById['homeTeamLogo']
+                                              .toString()),
                                       fit: BoxFit.fill,
                                     ),
                                   ),
-                                  Text("No Match Data",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.bold,
-                                        height: 1,
-                                        letterSpacing: 0.46,
-                                      )),
+                                ),
+                              ),
+                              Positioned(
+                                top: 77.92,
+                                right: 49.92,
+                                child: Container(
+                                  width: 42.17,
+                                  height: 42.17,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                          footballMatchById['awayTeamLogo']
+                                              .toString()),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: 140,
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.fromLTRB(0, 135, 0, 0),
+                                      child: Text(
+                                        footballMatchById['homeTeamName']
+                                            .toString(),
+                                        textAlign: TextAlign.center,
+                                        maxLines: 3,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontFamily: 'NotoSansSC',
+                                          fontWeight: FontWeight.w400,
+                                          height: 1,
+                                          letterSpacing: 0.30,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 140,
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.fromLTRB(0, 135, 0, 0),
+                                      child: Text(
+                                        footballMatchById['awayTeamName']
+                                            .toString(),
+                                        textAlign: TextAlign.center,
+                                        maxLines: 3,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontFamily: 'NotoSansSC',
+                                          fontWeight: FontWeight.w400,
+                                          height: 1,
+                                          letterSpacing: 0.30,
+                                        ),
+                                      ),
+                                    ),
+                                  )
                                 ],
-                              )
-                        : Stack(children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: Image.asset(
-                                'images/tournament/tournament_detail.png',
-                                fit: BoxFit.fill,
                               ),
-                            ),
-                            Positioned(
-                              top: 54,
-                              left: 0,
-                              right: 0,
-                              child: Align(
-                                alignment: Alignment.center,
+                              Positioned(
+                                top: 122,
+                                left: 144,
                                 child: Text(
-                                  '${widget.matchDate}',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Color(0xFFF8FEE4),
-                                    fontSize: 12,
-                                    fontFamily: 'NotoSansSC',
-                                    fontWeight: FontWeight.w400,
-                                    height: 1,
-                                    letterSpacing: 0.46,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: 72,
-                              left: 0,
-                              right: 0,
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  matchStatusStr,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Color(0xFFF8FEE4),
-                                    fontSize: 12,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w400,
-                                    height: 1,
-                                    letterSpacing: 0.46,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: 76,
-                              left: 48,
-                              child: Container(
-                                width: 46,
-                                height: 46,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                        footballMatchById['homeTeamLogo']
-                                            .toString()),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: 77.92,
-                              right: 49.92,
-                              child: Container(
-                                width: 42.17,
-                                height: 42.17,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                        footballMatchById['awayTeamLogo']
-                                            .toString()),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  width: 140,
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 135, 0, 0),
-                                    child: Text(
-                                      footballMatchById['homeTeamName']
-                                          .toString(),
-                                      textAlign: TextAlign.center,
-                                      maxLines: 3,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontFamily: 'NotoSansSC',
-                                        fontWeight: FontWeight.w400,
-                                        height: 1,
-                                        letterSpacing: 0.30,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  width: 140,
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 135, 0, 0),
-                                    child: Text(
-                                      footballMatchById['awayTeamName']
-                                          .toString(),
-                                      textAlign: TextAlign.center,
-                                      maxLines: 3,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontFamily: 'NotoSansSC',
-                                        fontWeight: FontWeight.w400,
-                                        height: 1,
-                                        letterSpacing: 0.30,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                            Positioned(
-                              top: 122,
-                              left: 144,
-                              child: Text(
-                                '${footballMatchById['homeScore'].toString()}',
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 30,
-                                  fontFamily: 'NotoSansSC',
-                                  fontWeight: FontWeight.w600,
-                                  height: 1,
-                                  letterSpacing: 0.42,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: 122,
-                              left: 0,
-                              right: 0,
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  '-',
+                                  '${footballMatchById['homeScore'].toString()}',
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
                                     color: Colors.white,
@@ -429,178 +447,223 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                   ),
                                 ),
                               ),
-                            ),
-                            Positioned(
-                              top: 122,
-                              right: 143,
-                              child: Text(
-                                '${footballMatchById['awayScore'].toString()}',
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 30,
-                                  fontFamily: 'NotoSansSC',
-                                  fontWeight: FontWeight.w600,
-                                  height: 1,
-                                  letterSpacing: 0.42,
+                              Positioned(
+                                top: 122,
+                                left: 0,
+                                right: 0,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    '-',
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 30,
+                                      fontFamily: 'NotoSansSC',
+                                      fontWeight: FontWeight.w600,
+                                      height: 1,
+                                      letterSpacing: 0.42,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Positioned(
-                                top: 160,
-                                left: 85,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    print("navi to live stream");
-
-                                    if (liveUrl == "" || liveUrl == null) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                        content: Text("没有直播"),
-                                        backgroundColor: redColor,
-                                      ));
-                                    } else {
-                                      Get.to(
-                                          () => LivePlayPage2(
-                                                streamId: liveUrl,
-                                                title: widget.matchName,
-                                              ),
-                                          transition: Transition.fadeIn);
-                                    }
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "视频直播",
-                                        style: TextStyle(
-                                            fontFamily: "Inter",
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: 0.3,
-                                            color: white),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(horizontal: 5),
-                                        child: Image(
-                                            width: 24,
-                                            height: 24,
-                                            image: AssetImage(
-                                                "images/tournament/videoLiveStream.png")),
-                                      )
-                                    ],
+                              Positioned(
+                                top: 122,
+                                right: 143,
+                                child: Text(
+                                  '${footballMatchById['awayScore'].toString()}',
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30,
+                                    fontFamily: 'NotoSansSC',
+                                    fontWeight: FontWeight.w600,
+                                    height: 1,
+                                    letterSpacing: 0.42,
                                   ),
-                                )),
-                            Positioned(
-                                top: 160,
-                                right: 85,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    print(
-                                        "navi to animation stream:${animationUrl}");
+                                ),
+                              ),
+                              Positioned(
+                                  top: 160,
+                                  left: 90,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      print("navi to live stream");
 
-                                    if (animationUrl == "" ||
-                                        animationUrl == null) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                        content: Text("没有动画直播"),
-                                        backgroundColor: redColor,
-                                      ));
-                                    } else {
-                                      Get.to(
-                                          () => LivePlayPage2(
-                                                streamId: animationUrl,
-                                                title: widget.matchName,
-                                              ),
-                                          transition: Transition.fadeIn);
-                                    }
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(horizontal: 5),
-                                        child: Image(
-                                            width: 24,
-                                            height: 24,
-                                            image: AssetImage(
-                                                "images/tournament/animationStream.png")),
-                                      ),
-                                      Text(
-                                        "动画直播",
-                                        style: TextStyle(
-                                            fontFamily: "Inter",
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: 0.3,
-                                            color: white),
-                                      ),
-                                    ],
-                                  ),
-                                ))
-                          ]),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 10, 0, 14),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            selectedButton = 1;
-                          });
-                        },
-                        child: Text(
-                          userModel.isCN == true ? "赛况" : "Match Status",
-                          style: TextStyle(
-                              color: selectedButton == 1
-                                  ? Colors.white
-                                  : kComponentHintTextColor,
-                              fontSize: 14,
-                              fontFamily: 'NotoSansSC'),
+                                      if (liveUrl == "" || liveUrl == null) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text("没有直播"),
+                                          backgroundColor: redColor,
+                                        ));
+                                      } else {
+                                        Get.to(
+                                            () => LivePlayPage2(
+                                                  streamId: liveUrl,
+                                                  title: widget.matchName,
+                                                ),
+                                            transition: Transition.fadeIn);
+                                      }
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "视频直播",
+                                          style: TextStyle(
+                                              fontFamily: "Inter",
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400,
+                                              letterSpacing: 0.3,
+                                              color: white),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 5),
+                                          child: Image(
+                                              width: 28,
+                                              height: 28,
+                                              image: AssetImage(
+                                                  "images/tournament/videoLiveStream.png")),
+                                        )
+                                      ],
+                                    ),
+                                  )),
+                              Positioned(
+                                  top: 160,
+                                  right: 85,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      print(
+                                          "navi to animation stream:${animationUrl}");
+
+                                      if (animationUrl == "" ||
+                                          animationUrl == null) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text("没有动画直播"),
+                                          backgroundColor: redColor,
+                                        ));
+                                      } else {
+                                        Get.to(
+                                            () => LivePlayPage2(
+                                                  streamId: animationUrl,
+                                                  title: widget.matchName,
+                                                ),
+                                            transition: Transition.fadeIn);
+                                      }
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 5),
+                                          child: Image(
+                                              width: 28,
+                                              height: 28,
+                                              image: AssetImage(
+                                                  "images/tournament/animationStream.png")),
+                                        ),
+                                        Text(
+                                          "动画直播",
+                                          style: TextStyle(
+                                              fontFamily: "Inter",
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400,
+                                              letterSpacing: 0.3,
+                                              color: white),
+                                        ),
+                                      ],
+                                    ),
+                                  ))
+                            ]),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 10, 0, 14),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        StatusButtonComponent(
+                          statusList: selectionList,
+                          statusId: selectedButton,
+                          onTap: (selectId) {
+                            setState(() {
+                              selectedButton = selectId;
+                            });
+                          },
                         ),
-                        style: buttonStyle(1).copyWith(
-                            elevation: MaterialStateProperty.all(0),
-                            backgroundColor: MaterialStatePropertyAll(
-                                selectedButton == 1 ? kMainGreenColor : white)),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            selectedButton = 3;
-                          });
-                        },
-                        child: Text(
-                          userModel.isCN == true ? "阵容" : "Line-up",
-                          style: TextStyle(
-                              color: selectedButton == 3
-                                  ? Colors.white
-                                  : kComponentHintTextColor,
-                              fontSize: 14,
-                              fontFamily: 'NotoSansSC'),
-                        ),
-                        style: buttonStyle(3).copyWith(
-                            elevation: MaterialStateProperty.all(0),
-                            backgroundColor: MaterialStatePropertyAll(
-                                selectedButton == 3 ? kMainGreenColor : white)),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  // set height to your preference// optional
-                  child: isDetailNull
-                      ? searchEmptyWidget()
-                      : getContentForSelectedButton(),
-                ),
-              ],
+                  Container(
+                    // set height to your preference// optional
+                    child: isDetailNull
+                        ? searchEmptyWidget()
+                        : getContentForSelectedButton(),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+          bottomNavigationBar: (selectedButton == 1)
+              ? Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0x1A000000),
+                        offset: Offset(1, 0),
+                        blurRadius: 1,
+                        spreadRadius: 0,
+                      ),
+                    ],
+                    color: kMainComponentColor,
+                  ),
+                  padding: EdgeInsets.fromLTRB(12, 10, 12, 55),
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                        flex: 85,
+                        child: Container(
+                          height: 32,
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              color: kComponentTagBackgroundColor),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 4),
+                            child: TextField(
+                              decoration: InputDecoration(
+                                  hintText: "跟大家聊聊呗",
+                                  hintStyle: tChatHintText,
+                                  border: InputBorder.none),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                          flex: 15,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 5),
+                            child: RawMaterialButton(
+                              shape: CircleBorder(),
+                              elevation: 0,
+                              fillColor: kComponentTagBackgroundColor,
+                              child: Icon(
+                                Icons.arrow_upward_rounded,
+                                color: kMainGreyColor,
+                              ),
+                              onPressed: () {
+                                print("sent");
+                              },
+                            ),
+                          ))
+                    ],
+                  ),
+                )
+              : SizedBox()),
     );
   }
 
@@ -609,7 +672,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
 
     final barWidth = (screenWidth - 0) * 0.2; // 调整为需要的宽度
 
-    // Case 3
+    // Case 2
     List<dynamic> F_list;
     List<dynamic> M_list;
     List<dynamic> G_list;
@@ -820,7 +883,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
           lineupList, AS_list, AS_captain, AS_shirtNumber, AS_playerName);
     }
 
-    // Case 1
+    // Case 0
     double parseDouble(String key, Map<String, dynamic> data) {
       if (data[key] != null) {
         print("check: ${data[key]}");
@@ -832,7 +895,6 @@ class _TournamentDetailsState extends State<TournamentDetails> {
         }
 
         return double.parse(data[key].toString());
-        // return double.parse("55");
       }
       return 0.0;
     }
@@ -911,7 +973,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
         parseDouble('awayPenaltyNum', footballMatchById);
 
     switch (selectedButton) {
-      case 1:
+      case 0:
         // Return a ListView for Button 1
         //与屏幕向内Padding
         return isLoading
@@ -935,7 +997,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                         textColor: Colors.black,
                       )
                 : Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 8, 5, 0),
+                    padding: const EdgeInsets.fromLTRB(10, 8, 10, 0),
                     child: Center(
                       //Container 来添加白背景
                       child: Container(
@@ -1218,7 +1280,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                       ),
                                       SizedBox(width: 1),
                                       SizedBox(
-                                        width: 50,
+                                        width: 80,
                                         child: Center(
                                           child: Text(
                                             userModel.isCN == true
@@ -1319,9 +1381,10 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                     ),
                   );
 
-      case 3:
-        // Return a ListView for Button 3
+      case 1:
+        return TournamentChatComponent();
 
+      case 2:
         return SingleChildScrollView(
             child: (footballLineupByMatchId['homeMatchLineUpList']?.isEmpty ??
                         false) ||
@@ -2066,6 +2129,35 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                 )
                         ],
                       ));
+
+      case 3:
+        return SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SelectionButtonTournamentComponent(
+                index: selectedTextButton,
+                selectionList: selectionButtonText,
+                onTap: (index) {
+                  setState(() {
+                    selectedTextButton = index;
+                  });
+                },
+              ),
+              (selectedTextButton == 0)
+                  ? ConcedeTableComponent()
+                  : (selectedTextButton == 1)
+                      ? WinLossDrawTableComponent()
+                      : (selectedTextButton == 2)
+                          ? ConcedeTableComponent()
+                          : (selectedTextButton == 3)
+                              ? ConcedeTableComponent()
+                              : searchEmptyWidget()
+            ],
+          ),
+        );
 
       default:
         return const Center(

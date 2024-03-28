@@ -448,3 +448,78 @@ const tFollowNull = TextStyle(
     fontWeight: FontWeight.w400,
     letterSpacing: 0.3,
     color: kUnselectedTextColor);
+
+// Tournament
+const tBannerText = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.3,
+    color: kTournamentChatBannerTextColor);
+const tChatUserNameText = TextStyle(
+    fontFamily: "Inter",
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.3,
+    color: kMainGreenColor);
+const tChatContentText = TextStyle(
+    fontFamily: "Inter",
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.3,
+    color: kMainTitleColor);
+const tChatHintText = TextStyle(
+    fontFamily: "Inter",
+    fontSize: 10,
+    fontWeight: FontWeight.w400,
+    height: 1.5,
+    color: kMainGreyColor);
+const tUnselectedText = TextStyle(
+    fontFamily: "Inter",
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.3,
+    color: kMainGreyColor);
+const tSelectedText = TextStyle(
+  fontFamily: 'Inter',
+  fontSize: 14,
+  fontWeight: FontWeight.w400,
+  letterSpacing: 0.3,
+  color: Colors.transparent,
+  decoration: TextDecoration.underline,
+  decorationColor: kMainGreenColor,
+  decorationThickness: 4.0,
+  shadows: [Shadow(color: kMainGreenColor, offset: Offset(0, -5))],
+);
+const tTableTitleText = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.3,
+    color: kMainGreyColor);
+
+const tTableContentText = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.3,
+    color: kMainTitleColor);
+
+const tTableContentGreenText = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.3,
+    color: kMainGreenColor);
+const tTableContentRedText = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.3,
+    color: kTopNewsTextColor);
+const tTableContentGreyText = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.3,
+    color: kUnselectedTextColor);

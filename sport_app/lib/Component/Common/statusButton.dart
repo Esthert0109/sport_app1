@@ -42,8 +42,8 @@ class _StatusButtonComponentState extends State<StatusButtonComponent> {
                     : kMainComponentColor,
               ),
               padding:
-                  EdgeInsets.symmetric(horizontal: 12 * fem, vertical: 3 * fem),
-              margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  EdgeInsets.symmetric(horizontal: 13 * fem, vertical: 5 * fem),
+              margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
               child: InkWell(
                 onTap: () => widget.onTap(index),
                 child: Text(widget.statusList[index],

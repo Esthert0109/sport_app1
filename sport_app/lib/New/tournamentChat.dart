@@ -1,8 +1,8 @@
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../Constants/colorConstant.dart';
-import '../../Constants/textConstant.dart';
+import '../Constants/colorConstant.dart';
+import '../Constants/textConstant.dart';
 
 class TournamentChatComponent extends StatefulWidget {
   TournamentChatComponent({super.key});

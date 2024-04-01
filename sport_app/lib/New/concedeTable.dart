@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../Constants/colorConstant.dart';
-import '../../Constants/textConstant.dart';
+import '../Constants/colorConstant.dart';
+import '../Constants/textConstant.dart';
 
 class ConcedeTableComponent extends StatefulWidget {
   ConcedeTableComponent({super.key});

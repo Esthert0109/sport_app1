@@ -31,6 +31,7 @@ class NewsPage extends StatefulWidget {
 class _NewsPageState extends State<NewsPage> {
   List<String> categoryList = [];
   int categoryLength = 0;
+  List<int> categoryId = [];
 
   List<InfoListData> topList = [];
   int topLength = 0;
@@ -71,10 +72,14 @@ class _NewsPageState extends State<NewsPage> {
 
       for (int i = 0; i < categoryLength; i++) {
         categoryList.add(list[i].category);
+        categoryId.add(list[i].categoryId);
       }
 
       setState(() {
         isLoading = false;
+        getInfoList();
+        getTopInfoList();
+        getImgInfoList();
       });
     }
   }
@@ -85,7 +90,8 @@ class _NewsPageState extends State<NewsPage> {
         isLoading = true;
       });
 
-      InfoListModel? infoModel = await infoProvider.getTopInfoList(tagId + 1);
+      InfoListModel? infoModel =
+          await infoProvider.getTopInfoList(categoryId[tagId]);
       topList.addAll(infoModel?.data ?? []);
       topLength = topList.length;
 
@@ -101,7 +107,8 @@ class _NewsPageState extends State<NewsPage> {
         isLoading = true;
       });
 
-      InfoListModel? infoModel = await infoProvider.getImageInfoUrl(tagId + 1);
+      InfoListModel? infoModel =
+          await infoProvider.getImageInfoUrl(categoryId[tagId]);
       imgList.addAll(infoModel?.data ?? []);
       imgLength = imgList.length;
 
@@ -118,7 +125,7 @@ class _NewsPageState extends State<NewsPage> {
       });
 
       InfoListModel? infoModel =
-          await infoProvider.getInfoList(page, size, tagId + 1);
+          await infoProvider.getInfoList(page, size, categoryId[tagId]);
       infoList.addAll(infoModel?.data ?? []);
       infoLength = infoList.length;
 

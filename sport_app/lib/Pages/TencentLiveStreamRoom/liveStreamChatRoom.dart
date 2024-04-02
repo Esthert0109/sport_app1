@@ -352,16 +352,9 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                   : Positioned(
                                       right: -15,
                                       bottom: 25,
-                                      child: Lottie.asset(
-                                        'images/livepage/hearts.json',
-                                        width: 100,
-                                        height: 400,
-                                        repeat: true,
-                                      ),
-                                    ),
+                                      child: Container()),
                               Padding(
                                 padding: EdgeInsets.fromLTRB(0, 0, 0, 15 * fem),
-
                                 child: _isDanmakuOn
                                     ? Positioned(
                                         bottom: 25,
@@ -382,43 +375,46 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                         config: TencentCloudAvChatRoomConfig(
                                             avChatRoomID: widget.avChatRoomId,
                                             loginUserID: widget.userLoginId,
-                                            giftHttpBase:
-                                                "https://live-stream-1321239144.cos.ap-singapore.myqcloud.com/head/",
+                                            // giftHttpBase:
+                                            //     "https://live-stream-1321239144.cos.ap-singapore.myqcloud.com/head/",
                                             displayConfig: DisplayConfig(
                                               showAnchor: false,
                                               showOnlineMemberCount: false,
-                                              showTextFieldGiftAction: true,
-                                              showTextFieldThumbsUpAction: true,
+                                              showTextFieldGiftAction: false,
+                                              showTextFieldThumbsUpAction:
+                                                  false,
                                             )),
                                         customWidgets:
                                             TencentCloudAvChatRoomCustomWidgets(
-                                          giftsPanelBuilder: (context) {
-                                            return GiftPanel(onTap: (item) {
-                                              final customInfo = {
-                                                "version": 1.0, // 协议版本号
-                                                "businessID":
-                                                    "flutter_live_kit", // 业务标识字段
-                                                "data": {
-                                                  "cmd":
-                                                      "send_gift_message", // send_gift_message: 发送礼物消息, update_online_member: 更新在线人数
-                                                  "cmdInfo": {
-                                                    "type": item.type,
-                                                    "giftUrl": item.giftUrl,
-                                                    "giftCount": 1,
-                                                    "giftSEUrl": item.seUrl,
-                                                    "giftName": item.name,
-                                                    "giftUnits": "朵",
-                                                  }
-                                                },
-                                              };
-                                              controller.sendGiftMessage(
-                                                  jsonEncode(customInfo));
-                                              Navigator.pop(context);
-                                            });
-                                          },
+                                          // giftsPanelBuilder: (context) {
+                                          //   return GiftPanel(onTap: (item) {
+                                          //     final customInfo = {
+                                          //       "version": 1.0, // 协议版本号
+                                          //       "businessID":
+                                          //           "flutter_live_kit", // 业务标识字段
+                                          //       "data": {
+                                          //         "cmd":
+                                          //             "send_gift_message", // send_gift_message: 发送礼物消息, update_online_member: 更新在线人数
+                                          //         "cmdInfo": {
+                                          //           "type": item.type,
+                                          //           "giftUrl": item.giftUrl,
+                                          //           "giftCount": 1,
+                                          //           "giftSEUrl": item.seUrl,
+                                          //           "giftName": item.name,
+                                          //           "giftUnits": "朵",
+                                          //         }
+                                          //       },
+                                          //     };
+                                          //     controller.sendGiftMessage(
+                                          //         jsonEncode(customInfo));
+                                          //     Navigator.pop(context);
+                                          //   });
+                                          // },
                                           textFieldDecoratorBuilder: (context) {
                                             return Container(
-                                              width: 230 * fem,
+                                              width: 340 * fem,
+                                              margin: EdgeInsets.symmetric(
+                                                  horizontal: 0 * fem),
                                               height: 40 * fem,
                                               child: RoundedContainer(
                                                 padding:
@@ -971,45 +967,46 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                       config: TencentCloudAvChatRoomConfig(
                                           avChatRoomID: widget.avChatRoomId,
                                           loginUserID: widget.userLoginId,
-                                          giftHttpBase:
-                                              "https://live-stream-1321239144.cos.ap-singapore.myqcloud.com/head/",
+                                          // giftHttpBase:
+                                          //     "https://live-stream-1321239144.cos.ap-singapore.myqcloud.com/head/",
                                           displayConfig: DisplayConfig(
                                             showAnchor: false,
-                                            showOnlineMemberCount: true,
-                                            showTextFieldGiftAction: true,
-                                            showTextFieldThumbsUpAction: true,
+                                            showOnlineMemberCount: false,
+                                            showTextFieldGiftAction: false,
+                                            showTextFieldThumbsUpAction: false,
                                           )),
                                       customWidgets:
                                           TencentCloudAvChatRoomCustomWidgets(
-                                        onlineMemberListPanelBuilder:
-                                            (context, groupID) {
-                                          return const Text(
-                                              "onlineMemberListPanelBuilder");
-                                        },
-                                        giftsPanelBuilder: (context) {
-                                          return GiftPanel(onTap: (item) {
-                                            final customInfo = {
-                                              "version": 1.0, // 协议版本号
-                                              "businessID":
-                                                  "flutter_live_kit", // 业务标识字段
-                                              "data": {
-                                                "cmd":
-                                                    "send_gift_message", // send_gift_message: 发送礼物消息, update_online_member: 更新在线人数
-                                                "cmdInfo": {
-                                                  "type": item.type,
-                                                  "giftUrl": item.giftUrl,
-                                                  "giftCount": 1,
-                                                  "giftSEUrl": item.seUrl,
-                                                  "giftName": item.name,
-                                                  "giftUnits": "朵",
-                                                }
-                                              },
-                                            };
-                                            controller.sendGiftMessage(
-                                                jsonEncode(customInfo));
-                                            Navigator.pop(context);
-                                          });
-                                        },
+                                        // onlineMemberListPanelBuilder:
+                                        //     (context, groupID) {
+                                        //   return const Text(
+                                        //       "onlineMemberListPanelBuilder");
+                                        // },
+                                        // giftsPanelBuilder:
+                                        //  (context) {
+                                        // return GiftPanel(onTap: (item) {
+                                        //   final customInfo = {
+                                        //     "version": 1.0, // 协议版本号
+                                        //     "businessID":
+                                        //         "flutter_live_kit", // 业务标识字段
+                                        //     "data": {
+                                        //       "cmd":
+                                        //           "send_gift_message", // send_gift_message: 发送礼物消息, update_online_member: 更新在线人数
+                                        //       "cmdInfo": {
+                                        //         "type": item.type,
+                                        //         "giftUrl": item.giftUrl,
+                                        //         "giftCount": 1,
+                                        //         "giftSEUrl": item.seUrl,
+                                        //         "giftName": item.name,
+                                        //         "giftUnits": "朵",
+                                        //       }
+                                        //     },
+                                        //   };
+                                        //   controller.sendGiftMessage(
+                                        //       jsonEncode(customInfo));
+                                        //   Navigator.pop(context);
+                                        // });
+                                        // },
                                         textFieldDecoratorBuilder: (context) {
                                           return Container(
                                             width: 230 * fem,
@@ -1036,7 +1033,6 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                                         fontWeight:
                                                             FontWeight.w500),
                                                   )
-                                                  
                                                 ],
                                               ),
                                             ),
@@ -1045,10 +1041,9 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                       ),
                                       data: TencentCloudAvChatRoomData(
                                         isSubscribe: false,
-                                        notification:
-                                            userModel.isCN.value
-                                                ? "欢迎来到直播间！严禁未成年人直播、打赏或向末成年人销售酒类商品。若主播销售酒类商品，请未成年人在监护人陪同下观看。直播间内严禁出现违法违规、低俗色情、吸烟酗酒、人身伤害等内容。如主播在直播中以不当方式诱导打赏私下交易请谨慎判断以防人身财产损失购买商品请点击下方购物车按钮，请勿私下交易，请大家注意财产安全，谨防网络诈骗。"
-                                                : "Welcome to the live broadcast room! It is strictly prohibited for minors to live stream, tip or sell alcoholic products to under-adults. If the anchor sells alcohol, minors are asked to watch with the supervision of a guardian. Contents that violate laws and regulations, vulgar pornography, smoking, alcoholism, personal injury, etc. are strictly prohibited in the live broadcast room. If the anchor improperly induces rewards during the live broadcast and makes private transactions, please use caution to prevent personal and property losses. To purchase goods, please click the shopping cart button below. Please do not make private transactions. Please pay attention to property safety and beware of online fraud.",
+                                        notification: userModel.isCN.value
+                                            ? "欢迎来到直播间！严禁未成年人直播、打赏或向末成年人销售酒类商品。若主播销售酒类商品，请未成年人在监护人陪同下观看。直播间内严禁出现违法违规、低俗色情、吸烟酗酒、人身伤害等内容。如主播在直播中以不当方式诱导打赏私下交易请谨慎判断以防人身财产损失购买商品请点击下方购物车按钮，请勿私下交易，请大家注意财产安全，谨防网络诈骗。"
+                                            : "Welcome to the live broadcast room! It is strictly prohibited for minors to live stream, tip or sell alcoholic products to under-adults. If the anchor sells alcohol, minors are asked to watch with the supervision of a guardian. Contents that violate laws and regulations, vulgar pornography, smoking, alcoholism, personal injury, etc. are strictly prohibited in the live broadcast room. If the anchor improperly induces rewards during the live broadcast and makes private transactions, please use caution to prevent personal and property losses. To purchase goods, please click the shopping cart button below. Please do not make private transactions. Please pay attention to property safety and beware of online fraud.",
                                         anchorInfo: AnchorInfo(
                                             subscribeNum: 200,
                                             fansNum: 5768,

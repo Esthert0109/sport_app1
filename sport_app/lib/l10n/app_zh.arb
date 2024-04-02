@@ -105,9 +105,9 @@
     "noAcc": "还没有账号? ",
 
     "all": "全部",
-    "started": "已开赛",
-    "yet": "未开赛",
-    "end": "已结束",
+    "started": "进行中",
+    "yet": "赛程",
+    "end": "赛果",
     "collection": "收藏", 
     "following": "我的关注",
     "defaultSort": "综合排序",

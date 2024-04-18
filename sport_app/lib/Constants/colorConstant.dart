@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-const kMainGreenColor = Color(0xff16B13B);
-const kMainBackgroundColor = Color(0xffF4F9F4);
-const kMainBottomNaviBtnColor = Color(0xffA4B9A4);
-const kSecondaryBtnColor = Color(0xFFD6F1DD);
+const kMainGreenColor = Color(0xff1349D5);
+const kMainBackgroundColor = Color(0xffF6F6F9);
+const kMainBottomNaviBtnColor = Color(0xff93A1C5);
+const kSecondaryBtnColor = Color(0xFFB8CBFB);
 
 const kMainComponentColor = Color(0xffFFFFFF);
 const kMainTitleColor = Color(0xff333333);

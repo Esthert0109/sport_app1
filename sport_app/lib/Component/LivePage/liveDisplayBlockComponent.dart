@@ -221,7 +221,7 @@ class _LiveDisplayBlockState extends State<LiveDisplayBlock> {
                       'images/Circle.svg',
                       color: userModel.isCN.value == true
                           ? status == '开'
-                              ? Color.fromARGB(255, 166, 241, 166)
+                              ? kSecondaryBtnColor
                               : Color.fromARGB(255, 182, 182, 182)
                           : Color.fromARGB(255, 255, 255, 255),
                       width: 28 * fem,
@@ -236,7 +236,7 @@ class _LiveDisplayBlockState extends State<LiveDisplayBlock> {
                                   status ?? "No Data",
                                   style: TextStyle(
                                       color: status == '开'
-                                          ? Color(0xFF16B13B)
+                                          ? kMainGreenColor
                                           : kMainGreyColor,
                                       fontFamily: 'NotoSansSC',
                                       fontSize: 12 * fem,

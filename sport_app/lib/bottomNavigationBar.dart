@@ -97,8 +97,8 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
                 BottomNavigationBarItem(
                     label: AppLocalizations.of(context)!.info,
                     icon: pageIndex == 2
-                        ? SvgPicture.asset('images/bottomNaviBtn/info-0.svg')
-                        : SvgPicture.asset('images/bottomNaviBtn/info-1.svg'),
+                        ? SvgPicture.asset('images/bottomNaviBtn/info-1.svg')
+                        : SvgPicture.asset('images/bottomNaviBtn/info-0.svg'),
                     backgroundColor: kMainBackgroundColor),
                 BottomNavigationBarItem(
                     label: AppLocalizations.of(context)!.my,

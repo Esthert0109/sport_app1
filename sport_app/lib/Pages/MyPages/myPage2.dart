@@ -600,12 +600,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                                             ),
                                                             backgroundColor:
                                                                 MaterialStateProperty
-                                                                    .all(Color
-                                                                        .fromARGB(
-                                                                            255,
-                                                                            215,
-                                                                            236,
-                                                                            191))),
+                                                                    .all(
+                                                                        kSecondaryBtnColor)),
                                                         child: Text(
                                                           userModel.isCN.value
                                                               ? "取消"
@@ -616,7 +612,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                                             fontSize: 12 * fem,
                                                             fontWeight:
                                                                 FontWeight.w600,
-                                                            color: greenColor,
+                                                            color:
+                                                                kMainGreenColor,
                                                           ),
                                                         ),
                                                       ),

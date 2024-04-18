@@ -588,7 +588,7 @@ class _OTPVerificationState extends State<OTPVerification> {
                                 }
                               },
                               color: isbuttonDisabled
-                                  ? Color.fromARGB(255, 17, 143, 47)
+                                  ? kSecondaryBtnColor
                                   : kMainGreenColor,
                             )
                           ],

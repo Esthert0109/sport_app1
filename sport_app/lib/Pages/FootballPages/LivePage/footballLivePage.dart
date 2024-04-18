@@ -323,7 +323,7 @@ class _FootballLivePageState extends State<FootballLivePage>
                         height: 0,
                         color: Colors.transparent,
                       ),
-                      dropdownColor: Color.fromARGB(255, 211, 255, 212),
+                      dropdownColor: kSecondaryBtnColor,
                       icon: Padding(
                         padding: EdgeInsets.only(left: 5 * fem),
                         child: SvgPicture.asset('images/appBar/down-arrow.svg'),

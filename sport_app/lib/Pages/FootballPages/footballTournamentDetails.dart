@@ -155,6 +155,8 @@ class _TournamentDetailsState extends State<TournamentDetails> {
     footballLineupByMatchId =
         await provider.getFootballLineup(widget.id, userModel.isCN.value);
 
+    print("${footballLineupByMatchId['homeMatchLineUpList'][0]}");
+
     return footballLineupByMatchId;
   }
 
@@ -621,17 +623,94 @@ class _TournamentDetailsState extends State<TournamentDetails> {
     List<dynamic> AS_list;
 
     if (userModel.isCN.value) {
-      F_list = ["F"];
-      M_list = ["M"];
-      G_list = ["G"];
-      D_list = ["D"];
-      S_list = ["S"];
+      // F_list = ["F"];
+      // M_list = ["M"];
+      // G_list = ["G"];
+      // D_list = ["D"];
+      // S_list = ["S"];
 
-      AF_list = ["F"];
-      AM_list = ["M"];
-      AG_list = ["G"];
-      AD_list = ["D"];
-      AS_list = ["S"];
+      // AF_list = ["F"];
+      // AM_list = ["M"];
+      // AG_list = ["G"];
+      // AD_list = ["D"];
+      // AS_list = ["S"];
+
+      List<String> parts = widget.homeTeamFormation.split("");
+      int F = 0, M = 0, D = 0, S = 0;
+
+      if (parts.length >= 1) {
+        F = int.tryParse(parts[0]) ?? 0;
+      }
+      if (parts.length >= 2) {
+        M = int.tryParse(parts[1]) ?? 0;
+      }
+      if (parts.length >= 3) {
+        D = int.tryParse(parts[2]) ?? 0;
+      }
+      if (parts.length >= 4) {
+        S = int.tryParse(parts[3]) ?? 0;
+      }
+
+      print("part----------$parts");
+      print("$F + $M + $D + $S");
+
+      // AWAY
+      List<String> Aparts = widget.awayTeamFormation.split("");
+      int AF = 0, AM = 0, AD = 0, AS = 0;
+
+      if (Aparts.length >= 1) {
+        AF = int.tryParse(Aparts[0]) ?? 0;
+      }
+      if (Aparts.length >= 2) {
+        AM = int.tryParse(Aparts[1]) ?? 0;
+      }
+      if (Aparts.length >= 3) {
+        AD = int.tryParse(Aparts[2]) ?? 0;
+      }
+      if (Aparts.length >= 4) {
+        AS = int.tryParse(Aparts[3]) ?? 0;
+      }
+
+      print("part----------$Aparts");
+      print("$AF + $AM + $AD + $AS");
+
+      List<int> generateNumberList(int start, int end) {
+        List<int> numbersList = [];
+        for (int i = start; i <= end; i++) {
+          numbersList.add(i);
+        }
+        return numbersList;
+      }
+
+      // HOME
+      F_list = generateNumberList(F + M + 2, F + M + D + 1);
+      print("first: $F_list");
+
+      M_list = generateNumberList(F + 2, F + M + 1);
+      print("second: $M_list");
+
+      D_list = generateNumberList(2, F + 1);
+      print("third: $D_list");
+
+      S_list = generateNumberList(F + M + D + 2, F + M + D + S + 1);
+      print("fourth: $S_list");
+
+      G_list = [1];
+
+      // AWAY
+      AF_list = generateNumberList(AF + AM + 2, AF + AM + AD + 1);
+      print("A_first: $AF_list");
+
+      AM_list = generateNumberList(AF + 2, AF + AM + 1);
+      print("A_second: $AM_list");
+
+      AD_list = generateNumberList(2, AF + 1);
+      print("A_third: $AD_list");
+
+      AS_list = generateNumberList(AF + AM + AD + 2, AF + AM + AD + AS + 1);
+      print("A_fourth: $AS_list");
+
+      AG_list = [1];
     } else {
       // HOME
       List<String> parts = widget.homeTeamFormation.split("-");
@@ -918,7 +997,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                   padding:
                       EdgeInsets.only(top: 20.0), // Adjust the value as needed
                   child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                    valueColor: AlwaysStoppedAnimation<Color>(kMainGreenColor),
                   ),
                 ),
               )
@@ -1341,7 +1420,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                               top: 20.0), // Adjust the value as needed
                           child: CircularProgressIndicator(
                             valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.green),
+                                AlwaysStoppedAnimation<Color>(kMainGreenColor),
                           ),
                         ),
                       )
@@ -1364,53 +1443,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                               ),
                               //阵容里面的排版
                               child: (widget.lineUp == 0)
-                                  ? Center(
-                                      child: userModel.isCN.value
-                                          ? Padding(
-                                              padding: EdgeInsets.all(
-                                                  25.0), // Adjust the padding as needed
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    '无阵容信息',
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                      fontFamily: 'Inter',
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      height: 1,
-                                                      letterSpacing: 0.46,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                          : Padding(
-                                              padding: EdgeInsets.all(
-                                                  25.0), // Adjust the padding as needed
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'No Lineup Information',
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                      fontFamily: 'Inter',
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      height: 1,
-                                                      letterSpacing: 0.46,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                    )
+                                  ? searchEmptyWidget()
                                   : Stack(
                                       children: [
                                         Column(
@@ -1436,10 +1469,10 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                                   SizedBox(
                                                     width: 5,
                                                   ),
-                                                  //Lineup need to fetch from API
+                                                  // Lineup need to fetch from API
                                                   userModel.isCN.value
                                                       ? Text(
-                                                          "${D_playerName.length}-${M_playerName.length}-${F_playerName.length}",
+                                                          "${liveData.homeFormation}",
                                                           style: TextStyle(
                                                               color:
                                                                   kMainComponentColor,
@@ -1493,7 +1526,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                                   ),
                                                   userModel.isCN.value
                                                       ? Text(
-                                                          "${AD_playerName.length}-${AM_playerName.length}-${AF_playerName.length}",
+                                                          "${liveData.awayFormation}",
                                                           style: TextStyle(
                                                               color:
                                                                   kMainComponentColor,
@@ -1675,7 +1708,7 @@ class _TournamentDetailsState extends State<TournamentDetails> {
                                               ? '替补阵容'
                                               : "Substitute",
                                           style: TextStyle(
-                                            color: Colors.green,
+                                            color: kMainGreenColor,
                                             fontSize: 18,
                                             fontFamily: 'Inter',
                                             fontWeight: FontWeight.bold,

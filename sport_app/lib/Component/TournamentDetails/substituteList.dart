@@ -70,30 +70,30 @@ class substituteListState extends State<substituteList> {
 
             dynamic position;
 
-            if (UserModel.isCN.value) {
-              String positionAbbreviation = player['position'];
-              position;
+            // if (UserModel.isCN.value) {
+            //   String positionAbbreviation = player['position'];
+            //   position;
 
-              // Map the position abbreviation to the full position name
-              switch (positionAbbreviation) {
-                case "F":
-                  position = "前锋";
-                  break;
-                case "G":
-                  position = "守门员";
-                  break;
-                case "D":
-                  position = "后卫";
-                  break;
-                case "M":
-                  position = "中锋";
-                  break;
-                default:
-                  position =
-                      positionAbbreviation; // Keep it as is if not matched
-                  break;
-              }
-            }
+            //   // Map the position abbreviation to the full position name
+            //   switch (positionAbbreviation) {
+            //     case "F":
+            //       position = "前锋";
+            //       break;
+            //     case "G":
+            //       position = "守门员";
+            //       break;
+            //     case "D":
+            //       position = "后卫";
+            //       break;
+            //     case "M":
+            //       position = "中锋";
+            //       break;
+            //     default:
+            //       position =
+            //           positionAbbreviation; // Keep it as is if not matched
+            //       break;
+            //   }
+            // }
 
             teamASubstitutes.add({
               'shirtNumber': player['shirtNumber'],
@@ -127,30 +127,30 @@ class substituteListState extends State<substituteList> {
 
             dynamic position;
 
-            if (UserModel.isCN.value) {
-              String positionAbbreviation = player['position'];
-              position;
+            // if (UserModel.isCN.value) {
+            //   String positionAbbreviation = player['position'];
+            //   position;
 
-              // Map the position abbreviation to the full position name
-              switch (positionAbbreviation) {
-                case "F":
-                  position = "前锋";
-                  break;
-                case "G":
-                  position = "守门员";
-                  break;
-                case "D":
-                  position = "后卫";
-                  break;
-                case "M":
-                  position = "中锋";
-                  break;
-                default:
-                  position =
-                      positionAbbreviation; // Keep it as is if not matched
-                  break;
-              }
-            }
+            //   // Map the position abbreviation to the full position name
+            //   switch (positionAbbreviation) {
+            //     case "F":
+            //       position = "前锋";
+            //       break;
+            //     case "G":
+            //       position = "守门员";
+            //       break;
+            //     case "D":
+            //       position = "后卫";
+            //       break;
+            //     case "M":
+            //       position = "中锋";
+            //       break;
+            //     default:
+            //       position =
+            //           positionAbbreviation; // Keep it as is if not matched
+            //       break;
+            //   }
+            // }
 
             teamBSubstitutes.add({
               'shirtNumber': player['shirtNumber'],

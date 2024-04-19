@@ -396,8 +396,8 @@ class ApiConstants {
   static const ifFollowed = "/api/v1/follow/check/";
 
   // get animation
-  static const getAnimationUrl = 'api/v1/animation/';
-  static const getLiveUrl = "api/v1/live-address/";
+  static const getAnimationUrl = '/api/v1/animation/';
+  static const getLiveUrl = "/api/v1/live-address/";
 
   // info
   static const getCategoriesList = "/api/v1/info/categories";

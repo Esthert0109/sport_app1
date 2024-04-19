@@ -9,7 +9,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:sport_app/Pages/MyPages/editUsername.dart';
 
-import '../../Component/Common/loadingScreen.dart';
 import '../../Component/Common/noticeDialog.dart';
 import '../../Component/Common/snackBar.dart';
 import '../../Constants/colorConstant.dart';

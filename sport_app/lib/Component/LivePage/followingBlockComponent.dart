@@ -126,7 +126,6 @@ class _FollowingBlockComponentState extends State<FollowingBlockComponent> {
             flex: 20,
             child: InkWell(
               onTap: () async {
-
                 setState(() {
                   showDialog(
                       context: context,
@@ -163,15 +162,14 @@ class _FollowingBlockComponentState extends State<FollowingBlockComponent> {
                                         ),
                                         backgroundColor:
                                             MaterialStateProperty.all(
-                                                Color.fromARGB(
-                                                    255, 215, 236, 191))),
+                                                kMainBackgroundColor)),
                                     child: Text(
                                       userModel.isCN.value ? "取消" : "Cancel",
                                       style: TextStyle(
                                         fontFamily: 'NotoSansSC',
                                         fontSize: 12 * fem,
                                         fontWeight: FontWeight.w600,
-                                        color: greenColor,
+                                        color: kMainBottomNaviBtnColor,
                                       ),
                                     ),
                                   ),

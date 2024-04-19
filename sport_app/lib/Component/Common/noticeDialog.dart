@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../../Constants/colorConstant.dart';
 import '../../Model/userDataModel.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -44,14 +45,14 @@ void showNoticeDialog(BuildContext context, String message, String btnText,
                             ),
                           ),
                           backgroundColor: MaterialStateProperty.all(
-                              Color.fromARGB(255, 215, 236, 191))),
+                              Color(0xffF6F6F9))),
                       child: Text(
                         userModel.isCN.value ? "取消" : "Cancel",
                         style: TextStyle(
                           fontFamily: 'NotoSansSC',
                           fontSize: 12 * fem,
                           fontWeight: FontWeight.w600,
-                          color: greenColor,
+                          color: kMainBottomNaviBtnColor,
                         ),
                       )),
                 ),
@@ -71,7 +72,7 @@ void showNoticeDialog(BuildContext context, String message, String btnText,
                             ),
                           ),
                           backgroundColor:
-                              MaterialStateProperty.all(greenColor)),
+                              MaterialStateProperty.all(kMainGreenColor)),
                       child: Text(
                         btnText,
                         style: TextStyle(

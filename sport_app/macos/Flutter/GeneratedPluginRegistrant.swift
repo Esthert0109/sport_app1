@@ -24,6 +24,7 @@ import sqflite
 import tencent_cloud_chat_sdk
 import url_launcher_macos
 import video_player_avfoundation
+import wakelock_plus
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   AudioSessionPlugin.register(with: registry.registrar(forPlugin: "AudioSessionPlugin"))
@@ -45,4 +46,5 @@ func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   TencentCloudChatSdkPlugin.register(with: registry.registrar(forPlugin: "TencentCloudChatSdkPlugin"))
   UrlLauncherPlugin.register(with: registry.registrar(forPlugin: "UrlLauncherPlugin"))
   FVPVideoPlayerPlugin.register(with: registry.registrar(forPlugin: "FVPVideoPlayerPlugin"))
+  WakelockPlusMacosPlugin.register(with: registry.registrar(forPlugin: "WakelockPlusMacosPlugin"))
 }

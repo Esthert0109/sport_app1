@@ -24,18 +24,18 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.example.sport_app"
-    compileSdkVersion 34
+    compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = '1.8'
     }
 
     sourceSets {
@@ -47,24 +47,52 @@ android {
         applicationId "com.example.sport_app"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 34
+        minSdkVersion 26
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        ndk {
+            //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a"
+        }
+    }
+
+    signingConfigs {
+        sign {
+            storeFile file('../fate_box.jks')
+            storePassword 'com.fate.box'
+            keyAlias 'FateBox'
+            keyPassword 'com.fate.box'
+        }
     }
 
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.sign
+            //关闭混淆
+            minifyEnabled false //删除无用代码
+            shrinkResources false //删除无用资源
+            //debuggable true
         }
-        // debug{
-        //     minifyEnabled true
-        //     proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        // }
+        debug {
+             signingConfig signingConfigs.sign
+            //关闭混淆
+            minifyEnabled false //删除无用代码
+            shrinkResources false //删除无用资源
+        }
+    }
+    splits {
+        abi {
+            enable true
+            // 默认情况下，包含了所有的ABI。
+            // 所以使用reset()清空所有的ABI，再使用include指定我们想要生成的架构armeabi-v7a、arm-v8a
+            reset()
+            include "armeabi-v7a", "arm64-v8a"
+            // 是否生成通用的apk，也就是包含所有ABI的apk。如果设为 true，那么除了按 ABI 生成的 APK 之外，Gradle 还会生成一个通用 APK。
+            universalApk true
+        }
     }
 }
 

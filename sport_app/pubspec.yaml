@@ -45,7 +45,7 @@ dependencies:
   tencent_cloud_chat_uikit: ^2.4.3
   crypto: ^3.0.3
   intl_phone_number_input: ^0.7.4
-  google_fonts: ^6.1.0
+  google_fonts: 6.1.0
   nb_utils: ^6.1.2
   libphonenumber_plugin: ^0.3.3
   live_flutter_plugin: ^11.4.4

@@ -356,10 +356,14 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                               Padding(
                                 padding: EdgeInsets.fromLTRB(0, 0, 0, 15 * fem),
                                 child: _isDanmakuOn
-                                    ? Positioned(
-                                        bottom: 25,
-                                        right: -15,
-                                        child: Container())
+                                    ? Stack(
+                                        children: [
+                                          Positioned(
+                                              bottom: 25,
+                                              right: -15,
+                                              child: Container()),
+                                        ],
+                                      )
                                     : TencentCloudAVChatRoom(
                                         theme: TencentCloudAvChatRoomTheme(
                                           backgroundColor: white,
@@ -386,30 +390,6 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                             )),
                                         customWidgets:
                                             TencentCloudAvChatRoomCustomWidgets(
-                                          // giftsPanelBuilder: (context) {
-                                          //   return GiftPanel(onTap: (item) {
-                                          //     final customInfo = {
-                                          //       "version": 1.0, // 协议版本号
-                                          //       "businessID":
-                                          //           "flutter_live_kit", // 业务标识字段
-                                          //       "data": {
-                                          //         "cmd":
-                                          //             "send_gift_message", // send_gift_message: 发送礼物消息, update_online_member: 更新在线人数
-                                          //         "cmdInfo": {
-                                          //           "type": item.type,
-                                          //           "giftUrl": item.giftUrl,
-                                          //           "giftCount": 1,
-                                          //           "giftSEUrl": item.seUrl,
-                                          //           "giftName": item.name,
-                                          //           "giftUnits": "朵",
-                                          //         }
-                                          //       },
-                                          //     };
-                                          //     controller.sendGiftMessage(
-                                          //         jsonEncode(customInfo));
-                                          //     Navigator.pop(context);
-                                          //   });
-                                          // },
                                           textFieldDecoratorBuilder: (context) {
                                             return Container(
                                               width: 340 * fem,
@@ -831,87 +811,138 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                       color: Colors.black.withOpacity(0.5),
                                     )
                                   : Container(),
-                              Positioned(
-                                  top: 230 * fem,
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        10 * fem, 0 * fem, 10 * fem, 10 * fem),
-                                    child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Positioned(
-                                            top: 210 * fem,
-                                            right: 330 * fem,
-                                            child: InkWell(
-                                              onTap: () {
-                                                if (_isPlaying) {
-                                                  pausePlay();
-                                                } else {
-                                                  startPlay();
-                                                }
-                                              },
-                                              child: Icon(
-                                                _isPlaying
-                                                    ? Icons
-                                                        .pause_circle_filled_rounded
-                                                    : Icons.not_started_rounded,
-                                                size: _isPlaying ? 30 : 30,
-                                                color: Colors.white70,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 250 * fem,
-                                          ),
-                                          Positioned(
-                                            top: 210 * fem,
-                                            left: 280 * fem,
-                                            child: InkWell(
-                                              onTap: () {
-                                                setMuteState(!_ismuteState);
-                                              },
-                                              child: Icon(
-                                                _ismuteState
-                                                    ? Icons.volume_off
-                                                    : Icons.volume_up,
-                                                size: 30,
-                                                color: Colors.white70,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 10 * fem,
-                                          ),
-                                          Positioned(
-                                              top: 210 * fem,
-                                              left: 330 * fem,
-                                              child: InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    _isFullScreen = true;
-                                                  });
+                              Container(
+                                margin: EdgeInsets.all(0),
+                                child: Stack(
+                                  children: [
+                                    Positioned(
+                                        top: 230 * fem,
+                                        child: SizedBox(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          height: 50,
+                                          child: Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                                10 * fem,
+                                                0 * fem,
+                                                10 * fem,
+                                                10 * fem),
+                                            child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceAround,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  SizedBox(
+                                                    width: 50,
+                                                    height: 50,
+                                                    child: Stack(
+                                                      children: [
+                                                        Positioned(
+                                                          top: 210 * fem,
+                                                          right: 330 * fem,
+                                                          child: InkWell(
+                                                            onTap: () {
+                                                              if (_isPlaying) {
+                                                                pausePlay();
+                                                              } else {
+                                                                startPlay();
+                                                              }
+                                                            },
+                                                            child: Icon(
+                                                              _isPlaying
+                                                                  ? Icons
+                                                                      .pause_circle_filled_rounded
+                                                                  : Icons
+                                                                      .not_started_rounded,
+                                                              size: _isPlaying
+                                                                  ? 30
+                                                                  : 30,
+                                                              color: Colors
+                                                                  .white70,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 200 * fem,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 50,
+                                                    width: 50,
+                                                    child: Stack(
+                                                      children: [
+                                                        Positioned(
+                                                          top: 210 * fem,
+                                                          left: 280 * fem,
+                                                          child: InkWell(
+                                                            onTap: () {
+                                                              setMuteState(
+                                                                  !_ismuteState);
+                                                            },
+                                                            child: Icon(
+                                                              _ismuteState
+                                                                  ? Icons
+                                                                      .volume_off
+                                                                  : Icons
+                                                                      .volume_up,
+                                                              size: 30,
+                                                              color: Colors
+                                                                  .white70,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10 * fem,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 50,
+                                                    width: 50,
+                                                    child: Stack(
+                                                      children: [
+                                                        Positioned(
+                                                            top: 210 * fem,
+                                                            left: 330 * fem,
+                                                            child: InkWell(
+                                                              onTap: () {
+                                                                setState(() {
+                                                                  _isFullScreen =
+                                                                      true;
+                                                                });
 
-                                                  if (_isFullScreen) {
-                                                    SystemChrome
-                                                        .setPreferredOrientations([
-                                                      DeviceOrientation
-                                                          .landscapeLeft,
-                                                      DeviceOrientation
-                                                          .landscapeRight
-                                                    ]);
-                                                  }
-                                                },
-                                                child: Icon(
-                                                  Icons.fullscreen,
-                                                  size: 30,
-                                                  color: Colors.white70,
-                                                ),
-                                              )),
-                                        ]),
-                                  ))
+                                                                if (_isFullScreen) {
+                                                                  SystemChrome
+                                                                      .setPreferredOrientations([
+                                                                    DeviceOrientation
+                                                                        .landscapeLeft,
+                                                                    DeviceOrientation
+                                                                        .landscapeRight
+                                                                  ]);
+                                                                }
+                                                              },
+                                                              child: Icon(
+                                                                Icons
+                                                                    .fullscreen,
+                                                                size: 30,
+                                                                color: Colors
+                                                                    .white70,
+                                                              ),
+                                                            )),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ]),
+                                          ),
+                                        )),
+                                  ],
+                                ),
+                              )
                             ],
                           ))
                       : Stack(
@@ -977,36 +1008,6 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                           )),
                                       customWidgets:
                                           TencentCloudAvChatRoomCustomWidgets(
-                                        // onlineMemberListPanelBuilder:
-                                        //     (context, groupID) {
-                                        //   return const Text(
-                                        //       "onlineMemberListPanelBuilder");
-                                        // },
-                                        // giftsPanelBuilder:
-                                        //  (context) {
-                                        // return GiftPanel(onTap: (item) {
-                                        //   final customInfo = {
-                                        //     "version": 1.0, // 协议版本号
-                                        //     "businessID":
-                                        //         "flutter_live_kit", // 业务标识字段
-                                        //     "data": {
-                                        //       "cmd":
-                                        //           "send_gift_message", // send_gift_message: 发送礼物消息, update_online_member: 更新在线人数
-                                        //       "cmdInfo": {
-                                        //         "type": item.type,
-                                        //         "giftUrl": item.giftUrl,
-                                        //         "giftCount": 1,
-                                        //         "giftSEUrl": item.seUrl,
-                                        //         "giftName": item.name,
-                                        //         "giftUnits": "朵",
-                                        //       }
-                                        //     },
-                                        //   };
-                                        //   controller.sendGiftMessage(
-                                        //       jsonEncode(customInfo));
-                                        //   Navigator.pop(context);
-                                        // });
-                                        // },
                                         textFieldDecoratorBuilder: (context) {
                                           return Container(
                                             width: 230 * fem,

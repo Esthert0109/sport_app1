@@ -46,7 +46,7 @@ class _NewsPageState extends State<NewsPage> {
   bool _showAppBar = true;
   bool isScrollingDown = false;
   bool isLoading = false;
-  int tagId = 1;
+  int tagId = 0;
   int page = 1;
   int size = 15;
 
@@ -126,7 +126,10 @@ class _NewsPageState extends State<NewsPage> {
 
       InfoListModel? infoModel =
           await infoProvider.getInfoList(page, size, categoryId[tagId]);
-      infoList.addAll(infoModel?.data ?? []);
+      if (infoModel?.data != null && infoModel!.data!.isNotEmpty) {
+        infoList.addAll(infoModel!.data!);
+      }
+
       infoLength = infoList.length;
 
       setState(() {
@@ -141,10 +144,10 @@ class _NewsPageState extends State<NewsPage> {
     setState(() {
       lc.sportType.value = selectedValue!;
 
-      print("check sport selection: $selectedValue");
+      // print("check sport selection: $selectedValue");
       if (lc.sportType.value == 'basketball') {
         userModel.isFootball.value = false;
-        print("check sport selection 2: ${userModel.isFootball.value}");
+        // print("check sport selection 2: ${userModel.isFootball.value}");
       } else {
         userModel.isFootball.value = true;
         print("check sport selection 2: ${userModel.isFootball.value}");

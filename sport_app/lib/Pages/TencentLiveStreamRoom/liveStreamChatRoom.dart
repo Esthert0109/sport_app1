@@ -162,9 +162,9 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                   child: InkWell(
                     onTap: () {
                       if (_isPlaying) {
-                        pausePlay();
+                        // pausePlay();
                       } else {
-                        startPlay();
+                        // startPlay();
                       }
                     },
                     child: Icon(
@@ -190,51 +190,51 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
   //--------------------------------------------------------------------------------------------//
 
   //live stream start play
-  Future<void> startPlay() async {
-    if (_isPlaying) {
-      return;
-    }
-    if (_localViewId != null) {
-      var code = await _livePlayer?.setRenderViewID(_localViewId!);
-      if (code != V2TXLIVE_OK) {
-        debugPrint("Start Play error: check the remote view Id");
-      }
-    }
+  // Future<void> startPlay() async {
+  //   if (_isPlaying) {
+  //     return;
+  //   }
+  //   if (_localViewId != null) {
+  //     var code = await _livePlayer?.setRenderViewID(_localViewId!);
+  //     if (code != V2TXLIVE_OK) {
+  //       debugPrint("Start Play error: check the remote view Id");
+  //     }
+  //   }
 
-    var url = URLUtils.generateRtmpPlayUrl(widget.liveURL);
-    var playStatus = await _livePlayer?.startLivePlay(url);
+  //   var url = URLUtils.generateRtmpPlayUrl(widget.liveURL);
+  //   var playStatus = await _livePlayer?.startLivePlay(url);
 
-    print("check live url: ${widget.liveURL}");
-    if (playStatus == null || playStatus != V2TXLIVE_OK) {
-      return;
-    }
-    await _livePlayer?.setPlayoutVolume(100);
-    setState(() {
-      _isPlaying = true;
-    });
-  }
+  //   print("check live url: ${widget.liveURL}");
+  //   if (playStatus == null || playStatus != V2TXLIVE_OK) {
+  //     return;
+  //   }
+  //   await _livePlayer?.setPlayoutVolume(100);
+  //   setState(() {
+  //     _isPlaying = true;
+  //   });
+  // }
 
   //live stream stop playing
-  pausePlay() async {
-    await _livePlayer?.stopPlay();
-    setState(() {
-      _isPlaying = false;
-    });
-  }
+  // pausePlay() async {
+  //   await _livePlayer?.stopPlay();
+  //   setState(() {
+  //     _isPlaying = false;
+  //   });
+  // }
 
   //mute live stream
-  void setMuteState(bool isMute) async {
-    var code = await _livePlayer?.snapshot();
-    if (isMute) {
-      _livePlayer?.setPlayoutVolume(0);
-    } else {
-      _livePlayer?.setPlayoutVolume(100);
-    }
+  // void setMuteState(bool isMute) async {
+  //   var code = await _livePlayer?.snapshot();
+  //   if (isMute) {
+  //     _livePlayer?.setPlayoutVolume(0);
+  //   } else {
+  //     _livePlayer?.setPlayoutVolume(100);
+  //   }
 
-    setState(() {
-      _ismuteState = isMute;
-    });
-  }
+  //   setState(() {
+  //     _ismuteState = isMute;
+  //   });
+  // }
 
   //Countdown widget
   void countDownWidget() {
@@ -250,7 +250,7 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
     super.initState();
     initPlatformState();
     renderView();
-    startPlay();
+    // startPlay();
     countDownWidget();
     ifFollowed();
 
@@ -265,8 +265,8 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
   @override
   void deactivate() {
     _livePlayer?.removeListener(onPlayerObserver);
-    _livePlayer?.stopPlay();
-    _livePlayer?.destroy();
+    // _livePlayer?.stopPlay();
+    // _livePlayer?.destroy();
     super.deactivate();
   }
 
@@ -845,9 +845,9 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                                           child: InkWell(
                                                             onTap: () {
                                                               if (_isPlaying) {
-                                                                pausePlay();
+                                                                // pausePlay();
                                                               } else {
-                                                                startPlay();
+                                                                // startPlay();
                                                               }
                                                             },
                                                             child: Icon(
@@ -880,8 +880,8 @@ class _LiveStreamChatRoomState extends State<LiveStreamChatRoom> {
                                                           left: 280 * fem,
                                                           child: InkWell(
                                                             onTap: () {
-                                                              setMuteState(
-                                                                  !_ismuteState);
+                                                              // setMuteState(
+                                                              //     !_ismuteState);
                                                             },
                                                             child: Icon(
                                                               _ismuteState

@@ -8,7 +8,7 @@ class GenerateTestUserSig {
   GenerateTestUserSig({required this.sdkappId, required this.key});
   int sdkappId;
   String key;
-  static int sdkAppId = 20007685;
+  static int sdkAppId = 20008621;
 
   /*
    * 签名过期时间，建议不要设置的过短
@@ -18,16 +18,16 @@ class GenerateTestUserSig {
    */
   static int expireTime = 604800;
 
-  static String secretKey = "0abda76ec2364e9e96a986d703cee89b86c82a4f6f4224af20830899d3e76466";
+  static String secretKey = "8361f9a2a0d838abf63b7a32f51acd896ca3d0ded3c5cefbd92009645ac83779";
 
   static String PUSH_DOMAIN = "";
   static String PLAY_DOMAIN = "play.mindarker.top";
   static String LIVE_URL_KEY = "";
 
   static String LICENSEURL =
-      "https://license.vod-pro.com/license/v2/1324939077_1/v_cube.license";
+      "https://license.vod-pro.com/license/v2/1325710331_1/v_cube.license";
 
-  static String LICENSEURLKEY = "4cdeecc66f99fcdd90e29e586fe3bec8";
+  static String LICENSEURLKEY = "4da5931fb7eba6d5853c180289a6a870";
 
   ///生成UserSig
   static String genTestSig(String userId) {

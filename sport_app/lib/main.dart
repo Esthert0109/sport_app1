@@ -24,6 +24,12 @@ void main() {
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
+  FlutterError.onError = (FlutterErrorDetails details) {
+    // Handle the error (e.g., log the error)
+    print("Unhandled error: $details");
+  };
+  
   runApp(MyApp());
 }
 

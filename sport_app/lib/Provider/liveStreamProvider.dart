@@ -74,6 +74,8 @@ class LiveStreamProvider extends ChangeNotifier {
         ApiConstants.getAnimationUrl +
         "${sportType}/${matchId}";
 
+    print("Match id: ${matchId}");
+
     Map<String, String> headers = {
       'Content-Type': 'application/json; charset=utf-8',
     };
@@ -84,7 +86,8 @@ class LiveStreamProvider extends ChangeNotifier {
       String responseMsg = response['msg'];
 
       if (responseCode == 0) {
-        String responseData = response['data'];
+        String responseData =
+            response['data'] != null ? response['data'].toString() : "";
 
         AnimationStreamModel model = AnimationStreamModel(
             code: responseCode, msg: responseMsg, data: responseData);
@@ -96,7 +99,7 @@ class LiveStreamProvider extends ChangeNotifier {
         return model;
       }
     } catch (e) {
-      print("Error in animation url: $e");
+      print("Error in animation url: $e, match Id: $matchId");
       return null;
     }
   }
@@ -117,7 +120,8 @@ class LiveStreamProvider extends ChangeNotifier {
       String responseMsg = response['msg'];
 
       if (responseCode == 0) {
-        String responseData = response['data'];
+        String responseData =
+            response['data'] != null ? response['data'].toString() : "";
 
         AnimationStreamModel model = AnimationStreamModel(
             code: responseCode, msg: responseMsg, data: responseData);

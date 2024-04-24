@@ -74,7 +74,7 @@ android {
             //关闭混淆
             minifyEnabled false //删除无用代码
             shrinkResources false //删除无用资源
-            //debuggable true
+            // debuggable true
         }
         debug {
              signingConfig signingConfigs.sign

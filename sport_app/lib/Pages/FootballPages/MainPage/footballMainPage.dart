@@ -1808,9 +1808,7 @@ class _FootballMainPageState extends State<FootballMainPage>
                                                                             )
                                                                       : (statusId == 3 &&
                                                                               pastDateId == 1)
-                                                                          ?
-                                                                         
-                                                                          (past2Length == 0)
+                                                                          ? (past2Length == 0)
                                                                               ? searchEmptyWidget()
                                                                               : ListView.builder(
                                                                                   physics: const NeverScrollableScrollPhysics(),

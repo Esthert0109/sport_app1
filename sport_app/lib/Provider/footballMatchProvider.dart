@@ -337,7 +337,9 @@ class FootballMatchProvider extends ChangeNotifier {
       final response = await service.getRequest(url);
 
       String code = response['code'].toString();
-      Map<String, dynamic> data = response['data'];
+      Map<String, dynamic>? responseData = response['data'];
+      Map<String, dynamic> data = responseData?.cast<String, dynamic>() ?? {};
+
       String msg = response['msg'].toString();
 
       return data;

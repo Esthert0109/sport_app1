@@ -58,7 +58,7 @@ class _BasketballTournamentDetailsState
 
   ButtonStyle buttonStyle(int buttonNumber) {
     return ElevatedButton.styleFrom(
-       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(53)));
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(53)));
   }
 
   //provider body
@@ -160,240 +160,221 @@ class _BasketballTournamentDetailsState
               letterSpacing: 0.3),
         ),
       ),
-      body: Expanded(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              isLoading
-                  ? Stack(
-                      alignment: Alignment.center,
-                      children: <Widget>[
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          child: Image.asset(
-                            'images/tournament/basketball_tournament.png',
-                            fit: BoxFit.fill,
-                          ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            isLoading
+                ? Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: Image.asset(
+                          'images/tournament/basketball_tournament.png',
+                          fit: BoxFit.fill,
                         ),
-                        CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.green),
-                        )
-                      ],
-                    )
-                  : (basketballMatchById?.isEmpty ?? false)
-                      ? userModel.isCN.value
-                          ? Stack(
-                              alignment: Alignment.center,
-                              children: <Widget>[
-                                Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Image.asset(
-                                    'images/tournament/basketball_tournament.png',
-                                    fit: BoxFit.fill,
-                                  ),
+                      ),
+                      CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                      )
+                    ],
+                  )
+                : (basketballMatchById?.isEmpty ?? false)
+                    ? userModel.isCN.value
+                        ? Stack(
+                            alignment: Alignment.center,
+                            children: <Widget>[
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                child: Image.asset(
+                                  'images/tournament/basketball_tournament.png',
+                                  fit: BoxFit.fill,
                                 ),
-                                Text("无信息数据",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.bold,
-                                      height: 1,
-                                      letterSpacing: 0.46,
-                                    )),
-                              ],
-                            )
-                          : Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Image.asset(
-                                    'images/tournament/basketball_tournament.png',
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                                Text("No Match Data",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.bold,
-                                      height: 1,
-                                      letterSpacing: 0.46,
-                                    )),
-                              ],
-                            )
-                      : Stack(
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: Image.asset(
-                                'images/tournament/basketball_tournament.png',
-                                fit: BoxFit.fill,
                               ),
-                            ),
-                            Positioned(
-                              top: 54,
-                              left: 0,
-                              right: 0,
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  widget.matchDate,
+                              Text("无信息数据",
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Color(0xFFF8FEE4),
-                                    fontSize: 12,
-                                    fontFamily: 'NotoSansSC',
-                                    fontWeight: FontWeight.w400,
-                                    height: 1,
-                                    letterSpacing: 0.46,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: 72,
-                              left: 0,
-                              right: 0,
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  matchStatusStr,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Color(0xFFF8FEE4),
-                                    fontSize: 12,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w400,
-                                    height: 1,
-                                    letterSpacing: 0.46,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: 76,
-                              left: 48,
-                              child: Container(
-                                width: 46,
-                                height: 46,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                        basketballMatchById!['homeTeamLogo']
-                                            .toString()),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: 77.92,
-                              right: 49.92,
-                              child: Container(
-                                width: 42.17,
-                                height: 42.17,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                        basketballMatchById!['awayTeamLogo']
-                                            .toString()),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  width: 120,
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 135, 0, 0),
-                                    child: Text(
-                                      "${basketballMatchById?['homeTeamName'].toString()}",
-                                      textAlign: TextAlign.center,
-                                      maxLines: 3,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontFamily: 'NotoSansSC',
-                                        fontWeight: FontWeight.w400,
-                                        height: 1,
-                                        letterSpacing: 0.30,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  width: 120,
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 135, 0, 0),
-                                    child: Text(
-                                      "${basketballMatchById?['awayTeamName'].toString()}",
-                                      textAlign: TextAlign.center,
-                                      maxLines: 3,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontFamily: 'NotoSansSC',
-                                        fontWeight: FontWeight.w400,
-                                        height: 1,
-                                        letterSpacing: 0.30,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                            Positioned(
-                              top: 122,
-                              left: 120,
-                              child: Text(
-                                '${basketballMatchById?['homeScore'].toString()}',
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 30,
-                                  fontFamily: 'NotoSansSC',
-                                  fontWeight: FontWeight.w600,
-                                  height: 1,
-                                  letterSpacing: 0.42,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: 122,
-                              left: 0,
-                              right: 0,
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  '-',
-                                  textAlign: TextAlign.right,
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 30,
-                                    fontFamily: 'NotoSansSC',
-                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.bold,
                                     height: 1,
-                                    letterSpacing: 0.42,
-                                  ),
+                                    letterSpacing: 0.46,
+                                  )),
+                            ],
+                          )
+                        : Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                child: Image.asset(
+                                  'images/tournament/basketball_tournament.png',
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              Text("No Match Data",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.bold,
+                                    height: 1,
+                                    letterSpacing: 0.46,
+                                  )),
+                            ],
+                          )
+                    : Stack(
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Image.asset(
+                              'images/tournament/basketball_tournament.png',
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          Positioned(
+                            top: 54,
+                            left: 0,
+                            right: 0,
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                widget.matchDate,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color(0xFFF8FEE4),
+                                  fontSize: 12,
+                                  fontFamily: 'NotoSansSC',
+                                  fontWeight: FontWeight.w400,
+                                  height: 1,
+                                  letterSpacing: 0.46,
                                 ),
                               ),
                             ),
-                            Positioned(
-                              top: 122,
-                              right: 123,
+                          ),
+                          Positioned(
+                            top: 72,
+                            left: 0,
+                            right: 0,
+                            child: Align(
+                              alignment: Alignment.center,
                               child: Text(
-                                '${basketballMatchById?['awayScore'].toString()}',
+                                matchStatusStr,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color(0xFFF8FEE4),
+                                  fontSize: 12,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w400,
+                                  height: 1,
+                                  letterSpacing: 0.46,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 76,
+                            left: 48,
+                            child: Container(
+                              width: 46,
+                              height: 46,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                      basketballMatchById!['homeTeamLogo']
+                                          .toString()),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 77.92,
+                            right: 49.92,
+                            child: Container(
+                              width: 42.17,
+                              height: 42.17,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                      basketballMatchById!['awayTeamLogo']
+                                          .toString()),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                width: 120,
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(0, 135, 0, 0),
+                                  child: Text(
+                                    "${basketballMatchById?['homeTeamName'].toString()}",
+                                    textAlign: TextAlign.center,
+                                    maxLines: 3,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontFamily: 'NotoSansSC',
+                                      fontWeight: FontWeight.w400,
+                                      height: 1,
+                                      letterSpacing: 0.30,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: 120,
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(0, 135, 0, 0),
+                                  child: Text(
+                                    "${basketballMatchById?['awayTeamName'].toString()}",
+                                    textAlign: TextAlign.center,
+                                    maxLines: 3,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontFamily: 'NotoSansSC',
+                                      fontWeight: FontWeight.w400,
+                                      height: 1,
+                                      letterSpacing: 0.30,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          Positioned(
+                            top: 122,
+                            left: 120,
+                            child: Text(
+                              '${basketballMatchById?['homeScore'].toString()}',
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 30,
+                                fontFamily: 'NotoSansSC',
+                                fontWeight: FontWeight.w600,
+                                height: 1,
+                                letterSpacing: 0.42,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 122,
+                            left: 0,
+                            right: 0,
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                '-',
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   color: Colors.white,
@@ -405,165 +386,179 @@ class _BasketballTournamentDetailsState
                                 ),
                               ),
                             ),
-                            Positioned(
-                                top: 160,
-                                left: 85,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    print("navi to live stream");
-                                    if (liveUrl == "" || liveUrl == null) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                        content: Text(
-                                            AppLocalizations.of(context)!
-                                                .noLive),
-                                        backgroundColor: redColor,
-                                      ));
-                                    } else {
-                                      Get.to(
-                                          () => LivePlayPage2(
-                                                streamId: liveUrl,
-                                                title: widget.matchName,
-                                              ),
-                                          transition: Transition.fadeIn);
-                                    }
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        AppLocalizations.of(context)!
-                                            .liveStream,
-                                        style: TextStyle(
-                                            fontFamily: "Inter",
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: 0.3,
-                                            color: white),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(horizontal: 5),
-                                        child: Image(
-                                            width: 24,
-                                            height: 24,
-                                            image: AssetImage(
-                                                "images/tournament/videoLiveStream.png")),
-                                      )
-                                    ],
-                                  ),
-                                )),
-                            Positioned(
-                                top: 160,
-                                right: 85,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    print(
-                                        "navi to animation stream: ${animationUrl}");
-                                    if (animationUrl == "" ||
-                                        animationUrl == null) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                        content: Text(
-                                            AppLocalizations.of(context)!
-                                                .noAnimation),
-                                        backgroundColor: redColor,
-                                      ));
-                                    } else {
-                                      Get.to(
-                                          () => LivePlayPage2(
-                                                streamId: animationUrl,
-                                                title: widget.matchName,
-                                              ),
-                                          transition: Transition.fadeIn);
-                                    }
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(horizontal: 5),
-                                        child: Image(
-                                            width: 24,
-                                            height: 24,
-                                            image: AssetImage(
-                                                "images/tournament/animationStream.png")),
-                                      ),
-                                      Text(
-                                        AppLocalizations.of(context)!
-                                            .animationStream,
-                                        style: TextStyle(
-                                            fontFamily: "Inter",
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: 0.3,
-                                            color: white),
-                                      ),
-                                    ],
-                                  ),
-                                ))
-                          ],
-                        ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 10, 0, 14),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          selectedButton = 1;
-                        });
-                      },
-                      child: Text(
-                        userModel.isCN == true ? "赛况" : "Match Status",
-                        style: TextStyle(
-                            color: selectedButton == 1
-                                ? Colors.white
-                                : kComponentHintTextColor,
-                            fontSize: 14,
-                            fontFamily: 'NotoSansSC'),
+                          ),
+                          Positioned(
+                            top: 122,
+                            right: 123,
+                            child: Text(
+                              '${basketballMatchById?['awayScore'].toString()}',
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 30,
+                                fontFamily: 'NotoSansSC',
+                                fontWeight: FontWeight.w600,
+                                height: 1,
+                                letterSpacing: 0.42,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                              top: 160,
+                              left: 85,
+                              child: GestureDetector(
+                                onTap: () {
+                                  print("navi to live stream");
+                                  if (liveUrl == "" || liveUrl == null) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      content: Text(
+                                          AppLocalizations.of(context)!.noLive),
+                                      backgroundColor: redColor,
+                                    ));
+                                  } else {
+                                    Get.to(
+                                        () => LivePlayPage2(
+                                              streamId: liveUrl,
+                                              title: widget.matchName,
+                                            ),
+                                        transition: Transition.fadeIn);
+                                  }
+                                },
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      AppLocalizations.of(context)!.liveStream,
+                                      style: TextStyle(
+                                          fontFamily: "Inter",
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          letterSpacing: 0.3,
+                                          color: white),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 5),
+                                      child: Image(
+                                          width: 24,
+                                          height: 24,
+                                          image: AssetImage(
+                                              "images/tournament/videoLiveStream.png")),
+                                    )
+                                  ],
+                                ),
+                              )),
+                          Positioned(
+                              top: 160,
+                              right: 85,
+                              child: GestureDetector(
+                                onTap: () {
+                                  print(
+                                      "navi to animation stream: ${animationUrl}");
+                                  if (animationUrl == "" ||
+                                      animationUrl == null) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      content: Text(
+                                          AppLocalizations.of(context)!
+                                              .noAnimation),
+                                      backgroundColor: redColor,
+                                    ));
+                                  } else {
+                                    Get.to(
+                                        () => LivePlayPage2(
+                                              streamId: animationUrl,
+                                              title: widget.matchName,
+                                            ),
+                                        transition: Transition.fadeIn);
+                                  }
+                                },
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 5),
+                                      child: Image(
+                                          width: 24,
+                                          height: 24,
+                                          image: AssetImage(
+                                              "images/tournament/animationStream.png")),
+                                    ),
+                                    Text(
+                                      AppLocalizations.of(context)!
+                                          .animationStream,
+                                      style: TextStyle(
+                                          fontFamily: "Inter",
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          letterSpacing: 0.3,
+                                          color: white),
+                                    ),
+                                  ],
+                                ),
+                              ))
+                        ],
                       ),
-                      style: buttonStyle(1).copyWith(
-                          elevation: MaterialStateProperty.all(0),
-                          backgroundColor: MaterialStatePropertyAll(
-                              selectedButton == 1 ? kMainGreenColor : white)),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 10, 0, 14),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        selectedButton = 1;
+                      });
+                    },
+                    child: Text(
+                      userModel.isCN == true ? "赛况" : "Match Status",
+                      style: TextStyle(
+                          color: selectedButton == 1
+                              ? Colors.white
+                              : kComponentHintTextColor,
+                          fontSize: 14,
+                          fontFamily: 'NotoSansSC'),
                     ),
-                    SizedBox(
-                      width: 10,
+                    style: buttonStyle(1).copyWith(
+                        elevation: MaterialStateProperty.all(0),
+                        backgroundColor: MaterialStatePropertyAll(
+                            selectedButton == 1 ? kMainGreenColor : white)),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        selectedButton = 3;
+                      });
+                    },
+                    child: Text(
+                      userModel.isCN == true ? "阵容" : "Line-up",
+                      style: TextStyle(
+                          color: selectedButton == 3
+                              ? Colors.white
+                              : kComponentHintTextColor,
+                          fontSize: 14,
+                          fontFamily: 'NotoSansSC'),
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          selectedButton = 3;
-                        });
-                      },
-                      child: Text(
-                        userModel.isCN == true ? "阵容" : "Line-up",
-                        style: TextStyle(
-                            color: selectedButton == 3
-                                ? Colors.white
-                                : kComponentHintTextColor,
-                            fontSize: 14,
-                            fontFamily: 'NotoSansSC'),
-                      ),
-                      style: buttonStyle(3).copyWith(
-                          elevation: MaterialStateProperty.all(0),
-                          backgroundColor: MaterialStatePropertyAll(
-                              selectedButton == 3 ? kMainGreenColor : white)),
-                    )
-                  ],
-                ),
+                    style: buttonStyle(3).copyWith(
+                        elevation: MaterialStateProperty.all(0),
+                        backgroundColor: MaterialStatePropertyAll(
+                            selectedButton == 3 ? kMainGreenColor : white)),
+                  )
+                ],
               ),
-              Container(
-                child: isDetailNull
-                    ? searchEmptyWidget()
-                    : getContentForSelectedButton(),
-              )
-            ],
-          ),
+            ),
+            Container(
+              child: isDetailNull
+                  ? searchEmptyWidget()
+                  : getContentForSelectedButton(),
+            )
+          ],
         ),
       ),
     ));
@@ -824,11 +819,13 @@ class _BasketballTournamentDetailsState
                 child: Padding(
                 padding: EdgeInsets.only(top: 20),
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                  valueColor: AlwaysStoppedAnimation<Color>(kMainGreenColor),
                 ),
               ))
             : (basketballMatchById?.isEmpty ?? false)
-                ? searchEmptyWidget()
+                ? Container(
+                    padding: const EdgeInsets.fromLTRB(16, 5, 16, 10),
+                    child: searchEmptyWidget())
                 : Padding(
                     padding: const EdgeInsets.fromLTRB(5, 3, 5, 5),
                     child: Center(
@@ -1796,7 +1793,7 @@ class _BasketballTournamentDetailsState
                               ))),
                     ),
                   );
-      
+
       case 3:
         return SingleChildScrollView(
           child: Column(

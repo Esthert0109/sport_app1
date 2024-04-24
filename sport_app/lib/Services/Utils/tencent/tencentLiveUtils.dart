@@ -2,7 +2,7 @@ import 'package:tencent_cloud_chat_uikit/tencent_cloud_chat_uikit.dart';
 
 import 'GenerateTestUserSig.dart';
 
-final int _sdkAppID = 20007685; // 前置条件中创建的IM应用SDKAppID
+final int _sdkAppID = 20008621; // 前置条件中创建的IM应用SDKAppID
 
 initAndLoginIm() {
   TencentImSDKPlugin.v2TIMManager.initSDK(
@@ -14,9 +14,9 @@ initAndLoginIm() {
 Future<bool> userLogin(String userID) async {
   final CoreServicesImpl coreInstance = TIMUIKitCore.getInstance();
 
-  int sdkAppId = 20007685;
+  int sdkAppId = 20008621;
   String key =
-      "0abda76ec2364e9e96a986d703cee89b86c82a4f6f4224af20830899d3e76466";
+      "8361f9a2a0d838abf63b7a32f51acd896ca3d0ded3c5cefbd92009645ac83779";
 
   GenerateTestUserSig generateTestUserSig = GenerateTestUserSig(
     sdkappId: sdkAppId,

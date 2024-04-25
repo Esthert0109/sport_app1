@@ -77,9 +77,12 @@ class _NewsPageState extends State<NewsPage> {
 
       setState(() {
         isLoading = false;
-        getInfoList();
         getTopInfoList();
+        isLoading = false;
         getImgInfoList();
+        isLoading = false;
+        getInfoList();
+        isLoading = false;
       });
     }
   }
@@ -192,9 +195,7 @@ class _NewsPageState extends State<NewsPage> {
       imgList.clear();
       imgLength = imgList.length;
 
-      getInfoList();
-      getTopInfoList();
-      getImgInfoList();
+      getCategoryList();
     });
   }
 
@@ -203,11 +204,7 @@ class _NewsPageState extends State<NewsPage> {
     super.initState();
     getCategoryList();
     isLoading = false;
-    getInfoList();
-    isLoading = false;
-    getTopInfoList();
-    isLoading = false;
-    getImgInfoList();
+
     _scrollController = ScrollController()..addListener(bottomScrollController);
   }
 
